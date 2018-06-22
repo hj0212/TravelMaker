@@ -8,27 +8,69 @@
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.jss"></script>
 
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type="text/javascript"
-	src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
-	charset="utf-8"></script>
-<script src="source/js/kakaologin.js"></script>
+
 <style>
 #container {
 	width: 800px;
 	margin: 0 auto;
+	padding-top: 40px;
 }
 
 #loginbox {
 	width: 400px;
-	height: 700px;
+	height: 570px;
 	margin: 50px auto;
 }
 
 #loginbtn {
-	
+	width: 222px;
+	height: 49px;
 }
+
+#naver_id_login a, #kakao_btn_changed a {
+	margin: 0 auto;
+}
+
+#loginbtn {
+	line-height: 49px;
+}
+
+#card_bottom {
+	padding-top: 30px;
+}
+
+.login-link.active span,
+.signup-link.active span {
+  border-bottom: 2px solid #ff6f00;
+}
+
 </style>
+<script>
+	$(document).ready(() => {
+	  $(".login-link").on("click", showLogin);
+	  $(".signup-link").on("click", showSignup);
+	});
+	
+	const showLogin = () => {
+		 $(".login-link").addClass("active");
+		 $(".signup-link").removeClass("active");
+		 $(".confirm-password-row").hide();
+		 $(".btn-login").text("Log in");
+		 $(".forgot-password-row").show();
+	};
+
+	const showSignup = () => {
+		 $(".signup-link").addClass("active");
+		 $(".login-link").removeClass("active");
+		 $(".btn-login").text("Sign up");
+		 $(".forgot-password-row").hide();
+		 $(".confirm-password-row").show();
+	};
+
+</script>
 </head>
 <body>
 	<div id="container">
@@ -38,44 +80,59 @@
 				<div class="card white hoverable" id="loginbox">
 					<div class="card-content black-text">
 						<div class="row card-title">
-							<div class="col s6 left-align login-link">
+							<div class="col s6 left-align login-link active">
 								<span>Log in</span>
 							</div>
-							<div class="col s6 right-align signup-link active">
+							<div class="col s6 right-align signup-link">
 								<span>Sign up</span>
 							</div>
 						</div>
 						<div class="row">
-							<div class="input-field email-field col s12">
-								<input id="email" type="email" class="validate white-text">
-								<label for="email" class="grey-text text-lighten-1">Email</label>
+							<div class="input-field col s12">
+								<input id="user_id" type="text" class="validate"> <label
+									for="user_id">id</label>
 							</div>
 						</div>
 						<div class="row">
-							<div class="input-field email-field col s12">
-								<input id="email" type="password" class="validate">
-								<label for="email" class="grey-text text-lighten-1">password</label>
+							<div class="input-field col s12">
+								<input id="password" type="password" class="validate"> <label
+									for="password" class="grey-text text-lighten-1">password</label>
 							</div>
 						</div>
 
-						<div class="card-action">
+						<div class="card-action center" id="card_bottom">
 							<div class="row">
 								<a class="btn-login btn blue lighten-1 waves-effect white-text"
 									id="loginbtn">Log In</a>
 							</div>
-							<div id="kakao_btn_changed">
-								<a id="kakao-login-btn"></a> <a
-									href="http://developers.kakao.com/logout"></a>
+							<div class="row">
+								<div id="kakao_btn_changed">
+									<a id="kakao-login-btn"></a> <a
+										href="http://developers.kakao.com/logout"></a>
+								</div>
 							</div>
-							<div id="naverIdLogin"></div>
-
+							<div class="row">
+								<div id="naver_id_login"></div>
+								<script type="text/javascript">
+								  	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://localhost:8080/BoardProject/loginProc.html");
+								  	var state = naver_id_login.getUniqState();
+								  	naver_id_login.setButton("green", 3, 49);
+								  	naver_id_login.setDomain("http://localhost:8080/BoardProject/");
+								  	naver_id_login.setState(state);
+								  	naver_id_login.setPopup();
+								  	naver_id_login.init_naver_id_login();
+  								</script>
+							</div>
+							<div class="row">
+           						<span class="blue-text text-lighten-1 waves-effect">Forgot Password?</span>
+          					</div>
+							
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
-
 </body>
+<script src="source/js/kakaologin.js"></script>
 </html>
