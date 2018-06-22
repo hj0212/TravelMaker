@@ -15,7 +15,7 @@
 				
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					" ws://localhost:8080/WEB_06_18/websocket ");
+					" ws://192.168.20.31:8080/WEB_SOCKET_0611/websocket ");
 		
 			var str;
 		
@@ -30,9 +30,7 @@
 		            }
 		        });
 
-			
-
-			
+					
 			ws.onopen = function() {
 			
 				//document.getElementById("contents").innerHTML += str+"님이 입장하셨습니다"+"<br>";
@@ -72,7 +70,7 @@ document.getElementById("logout").onclick = function(){
 	
 	
 	}
-$("#livechathistory").scrollTop($("#livechathistory")[0].scrollHegiht);
+
 
 
 </script>
@@ -93,9 +91,14 @@ $("#livechathistory").scrollTop($("#livechathistory")[0].scrollHegiht);
             <div class="chat"  id="chatchat">
 
                 <div class="chat-history" id="livechathistory">
-
+				
                    
                 </div>
+                <script>
+                $(".chat-history").scrollTop($(".chat-history").height());
+                </script>
+                
+                
                 <!-- end chat-history -->
 
                 <p class="chat-feedback">Messages</p>
@@ -118,7 +121,10 @@ $("#livechathistory").scrollTop($("#livechathistory")[0].scrollHegiht);
         <!-- end live-chat -->
     </body>
 <script>
+
+
 (function() {
+	
 	  $('#live-chat header').on('click', function() {
 
           $('.chat').slideToggle(300, 'swing');
