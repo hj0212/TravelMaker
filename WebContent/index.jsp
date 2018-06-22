@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <%
 	String nickname =request.getParameter("nickname");
-
+	
 %>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
@@ -20,16 +20,17 @@
 			var str;
 		
 			
-			function enter_check(){
-				if(event.keyCode == 13){
+			 $("input").keydown(function(event) {
+		            if (event.which === 13) { 
+		            	console.log("엔터");
+		            	var msg = $("#livemsg").val();
+		    			ws.send(msg);
+		    			$("#livemsg").val("");
+		    			  
+		            }
+		        });
 
-					var msg = $("#livemsg").val();
-					ws.send(str+":"+msg);
-					$("#livemsg").val("");
-				}
-			};
-
-
+			
 
 			
 			ws.onopen = function() {
@@ -37,9 +38,8 @@
 				//document.getElementById("contents").innerHTML += str+"님이 입장하셨습니다"+"<br>";
 			};
 			ws.onmessage = function(msg) {
-				$("#livechathistory").append("<hr class=livehr><div class=chat-message clearfix><img src=https://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32 alt= width=32 height=32><div class=chat-message-content clearfix><h5 class=live5>"+<%=nickname%>+"</h5><p class=livep>"+msg+ "</p></div></div>");
-				
-			
+				$("#livechathistory").append("<hr class=livehr><div class=chat-message clearfix><img src=https://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32 alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>" +"<%=nickname%>"  + "</h5><p class=livep>" + msg.data + "</p></div></div>");
+	
 					
 			};
 			ws.onclose = function() {
@@ -50,8 +50,10 @@
 		} else {
 			alert("브라우저가 웹소켓을 지원하지 않습니다");
 		}
+		
 	}
 </script>
+
 </head>
 <body>
 
@@ -62,18 +64,15 @@
 <script src="js/kakaologin.js">
 </script>
 <script>
-document.getElementById("logout").onclick = function(){
-
-		
+document.getElementById("logout").onclick = function(){	
 		setTimeout(function() {
 		    Kakao.Auth.logout(function() { alert("로그아웃되었습니다"); });
 		    location.href="login.jsp";
 		}, 1000);
 	
 	
-		
-
 	}
+$("#livechathistory").scrollTop($("#livechathistory")[0].scrollHegiht);
 
 
 </script>
@@ -85,87 +84,28 @@ document.getElementById("logout").onclick = function(){
 
                 <a href="#" class="chat-close">x</a>
 
-                <h4 class="live4">John Doe</h4>
+                <h4 class="live4"><%=nickname %></h4>
 
-                <span class="chat-message-counter">3</span>
+                <span class="chat-message-counter">!</span>
 
             </header>
 
-            <div class="chat">
+            <div class="chat"  id="chatchat">
 
                 <div class="chat-history" id="livechathistory">
 
-                    <div class="chat-message clearfix">
-
-                        <img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">
-
-                        <div class="chat-message-content clearfix">
-
-                            <span class="chat-time">13:35</span>
-
-                            <h5 class="live5">John Doe</h5>
-
-                            <p class="livep">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, explicabo quasi ratione odio dolorum harum.</p>
-
-                        </div>
-                        <!-- end chat-message-content -->
-
-                    </div>
-                    <!-- end chat-message -->
-
-                    <hr class="livehr">
-
-                    <div class="chat-message clearfix">
-
-                        <img src="https://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32" alt="" width="32" height="32">
-
-                        <div class="chat-message-content clearfix">
-
-                            <span class="chat-time">13:37</span>
-
-                            <h5 class="live5">Marco Biedermann</h5>
-
-                            <p class="livep">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis, nulla accusamus magni vel debitis numquam qui tempora rem voluptatem delectus!</p>
-
-                        </div>
-                        <!-- end chat-message-content -->
-
-                    </div>
-                    <!-- end chat-message -->
-
-                    <hr class="livehr">
-
-                    <div class="chat-message clearfix">
-
-                        <img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">
-
-                        <div class="chat-message-content clearfix">
-
-                            <span class="chat-time">13:38</span>
-
-                            <h5 class="live5">John Doe</h5>
-
-                            <p class="livep">Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-
-                        </div>
-                        <!-- end chat-message-content -->
-
-                    </div>
-                    <!-- end chat-message -->
-
-                    <hr class="livehr">
-
+                   
                 </div>
                 <!-- end chat-history -->
 
-                <p class="chat-feedback">Your partner is typing…</p>
+                <p class="chat-feedback">Messages</p>
 
           
 
                     <fieldset>
 
-                        <input type="text" placeholder="Type your message…" class="liveinput" id="livemsg" onkeydown=enter_Check()>
-                        <input type="hidden" class="liveinput" >
+                        <input type="text" placeholder="Type your message…" class="liveinput" id="livemsg" >
+                        <input type="hidden" class="liveinput"  >
 
                     </fieldset>
 
@@ -191,7 +131,9 @@ document.getElementById("logout").onclick = function(){
           $('#live-chat').fadeOut(300);
 
       });
+
 })();
+
 </script>
 
 
