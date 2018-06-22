@@ -42,7 +42,7 @@
 								<label for="text" class="grey-text text-lighten-1">Name</label>
 							</div>
 						</div>
-						<div class="row">wq2
+						<div class="row">
 							<form action="." class="col s12 password-form"
 								autocomplete="nope">
 								<div class="row">
