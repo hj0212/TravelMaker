@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,7 +15,7 @@
 				
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					" ws://localhost:8080/WEB_06_18/websocket ");
+					" ws://localhost:8080/BoardProject/websocket ");
 		
 			var str;
 		
@@ -39,13 +39,10 @@
 			};
 			ws.onmessage = function(msg) {
 				$("#livechathistory").append("<hr class=livehr><div class=chat-message clearfix><img src=https://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32 alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>" +"<%=nickname%>"  + "</h5><p class=livep>" + msg.data + "</p></div></div>");
-	
-					
 			};
 			ws.onclose = function() {
 
 			};
-		
 
 		} else {
 			alert("브라우저가 웹소켓을 지원하지 않습니다");
@@ -53,7 +50,7 @@
 		
 	}
 </script>
-
+<link rel="stylesheet" href="css/livechat.css" type="text/css">
 </head>
 <body>
 
@@ -70,13 +67,11 @@ document.getElementById("logout").onclick = function(){
 		    location.href="login.jsp";
 		}, 1000);
 	
-	
-	}
-$("#livechathistory").scrollTop($("#livechathistory")[0].scrollHegiht);
+}
 
 
 </script>
-<link rel="stylesheet" href="css/livechat.css" type="text/css">
+
 
         <div id="live-chat">
 
@@ -135,9 +130,5 @@ $("#livechathistory").scrollTop($("#livechathistory")[0].scrollHegiht);
 })();
 
 </script>
-
-
-
-
 </body>
 </html>
