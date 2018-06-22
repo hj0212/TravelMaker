@@ -201,7 +201,7 @@ ul.tabs li a.active {
 border-bottom-right-radius: 8px;
 border-bottom-left-radius: 8px;
 }
-p{
+.p{
   font-family: 'Open Sans', sans-serif;
   padding: 30px 40px;
   color: #ffffff;
@@ -258,10 +258,13 @@ p{
     <li><a href="#/three">Tabs</a></li>
   </ul>
   
-  <div id="content">
-    <!-- <p id="one">Some text about Light sit amet, consectetur adipisicing elit. Pariatur modi quod quo iure recusandae eligendi q.t, consectetur adipisicing elit. Pariatur </p> -->
-    <div id="one">
-    <div class="row">
+  <div id="content" >
+    <!-- <p id="one">Some text about Light sit amet, consectetur adipisicing elit. Pariatur modi quod quo iure recusandae eligendi q.t, consectetur adipisicing elit. Pariatur </p> 
+    <p id="two">Sexy sexy  consectetur adipisicing elit. Pariatur modi quod quo iure recusandae eligendi q.t, consectetur adipisicing elit. Pariatur modi quod quo iureq</p>
+    <p id="three">Tabs , consectetur adipisicing elit. Pariatur modi quod quo iure recusandae eligendi q.t, consectetur adipisicing elit. Pariatur modi quod quo iureq</p>
+    -->
+    <div id="one" class="arti">
+    <div class="row" >
     <div class="col s12 m6">
       <div class="card">
         <div class="card-image">
@@ -275,9 +278,72 @@ p{
       </div>
     </div>
   </div>
+</div>
+    
+    <div id="two" class="arti">
+    <div class="row" >
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-image">
+          <img src="Charlie-Chaplin-PNG-Image-17681.png">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+        </div>
+      </div>
+    </div>
   </div>
-    <p id="two">Sexy sexy  consectetur adipisicing elit. Pariatur modi quod quo iure recusandae eligendi q.t, consectetur adipisicing elit. Pariatur modi quod quo iureq</p>
-    <p id="three">Tabs , consectetur adipisicing elit. Pariatur modi quod quo iure recusandae eligendi q.t, consectetur adipisicing elit. Pariatur modi quod quo iureq</p>
+</div>
+
+<div id="three" class="arti">
+    <div class="row" >
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-image">
+          <img src="Charlie-Chaplin-PNG-Image-17681.png">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+      <div class="row" >
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-image">
+          <img src="Charlie-Chaplin-PNG-Image-17681.png">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+      <div class="row" >
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-image">
+          <img src="Charlie-Chaplin-PNG-Image-17681.png">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
   </div>
   
 </div>
@@ -286,15 +352,16 @@ p{
 </div>
 
 <script>
+ $("#two").hide();
+$("#three").hide(); 
 (function($) {
-
 	var tabs =  $(".tabs li a");
   
 	tabs.click(function() {
 		var content = this.hash.replace('/','');
 		tabs.removeClass("active");
 		$(this).addClass("active");
-    $("#content").find('p').hide();
+    $("#content").find('.arti').hide();
     $(content).fadeIn(200);
 	});
 
