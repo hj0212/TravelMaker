@@ -20,6 +20,9 @@
 <link rel='stylesheet prefetch'
 	href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css'>
 <link rel="stylesheet" href="source/css/login.css" type="text/css">
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
+	charset="utf-8"></script>
 </head>
 <body>
 	<h1 id="title">TRAVEL MAKER</h1>
@@ -85,7 +88,8 @@
 							<a id="kakao-login-btn"></a> <a
 								href="http://developers.kakao.com/logout"></a>
 						</div>
-						<div class="row forgot-password-row">
+						<div id="naverIdLogin"></div>
+						<p><div class="row forgot-password-row"><p>
 							<span class="amber-text text-darken-4 waves-effect">Forgot
 								Password?</span>
 						</div>
