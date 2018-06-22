@@ -15,7 +15,7 @@
 				
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					" ws://localhost:8080/TravelMaker/websocket");
+					" ws://192.168.20.37:8080/TravelMaker/websocket");
 		
 			var str;
 		
@@ -39,7 +39,9 @@
 				//document.getElementById("contents").innerHTML += str+"님이 입장하셨습니다"+"<br>";
 			};
 			ws.onmessage = function(msg) {
-				$("#livechathistory").append("<hr class=livehr><div class=chat-message clearfix><img src=https://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32 alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>" +"<%=nickname%>"  + "</h5><p class=livep>" + msg.data + "</p></div></div>");
+				var obj = JSON.parse(msg.data);
+				console.log(obj.id + ":" + obj.msg);
+				$("#livechathistory").append("<hr class=livehr><div class=chat-message clearfix><img src=https://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32 alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>" + obj.id + "</h5><p class=livep>" + obj.msg + "</p></div></div>");
 			};
 			ws.onclose = function() {
 
