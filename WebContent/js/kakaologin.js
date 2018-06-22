@@ -21,6 +21,7 @@ Kakao.Auth.createLoginButton({
     }
    
   });
-Kakao.Auth.loginForm(function(){
-	persistAccessToken : true;	
+Kakao.Auth.login(function(){
+	persistAccessToken : true;
+	throughTalk : false;
 })
