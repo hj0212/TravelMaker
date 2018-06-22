@@ -10,6 +10,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
@@ -39,6 +40,7 @@ public class MakerChat {
 		for(Session tmp : clients) {
 			tmp.getBasicRemote().sendText(message);
 		}
+		
 	}
 	
 	@OnClose
