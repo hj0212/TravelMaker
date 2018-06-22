@@ -15,7 +15,7 @@
 				
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					" ws://192.168.20.37:8080/TravelMaker/websocket");
+					" ws://localhost:8080/WEB_06_18/websocket");
 		
 			var str;
 		

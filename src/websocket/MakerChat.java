@@ -32,11 +32,13 @@ public class MakerChat {
 	@OnMessage
 	public void handleMessage(String message)throws Exception{
 		System.out.println(message);
-//		JsonParser parser = new JsonParser();
-//		JsonElement element = parser.parse(message);
-//		String id = element.getAsJsonObject().get("id").getAsString();
-//		String msg = element.getAsJsonObject().get("msg").getAsString();
-//		System.out.println(id + " : " + msg);
+		JsonParser parser = new JsonParser();
+		JsonElement element = parser.parse(message);
+		String id = element.getAsJsonObject().get("id").getAsString();
+		String msg = element.getAsJsonObject().get("msg").getAsString();
+
+	
+		System.out.println(id + " : " + msg);
 		for(Session tmp : clients) {
 			tmp.getBasicRemote().sendText(message);
 		}
