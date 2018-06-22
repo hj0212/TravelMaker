@@ -15,16 +15,17 @@
 				
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					" ws://localhost:8080/BoardProject/websocket ");
+					" ws://localhost:8080/TravelMaker/websocket");
 		
 			var str;
 		
 			
 			 $("input").keydown(function(event) {
-		            if (event.which === 13) { 
-		            	console.log("엔터");
+		            if (event.which === 13) {
+		            	var id = "<%=nickname%>";
 		            	var msg = $("#livemsg").val();
-		    			ws.send(msg);
+		            	
+		    			ws.send(JSON.stringify({id:id, msg:msg}));
 		    			$("#livemsg").val("");
 		    			  
 		            }

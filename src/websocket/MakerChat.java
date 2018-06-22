@@ -10,6 +10,9 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 //PDJO - Plain old Java Object
 
 @ServerEndpoint("/websocket")
@@ -27,10 +30,14 @@ public class MakerChat {
 	
 	@OnMessage
 	public void handleMessage(String message)throws Exception{
-		
 		System.out.println(message);
+		JsonParser parser = new JsonParser();
+		JsonElement element = parser.parse(message);
+		String id = element.getAsJsonObject().get("id").getAsString();
+		String msg = element.getAsJsonObject().get("msg").getAsString();
+		System.out.println(id + " : " + msg);
 		for(Session tmp : clients) {
-			tmp.getBasicRemote().sendText(message);
+			//tmp.getBasicRemote().sendText(message);
 		}
 	}
 	
