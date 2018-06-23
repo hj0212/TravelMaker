@@ -100,7 +100,7 @@
 	const showSignup = () => {
 		 $(".signup-link").addClass("active");
 		 $(".login-link").removeClass("active");
-		 $("#loginbox").height(785);
+		 $("#loginbox").height(610);
 		 $(".btn-login").text("Sign up");
 		 $(".forgot-password-row").hide();
 		 $(".confirm-password-row").show();
@@ -154,13 +154,13 @@
 								<a class="btn-login btn blue lighten-1 waves-effect white-text"
 									id="loginbtn">Log In</a>
 							</div>
-							<div class="row_margin">
+							<div class="row_margin forgot-password-row">
 								<div id="kakao_btn_changed">
 									<a id="kakao-login-btn"></a> <a
 										href="http://developers.kakao.com/logout"></a>
 								</div>
 							</div>
-							<div class="row_margin">
+							<div class="row_margin forgot-password-row">
 								<div id="naver_id_login"></div>
 								<script type="text/javascript">
 								  	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://localhost:8080/BoardProject/loginProc.html");
@@ -172,7 +172,7 @@
 								  	naver_id_login.init_naver_id_login();
   								</script>
 							</div>
-							<div class="row">
+							<div class="row forgot-password-row">
 								<span class="blue-text text-lighten-1 waves-effect">Forgot
 									Password?</span>
 							</div>
