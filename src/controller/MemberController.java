@@ -29,15 +29,24 @@ public class MemberController extends HttpServlet {
 		String dst = null;
 		
 		if(command.equals("/login.do")) {
-
+			MemberDTO dto = new MemberDTO();
+			dto.setUserid(request.getParameter("id"));
+			dto.setPassword(request.getParameter("pw"));
+			boolean result = mdao.loginMember(dto);
+			request.setAttribute("loginResult", result);	
+			isForward = true;
+			dst="userResult.jsp?proc=login";
 			
 		}else if(command.equals("/join.do")) {
-//			MemberDTO dto = new MemberDTO(request.getParameter("id"),request.getParameter("pw"),request.getParameter("name"),request.getParameter("email"));			
-//			int result=mdao.addMember(dto);	
-//			request.setAttribute("addResult", result);	
+			MemberDTO dto = new MemberDTO();
+			dto.setUserid(request.getParameter("id"));
+			dto.setPassword(request.getParameter("pw"));
+			dto.setNickname(request.getParameter("nickname"));
+			dto.setEmail(request.getParameter("email"));
+			int result=mdao.addMember(dto);	
+			request.setAttribute("joinResult", result);	
 			isForward = true;
-			dst="joinFormResult.jsp";
-			
+			dst="userResult.jsp?proc=join";
 		}else if(command.equals("/navlogin.do")) {
 			
 			String id = request.getParameter("id");

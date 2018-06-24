@@ -53,7 +53,7 @@
 		
 	}
 </script>
-<link rel="stylesheet" href="css/livechat.css" type="text/css">
+<link rel="stylesheet" href="source/css/livechat.css" type="text/css">
 </head>
 <body>
 

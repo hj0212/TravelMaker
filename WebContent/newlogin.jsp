@@ -24,6 +24,7 @@
 	width: 400px;
 	height: 560px;
 	margin: 50px auto;
+	transition: height 0.3s ease;
 }
 
 #loginbtn {
@@ -69,6 +70,8 @@
 	border-bottom: 2px solid #64b5f6;
 }
 
+
+
 .row_margin {
 	margin-left: auto;
 	margin-right: auto;
@@ -84,6 +87,17 @@
 	  $(".login-link").on("click", showLogin);
 	  $(".signup-link").on("click", showSignup);
 	  $(".confirm-password-row").hide();
+	  $(".btn-login").text("Log in");
+	  
+	  $(".btn-login").click(function() {
+		  if($(".btn-login").text()=="Log in") {
+			  console.log("로그인");
+			  $("#userform").attr('action','login.do').submit();
+		  } else if($(".btn-login").text()=="Sign up"){
+			  console.log("사인업");
+			  $("#userform").attr('action','join.do').submit();
+		  }
+	  })
 	});
 	
 	const showLogin = () => {
@@ -98,7 +112,7 @@
 	const showSignup = () => {
 		 $(".signup-link").addClass("active");
 		 $(".login-link").removeClass("active");
-		 $("#loginbox").height(610);
+		 $("#loginbox").height(700);
 		 $(".btn-login").text("Sign up");
 		 $(".forgot-password-row").hide();
 		 $(".confirm-password-row").show();
@@ -121,32 +135,37 @@
 								<span>Sign up</span>
 							</div>
 						</div>
+						<form id="userform" method="post">
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="user_id" type="text"> <label for="user_id">id</label>
+								<input id="user_id" type="text" name="id"> <label for="user_id">id</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="password" type="password"> <label
+								<input id="password" type="password" name="pw"> <label
 									for="password" class="grey-text text-lighten-1">password</label>
 							</div>
 						</div>
 						<div class="row confirm-password-row">
 							<div class="input-field confirm-password-field col s12">
-								<input id="confirm-password" type="password" class="validate">
+								<input id="confirm-password" type="password" class="validate" name="cpw">
 								<label for="confirm-password">confirm password</label>
 							</div>
 						</div>
-
 						<div class="row confirm-password-row">
 							<div class="input-field confirm-password-field col s12">
-								<input id="email" type="email" class="validate"> <label
-									for="email">Email</label>
-
+								<input id="nickname" type="text" name="nickname"> <label
+									for="nickname">name</label>
 							</div>
 						</div>
-
+						<div class="row confirm-password-row">
+							<div class="input-field confirm-password-field col s12">
+								<input id="email" type="email" class="validate" name="email"> <label
+									for="email">Email</label>
+							</div>
+						</div>
+						</form>
 						<div class="card-action center" id="card_bottom">
 							<div class="row_margin">
 								<a class="btn-login btn blue lighten-1 waves-effect white-text"

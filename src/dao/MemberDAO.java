@@ -16,20 +16,57 @@ public class MemberDAO {
 		return DriverManager.getConnection(dbURL,dbId,dbPw);
 	}
 	
-	public int addNaverMember(MemberDTO dto) throws Exception{
+	public boolean loginMember(MemberDTO dto) throws Exception {
+		Connection con = this.getConnection();
+		String sql = "select * from users where userid = ? and password = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, dto.getUserid());
+		pstmt.setString(2, dto.getPassword());
+		ResultSet rs = pstmt.executeQuery();
+		boolean result;
+		if(rs.next()) {
+			result = true;
+		} else {
+			result = false;
+		}
+		
+		con.close();
+		pstmt.close();
+		rs.close();
+		
+		return result;
+	}
+	
+	public int addMember(MemberDTO dto) throws Exception {
+		Connection con = this.getConnection();
+		String sql = "insert into users (seq, userid, password, nickname, email) VALUES (users_seq.nextval, ?, ?, ?, ?)";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, dto.getUserid());
+		pstmt.setString(2, dto.getPassword());
+		pstmt.setString(3, dto.getNickname());
+		pstmt.setString(4, dto.getEmail());
+		int result = pstmt.executeUpdate();
+		
+		con.close();
+		pstmt.close();
+		
+		return result;
+	}
+	
+	public int addNaverMember(MemberDTO dto) throws Exception {
 		if(!check(dto.getNaver_id())) {
-			Connection conn = this.getConnection();
+			Connection con = this.getConnection();
 			String sql = "insert into users (seq, naver_id, naver_nickname, naver_email) VALUES (users_seq.nextval, ?, ?, ?)";
-			PreparedStatement pstmt = conn.prepareStatement(sql);
+			PreparedStatement pstmt = con.prepareStatement(sql);
 	
 			pstmt.setString(1, dto.getNaver_id());
 			pstmt.setString(2, dto.getNaver_nickname());
 			pstmt.setString(3, dto.getNaver_email());
 			
 			int result = pstmt.executeUpdate();		
-			conn.commit();
+			con.commit();
 			pstmt.close();
-			conn.close();
+			con.close();
 			return result;	
 		}
 		
@@ -37,9 +74,9 @@ public class MemberDAO {
 	}
 	
 	private boolean check(String id) throws Exception {
-		Connection conn = this.getConnection();
+		Connection con = this.getConnection();
 		String sql = "select * from users where naver_id=?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+		PreparedStatement pstmt = con.prepareStatement(sql);
 		
 		pstmt.setString(1, id);
 		ResultSet rs = pstmt.executeQuery();
@@ -51,7 +88,7 @@ public class MemberDAO {
 		}
 		
 		rs.close();
-		conn.close();
+		con.close();
 		pstmt.close();
 		
 		return result;
