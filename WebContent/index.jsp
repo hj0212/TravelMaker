@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,16 +15,21 @@
 				
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
+<<<<<<< HEAD
 					" ws://192.168.20.31:8080/WEB_SOCKET_0611/websocket ");
+=======
+					" ws://192.168.20.37:8080/TravelMaker/websocket");
+>>>>>>> newlogin
 		
 			var str;
 		
 			
 			 $("input").keydown(function(event) {
-		            if (event.which === 13) { 
-		            	console.log("엔터");
+		            if (event.which === 13) {
+		            	var id = "<%=nickname%>";
 		            	var msg = $("#livemsg").val();
-		    			ws.send(msg);
+		            	
+		    			ws.send(JSON.stringify({id:id, msg:msg}));
 		    			$("#livemsg").val("");
 		    			  
 		            }
@@ -36,14 +41,13 @@
 				//document.getElementById("contents").innerHTML += str+"님이 입장하셨습니다"+"<br>";
 			};
 			ws.onmessage = function(msg) {
-				$("#livechathistory").append("<hr class=livehr><div class=chat-message clearfix><img src=https://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32 alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>" +"<%=nickname%>"  + "</h5><p class=livep>" + msg.data + "</p></div></div>");
-	
-					
+				var obj = JSON.parse(msg.data);
+				console.log(obj.id + ":" + obj.msg);
+				$("#livechathistory").append("<hr class=livehr><div class=chat-message clearfix><img src=https://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32 alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>" + obj.id + "</h5><p class=livep>" + obj.msg + "</p></div></div>");
 			};
 			ws.onclose = function() {
 
 			};
-		
 
 		} else {
 			alert("브라우저가 웹소켓을 지원하지 않습니다");
@@ -51,7 +55,7 @@
 		
 	}
 </script>
-
+<link rel="stylesheet" href="css/livechat.css" type="text/css">
 </head>
 <body>
 
@@ -68,13 +72,17 @@ document.getElementById("logout").onclick = function(){
 		    location.href="login.jsp";
 		}, 1000);
 	
+<<<<<<< HEAD
 	
 	}
 
+=======
+}
+>>>>>>> newlogin
 
 
 </script>
-<link rel="stylesheet" href="css/livechat.css" type="text/css">
+
 
         <div id="live-chat">
 
@@ -141,9 +149,5 @@ document.getElementById("logout").onclick = function(){
 })();
 
 </script>
-
-
-
-
 </body>
 </html>

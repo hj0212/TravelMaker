@@ -19,7 +19,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel='stylesheet prefetch'
 	href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css'>
-<link rel="stylesheet" href="css/login.css" type="text/css">
+<link rel="stylesheet" href="source/css/login.css" type="text/css">
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
+	charset="utf-8"></script>
 </head>
 <body>
 	<h1 id="title">TRAVEL MAKER</h1>
@@ -84,9 +87,9 @@
 						<div id="kakao_btn_changed">
 							<a id="kakao-login-btn"></a> <a
 								href="http://developers.kakao.com/logout"></a>
-
 						</div>
-						<div class="row forgot-password-row">
+						<div id="naverIdLogin"></div>
+						<p><div class="row forgot-password-row"><p>
 							<span class="amber-text text-darken-4 waves-effect">Forgot
 								Password?</span>
 						</div>
@@ -104,7 +107,7 @@
 		src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js'></script>
 	<script
 		src='https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js'></script>
-	<script src=js/login.js></script>
+	<script src=source/js/login.js></script>
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	<script src="js/kakaologin.js">	</script>
 
