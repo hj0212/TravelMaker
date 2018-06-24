@@ -35,11 +35,11 @@ a {
 
 body {
 	background: #1d76a6;
-	background: -webkit-linear-gradient(90deg, #f7f7f7 10%, #84dcf9 90%);
-	background: -moz-linear-gradient(90deg, #f7f7f7 10%, #84dcf9 90%);
-	background: -ms-linear-gradient(90deg, #f7f7f7 10%, #84dcf9 90%);
-	background: -o-linear-gradient(90deg, #f7f7f7 10%, #84dcf9 90%);
-	background: linear-gradient(90deg, #f7f7f7 10%, #84dcf9 90%);
+	background: -webkit-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
+	background: -moz-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
+	background: -ms-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
+	background: -o-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
+	background: linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
 	height: 1200px;
 }
 .container{
@@ -170,4 +170,48 @@ footer a {
 #top-head.fixed #main-nav ul li:hover:after {
 	background: #0b8793;
 	bottom: -20px;
+}
+
+/* image Slider 관련 코드 */
+slider-container {
+	width: 100%;
+	max-width: 95%;
+	margin: 0 auto;
+	padding-top: 35px;
+}
+h3{ 
+	
+	color: white;
+	text-align:left;
+}
+.slide-image {
+	padding: 20px;
+	width: 200px;
+	display: inline-block;
+}
+
+.slick-slider {
+	position: relative;
+}
+
+.slick-active {
+	opacity: 1;
+}
+
+.slick-arrow {
+	position: absolute;
+	top: 10%;
+	background-color: transparent;
+	border: none;
+	color: black;
+	font-size: 30px;
+	z-index: 5;
+}
+
+.slick-prev {
+	left: -10px;
+}
+
+.slick-next {
+	right: -10px;
 }
