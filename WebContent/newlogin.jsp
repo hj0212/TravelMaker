@@ -7,14 +7,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
-
-<script type="text/javascript"
-	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-	charset="utf-8"></script>
+	
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <style>
 #container {
 	width: 800px;
@@ -163,12 +161,11 @@
 							<div class="row_margin forgot-password-row">
 								<div id="naver_id_login"></div>
 								<script type="text/javascript">
-								  	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://localhost:8080/BoardProject/loginProc.html");
+								  	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://59.10.249.73/Test/loginProc.html");
 								  	var state = naver_id_login.getUniqState();
 								  	naver_id_login.setButton("green", 3, 48);
-								  	naver_id_login.setDomain("http://localhost:8080/BoardProject/");
+								  	naver_id_login.setDomain("http://59.10.249.73/");
 								  	naver_id_login.setState(state);
-								  	naver_id_login.setPopup();
 								  	naver_id_login.init_naver_id_login();
   								</script>
 							</div>
