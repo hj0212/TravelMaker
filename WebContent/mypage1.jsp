@@ -94,7 +94,6 @@ body {
 	hyphens: auto;
 } */
 
-
 #about_me section {
   margin: calc(var(--size) * .5) auto 0;
   width: calc(var(--size) * calc(var(--Nhexa) - 1));
