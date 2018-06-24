@@ -1,219 +1,346 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<style>
- *, *:after, *:before {box-sizing: inherit;}
-* {margin:0;padding:0;border: 0 none; position: relative;}
-:root {
-	--sinSerif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-	--Nhexa: 4;
-	--gap: 2vw;
-	--size: calc(calc(100vw / var(--Nhexa)) - var(--gap));
-}
-@media only screen and (min-width: 1100px) {:root {--Nhexa: 6;}}
-@media only screen and (max-width: 600px) {
-	:root {--Nhexa: 2;}
-	body {margin-right: calc(var(--size) * .3);}
-}
-html {
-	background: #e9e9e7;
-  box-sizing: border-box;
-	font-family: var(--sinSerif);
-	font-size: 1rem;
-}
-body {
-	padding-right: calc(var(--size) * .5);
-	overflow-X: hidden;
-	hyphens: auto;
-}
-section {
-  margin: calc(var(--size) * .5) auto 0;
-  width: calc(var(--size) * calc(var(--Nhexa) - 1));
-	display: grid;
-	grid-template-columns: repeat(var(--Nhexa), 1fr);
-	grid-gap: var(--gap);
-}
-article {
-	background: cadetblue;
-  width: var(--size); 
-  height: calc(var(--size) / 1.1111111);
-	clip-path: url(#hexagono);
-  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
-  margin-right: calc(var(--size) / 2);
-	color: #fff;
-	overflow: hidden;
-}
-article:nth-child(2n) {margin: calc(var(--size) * -.5) calc(var(--size) * -.25) 0 calc(var(--size) * -.75);}
-article::before {
-	content: '';
-	float: left;
-	width: 25%;
-	height: 100%;
-	clip-path: polygon(0% 0%, 100% 0%, 0% 50%, 100% 100%, 0% 100%);
-	shape-outside: polygon(0% 0%, 100% 0%, 0% 50%, 100% 100%, 0% 100%);
-}
-img {
-  width: var(--size);
-	height: var(--size);
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	transform-origin: 0% 50%;
-	transition: .75s;
-	clip-path: url(#hexagono);
-	clip-path: inherit;
-	z-index:  10;
-}
-article:hover img {transform: translate(-50%, -50%) rotate(-110deg);}
-h2 {font-size: 100%;}
-figure {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: center;
-	max-width: 50%;
-	height: 100%;
-	font-size: calc(9 / var(--Nhexa) * 1vw);
-	line-height: 1;
-	color: #fff;
-	transition: .75s .05s;
-  text-align: center;
-}
-figure p {
-	font-size: 70%;
-	line-height: 1.2;
-	width: 100%;
-}
-h1 {
-	width: 100vw;
-	background: #FF0066;
-	position: sticky;
-	top: 0;
-	z-index: 1;
-	margin-bottom: calc(var(--size) * .55 + var(--gap));
-	padding: 2vh 0;
-	text-align: center;
-	font-weight: 400;
-	color: #fff;
-}
-body > p {
-	font-size: 1.5rem;
-	margin: 2rem 0 1rem calc(var(--size) * .5);
-	font-weight: 200;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="mypage.css" type="text/css">
+  <style>
+ #wrapper{
+ width:970px;
+ margin:0px auto;
+ }
+ 
+ 
+ 
+// Options
+// 
+// Quickly modify global styling by enabling or disabling optional features.
+  
+$enable-rounded:            true !default;
+$enable-shadows:            true;
+$enable-transitions:        true;
+$enable-hover-media-query:  false;
+$enable-grid-classes:       true;
+$enable-print-styles:       true;
 
-<script  src="https://code.jquery.com/jquery-3.3.1.js"></script>
+// Variables
+//
+// Colors
 
+$theme-colors: (
+  primary: #f2f6fc,
+  secondary: #4f70ce,
+  light: #f3f3f3,
+  dark: #151515,
+  info: #ccc,
+  success: #28a745,
+  warning: #ffc107,
+  danger: #dc3545
+);
+
+$body-bg: white;
+$body-color: #333;
+
+
+$body-color-inverse: invert($body-color) !default;
+$link-color: #f2f6fc;
+
+
+// Fonts
+$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$headings-font-family: $font-family-base;
+$display-font-family: $font-family-base;
+$font-weight-normal: 200;
+$headings-font-weight: 200;
+$lead-font-size:   1.30rem;
+
+
+
+$border-radius: 1rem;
+$border-radius-lg: $border-radius * 1.2;
+$border-radius-sm: $border-radius * .8;
+
+$spacer: 1.5rem;
+@import 'bootstrap-4.0.0';
+
+ 
+html,body {
+   height:100%;
+}
+
+.cover {
+	min-height:100%;
+  display:flex;
+  align-items:center
+}
+
+
+.bg-gradient {
+  overflow: hidden;
+  color: color-yiq(map-get($theme-colors, 'primary'));
+  background: linear-gradient(-30deg, theme-color("secondary") 0%, theme-color("primary") 50%, theme-color("primary") 100%);
+}
+
+.filter-dark {
+  overflow: hidden;
+  position: relative;
+  color: color-yiq(map-get($theme-colors, 'dark'));
+	&:before {
+    position: absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height: 100%;
+    content: ' ';
+    background: rgba(map-get($theme-colors, 'dark'), 0.75);
+  }
+}
+
+.filter-light {
+  overflow: hidden;
+  position: relative;
+  color: color-yiq(map-get($theme-colors, 'light'));
+	&:before {
+    position: absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height: 100%;
+    content: ' ';
+    background: rgba(map-get($theme-colors, 'light'),0.75);
+  }
+}
+
+.filter-color {
+  overflow: hidden;
+  position: relative;
+  color: color-yiq(map-get($theme-colors, 'primary'));
+	&:before {
+    position: absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height: 100%;
+    content: ' ';
+    background: rgba(map-get($theme-colors, 'primary'), 0.75);
+  }
+}
+
+.filter-gradient {
+  overflow: hidden;
+  position: relative;
+  color: color-yiq(map-get($theme-colors, 'primary'));
+	&:before {
+    position: absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height: 100%;
+    content: ' ';
+    background: linear-gradient(-30deg, transparentize(theme-color("secondary"), 0.1) 0%, transparentize(theme-color("primary"), 0.1) 50%, transparentize(theme-color("primary"), 0.05) 100%);
+  }
+}
+
+.filter-fade-in {
+  overflow: hidden;
+  position: relative;
+  &:before {
+    position: absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height: 100%;
+    content: ' ';
+    background: linear-gradient($body-bg, transparentize($body-bg, 0.2),transparentize($body-bg, 0.9),transparentize($body-bg, 1));
+	}
+}
+
+
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+    td,
+    td::before,
+    td::after {
+      box-sizing: border-box;
+    }
+
+   td {
+      background: #FDFDFD;
+      margin: 25px 0;
+    }
+    .basicBox {
+      width: 130px;
+      height: 65px;
+      margin: 15px auto;
+      color: #4274D3;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1.15rem;
+      line-height: 65px;
+      text-transform: uppercase;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .basicBox svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+   .basicBox svg rect {
+      fill: none;
+      stroke: #4274D3;
+      stroke-width: 1;
+    }
+
+    .basicBox:hover svg rect {
+      stroke: #4274D3;
+    }
+    /* Basic Box */
+
+   .basicBox svg rect {
+      stroke-dasharray: 400, 0;
+      -webkit-transition: all 0.8s ease-in-out;
+      -moz-transition: all 0.8s ease-in-out;
+      -ms-transition: all 0.8s ease-in-out;
+      -o-transition: all 0.8s ease-in-out;
+    }
+
+    .basicBox:hover svg rect {
+      stroke-width: 3;
+      stroke-dasharray: 35, 245;
+      stroke-dashoffset: 38;
+      -webkit-transition: all 0.8s ease-in-out;
+      -moz-transition: all 0.8s ease-in-out;
+      -ms-transition: all 0.8s ease-in-out;
+      -o-transition: all 0.8s ease-in-out;
+    }
+  </style>
 </head>
+
 <body>
 
-	<h1>Auto Hexagonal CSS Grid Layout</h1>
-  <section>
-		<article>
-			<figure>
-				<h2>@Xavisu</h2>
-				<p>Hola, vengo a flotar. Front~end</p>
-			</figure>
-			<img alt src='https://kaleidos.net/media/filer_public_thumbnails/filer_public/91/7c/917ca0ca-f069-455e-b25f-154db357d09a/xaviju2.jpg__300x300_q85_crop_subject_location-3257%2C1894_subsampling-2_upscale.jpg' />
-		</article>
-		<article>
-			<figure>
-			<h2>@Kseso</h2>
-				<p>Enredique Amanuense de CSS</p>
-			</figure>
-			<img alt src='https://1.bp.blogspot.com/-8xv4oUIGGdo/WR3XHvAb5hI/AAAAAAAANjo/Pi2TSd9llSQBvuIgWWe4RY8l9msbOgcbgCK4B/s250-c/hrRtW6LJ.jpg' />
-		</article>
-		<article>
-			<figure>
-				<h2>@abelsutilo</h2>
-			<p>Diseño Productos Digitales. Formador en #UX #U</p>
-			</figure>
-			<img alt src='http://abelsutilo.com/wp-content/uploads/2009/01/10850250_10152894635423684_7160074995457018570_n.jpg.pagespeed.ce.tgatamlOAJ.jpg' />
-		</article>
-		<article>
-			<figure>
-				<h2>@Olgacarreras</h2>
-			<p>Consultora freelance. Accesibilidad web y PDF</p>
-			</figure>
-			<img alt src='https://www.usableyaccesible.com/images/olga_carreras_montoto.jpg' />
-		</article>
-		<article>
-			<figure>
-				<h2>@cristinafsanz<h2>
-					<p>Front-end developer in learning mode</p>
-			</figure>
-			<img alt src='https://cristinafsanz.github.io/images/avatar.png' />
-		</article>
-		<article>
-			<figure>
-				<h2>@lau_es</h2>
-				<p>#OpenSource rocks! Making awesome things</p>
-			</figure>
-			<img alt src='https://www.gravatar.com/avatar/73f55f92af57327a909da02fd88ac4d0?d=404&s=250' />
-		</article>
-		<article>
-			<figure>
-				<h2>@yoksel_en</h2>
-				<p>CSS and SVG lover : ) In Russian</p>
-			</figure>
-			<img alt src='https://avatars3.githubusercontent.com/u/2571308?s=400&v=4' />
-		</article>
-		<article>
-			<figure>
-				<h2>@jorgeATGU</h2>
-				<p>front/design Pirineo</p>
-			</figure> 
-			<img alt src='https://avatars1.githubusercontent.com/u/2649175?s=400&v=4' />
-		</article>
-		<article>
-			<figure>
-			<h2>@SaraSoueidan</h2>
-				<p>Freelance front-end Web developer & speaker</p>
-			</figure>
-			<img alt src='http://www.webdirections.org/respond16/images/speakers/speaker-sara-soueidan.jpg' />
-		</article>
-		<article>
-			<figure>
-			<h2>@Furoya</h2>
-				<p>La magia del puro JS y CSS en su mínima y expresión</p>
-			</figure>
-			<img alt src='https://4.bp.blogspot.com/-oEYLUC8u3Jg/Ua55qLcPbtI/AAAAAAAAADc/H-X_ID0b5bo/s250-c/avatarFuroya.jpg' />
-		</article>
-		<article>
-			<figure>
-				<h2>@AmeliasBrain</h2>
-				<p>Writer & Developer. SVG guru, policy nut, science nerd, & music fan</p>
-			</figure>
-			<img alt src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/91525/profile/profile-512.jpg?3' />
-		</article>
-		<article>
-			<figure>
-			<h2>@lpez_elena</h2>
-				<p>Tan a gusto en la cama, ocho de la mañana y suena el despertador… </p>
-			</figure>
-			<img alt src='https://cdn-images-1.medium.com/fit/c/125/125/0*oNbktSWCpFc07xOj.jpg' />
-		</article>
-  </section>
-			
-			<p>
-				<code><b>--Nhexa</b></code>: conviene que sea un valor par <code>(2n)</code> por usar el selector <code>:nth-child(2n)</code> para crear el panal y desplazar los hexágonos.</p>
-			<p><b>Please</b>, show the pen & link the post: <a href='https://escss.blogspot.com/2017/04/auto-hexagonal-css-grid-layout.html'>The post in my blog: now with 2 versions</a>. Thanks</p>
-			
-
-			
-<svg width="0" height="0">
-  <defs>
-    <clipPath id="hexagono" clipPathUnits="objectBoundingBox">
-      <polygon points=".25 0, .75 0, 1 .5, .75 1, .25 1, 0 .5" />
-    </clipPath>
-  </defs>
-</svg>
+<div id="wrapper">
+  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary">
+    <div class="container w-100 h-100 py-0">
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-12 col-lg-3">
+          <div class="card w-100 h-100">
+            <img class="card-img-top float-left rounded-circle" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+            <div class="card-body h-100 py-4 my-5">
+              <h4 class="card-title my-4">아이디</h4>
+              <h4 class="my-4">아이디@naver.com</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-9 col-12 col-xl-9 w-100 h-100 align-items-center">
+          <div id="tb" class="py-5 my-5">
+            <table class="table col-mt-5 col-md-5 col-sm-12 text-center">
+              <thead>
+                <tr>
+                  <th scope="col" class="text-center">게시글</th>
+                  <th scope="col" class="text-center">스크랩</th>
+                  <th scope="col" class="text-center" >좋아요</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="basicBox"> num1
+                      <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" fill="none" width="130" height="65"></rect>
+                      </svg>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="basicBox"> num2
+                      <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" fill="none" width="130" height="65"></rect>
+                      </svg>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="basicBox"> num3
+                      <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" fill="none" width="130" height="65"></rect>
+                      </svg>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 w-100 h-100">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a href="" class="active nav-link" data-toggle="tab" data-target="#tabone">Tab 1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="" data-toggle="tab" data-target="#tabtwo">Tab 2</a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link active" data-toggle="tab" data-target="#tabthree">Tab 3</a>
+            </li>
+          </ul>
+          <div class="tab-content mt-2">
+            <div class="tab-pane fade show active align-items-start row-md-3 d-inline-flex bg-primary border border-info" id="tabone" role="tabpanel">
+              <div class="card col-md-3 col-sm-12 w-100">
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body w-100">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="card col-md-3 col-sm-12 w-100">
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body w-100">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="card col-md-3 col-sm-12 w-100">
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body w-100">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="card col-md-3 col-sm-12 w-100">
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body w-100">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- 합쳐지고 최소화된 최신 CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/source/lib/bootstrap-3.3.2-dist/css/bootstrap.min.css">
+  <!-- 부가적인 테마 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/source/lib/bootstrap-3.3.2-dist/css/bootstrap-theme.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/source/lib/bootstrap-3.3.2-dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
+
 </html>
