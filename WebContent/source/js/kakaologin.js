@@ -9,13 +9,12 @@ Kakao.Auth.createLoginButton({
       Kakao.API.request({
         url:'/v1/user/me',
         data:{
-        	propertyKeys: ["kaccount_email"]
-      		
+        	propertyKeys: ["kaccount_email"]   		
         },
         success: function(res) {   	
         	
         	alert(JSON.stringify(res));
-        	alert(kaccount_email);
+        	alert(propertyKeys);
         	
             $.ajax({
             	url:"kakao.do",
