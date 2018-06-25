@@ -24,7 +24,6 @@
 	width: 400px;
 	height: 560px;
 	margin: 50px auto;
-	transition: height 0.3s ease;
 }
 
 #loginbtn {
@@ -138,12 +137,12 @@
 						<form id="userform" method="post">
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="user_id" type="text" name="id"> <label for="user_id">id</label>
+								<input id="user_id" type="text" class="validate" name="id"> <label for="user_id">id</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="password" type="password" name="pw"> <label
+								<input id="password" type="password" class="validate" name="pw"> <label
 									for="password" class="grey-text text-lighten-1">password</label>
 							</div>
 						</div>
@@ -155,7 +154,7 @@
 						</div>
 						<div class="row confirm-password-row">
 							<div class="input-field confirm-password-field col s12">
-								<input id="nickname" type="text" name="nickname"> <label
+								<input id="nickname" type="text" class="validate" name="nickname"> <label
 									for="nickname">name</label>
 							</div>
 						</div>
