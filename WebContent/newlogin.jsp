@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
 <link rel="stylesheet" href="source/css/codepenNavi.css">
-	
+
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -125,6 +125,7 @@
 </script>
 </head>
 <body>
+
 <%@include file="include/navi_include.jsp"%>
 	<div id="container">
 		<div class="row">
@@ -175,6 +176,7 @@
 								<a class="btn-login btn blue lighten-1 waves-effect white-text"
 									id="loginbtn">Log In</a>
 							</div>
+							
 							<div class="row_margin forgot-password-row">
 								<div id="kakao_btn_changed">
 									<a id="kakao-login-btn"></a> <a
@@ -203,5 +205,5 @@
 		</div>
 	</div>
 </body>
-<script src="source/js/kakaologin.js"></script>
+<script src="source/js/kakaologin.js"></script>	
 </html>
