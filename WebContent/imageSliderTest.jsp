@@ -29,12 +29,26 @@
 <link rel='stylesheet prefetch'
 	href='source/css/slick-theme_mainnavi.css'>
 
+<link rel="stylesheet" type="text/css" href="source/lib/slick/slick.css" />
+<link rel="stylesheet" type="text/css" href="source/lib/slick/slick-theme.css" />
+<link rel="stylesheet" href="mypage.css" type="text/css">
 
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src='//cdn.jsdelivr.net/jquery.slick/1.5.0/slick.min.js'></script>
 <script src="source/js/imageSlider.js" type="text/javascript"> </script>
 
+<style>
+.data, .data div {
+	height: 300px;
+}
+
+.slide_item {
+	height: 300px;
+	width: 240px;
+}
+
+</style>
 </head>
 <!-- <div class="shadow-none p-3 mb-5 bg-light rounded">No shadow</div>
 <div class="shadow-sm p-3 mb-5 bg-white rounded">Small shadow</div>
@@ -55,40 +69,105 @@
 		<div id="main-visual">
 			<h3>Best Plans</h3>
 			<div class="row">
-				<div class="col-md-12 slider-container" id="bestPlan">
-
-					<div class="slider-images-container">
-						<img class="slide-image" src="travel1.jpg" /><img
-							class="slide-image" src="travel1.jpg" /><img class="slide-image"
-							src="travel1.jpg" /><img class="slide-image" src="travel1.jpg" /><img
-							class="slide-image" src="travel1.jpg" /><img class="slide-image"
-							src="travel1.jpg" /><img class="slide-image" src="travel2.png" />
+				<div class="col-md-12" id="bestPlan">
+					<div class="data"
+						data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
+						<div class="slide_item">
+							<div class="card col-md-12 col-sm-12 w-100">
+								<div class="card-header">Header</div>
+								<div class="card-body">
+									<h4>Card title</h4>
+									<h6 class="text-muted">Subtitle</h6>
+									<p>Some quick example text to build on the card title .</p>
+								</div>
+							</div>
+						</div>
+						<div class="slide_item">
+							<div class="card col-md-12 col-sm-12 w-100">
+								<div class="card-header">Header</div>
+								<div class="card-body">
+									<h4>Card title</h4>
+									<h6 class="text-muted">Subtitle</h6>
+									<p>Some quick example text to build on the card title .</p>
+								</div>
+							</div>
+						</div>
+						<div class="slide_item">
+							<div class="card col-md-12 col-sm-12 w-100">
+								<div class="card-header">Header</div>
+								<div class="card-body">
+									<h4>Card title</h4>
+									<h6 class="text-muted">Subtitle</h6>
+									<p>Some quick example text to build on the card title .</p>
+								</div>
+							</div>
+						</div>
+						<div class="slide_item">
+							<div class="card col-md-12 col-sm-12 w-100">
+								<div class="card-header">Header</div>
+								<div class="card-body">
+									<h4>Card title</h4>
+									<h6 class="text-muted">Subtitle</h6>
+									<p>Some quick example text to build on the card title .</p>
+								</div>
+							</div>
+						</div>
+						<div class="slide_item">
+							<div class="card col-md-12 col-sm-12 w-100">
+								<div class="card-header">Header</div>
+								<div class="card-body">
+									<h4>Card title</h4>
+									<h6 class="text-muted">Subtitle</h6>
+									<p>Some quick example text to build on the card title .</p>
+								</div>
+							</div>
+						</div>
+						<div class="slide_item">
+							<div class="card col-md-12 col-sm-12 w-100">
+								<div class="card-header">Header</div>
+								<div class="card-body">
+									<h4>Card title</h4>
+									<h6 class="text-muted">Subtitle</h6>
+									<p>Some quick example text to build on the card title .</p>
+								</div>
+							</div>
+						</div>
 					</div>
-
-
-
 				</div>
 			</div>
-
-			<div class="row"> 
-				<div class="col-md-12" id="bests">베스트 사진, 베스트 장소, 베스트 후기</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-12" id="foot">
-					<h1>푸터올 곳</h1>
-				</div>
-			</div>
-
 		</div>
 
-		<!-- 	<article></article> -->
-		<footer> </footer>
+		<div class="row">
+			<div class="col-md-12" id="bests">베스트 사진, 베스트 장소, 베스트 후기</div>
+		</div>
 
+		<div class="row">
+			<div class="col-md-12" id="foot">
+				<h1>푸터올 곳</h1>
+			</div>
+		</div>
 
 	</div>
 
+	<!-- 	<article></article> -->
+	<footer> </footer>
 
 
+
+
+	<script
+		src='source/lib/slick/slick.js'></script>
+	<script>
+		$('.data').slick({
+			dots : true,
+			infinite : true,
+			slidesToShow : 3,
+			slidesToScroll : 1,
+			variableWidth : true,
+			autoplay : true,
+			speed : 500,
+			autoplaySpeed : 2000
+		});
+	</script>
 </body>
 </html>
