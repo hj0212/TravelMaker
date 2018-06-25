@@ -14,6 +14,7 @@
 	href="source/lib/bootstrap-3.3.2-dist/css/bootstrap-theme.css">
 <script src="source/lib/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<link rel =" stylesheet prestach" href="source/css/normalize.min_main.css">
 
 <link rel="stylesheet" href="source/css/codepenNavi.css">
 </head>

@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
@@ -122,7 +126,14 @@
 </script>
 </head>
 <body>
-<%@include file="include/navi_include.jsp"%>
+	<c:choose>
+		<c:when test="${sessionScope.loginId !=null}">
+			<%@include file="include/mainNavi_login.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="include/mainNavi.jsp"%>
+		</c:otherwise>
+	</c:choose>
 	<div id="container">
 		<div class="row">
 			<div id="loginarea">
