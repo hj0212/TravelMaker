@@ -109,7 +109,7 @@
 		src='https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js'></script>
 	<script src=source/js/login.js></script>
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-	<script src="js/kakaologin.js">	</script>
+	<script src="source/js/kakaologin.js">	</script>
 
 
 

@@ -8,34 +8,30 @@
 <link rel="stylesheet"
 	href="source/lib/bootstrap-3.3.2-dist/css/bootstrap-theme.css">
 <script src="source/lib/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <style>
-div {
+#tableboard{
 	width: 800px;
 	height: 800px;
 	margin: auto;
 	box-sizing: border-box;
 }
 
-table {
+#table {
 	text-align: center;
 }
 
-th {
+#table>th {
 	text-align: center;
 }
-
-#write {
-	text-align: right;
-}
-
 </style>
 
 
 </head>
 <body>
-	<div>
+	<div id="tableboard">
 
-		<table class="table table-hover ">
+		<table class="table table-hover " id="table">
 			<thead>
 				<th scope="col">1</th>
 				<th scope="col">2</th>
@@ -84,11 +80,14 @@ th {
 
 				</tr>
 
-			
+
 			</tbody>
 		</table>
-	<button type="button"class="btn btn-outline-primary"  style="float: right;">Primary</button></td>
-				</tr>
+		<button type="button" class="btn btn-outline-primary"
+			style="float: right;">Primary</button>
+		</td>
+		</tr>
 	</div>
+	<jsp:include page="chat.jsp" flush="false"/>
 </body>
 </html>
