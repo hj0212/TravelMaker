@@ -6,7 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
+<link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
+<link rel="stylesheet" href="source/css/codepenNavi.css">
 	
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -17,7 +19,7 @@
 #container {
 	width: 800px;
 	margin: 0 auto;
-	padding-top: 40px;
+	padding-top: 100px;
 }
 
 #loginbox {
@@ -120,9 +122,9 @@
 </script>
 </head>
 <body>
+<%@include file="include/navi_include.jsp"%>
 	<div id="container">
 		<div class="row">
-			<h1 id="title" class="center">TRAVEL MAKER</h1>
 			<div id="loginarea">
 				<div class="card white hoverable" id="loginbox">
 					<div class="card-content black-text">
