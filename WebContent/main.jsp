@@ -48,41 +48,6 @@ div {
 	height: 100px;
 }
 
-#carousel-example-generic {
-	height: 400px;
-}
-
-.carousel-inner>.item>img {
-	height: 400px;
-	margin: 0 auto;
-}
-
-.slide-carousel figure {
-	position: relative;
-	outline: 0;
-}
-
-.slide-carousel figure:after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.4);
-	z-index: 1;
-	transition: background-color .5s ease;
-}
-
-.slide-carousel figure:hover:after {
-	background-color: rgba(0, 0, 0, 0.2);
-}
-
-.slick-dots li button:before, .slick-dots li.slick-active button:before
-	{
-	color: #fff;
-}
-
 .data, .data div{
 	height: 400px;
 }
