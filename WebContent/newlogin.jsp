@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
+<link rel="stylesheet"
+	href="source/lib/bootstrap-3.3.2-dist/css/bootstrap-theme.css">
+<script src="source/lib/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -120,9 +124,9 @@
 </script>
 </head>
 <body>
+<%@include file="include/navi_include.jsp"%>
 	<div id="container">
 		<div class="row">
-			<h1 id="title" class="center">TRAVEL MAKER</h1>
 			<div id="loginarea">
 				<div class="card white hoverable" id="loginbox">
 					<div class="card-content black-text">
