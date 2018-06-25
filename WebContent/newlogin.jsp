@@ -9,12 +9,12 @@
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
 <link rel="stylesheet" href="source/css/codepenNavi.css">
+
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type="text/javascript"
-	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-	charset="utf-8"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <style>
 #container {
 	width: 800px;
@@ -225,6 +225,7 @@
 								<a class="btn-login btn blue lighten-1 waves-effect white-text"
 									id="loginbtn">Log In</a>
 							</div>
+							
 							<div class="row_margin forgot-password-row">
 								<div id="kakao_btn_changed">
 									<a id="kakao-login-btn"></a> <a
@@ -265,5 +266,5 @@
 		</div>
 	</div>
 </body>
-<!--  <script src="source/js/kakaologin.js"></script>-->
+<script src="source/js/kakaologin.js"></script>	
 </html>

@@ -22,6 +22,7 @@ public class MemberController extends HttpServlet {
 		String contextPath = request.getContextPath();
 		String command = requestURI.substring(contextPath.length());
 		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("utf8");
 		
 		MemberDAO mdao = new MemberDAO();
 
@@ -87,6 +88,20 @@ public class MemberController extends HttpServlet {
 		
 			isForward = true;
 			dst="newlogin.jsp";	
+		}else if(command.equals("/kakao.do")) {
+			String id = request.getParameter("id");
+			String email = request.getParameter("email");
+			String nickname = request.getParameter("nickname");
+			
+			System.out.println(id);
+			System.out.println(email);
+			System.out.println(nickname);
+			MemberDTO dto = new MemberDTO();
+			dto.setKakao_id(id);
+			dto.setKakao_email(email);
+			dto.setNaver_nickname(nickname);
+			
+			
 		}
 		
 		if(isForward) {
