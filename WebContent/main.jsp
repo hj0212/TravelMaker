@@ -58,7 +58,6 @@ div {
 		</ul>
 	</div>
 	<div class="container">
-
 		<div class="row" id="navi">
 			<div class="col-md-12">
 				<h1>네비올 곳</h1>
