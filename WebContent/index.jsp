@@ -15,7 +15,11 @@
 				
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
+<<<<<<< HEAD
+					" ws://192.168.20.31:8080/WEB_SOCKET_0611/websocket ");
+=======
 					" ws://192.168.20.37:8080/TravelMaker/websocket");
+>>>>>>> newlogin
 		
 			var str;
 		
@@ -31,9 +35,7 @@
 		            }
 		        });
 
-			
-
-			
+					
 			ws.onopen = function() {
 			
 				//document.getElementById("contents").innerHTML += str+"님이 입장하셨습니다"+"<br>";
@@ -53,7 +55,7 @@
 		
 	}
 </script>
-<link rel="stylesheet" href="source/css/livechat.css" type="text/css">
+<link rel="stylesheet" href="css/livechat.css" type="text/css">
 </head>
 <body>
 
@@ -70,7 +72,13 @@ document.getElementById("logout").onclick = function(){
 		    location.href="login.jsp";
 		}, 1000);
 	
+<<<<<<< HEAD
+	
+	}
+
+=======
 }
+>>>>>>> newlogin
 
 
 </script>
@@ -91,9 +99,14 @@ document.getElementById("logout").onclick = function(){
             <div class="chat"  id="chatchat">
 
                 <div class="chat-history" id="livechathistory">
-
+				
                    
                 </div>
+                <script>
+                $(".chat-history").scrollTop($(".chat-history").height());
+                </script>
+                
+                
                 <!-- end chat-history -->
 
                 <p class="chat-feedback">Messages</p>
@@ -116,7 +129,10 @@ document.getElementById("logout").onclick = function(){
         <!-- end live-chat -->
     </body>
 <script>
+
+
 (function() {
+	
 	  $('#live-chat header').on('click', function() {
 
           $('.chat').slideToggle(300, 'swing');
