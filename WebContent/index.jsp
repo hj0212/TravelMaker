@@ -15,7 +15,8 @@
 				
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					" ws://192.168.20.37:8080/TravelMaker/websocket");
+
+					" ws://192.168.20.31:8080/WEB_SOCKET_0611/websocket ");
 
 		
 			var str;
@@ -69,13 +70,8 @@ document.getElementById("logout").onclick = function(){
 		    location.href="login.jsp";
 		}, 1000);
 	
-<<<<<<< HEAD
-	
-	}
-
-=======
 }
->>>>>>> newlogin
+
 
 
 </script>
