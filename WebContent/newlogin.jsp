@@ -6,10 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
 <link rel="stylesheet" href="source/css/codepenNavi.css">
@@ -126,14 +122,7 @@
 </script>
 </head>
 <body>
-	<c:choose>
-		<c:when test="${sessionScope.loginId !=null}">
-			<%@include file="include/mainNavi_login.jsp"%>
-		</c:when>
-		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
-		</c:otherwise>
-	</c:choose>
+<h1 id="title" class="center"><a href="main.jsp">TRAVEL MAKER</a></h1>
 	<div id="container">
 		<div class="row">
 			<div id="loginarea">
