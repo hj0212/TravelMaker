@@ -14,27 +14,11 @@ public class MemberDTO {
 	private String kakao_email;
 	private String modify_date;
 	private String create_date;
+	private String part;
+	private String block;
 	
 	
 	public MemberDTO() {}
-	public MemberDTO(int seq, String userid, String password, String email, String nickname, String naver_id,
-			String naver_nickname, String naver_email, String kakao_id, String kakao_nickname, String kakao_email,
-			String modify_date, String create_date) {
-		super();
-		this.seq = seq;
-		this.userid = userid;
-		this.password = password;
-		this.email = email;
-		this.nickname = nickname;
-		this.naver_id = naver_id;
-		this.naver_nickname = naver_nickname;
-		this.naver_email = naver_email;
-		this.kakao_id = kakao_id;
-		this.kakao_nickname = kakao_nickname;
-		this.kakao_email = kakao_email;
-		this.modify_date = modify_date;
-		this.create_date = create_date;
-	}
 	
 	public int getSeq() {
 		return seq;
@@ -113,6 +97,18 @@ public class MemberDTO {
 	}
 	public void setCreate_date(String create_date) {
 		this.create_date = create_date;
+	}
+	public String getPart() {
+		return part;
+	}
+	public void setPart(String part) {
+		this.part = part;
+	}
+	public String getBlock() {
+		return block;
+	}
+	public void setBlock(String block) {
+		this.block = block;
 	}
 	
 	
