@@ -9,11 +9,9 @@
 <link rel="stylesheet" href="source/lib/bootstrap-3.3.2-dist/css/bootstrap-theme.css">
 <script src="source/lib/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
+<link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
-<link rel="stylesheet"
-	href="source/lib/bootstrap-3.3.2-dist/css/bootstrap-theme.css">
-<script src="source/lib/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<link rel="stylesheet" href="source/css/codepenNavi.css">
 	
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -24,7 +22,7 @@
 #container {
 	width: 800px;
 	margin: 0 auto;
-	padding-top: 40px;
+	padding-top: 100px;
 }
 
 #loginbox {
