@@ -9,12 +9,12 @@
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
 <link rel="stylesheet" href="source/css/codepenNavi.css">
-	
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+	charset="utf-8"></script>
 <style>
 #container {
 	width: 800px;
@@ -71,8 +71,6 @@
 	border-bottom: 2px solid #64b5f6;
 }
 
-
-
 .row_margin {
 	margin-left: auto;
 	margin-right: auto;
@@ -120,9 +118,62 @@
 	};
 
 </script>
+<script>
+		$(document).ready(function(){
+			Kakao.init("cf3c8a92c56d57b527e32f7519a7a4f6");
+			function getKakaotalkUserProfile(){
+				Kakao.API.request({
+					url: '/v1/user/me',
+					success: function(res) {
+						$("#kakao-profile").append(res.properties.nickname);
+						$("#kakao-profile").append($("<img/>",{"src":res.properties.profile_image,"alt":res.properties.nickname+"님의 프로필 사진"}));
+					},
+					fail: function(error) {
+						console.log(error);
+					}
+				});
+			}
+			function createKakaotalkLogin(){
+				$("#kakao-logged-group .kakao-logout-btn,#kakao-logged-group .kakao-login-btn").remove();
+				var loginBtn = $("<a/>",{"class":"kakao-login-btn","text":"로그인"});
+				loginBtn.click(function(){
+					Kakao.Auth.login({
+						persistAccessToken: true,
+						persistRefreshToken: true,
+						success: function(authObj) {
+							getKakaotalkUserProfile();
+							createKakaotalkLogout();
+						},
+						fail: function(err) {
+							console.log(err);
+						}
+					});
+				});
+				$("#kakao-logged-group").prepend(loginBtn)
+			}
+			function createKakaotalkLogout(){
+				$("#kakao-logged-group .kakao-logout-btn,#kakao-logged-group .kakao-login-btn").remove();
+				var logoutBtn = $("<a/>",{"class":"kakao-logout-btn","text":"로그아웃"});
+				logoutBtn.click(function(){
+					Kakao.Auth.logout();
+					createKakaotalkLogin();
+					$("#kakao-profile").text("");
+				});
+				$("#kakao-logged-group").prepend(logoutBtn);
+			}
+			if(Kakao.Auth.getRefreshToken()!=undefined&&Kakao.Auth.getRefreshToken().replace(/ /gi,"")!=""){
+				createKakaotalkLogout();
+				getKakaotalkUserProfile();
+			}else{
+				createKakaotalkLogin();
+			}
+		});
+	</script>
 </head>
 <body>
-<h1 id="title" class="center"><a href="main.jsp">TRAVEL MAKER</a></h1>
+	<h1 id="title" class="center">
+		<a href="main.jsp">TRAVEL MAKER</a>
+	</h1>
 	<div id="container">
 		<div class="row">
 			<div id="loginarea">
@@ -137,35 +188,37 @@
 							</div>
 						</div>
 						<form id="userform" method="post">
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="user_id" type="text" class="validate" name="id"> <label for="user_id">id</label>
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="user_id" type="text" class="validate" name="id">
+									<label for="user_id">id</label>
+								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="password" type="password" class="validate" name="pw"> <label
-									for="password" class="grey-text text-lighten-1">password</label>
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="password" type="password" class="validate" name="pw">
+									<label for="password" class="grey-text text-lighten-1">password</label>
+								</div>
 							</div>
-						</div>
-						<div class="row confirm-password-row">
-							<div class="input-field confirm-password-field col s12">
-								<input id="confirm-password" type="password" class="validate" name="cpw">
-								<label for="confirm-password">confirm password</label>
+							<div class="row confirm-password-row">
+								<div class="input-field confirm-password-field col s12">
+									<input id="confirm-password" type="password" class="validate"
+										name="cpw"> <label for="confirm-password">confirm
+										password</label>
+								</div>
 							</div>
-						</div>
-						<div class="row confirm-password-row">
-							<div class="input-field confirm-password-field col s12">
-								<input id="nickname" type="text" class="validate" name="nickname"> <label
-									for="nickname">name</label>
+							<div class="row confirm-password-row">
+								<div class="input-field confirm-password-field col s12">
+									<input id="nickname" type="text" class="validate"
+										name="nickname"> <label for="nickname">name</label>
+								</div>
 							</div>
-						</div>
-						<div class="row confirm-password-row">
-							<div class="input-field confirm-password-field col s12">
-								<input id="email" type="email" class="validate" name="email"> <label
-									for="email">Email</label>
+							<div class="row confirm-password-row">
+								<div class="input-field confirm-password-field col s12">
+									<input id="email" type="email" class="validate" name="email">
+									<label for="email">Email</label>
+								</div>
 							</div>
-						</div>
 						</form>
 						<div class="card-action center" id="card_bottom">
 							<div class="row_margin">
@@ -177,6 +230,18 @@
 									<a id="kakao-login-btn"></a> <a
 										href="http://developers.kakao.com/logout"></a>
 								</div>
+								<script>
+									Kakao.init('cf3c8a92c56d57b527e32f7519a7a4f6');
+									Kakao.Auth.createLoginButton({
+								          container: '#kakao-login-btn',
+								          success: function(authObj) {
+								            alert(JSON.stringify(authObj));
+								          },
+								          fail: function(err) {
+								             alert(JSON.stringify(err));
+								          }
+								        });
+									</script>
 							</div>
 							<div class="row_margin forgot-password-row">
 								<div id="naver_id_login"></div>
@@ -200,5 +265,5 @@
 		</div>
 	</div>
 </body>
-<script src="source/js/kakaologin.js"></script>
+<!--  <script src="source/js/kakaologin.js"></script>-->
 </html>

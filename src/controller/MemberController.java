@@ -38,7 +38,7 @@ public class MemberController extends HttpServlet {
 			isForward = true;
 			dst="userResult.jsp";
 			
-		}else if(command.equals("/join.do")) {
+		} else if(command.equals("/join.do")) {
 			MemberDTO dto = new MemberDTO();
 			dto.setUserid(request.getParameter("id"));
 			dto.setPassword(request.getParameter("pw"));
@@ -50,7 +50,7 @@ public class MemberController extends HttpServlet {
 			isForward = true;
 			dst="userResult.jsp";
 			
-		}else if(command.equals("/navlogin.do")) {
+		} else if(command.equals("/navlogin.do")) {
 			
 			String id = request.getParameter("id");
 			String name = request.getParameter("name");
@@ -66,7 +66,23 @@ public class MemberController extends HttpServlet {
 			isForward = false;
 			dst="index.jsp";		
 
-		}else if(command.equals("/logout.do")) {
+		} else if(command.equals("/kakaologin.do")) {
+			System.out.println("여기");
+			String id = request.getParameter("id");
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			MemberDTO dto = new MemberDTO();
+			dto.setKakao_id(id);
+			dto.setKakao_nickname(name);
+			dto.setKakao_email(email);
+			
+			request.getSession().setAttribute("loginId", id);
+			int result=mdao.addNaverMember(dto);
+
+			isForward = false;
+			dst="index.jsp";		
+
+		} else if(command.equals("/logout.do")) {
 			request.getSession().invalidate();
 		
 			isForward = true;
