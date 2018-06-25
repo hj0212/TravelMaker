@@ -1,0 +1,217 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing:border-box;
+}
+
+body {
+	font-family: 'Lato', sans-serif;
+	background: #eee;
+}
+
+/* article {
+	height: 1000px;
+	margin: 100px auto;
+	text-align: center;
+	line-height: 1.9;
+} */
+
+article p {
+	margin-bottom: 1em;
+}
+a {
+	color: #0b8793;
+}
+#bestPlan {
+	height: 400px;
+}
+
+#bests {
+	height: 1200px;
+}
+
+
+body {
+	background: #1d76a6;
+	background: -webkit-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
+	background: -moz-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
+	background: -ms-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
+	background: -o-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
+	background: linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
+	height: 1200px;
+}
+.container{
+	padding-top:140px;
+	}
+	
+#foot{
+	height:100px;
+	
+}	
+footer {
+	padding: 30px;
+	text-align: center;
+	border-top: solid 1px #bbb;
+}
+
+footer a {
+	color: #666;
+	text-decoration: none;
+}
+
+.naviclass {
+	width: 980px;
+	margin: 0 auto;
+}
+
+.naviclass:after {
+	content: "";
+	clear: both;
+	display: block;
+
+}
+
+/* header */
+#top-head {
+	position: fixed;
+	width: 100%;
+	margin: 0 auto;
+	padding: 30px 0 0;
+	line-height: 1;
+	z-index: 999;
+	height:100px;
+}
+
+#top-head:after {
+	content: "";
+	display: block;
+	height: 1px;
+	width: 980px;
+	margin: 30px auto 0;
+}
+
+#top-head a, #top-head {
+	color: #fff;
+	text-decoration: none;
+}
+
+#top-head .naviclass {
+	position: relative;
+}
+
+ #top-head .logo {
+	float: left;
+	font-size: 32px;
+	margin-left: 25px;
+} 
+
+#main-nav ul {
+	list-style: none;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	font-size: 20px;
+}
+
+#main-nav ul li {
+	float: left;
+	position: relative;
+}
+
+#main-nav ul li a {
+	padding: 0 30px;
+}
+
+/* Btn Hover */
+#main-nav ul li:after {
+	position: absolute;
+	content: "";
+	display: block;
+	width: 100%;
+	height: 3px;
+	bottom: -20px;
+}
+
+#main-nav ul li:hover:after {
+	background: #fff;
+	bottom: -30px;
+}
+
+/* Fixed */
+#top-head.fixed {
+	padding-top: 15px;
+	background: #fff;
+	background: rgba(255, 255, 255, .7);
+}
+
+ #top-head.fixed.logo {
+	font-size: 24px;
+	color: #333;
+	margin-left: 10px;
+} 
+
+#top-head.fixed:after {
+	width: 100%;
+	margin-top: 20px;
+}
+
+#top-head.fixed #main-nav ul li a {
+	color: #333;
+	padding: 0 20px;
+}
+
+/* Fixed Btn Hover */
+#top-head.fixed #main-nav ul li:after {
+	bottom: -10px;
+}
+
+#top-head.fixed #main-nav ul li:hover:after {
+	background: #0b8793;
+	bottom: -20px;
+}
+
+/* image Slider 관련 코드 */
+slider-container {
+	width: 100%;
+	max-width: 95%;
+	margin: 0 auto;
+	padding-top: 35px;
+}
+h3{ 
+	
+	color: white;
+	text-align:left;
+}
+.slide-image {
+	padding: 20px;
+	width: 200px;
+	display: inline-block;
+}
+
+.slick-slider {
+	position: relative;
+}
+
+.slick-active {
+	opacity: 1;
+}
+
+.slick-arrow {
+	position: absolute;
+	top: 10%;
+	background-color: transparent;
+	border: none;
+	color: black;
+	font-size: 30px;
+	z-index: 5;
+}
+
+.slick-prev {
+	left: -10px;
+}
+
+.slick-next {
+	right: -10px;
+}
