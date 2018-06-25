@@ -33,9 +33,10 @@ public class MemberController extends HttpServlet {
 			dto.setUserid(request.getParameter("id"));
 			dto.setPassword(request.getParameter("pw"));
 			boolean result = mdao.loginMember(dto);
+			request.setAttribute("proc", "login");
 			request.setAttribute("loginResult", result);	
 			isForward = true;
-			dst="userResult.jsp?proc=login";
+			dst="userResult.jsp";
 			
 		}else if(command.equals("/join.do")) {
 			MemberDTO dto = new MemberDTO();
@@ -44,9 +45,11 @@ public class MemberController extends HttpServlet {
 			dto.setNickname(request.getParameter("nickname"));
 			dto.setEmail(request.getParameter("email"));
 			int result=mdao.addMember(dto);	
+			request.setAttribute("proc", "join");
 			request.setAttribute("joinResult", result);	
 			isForward = true;
-			dst="userResult.jsp?proc=join";
+			dst="userResult.jsp";
+			
 		}else if(command.equals("/navlogin.do")) {
 			
 			String id = request.getParameter("id");
@@ -67,7 +70,7 @@ public class MemberController extends HttpServlet {
 			request.getSession().invalidate();
 		
 			isForward = true;
-			dst="login.html";	
+			dst="newlogin.jsp";	
 		}
 		
 		if(isForward) {

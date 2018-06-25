@@ -9,7 +9,7 @@
 </head>
 <body>
 	<c:choose>
-		<c:when test="${proc==login}">
+		<c:when test="${param.proc==login}">
 			<c:choose>
 				<c:when test="${loginResult==true}">
 					<script>
@@ -20,27 +20,33 @@
 				<c:otherwise>
 					<script>
 						alert("로그인 실패");
-						location.href = "login.jsp";
+						location.href = "newlogin.jsp";
 					</script>
 				</c:otherwise>
 			</c:choose>
 		</c:when>
-		<c:otherwise>
+		<c:when test="${param.proc==join}">
 			<c:choose>
-				<c:when test="${addResult==1}">
+				<c:when test="${joinResult==1}">
 					<script>
 						alert("가입을 축하합니다! 로그인해주세요");
-						location.href = "login.jsp";
+						location.href = "newlogin.jsp";
+					</script>
+				</c:when>
+				<c:when test="${joinResult==-1}">
+					<script>
+						alert("이미 사용중인 아이디입니다.");
+						location.href = "newlogin.jsp";
 					</script>
 				</c:when>
 				<c:otherwise>
 					<script>
 						alert("다시 시도해 주세요.");
-						location.href = "login.jsp";
+						location.href = "newlogin.jsp";
 					</script>
 				</c:otherwise>
 			</c:choose>
-		</c:otherwise>
+		</c:when>
 	</c:choose>
 
 </body>
