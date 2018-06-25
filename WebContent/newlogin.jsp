@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
-<link rel="stylesheet"
-	href="source/lib/bootstrap-3.3.2-dist/css/bootstrap-theme.css">
-<script src="source/lib/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<link rel="stylesheet" href="source/css/codepenNavi.css">
 	
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -21,7 +19,7 @@
 #container {
 	width: 800px;
 	margin: 0 auto;
-	padding-top: 40px;
+	padding-top: 100px;
 }
 
 #loginbox {
@@ -124,7 +122,7 @@
 </script>
 </head>
 <body>
-<%@include file="include/navi_include.jsp"%>
+<h1 id="title" class="center"><a href="main.jsp">TRAVEL MAKER</a></h1>
 	<div id="container">
 		<div class="row">
 			<div id="loginarea">
