@@ -11,11 +11,11 @@
 					responsive : [ {
 						breakpoint : 480,
 						settings : {
-							slidesToShow : 1,
+							slidesToShow : 4,
 							slidesToScroll : 1,
 							dots : false
 						}
 					} ]
 				});
-			}, 1000);
+			}, 0);
 		}(jQuery));	
