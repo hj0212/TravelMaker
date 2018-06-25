@@ -5,6 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="source/lib/bootstrap-3.3.2-dist/css/bootstrap.css">
+<link rel="stylesheet" href="source/lib/bootstrap-3.3.2-dist/css/bootstrap-theme.css">
+<script src="source/lib/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
