@@ -1,17 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<meta charset="UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/js/tempusdominus-bootstrap-4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/css/tempusdominus-bootstrap-4.min.css" />
 <html>
 
 <head>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>계획 일정표</title>
+    <title>Insert title here</title>
     <style>
         #title-board {
             font-size: 15px;
@@ -27,7 +32,7 @@
 
         #plan-board {
             margin-top: 20px;
-            width: 40%;
+            width: 55%;
             float: left
         }
 
@@ -41,6 +46,28 @@
 
         #plus-plan:hover {
             background-color: #e9e9e9;
+        }
+
+        .col-10 {
+            padding: 0px;
+            width: 150px;
+            float: left;
+            margin-left: 24px;
+        }
+
+        .cococo {
+            box-sizing: border-box;
+            width: 10px;
+            margin-left: 24px;
+            float: left;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        #schedule-plan {
+            padding: 0px;
+            text-align: center;
+            vertical-align: middle;
         }
     </style>
 
@@ -56,284 +83,116 @@
         </div>
 
         <div clss="schedule">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="schedule-plan">
                 <thead>
                     <tr>
                         <th scope="col">시간</th>
                         <th scope="col">장소</th>
                         <th scope="col">일정</th>
                         <th scope="col">예정</th>
-                        <th scope="col">참고</th>
+                        <th scope="col">참조</th>
+                        <th scope="col" style="width:20px;">삭제</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="schedule-tbody" style="table-layout:fixed;word-break:break-all;">
                     <tr>
                         <th scope="row">1</th>
                         <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
+                        <td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;"></textarea></td>
+                        <td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;"></textarea></td>
+                        <td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;"></textarea></td>
+                        <td><button style="float: left;border: none" type="button" class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button></td>
 
                     </tr>
                     <tr>
                         <th scope="row">2</th>
                         <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>Otto</td>
-
+                        <td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;"></textarea></td>
+                        <td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;"></textarea></td>
+                        <td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;"></textarea></td>
+                        <td><button style="float:left;border:none" type="button" class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button></td>
                     </tr>
                     <tr>
                         <th scope="row">3</th>
                         <td>Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;"></textarea></td>
+                        <td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;"></textarea></td>
+                        <td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;"></textarea></td>
+                        <td><button style="float:left;border:none" type="button" class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button></td>
                     </tr>
                 </tbody>
             </table>
-            <div id="bt-div" style="text-align: right;">
+            <div id="bt-div" style="text-align:right;">
 
-                <button type="button" class="btn btn-outline-danger  " id="delete-table">삭제</button>
+                <button type="button" class="btn btn-outline-danger" id="delete-table">삭제</button>
             </div>
         </div>
 
         <div id="plan-board">
-            <table class="table table-bordered " id="schedule-boarder ">
+            <table class="table table-bordered" id="schedule-boarder">
                 <thead>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <th scope="row " style="background-color: #e9e9e9 ;text-align: center ">시간</th>
-                        <td style="width:70%; text-align: center ">
-                            <select class=" selectpicker " id=" inputGroupSelect01 ">
-                                <option selected disabled>시</option>
-                                <option value="1 ">1시</option>
-                                <option value="2 ">2시</option>
-                                <option value="3 ">3시</option>
-                                <option value="4 ">4시</option>
-                                <option value="5 ">5시</option>
-                                <option value="6 ">6시</option>
-                                <option value="7 ">7시</option>
-                                <option value="8 ">8시</option>
-                                <option value="9 ">9시</option>
-                                <option value="10 ">10시</option>
-                                <option value="11 ">11시</option>
-                                <option value="12 ">12시</option>
-                                <option value="13 ">13시</option>
-                                <option value="14 ">14시</option>
-                                <option value="15 ">15시</option>
-                                <option value="16 ">16시</option>
-                                <option value="17 ">17시</option>
-                                <option value="18 ">18시</option>
-                                <option value="19 ">19시</option>
-                                <option value="20 ">20시</option>
-                                <option value="21 ">21시</option>
-                                <option value="22 ">22시</option>
-                                <option value="23 ">23시</option>
-                                <option value="24 ">24시</option>                                  
-                            </select>
-                            <select class="selectpicker " id=" inputGroupSelect02 ">
-                                <option selected disabled>분</option>
-                                <option value="0 ">00분</option>
-                                <option value="1 ">01분</option>
-                                <option value="2 ">02분</option>
-                                <option value="3 ">03분</option>
-                                <option value="4 ">04분</option>
-                                <option value="5 ">05분</option>
-                                <option value="6 ">06분</option>
-                                <option value="7 ">07분</option>
-                                <option value="8 ">08분</option>
-                                <option value="9 ">09분</option>
-                                <option value="10 ">10분</option>
-                                <option value="11 ">11분</option>
-                                <option value="12 ">12분</option>
-                                <option value="13 ">13분</option>
-                                <option value="14 ">14분</option>
-                                <option value="15 ">15분</option>
-                                <option value="16 ">16분</option>
-                                <option value="17 ">17분</option>
-                                <option value="18 ">18분</option>
-                                <option value="19 ">19분</option>
-                                <option value="20 ">20분</option>
-                                <option value="21 ">21분</option>
-                                <option value="22 ">22분</option>
-                                <option value="23 ">23분</option>
-                                <option value="24 ">24분</option>
-                                <option value="25 ">25분</option>
-                                <option value="26 ">26분</option>
-                                <option value="27 ">27분</option>
-                                <option value="28 ">28분</option>
-                                <option value="29 ">29분</option>
-                                <option value="30 ">30분</option>
-                                <option value="31 ">31분</option>
-                                <option value="32 ">32분</option>
-                                <option value="33 ">33분</option>
-                                <option value="34 ">34분</option>
-                                <option value="35 ">35분</option>
-                                <option value="36 ">36분</option>
-                                <option value="37 ">37분</option>
-                                <option value="38 ">38분</option>
-                                <option value="39 ">39분</option>
-                                <option value="40 ">40분</option>
-                                <option value="41 ">41분</option>
-                                <option value="42 ">42분</option>
-                                <option value="43 ">43분</option>
-                                <option value="44 ">44분</option>
-                                <option value="45 ">45분</option>
-                                <option value="46 ">46분</option>
-                                <option value="47 ">47분</option>
-                                <option value="48 ">48분</option>
-                                <option value="49 ">49분</option>
-                                <option value="50 ">50분</option>
-                                <option value="51 ">51분</option>
-                                <option value="52 ">52분</option>
-                                <option value="53 ">53분</option>
-                                <option value="54 ">54분</option>
-                                <option value="55 ">55분</option>
-                                <option value="56 ">56분</option>
-                                <option value="57 ">57분</option>
-                                <option value="58 ">58분</option>
-                                <option value="59 ">59분</option>                                        
-                            </select> ~
-                            <select class="selectpicker " id=" inputGroupSelect03 ">
-                                <option selected disabled>시</option>
-                               <option value="1 ">1시</option>
-                                <option value="2 ">2시</option>
-                                <option value="3 ">3시</option>
-                                <option value="4 ">4시</option>
-                                <option value="5 ">5시</option>
-                                <option value="6 ">6시</option>
-                                <option value="7 ">7시</option>
-                                <option value="8 ">8시</option>
-                                <option value="9 ">9시</option>
-                                <option value="10 ">10시</option>
-                                <option value="11 ">11시</option>
-                                <option value="12 ">12시</option>
-                                <option value="13 ">13시</option>
-                                <option value="14 ">14시</option>
-                                <option value="15 ">15시</option>
-                                <option value="16 ">16시</option>
-                                <option value="17 ">17시</option>
-                                <option value="18 ">18시</option>
-                                <option value="19 ">19시</option>
-                                <option value="20 ">20시</option>
-                                <option value="21 ">21시</option>
-                                <option value="22 ">22시</option>
-                                <option value="23 ">23시</option>
-                                <option value="24 ">24시</option>                                      
-                            </select>
-                            <select class="selectpicker " id=" inputGroupSelect04 ">
-                                <option selected disabled>분</option>
-                                 <option value="0 ">00분</option>
-                                <option value="1 ">01분</option>
-                                <option value="2 ">02분</option>
-                                <option value="3 ">03분</option>
-                                <option value="4 ">04분</option>
-                                <option value="5 ">05분</option>
-                                <option value="6 ">06분</option>
-                                <option value="7 ">07분</option>
-                                <option value="8 ">08분</option>
-                                <option value="9 ">09분</option>
-                                <option value="10 ">10분</option>
-                                <option value="11 ">11분</option>
-                                <option value="12 ">12분</option>
-                                <option value="13 ">13분</option>
-                                <option value="14 ">14분</option>
-                                <option value="15 ">15분</option>
-                                <option value="16 ">16분</option>
-                                <option value="17 ">17분</option>
-                                <option value="18 ">18분</option>
-                                <option value="19 ">19분</option>
-                                <option value="20 ">20분</option>
-                                <option value="21 ">21분</option>
-                                <option value="22 ">22분</option>
-                                <option value="23 ">23분</option>
-                                <option value="24 ">24분</option>
-                                <option value="25 ">25분</option>
-                                <option value="26 ">26분</option>
-                                <option value="27 ">27분</option>
-                                <option value="28 ">28분</option>
-                                <option value="29 ">29분</option>
-                                <option value="30 ">30분</option>
-                                <option value="31 ">31분</option>
-                                <option value="32 ">32분</option>
-                                <option value="33 ">33분</option>
-                                <option value="34 ">34분</option>
-                                <option value="35 ">35분</option>
-                                <option value="36 ">36분</option>
-                                <option value="37 ">37분</option>
-                                <option value="38 ">38분</option>
-                                <option value="39 ">39분</option>
-                                <option value="40 ">40분</option>
-                                <option value="41 ">41분</option>
-                                <option value="42 ">42분</option>
-                                <option value="43 ">43분</option>
-                                <option value="44 ">44분</option>
-                                <option value="45 ">45분</option>
-                                <option value="46 ">46분</option>
-                                <option value="47 ">47분</option>
-                                <option value="48 ">48분</option>
-                                <option value="49 ">49분</option>
-                                <option value="50 ">50분</option>
-                                <option value="51 ">51분</option>
-                                <option value="52 ">52분</option>
-                                <option value="53 ">53분</option>
-                                <option value="54 ">54분</option>
-                                <option value="55 ">55분</option>
-                                <option value="56 ">56분</option>
-                                <option value="57 ">57분</option>
-                                <option value="58 ">58분</option>
-                                <option value="59 ">59분</option>                                           
-                            </select>
+                        <th scope="row" style="background-color:#e9e9e9;text-align:center;vertical-align:middle">시간</th>
+                        <td style="width:70%;text-align:center;">
+
+                            <div class="col-10">
+                                <input class="form-control" type="time" value="13:45:00" id="start-time" />
+                            </div>
+                            <div class="cococo">
+                                ~
+                            </div>
+                            <div class="col-10">
+                                <input class="form-control" type="time" value="14:45:00" id="end-time" />
+                            </div>
                         </td>
 
 
 
                     </tr>
                     <tr>
-                        <th scope="row " style="background-color: #e9e9e9 ;text-align: center;vertical-align: middle ">장소</th>
+                        <th scope="row" style="background-color:#e9e9e9;text-align:center;vertical-align:middle">장소</th>
                         <td>
-                            <form action=" ">
 
-                                <div class="input-group ">
-                                    <input type="text " class="form-control " placeholder="Search " readonly>
-                                    <div class="input-btn ">
-                                        <button class="btn btn-default " type="submit " style="height: 100%; border: 1px ">
-                                         	<i class="fa fa-search"></i>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search" readonly id="place">
+                                <div class="input-btn">
+                                    <button class="btn btn-default" type="button" style="height:100%; border:1px">
+                                         	<i class="fa fa-search" ></i>
                                          </button>
-                                    </div>
                                 </div>
-                            </form>
+                            </div>
+
                         </td>
 
 
                     </tr>
                     <tr>
-                        <th scope="row " style="background-color: #e9e9e9 ;text-align: center;vertical-align: middle ">일정</th>
-                        <td><textarea class="form-control "></textarea></td>
+                        <th scope="row" style="background-color:#e9e9e9 ;text-align:center;vertical-align:middle ">일정</th>
+                        <td><textarea class="form-control" id="schedule"></textarea></td>
 
                     </tr>
                     <tr>
-                        <th scope="row " style="background-color: #e9e9e9 ;text-align: center;vertical-align: middle ">예산</th>
-                        <td><input type="text " class="form-control "></td>
+                        <th scope="row" style="background-color:#e9e9e9 ;text-align:center;vertical-align:middle ">예산</th>
+                        <td><input type="text" class="form-control" id="money"></td>
 
                     </tr>
                     <tr>
-                        <th scope="row " style="background-color: #e9e9e9 ;text-align: center;vertical-align: middle ">참조</th>
-                        <td><input type="text " class="form-control "></td>
+                        <th scope="row" style="background-color:#e9e9e9 ;text-align:center;vertical-align:middle">참조</th>
+                        <td><input type="text" class="form-control" id="reference"></td>
                     </tr>
                 </tbody>
             </table>
-            <div style="text-align: right ">
-                <button type="button " class="btn btn-outline-primary " id="delete-primary ">완료</button>
+            <div style="text-align:right">
+                <button type="button" class="btn btn-outline-primary" id="success-primary">완료</button>
             </div>
         </div>
-        <div style="width: 40%; float: right" id="plan-div">
+        <div style="width:40%;float:right" id="plan-div">
             <div>
 
-                <button type="button" id="plus-plan" class="btn btn-inline ">일정추가 <i class="fa fa-plus"></i></button>
+                <button type="button" id="plus-plan" class="btn btn-inline">일정추가 <i class="fa fa-plus "></i></button>
             </div>
             <table class="table table-bordered" id="plan-table">
                 <thead></thead>
@@ -343,8 +202,8 @@
                 </tbody>
 
             </table>
-            <div style="text-align: right">
-                <button class="btn btn-inline-primary btn-lg" type="" id="end-bt">여행계획 완료</button>
+            <div style="text-align:right">
+                <button class="btn btn-inline-primary btn-lg" id="end-bt">여행계획 완료</button>
 
             </div>
 
@@ -354,32 +213,101 @@
 
 </body>
 <script>
-    var datecount = 1;
-    $("#plus-plan").click(function() {
-        
-        var plustext = $("#plus-text").val();
+    $(document).ready(function() {
 
-        if (datecount <= 14) {
-            $("#plan-table>tbody:last").append("<tr><th style='background-color: #e9e9e9 ;text-align: center;vertical-align: middle' >" + datecount++ + "일차</th><td style='width: 70%'>" + datecount + "</td></tr>");
+        var datecount = 1;
+        $("#plus-plan").click(function() {
+
+            var plustext = $("#plus-text").val();
+
+            if (datecount <= 14) {
+                $("#plan-table>tbody:last").append("<tr><th style='background-color: #e9e9e9 ;text-align: center;vertical-align: middle' >" + datecount++ + "일차</th><td style='width: 70%'>" + datecount + "</td></tr>");
 
 
-            if ($("#plan-table tr:last")) {
-            
-                $("#plan-table  button[type='button']").hide();
+                if ($("#plan-table tr:last")) {
+
+                    $("#plan-table button[type='button']").hide();
+                }
+                $("#plan-table tr:last td:last-child").append("<button type='button' class='btn btn-outline-danger btn-sm'style='float: right'><i class='fa fa-times'></i></button>");
+
+
+            } else {
+                alert("최대 14일까지 제공하고있습니다");
             }
-            $("#plan-table tr:last td:last-child").append("<button type='button' class='btn btn-outline-danger btn-sm'style='float: right'><i class='fa fa-times'></i></button>");
+        });
+        $("#plan-table").on('click', "button[type='button']", function(event) {
+            var index = $(event.currentTarget).closest("tr").index();
+            var info = $("#plan-tbody")[0];
+            info.deleteRow(index, datecount--);
 
+            $("#plan-table tr:last td:last-child").append("<button type='button' class='btn btn-outline-danger btn-sm'style='float:right'><i class='fa fa-times'></i></button>");
 
-        } else {
-            alert("최대 14일까지 제공하고있습니다");
-        }
-    });
-    $("#plan-table").on('click', "button[type='button']", function(event) {
-        var index = $(event.currentTarget).closest("tr").index();
-        var info = $("#plan-tbody")[0];
-        info.deleteRow(index, datecount--);
-        
-        $("#plan-table tr:last td:last-child").append("<button type='button' class='btn btn-outline-danger btn-sm'style='float: right'><i class='fa fa-times'></i></button>");
+        });
+
+        $("#schedule-plan td:last-child").hide();
+        $("#schedule-plan th:last-child").hide();
+
+        $("#delete-table").click(function() {
+            if ($("#delete-table").text() == "삭제") {
+                $("#delete-table").text("완료");
+                $("#delete-table").attr("class", "btn btn-outline-primary");
+                $("#schedule-plan td:last-child").show();
+                $("#schedule-plan th:last-child").show();
+            } else {
+                $("#delete-table").text("삭제");
+                $("#delete-table").attr("class", "btn btn-outline-danger");
+                $("#schedule-plan td:last-child").hide();
+                $("#schedule-plan th:last-child").hide();
+            }
+        });
+
+        $("#schedule-plan").on('click', "button[type='button']", function(event) {
+            var index = $(event.currentTarget).closest("tr").index();
+            var info = $("#schedule-tbody")[0];
+            info.deleteRow(index);
+        });
+
+        $("#success-primary").click(function() {
+            var con = confirm("일정추가하시겠습니까?");
+            var starttime = $("#start-time").val();
+            var endtime = $("#end-time").val();
+            var place = $("#place").val("이레빌딩");
+            var schedule = $("#schedule").val();
+            var money = $("#money").val();
+            var reference = $("#reference").val();
+            var schedulecount = 1;
+            if (schedulecount <= 10) {
+                if (starttime == "" || endtime == "") {
+                    alert("시간을입력해주세요");
+                } else if (place == "") {
+                    alert("장소를정해주세요");
+                } else if (schedule == "") {
+                    alert("일정을적어주세요");
+                } else if (con) {
+                    var contents = '';
+                    contents += '<tr>';
+                    contents += '<th>' + starttime + "~" + endtime + '</th>';
+                    contents += '<td>' + place + '</td>';
+                    contents += '<td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;">' + schedule + '</textarea></td>';
+                    contents += '<td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;">' + money + '</textarea></td>';
+                    contents += '<td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;">' + reference + '</textarea></td>';
+                    contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button></td>';
+                    contents += '</tr>';
+
+                    $("#schedule-plan>tbody:last").append(contents);
+                    $("#schedule-plan td:last-child").hide();
+
+                    $("#start-time").val("");
+                    $("#end-time").val("");
+                    $("#place").val("");
+                    $("#schedule").text("");
+                    $("#money").val("");
+                    $("#reference").val("");
+                }
+            } else {
+                alert("아직지원하지않습니다");
+            }
+        });
 
     });
 </script>
