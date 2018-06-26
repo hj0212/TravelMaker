@@ -1,16 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
- <style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>계획 일정표</title>
+    <style>
         #title-board {
             font-size: 15px;
         }
@@ -32,9 +34,18 @@
         #plan-div {
             margin-top: 20px;
         }
+
+        #end-bt:hover {
+            background-color: #e9e9e9;
+        }
+
+        #plus-plan:hover {
+            background-color: #e9e9e9;
+        }
     </style>
 
 </head>
+
 <body>
     <div class="container">
         <div class="input-group input-group-lg">
@@ -83,7 +94,7 @@
             </table>
             <div id="bt-div" style="text-align: right;">
 
-                <button type="button" class="btn btn-outline-danger btn-lg " id="delete-table">삭제</button>
+                <button type="button" class="btn btn-outline-danger  " id="delete-table">삭제</button>
             </div>
         </div>
 
@@ -316,39 +327,24 @@
                 </tbody>
             </table>
             <div style="text-align: right ">
-                <button type="button " class="btn btn-outline-primary btn-lg" id="delete-primary ">완료</button>
+                <button type="button " class="btn btn-outline-primary " id="delete-primary ">완료</button>
             </div>
         </div>
         <div style="width: 40%; float: right" id="plan-div">
             <div>
-                <button type="button" class="btn btn-inline-primary btn-lg"> 일정추가(+)</button>
+
+                <button type="button" id="plus-plan" class="btn btn-inline ">일정추가 <i class="fa fa-plus"></i></button>
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="plan-table">
                 <thead></thead>
-                <tbody>
-                    <tr>
-                        <th style="background-color: #e9e9e9 ;text-align: center;vertical-align: middle ">1일차</th>
-                        <td style="width: 70%">총 예산:300,000원</td>
-                    </tr>
-                    <tr>
-                        <th style="background-color: #e9e9e9 ;text-align: center;vertical-align: middle ">2일차</th>
-                        <td style="width: 70%">총 예산:200,000원</td>
-                    </tr>
-                    <tr>
-                        <th style="background-color: #e9e9e9 ;text-align: center;vertical-align: middle ">3일차</th>
-                        <td style="width: 70%">총 예산:200,000원</td>
-                    </tr>
-                    <tr>
-                        <th style="background-color: #e9e9e9 ;text-align: center;vertical-align: middle ">4일차</th>
-                        <td style="width: 70%">총 예산:200,000원</td>
-                    </tr>
+                <tbody id="plan-tbody">
 
 
                 </tbody>
 
             </table>
             <div style="text-align: right">
-                <button class="btn btn-inline-primary btn-lg" type="">여행계획 완료</button>
+                <button class="btn btn-inline-primary btn-lg" type="" id="end-bt">여행계획 완료</button>
 
             </div>
 
@@ -357,4 +353,35 @@
     </div>
 
 </body>
+<script>
+    var datecount = 1;
+    $("#plus-plan").click(function() {
+        
+        var plustext = $("#plus-text").val();
+
+        if (datecount <= 14) {
+            $("#plan-table>tbody:last").append("<tr><th style='background-color: #e9e9e9 ;text-align: center;vertical-align: middle' >" + datecount++ + "일차</th><td style='width: 70%'>" + datecount + "</td></tr>");
+
+
+            if ($("#plan-table tr:last")) {
+            
+                $("#plan-table  button[type='button']").hide();
+            }
+            $("#plan-table tr:last td:last-child").append("<button type='button' class='btn btn-outline-danger btn-sm'style='float: right'><i class='fa fa-times'></i></button>");
+
+
+        } else {
+            alert("최대 14일까지 제공하고있습니다");
+        }
+    });
+    $("#plan-table").on('click', "button[type='button']", function(event) {
+        var index = $(event.currentTarget).closest("tr").index();
+        var info = $("#plan-tbody")[0];
+        info.deleteRow(index, datecount--);
+        
+        $("#plan-table tr:last td:last-child").append("<button type='button' class='btn btn-outline-danger btn-sm'style='float: right'><i class='fa fa-times'></i></button>");
+
+    });
+</script>
+
 </html>
