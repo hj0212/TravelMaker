@@ -130,7 +130,7 @@ public class MemberController extends HttpServlet {
 			request.getSession().invalidate();
 		
 			isForward = true;
-			dst="login.html";	
+			dst="main.jsp";	
 		}
 			
 		
