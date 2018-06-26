@@ -15,7 +15,9 @@
 				
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					" ws://192.168.20.37:8080/TravelMaker/websocket");
+
+					" ws://192.168.20.31:8080/WEB_SOCKET_0611/websocket ");
+
 		
 			var str;
 		
@@ -31,9 +33,7 @@
 		            }
 		        });
 
-			
-
-			
+					
 			ws.onopen = function() {
 			
 				//document.getElementById("contents").innerHTML += str+"님이 입장하셨습니다"+"<br>";
@@ -57,7 +57,7 @@
 </head>
 <body>
 
-<p id="p"><%=nickname %></p>
+<p id="p">${sessionScope.loginId }</p>
 <button id="logout" type="button" >logout</button>
 
 <script src='https://developers.kakao.com/sdk/js/kakao.min.js'></script>
@@ -70,7 +70,15 @@ document.getElementById("logout").onclick = function(){
 		    location.href="login.jsp";
 		}, 1000);
 	
+<<<<<<< Updated upstream
 }
+=======
+
+	
+	}
+
+>>>>>>> Stashed changes
+
 
 
 </script>
@@ -91,9 +99,14 @@ document.getElementById("logout").onclick = function(){
             <div class="chat"  id="chatchat">
 
                 <div class="chat-history" id="livechathistory">
-
+				
                    
                 </div>
+                <script>
+                $(".chat-history").scrollTop($(".chat-history").height());
+                </script>
+                
+                
                 <!-- end chat-history -->
 
                 <p class="chat-feedback">Messages</p>
@@ -110,13 +123,18 @@ document.getElementById("logout").onclick = function(){
         
 
             </div>
+            <button id="admin">admin</button>
+            <button id="mypage">mypage</button>
             <!-- end chat -->
 
         </div>
         <!-- end live-chat -->
     </body>
 <script>
+
+
 (function() {
+	
 	  $('#live-chat header').on('click', function() {
 
           $('.chat').slideToggle(300, 'swing');
@@ -132,6 +150,12 @@ document.getElementById("logout").onclick = function(){
 
 })();
 
+$("#admin").click(function(){
+	location.href = "admin.do";
+});
+$("#mypage").click(function(){
+	location.href="mypage.do";
+})
 </script>
 </body>
 </html>
