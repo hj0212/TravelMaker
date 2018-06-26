@@ -191,11 +191,7 @@
 								      	success: function(authObj) {
 								    	 	 Kakao.API.request({
 								    	       	url: '/v1/user/me',
-								    	      	success: function(res) {
-								    	            console.log(res.id);//<---- 콘솔 로그에 id 정보 출력(id는 res안에 있기 때문에  res.id 로 불러온다)
-								    	            console.log(res.kaccount_email);//<---- 콘솔 로그에 email 정보 출력 (어딨는지 알겠죠?)
-								    	            console.log(res.properties['nickname']);
-								    	             
+								    	      	success: function(res) {								    	             
 								    	            $.ajax({
 								    	            	type:"post",
 								    	            	dataType:"json",
