@@ -29,9 +29,9 @@
 			<tbody>
 				<tr>
 					<th scope="row">1</th>
-					<td>id</td>
-					<td>Otto</td>
-					<td>@mdo</td>
+					<td>${part}</td>
+					<td>${nickname}</td>
+					<td>${email}</td>
 					<td>@mdo</td>
 				</tr>
 			</tbody>
