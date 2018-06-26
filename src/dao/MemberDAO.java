@@ -179,6 +179,7 @@ public class MemberDAO {
 				if(rs.next()) {
 					dto.setNaver_nickname(rs.getString("naver_nickname"));
 					dto.setNaver_email(rs.getString("naver_email"));
+					dto.setPart(rs.getString("part"));
 				}
 			}
 			else if (part.equals("kakao")) {
@@ -189,6 +190,7 @@ public class MemberDAO {
 				if(rs.next()) {
 					dto.setKakao_nickname(rs.getString("kakao_nickname"));
 					dto.setKakao_email(rs.getString("kakao_email"));
+					dto.setPart(rs.getString("part"));
 				}
 			}
 			pstmt.close();
