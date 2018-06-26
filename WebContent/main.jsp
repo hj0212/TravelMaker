@@ -60,7 +60,6 @@ div {
 </head>
 <body>
 
-	<%@include file="include/navi_include.jsp"%>
 	<div class="container">
 <<<<<<< HEAD
 =======
