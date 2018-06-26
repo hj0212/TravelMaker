@@ -41,6 +41,7 @@ public class MemberController extends HttpServlet {
 			request.getSession().setAttribute("loginId", id);
 			isForward = true;
 			dst="userResult.jsp";
+			System.out.println("통과1");
 			
 		} else if(command.equals("/join.do")) {
 			MemberDTO dto = new MemberDTO();
