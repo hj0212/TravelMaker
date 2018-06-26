@@ -1,17 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<!-- ºÎÆ® ½ºÆ®·¦ ÄÚµå-->
+<!-- ë¶€íŠ¸ ìŠ¤íŠ¸ëž© ì½”ë“œ-->
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <link rel="stylesheet"
 	href="source/lib/bootstrap-3.3.2-dist/css/bootstrap.css">
 <link rel="stylesheet"
 	href="source/lib/bootstrap-3.3.2-dist/css/bootstrap-theme.css">
 <script src="source/lib/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<link rel="stylesheet" href="source/css/codepenNavi.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="source/lib/slick/slick.css" />
+<link rel="stylesheet" type="text/css"
+	href="source/lib/slick/slick-theme.css" />
+
+<link rel="stylesheet" href="mypage.css" type="text/css">
 
 <style>
 div {
@@ -38,49 +47,122 @@ div {
 #foot {
 	height: 100px;
 }
+
+.data, .data div{
+	height: 400px;
+}
+
+.item {
+	width: 300px;
+}
 </style>
-<!-- <div class="shadow-none p-3 mb-5 bg-light rounded">No shadow</div>
-<div class="shadow-sm p-3 mb-5 bg-white rounded">Small shadow</div>
-<div class="shadow p-3 mb-5 bg-white rounded">Regular shadow</div>
-<div class="shadow-lg p-3 mb-5 bg-white rounded">Larger shadow</div> -->
+
 </head>
 <body>
 
-	<div
-		class="navbar navbar-default navbar-fixed-top collapse navbar-collapse"
-		role="navigation">
-		<ul class="nav navbar-nav">
-			<li class="active"><a href="#"> <span class="sr-only">Plans</span></a></li>
-			<li><a href="#"><span class="sr-only">Schedules</span></a></li>
-			<li><a href="#"><span class="sr-only">Review</span></a></li>
-			<li><a href="#"><span class="sr-only">Board</span></a></li>
-			<li class="dropdown"></li>
-		</ul>
-	</div>
+	<%@include file="include/navi_include.jsp"%>
 	<div class="container">
-
+<<<<<<< HEAD
+=======
 		<div class="row" id="navi">
 			<div class="col-md-12">
 				<h1>³×ºñ¿Ã °÷</h1>
 			</div>
 		</div>
 
+>>>>>>> í˜¸ì—°
 		<div class="row">
-			<div class="col-md-12" id="bestPlan">º£½ºÆ® ¿©Çà°èÈ¹ ÀÌ¹ÌÁö ½½¶óÀÌ´õ</div>
+			<div class="col-md-12" id="bestPlan">
+				<div class="data" data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
+				<div class="item">
+					<div class="card col-md-12 col-sm-12 w-100">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item">
+					<div class="card col-md-12 col-sm-12 w-100">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item">
+					<div class="card col-md-12 col-sm-12 w-100">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item">
+					<div class="card col-md-12 col-sm-12 w-100">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item">
+					<div class="card col-md-12 col-sm-12 w-100">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item">
+					<div class="card col-md-12 col-sm-12 w-100">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+			</div>
+			</div>
 		</div>
 
 		<div class="row">
-			<div class="col-md-12" id="bests">º£½ºÆ® »çÁø, º£½ºÆ® Àå¼Ò, º£½ºÆ® ÈÄ±â</div>
+			<div class="col-md-12" id="bests">ë² ìŠ¤íŠ¸ ì‚¬ì§„, ë² ìŠ¤íŠ¸ ìž¥ì†Œ, ë² ìŠ¤íŠ¸ í›„ê¸°</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-12" id="foot">
-				<h1>ÇªÅÍ¿Ã °÷</h1>
+				<h1>í‘¸í„°ì˜¬ ê³³</h1>
 			</div>
 		</div>
 
 	</div>
-	</div>
-
+	<script
+		src='source/lib/slick/slick.js'></script>
+	<script>
+		$('.data').slick({
+			dots : true,
+			infinite : true,
+			slidesToShow : 3,
+			slidesToScroll : 1,
+			variableWidth : true,
+			autoplay : true,
+			speed : 500,
+			autoplaySpeed : 2000
+		});
+	</script>
 </body>
+
 </html>

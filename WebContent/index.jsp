@@ -15,11 +15,9 @@
 				
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-<<<<<<< HEAD
+
 					" ws://192.168.20.31:8080/WEB_SOCKET_0611/websocket ");
-=======
-					" ws://192.168.20.37:8080/TravelMaker/websocket");
->>>>>>> newlogin
+
 		
 			var str;
 		
@@ -59,7 +57,7 @@
 </head>
 <body>
 
-<p id="p"><%=nickname %></p>
+<p id="p">${sessionScope.loginId }</p>
 <button id="logout" type="button" >logout</button>
 
 <script src='https://developers.kakao.com/sdk/js/kakao.min.js'></script>
@@ -72,13 +70,15 @@ document.getElementById("logout").onclick = function(){
 		    location.href="login.jsp";
 		}, 1000);
 	
-<<<<<<< HEAD
+<<<<<<< Updated upstream
+}
+=======
+
 	
 	}
 
-=======
-}
->>>>>>> newlogin
+>>>>>>> Stashed changes
+
 
 
 </script>
@@ -123,6 +123,8 @@ document.getElementById("logout").onclick = function(){
         
 
             </div>
+            <button id="admin">admin</button>
+            <button id="mypage">mypage</button>
             <!-- end chat -->
 
         </div>
@@ -148,6 +150,12 @@ document.getElementById("logout").onclick = function(){
 
 })();
 
+$("#admin").click(function(){
+	location.href = "admin.do";
+});
+$("#mypage").click(function(){
+	location.href="mypage.do";
+})
 </script>
 </body>
 </html>
