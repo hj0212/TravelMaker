@@ -20,7 +20,17 @@
             <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
             <div class="card-body h-100 py-4 my-5">
               <h4 class="card-title my-4">${nickname}</h4>
+              <script>
+              if(${email eq null}){
+            	  </script>
+            	  <h4 class="my-4">이메일을 입력해주세요</h4>
+            	  <script>
+              }else{
+            	  </script>
               <h4 class="my-4">${email}</h4>
+              <script>
+              }
+              </script>
   		<a href="#" class="btn">정보수정</a>
             </div>
           </div>
