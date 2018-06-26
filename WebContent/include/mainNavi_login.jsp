@@ -26,7 +26,7 @@
 					<div class="dropdown-menu mt-5" aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="#">MyPage</a> <a
 							class="dropdown-item" href="#">MyPlans</a> <a
-							class="dropdown-item" href="#">LogOut</a>
+							class="dropdown-item" href="logout.do">LogOut</a>
 					</div></li>
 			</ul>
 		</div>
