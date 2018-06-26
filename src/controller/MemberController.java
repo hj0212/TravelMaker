@@ -88,27 +88,6 @@ public class MemberController extends HttpServlet {
 			isForward = false;
 			dst="index.jsp";		
 
-		}else if(command.equals("/logout.do")) {
-			request.getSession().invalidate();
-		
-			isForward = true;
-			dst="newlogin.jsp";	
-
-		}else if(command.equals("/kakao.do")) {
-			String id = request.getParameter("id");
-			String email = request.getParameter("email");
-			String nickname = request.getParameter("nickname");
-			
-			System.out.println(id);
-			System.out.println(email);
-			System.out.println(nickname);
-			MemberDTO dto = new MemberDTO();
-			dto.setKakao_id(id);
-			dto.setKakao_email(email);
-			dto.setNaver_nickname(nickname);
-			
-			
-
 		}else if(command.equals("/admin.do")) {
 			String part = (String)request.getSession().getAttribute("part");
 			String id = (String)request.getSession().getAttribute("loginId");
@@ -127,6 +106,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("nickname", mdto.getKakao_nickname());
 				request.setAttribute("email", mdto.getKakao_email());
 			}
+			
 			isForward = true;
 			dst="admin.jsp";
 		}else if(command.equals("/mypage.do")) {
@@ -147,7 +127,11 @@ public class MemberController extends HttpServlet {
 			
 			isForward = true;
 			dst="mypage.jsp";
-
+		}else if(command.equals("/logout.do")) {
+			request.getSession().invalidate();
+		
+			isForward = true;
+			dst="main.jsp";	
 		}
 			
 		
