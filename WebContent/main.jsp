@@ -147,8 +147,55 @@ div {
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="col-md-12" id="bests">베스트 사진, 베스트 장소, 베스트 후기</div>
+				<div class="row" id="bestImage">
+			<h1>BEST IMAGE</h1>
+			<div class="col-md-12">
+				<div class="hls_sol">
+					<ul>
+						<li><img src="travel1.jpg" alt="">
+							<div class="hls_sol_data">
+								<h3>1위</h3>
+								<div class="hls_data">
+									<a href="https://500px.com/ravi7284007" target="_blank"
+										class="hls_title">여행자님</a> <a
+										href="#https://www.facebook.com/ravi7284007"
+										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
+								</div>
+							</div></li>
+						<li><img src="travel1.jpg" alt="">
+							<div class="hls_sol_data">
+								<h3>2위</h3>
+								<div class="hls_data">
+									<a href="https://500px.com/ravi7284007" target="_blank"
+										class="hls_title">여행자님</a> <a
+										href="https://www.facebook.com/ravi7284007"
+										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
+								</div>
+							</div></li>
+						<li><img src="travel1.jpg" alt="">
+							<div class="hls_sol_data">
+								<h3>3위</h3>
+								<div class="hls_data">
+									<a href="https://500px.com/ravi7284007" target="_blank"
+										class="hls_title">여행자님</a> <a
+										href="https://www.facebook.com/ravi7284007"
+										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
+								</div>
+							</div></li>
+						<li><img src="travel1.jpg" alt="">
+							<div class="hls_sol_data">
+								<h3>4위</h3>
+								<div class="hls_data">
+									<a href="https://500px.com/ravi7284007" target="_blank"
+										class="hls_title">여행자님</a> <a
+										href="https://www.facebook.com/ravi7284007"
+										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
+								</div>
+							</div></li>
+					</ul>
+				</div>
+
+			</div>
 		</div>
 
 		<div class="row">

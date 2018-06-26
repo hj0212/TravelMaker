@@ -32,7 +32,7 @@
 <link rel="stylesheet" type="text/css" href="source/lib/slick/slick.css" />
 <link rel="stylesheet" type="text/css"
 	href="source/lib/slick/slick-theme.css" />
-<link rel="stylesheet" href="mypage.css" type="text/css">
+<!-- <link rel="stylesheet" href="mypage.css" type="text/css"> -->
 
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
@@ -75,7 +75,7 @@
 					<div class="data"
 						data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
 						<div class="slide_item">
-							<div class="card col-md-12 col-sm-12">
+							<div class="card col-md-12 col-sm-12 w-100">
 								<div class="card-header">Header</div>
 								<div class="card-body">
 									<h4>Card title</h4>
@@ -85,7 +85,7 @@
 							</div>
 						</div>
 						<div class="slide_item">
-							<div class="card col-md-12 col-sm-12">
+							<div class="card col-md-12 col-sm-12 w-100">
 								<div class="card-header">Header</div>
 								<div class="card-body">
 									<h4>Card title</h4>
@@ -95,7 +95,7 @@
 							</div>
 						</div>
 						<div class="slide_item">
-							<div class="card col-md-12 col-sm-12">
+							<div class="card col-md-12 col-sm-12 w-100">
 								<div class="card-header">Header</div>
 								<div class="card-body">
 									<h4>Card title</h4>
@@ -105,7 +105,7 @@
 							</div>
 						</div>
 						<div class="slide_item">
-							<div class="card col-md-12 col-sm-12">
+							<div class="card col-md-12 col-sm-12 w-100">
 								<div class="card-header">Header</div>
 								<div class="card-body">
 									<h4>Card title</h4>
@@ -115,7 +115,7 @@
 							</div>
 						</div>
 						<div class="slide_item">
-							<div class="card col-md-12 col-sm-12">
+							<div class="card col-md-12 col-sm-12 w-100">
 								<div class="card-header">Header</div>
 								<div class="card-body">
 									<h4>Card title</h4>
@@ -125,7 +125,7 @@
 							</div>
 						</div>
 						<div class="slide_item">
-							<div class="card col-md-12 col-sm-12">
+							<div class="card col-md-12 col-sm-12 w-100">
 								<div class="card-header">Header</div>
 								<div class="card-body">
 									<h4>Card title</h4>
@@ -139,56 +139,56 @@
 			</div>
 		</div>
 
+		<h1>BEST IMAGE</h1>
 		<div class="row" id="bestImage">
-			<h1>BEST IMAGE</h1>
-			<div class="col-md-12">
-				<div class="hls_sol">
-					<ul>
-						<li><img src="travel1.jpg" alt="">
-							<div class="hls_sol_data">
-								<h3>1위</h3>
-								<div class="hls_data">
-									<a href="https://500px.com/ravi7284007" target="_blank"
-										class="hls_title">여행자님</a> <a
-										href="#https://www.facebook.com/ravi7284007"
-										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
-								</div>
-							</div></li>
-						<li><img src="travel1.jpg" alt="">
-							<div class="hls_sol_data">
-								<h3>2위</h3>
-								<div class="hls_data">
-									<a href="https://500px.com/ravi7284007" target="_blank"
-										class="hls_title">여행자님</a> <a
-										href="https://www.facebook.com/ravi7284007"
-										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
-								</div>
-							</div></li>
-						<li><img src="travel1.jpg" alt="">
-							<div class="hls_sol_data">
-								<h3>3위</h3>
-								<div class="hls_data">
-									<a href="https://500px.com/ravi7284007" target="_blank"
-										class="hls_title">여행자님</a> <a
-										href="https://www.facebook.com/ravi7284007"
-										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
-								</div>
-							</div></li>
-						<li><img src="travel1.jpg" alt="">
-							<div class="hls_sol_data">
-								<h3>4위</h3>
-								<div class="hls_data">
-									<a href="https://500px.com/ravi7284007" target="_blank"
-										class="hls_title">여행자님</a> <a
-										href="https://www.facebook.com/ravi7284007"
-										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
-								</div>
-							</div></li>
-					</ul>
-				</div>
 
+			<div class="col-md-3 hls_sol" >
+				<img src="travel1.jpg" alt="">
+				<div class="hls_sol_data" >
+					<h1>1</h1>
+					<div class="hls_data">
+						<a href="" target="" class="hls_title">여행자님</a> <a href=""
+							class="btn btn-pro" >여행계획보기</a>
+
+					</div>
+				</div>
 			</div>
+			<div class="col-md-3 hls_sol">
+				<img src="travel1.jpg" alt="">
+				<div class="hls_sol_data">
+					<h1>2</h1>
+					<div class="hls_data">
+						<a href="" target="" class="hls_title">여행자님</a> <a href=""
+							class="btn btn-pro" >여행계획보기</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 hls_sol">
+				<img src="travel1.jpg" alt="">
+				<div class="hls_sol_data">
+					<h1>3</h1>
+					<div class="hls_data">
+						<a href="" target="" class="hls_title">여행자님</a> <a href=""
+							class="btn btn-pro" >여행계획보기</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 hls_sol">
+				<img src="travel1.jpg" alt="">
+				<div class="hls_sol_data">
+					<h1>4</h1>
+					<div class="hls_data">
+						<a href="" target="" class="hls_title">여행자님</a> <a href=""
+							class="btn btn-pro" >여행계획보기</a>
+					</div>
+				</div>
+			</div>
+
+
+
 		</div>
+		<!--bestImage 영역 끝 -->
+
 
 		<div class="row">
 			<div class="col-md-12" id="foot">
@@ -196,12 +196,12 @@
 			</div>
 		</div>
 
+
+		<!-- 	<article></article> -->
+		<footer> </footer>
+
 	</div>
-
-	<!-- 	<article></article> -->
-	<footer> </footer>
-
-
+	<!--container 끝  -->
 
 
 	<script src='source/lib/slick/slick.js'></script>

@@ -3,7 +3,7 @@
 * {
 	margin: 0;
 	padding: 0;
-	box-sizing:border-box;
+	box-sizing: border-box;
 }
 
 body {
@@ -17,13 +17,14 @@ body {
 	text-align: center;
 	line-height: 1.9;
 } */
-
 article p {
 	margin-bottom: 1em;
 }
+
 a {
 	color: #0b8793;
 }
+
 #bestPlan {
 	height: 400px;
 }
@@ -31,9 +32,9 @@ a {
 #bests {
 	height: 1200px;
 }
-#naviId{
-	height:100px;
-	
+
+#naviId {
+	height: 100px;
 }
 
 body {
@@ -45,14 +46,15 @@ body {
 	background: linear-gradient(90deg, #f9fafc 10%, #84dcf9 90%);
 	height: 1200px;
 }
-.container{
-	padding-top:140px;
-	}
-	
-#foot{
-	height:100px;
-	
-}	
+
+.container {
+	padding-top: 140px;
+}
+
+#foot {
+	height: 100px;
+}
+
 footer {
 	padding: 30px;
 	text-align: center;
@@ -65,124 +67,79 @@ footer a {
 }
 
 /* Best Images div 관련 css 입니다.  */
-#bestImage{
-	height:500px;
-	
-}
-.hls_sol img {
-	max-width: 100%;
-	height: auto;
-}
-.hls_sol ul li {
-	list-style: none;
-}
-a, a:hover {
-	text-decoration: none;
-	box-shadow: none;
-	outline: none;
-	-moz-transition: all 0.2s ease-in;
-	-o-transition: all 0.2s ease-in;
-	-webkit-transition: all 0.2s ease-in;
-	transition: all 0.2s ease-in;
-}
-h1{ text-align:left; margin:30px 0; color:black;}
-.hls_sol li {
-	width: 25%;
-	max-width: 100%;
-	display: inline-block;
-	float: left;
-	text-align: center;
+.hls_sol {
+	height: 300px;
 	overflow: hidden;
-	position: relative;
-	height: 500px
-}
-.hls_sol li img {
-	height: 100%;
-}
-.hls_sol ul {
-	padding: 0;
-	display: flow-root;
-}
-.hls_sol li:hover img {
-	-moz-transform: scale(1.1);
-	-webkit-transform: scale(1.1);
-	-ms-transform: scale(1.1);
-	-o-transform: scale(1.1);
-	transform: scale(1.1);
-}
-.hls_sol li img {
-	-webkit-transition: transform 0.5s ease;
-	-o-transition: transform 0.5s ease;
-	transition: transform 0.5s ease;
-}
-.hls_sol .hls_sol_data {
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	top: 0;
-	transition: 0.3s ease-in-out;
-	background: rgba(0,0,0,0.28);
-	visibility: hidden;
-}
-.hls_sol ul li:hover .hls_sol_data {
-	background: rgba(76, 74, 74,0.5);
-	transition: 0.3s ease-in-out;
-	visibility: visible;
-}
-.hls_data {
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	padding: 60px 20px;
-}
-.hls_data a {
-	display: block;
-}
-.hls_title {
-	text-align: right;
-	font-size: 22px;
-	border-bottom: 2px solid #c5eff9;
-	padding: 10px 0;
-	margin: 10px 0;
-	color: #fff;
-}
-.hls_title:hover {
-	color: #fff;
-}
-.hls_sol_data h3 {
-	color: #fff;
-	transition: 0.5s
-}
-.hls_sol_data:hover h3 {
-	transition: 0.5s ease;
-	margin-top: 100px;
-}
-.btn-pro {
-	border-radius: 0;
-	color: #222;
-	background: #fff;
-	display: inline-block !important;
-	float: right;
-}
-.btn-pro:hover {
-	color: #fff;
-	background: #222;
-}
-.sec_title {
-	text-align: center;
-	margin: 30px 0 30px;
-}
-.hls_data {
-	left: unset;
-	right: -310px;
-	transition: 1s ease
-}
-.hls_sol_data:hover .hls_data {
-	left: 0;
-	right: 0;
-	transition: 1s ease
+	padding: 0px;
 }
 
- 
+.hls_sol img {
+	height: 100%;
+	width: 100%;
+	opacity: 1;
+	transform: scale(1);
+	-webkit-transition: .2s ease-in-out;
+	transition: .2s ease-in-out;
+}
+
+.hls_sol:hover img {
+	opacity: 0.5;
+	transform: scale(1.2);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+.hls_sol:hover .hls_sol_data {
+	visibility: visible;
+	/* 	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out; */
+}
+
+.hls_sol_data {
+	width: 100%;
+	height: 200px;
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	visibility: hidden;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	-webkit-transition: .2s ease-in-out;
+	transition: .2s ease-in-out;
+}
+
+.hls_sol_data a {
+	color: white;
+	text-decoration: none;
+	text-align: center;
+}
+
+.hls_sol_data .btn {
+	position: absolute;
+	bottom: 0px;
+	color: white;
+	padding-right: 5px;
+	font-family: sans-serif;
+	border: #fff 1px solid;
+	transition: .5s;
+	border-radius: 0px;
+}
+
+.hls_sol_data .btn:active {
+	color: #000;
+	border: #1A1A1A 1px solid;
+	transition: .07s;
+	background-color: #FFF;
+}
+
+.hls_sol_data .btn:hover {
+	
+	-webkit-transition: .1s ease-in-out;
+	transition: .1s ease-in-out;
+	color: #10FF58;
+	padding-right: 5px;
+	transition: .5s;
+	border: #10FF58 1px solid;
+	border-radius: 10px;
+}
