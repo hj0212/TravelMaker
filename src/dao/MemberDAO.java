@@ -172,27 +172,30 @@ public class MemberDAO {
 					dto.setPart(rs.getString("part"));
 				}
 			}else if (part.equals("naver")) {
-				String sql = "select naver_nickname, naver_email from users where naver_id =?";
+				String sql = "select naver_nickname, naver_email, part from users where naver_id =?";
 				pstmt = con.prepareStatement(sql);
-				rs = pstmt.executeQuery();
 				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
 				if(rs.next()) {
+					dto = new MemberDTO();
 					dto.setNaver_nickname(rs.getString("naver_nickname"));
 					dto.setNaver_email(rs.getString("naver_email"));
 					dto.setPart(rs.getString("part"));
 				}
 			}
 			else if (part.equals("kakao")) {
-				String sql = "select kakao_nickname, kakao_email form users where kakao id = ?";
+				String sql = "select kakao_nickname, kakao_email, part from users where kakao_id = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, id);
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
-					dto.setKakao_nickname(rs.getString("kakao_nickname"));
+					dto = new MemberDTO();
+					dto.setKakao_nickname(rs.getString("KAKAO_NICKNAME"));
 					dto.setKakao_email(rs.getString("kakao_email"));
 					dto.setPart(rs.getString("part"));
 				}
 			}
+			
 			pstmt.close();
 			rs.close();
 			con.close();

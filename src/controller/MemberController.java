@@ -81,12 +81,10 @@ public class MemberController extends HttpServlet {
 			dto.setKakao_id(id);
 			dto.setKakao_nickname(name);
 			dto.setKakao_email(email);
-			
 			request.getSession().setAttribute("loginId", id);
+			request.getSession().setAttribute("part", "kakao");
 			int result=mdao.addKakaoMember(dto);
 			
-			isForward = false;
-			dst="index.jsp";		
 
 		}else if(command.equals("/admin.do")) {
 			String part = (String)request.getSession().getAttribute("part");
@@ -124,7 +122,6 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("nickname", mdto.getKakao_nickname());
 				request.setAttribute("email", mdto.getKakao_email());
 			}
-			
 			isForward = true;
 			dst="mypage.jsp";
 		}else if(command.equals("/logout.do")) {

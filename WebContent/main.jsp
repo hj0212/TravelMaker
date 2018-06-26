@@ -80,15 +80,6 @@ div {
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
-<<<<<<< HEAD
-=======
-		<div class="row" id="navi">
-			<div class="col-md-12">
-				<h1>³×ºñ¿Ã °÷</h1>
-			</div>
-		</div>
-
->>>>>>> í˜¸ì—°
 		<div class="row">
 			<div class="col-md-12" id="bestPlan">
 				<div class="data" data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
