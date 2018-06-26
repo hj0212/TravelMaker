@@ -99,6 +99,15 @@
 			  $("#userform").attr('action','join.do').submit();
 		  }
 	  })
+	  
+	  document.getElementById("pwcheck").onkeyup = function() {
+			if (document.getElementById("pwcheck").value == document
+					.getElementById("pwfield").value) {
+				document.getElementById("result").innerHTML = "<font color=blue size=2>패스워드가 일치합니다.</font>";
+			} else {
+				document.getElementById("result").innerHTML = "<font color=red size=2>패스워드가 일치하지 않습니다.</font>";
+			}
+	  }
 	});
 	
 	const showLogin = () => {
@@ -120,6 +129,57 @@
 	};
 
 </script>
+<script>
+		$(document).ready(function(){
+			Kakao.init("cf3c8a92c56d57b527e32f7519a7a4f6");
+			function getKakaotalkUserProfile(){
+				Kakao.API.request({
+					url: '/v1/user/me',
+					success: function(res) {
+						$("#kakao-profile").append(res.properties.nickname);
+						$("#kakao-profile").append($("<img/>",{"src":res.properties.profile_image,"alt":res.properties.nickname+"님의 프로필 사진"}));
+					},
+					fail: function(error) {
+						console.log(error);
+					}
+				});
+			}
+			function createKakaotalkLogin(){
+				$("#kakao-logged-group .kakao-logout-btn,#kakao-logged-group .kakao-login-btn").remove();
+				var loginBtn = $("<a/>",{"class":"kakao-login-btn","text":"로그인"});
+				loginBtn.click(function(){
+					Kakao.Auth.login({
+						persistAccessToken: true,
+						persistRefreshToken: true,
+						success: function(authObj) {
+							getKakaotalkUserProfile();
+							createKakaotalkLogout();
+						},
+						fail: function(err) {
+							console.log(err);
+						}
+					});
+				});
+				$("#kakao-logged-group").prepend(loginBtn)
+			}
+			function createKakaotalkLogout(){
+				$("#kakao-logged-group .kakao-logout-btn,#kakao-logged-group .kakao-login-btn").remove();
+				var logoutBtn = $("<a/>",{"class":"kakao-logout-btn","text":"로그아웃"});
+				logoutBtn.click(function(){
+					Kakao.Auth.logout();
+					createKakaotalkLogin();
+					$("#kakao-profile").text("");
+				});
+				$("#kakao-logged-group").prepend(logoutBtn);
+			}
+			if(Kakao.Auth.getRefreshToken()!=undefined&&Kakao.Auth.getRefreshToken().replace(/ /gi,"")!=""){
+				createKakaotalkLogout();
+				getKakaotalkUserProfile();
+			}else{
+				createKakaotalkLogin();
+			}
+		});
+	</script>
 </head>
 <body>
 	
@@ -218,6 +278,18 @@
 								     });
 									</script>
 								</div>
+								<script>
+									Kakao.init('cf3c8a92c56d57b527e32f7519a7a4f6');
+									Kakao.Auth.createLoginButton({
+								          container: '#kakao-login-btn',
+								          success: function(authObj) {
+								            alert(JSON.stringify(authObj));
+								          },
+								          fail: function(err) {
+								             alert(JSON.stringify(err));
+								          }
+								        });
+									</script>
 							</div>
 							<div class="row_margin forgot-password-row">
 								<div id="naver_id_login"></div>

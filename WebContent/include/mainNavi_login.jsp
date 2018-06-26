@@ -18,7 +18,7 @@
 				<li class="nav-item"><a class="nav-link" href="#">Schedules</a>
 				</li>
 				<li class="nav-item"><a class="nav-link" href="#">Review</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Board</a></li>
+				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -26,7 +26,7 @@
 					<div class="dropdown-menu mt-5" aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="#">MyPage</a> <a
 							class="dropdown-item" href="#">MyPlans</a> <a
-							class="dropdown-item" href="#">LogOut</a>
+							class="dropdown-item" href="logout.do">LogOut</a>
 					</div></li>
 			</ul>
 		</div>

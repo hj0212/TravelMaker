@@ -43,7 +43,7 @@ public class MemberController extends HttpServlet {
 			dst="userResult.jsp";
 			System.out.println("통과1");
 			
-		}else if(command.equals("/join.do")) {
+		} else if(command.equals("/join.do")) {
 			MemberDTO dto = new MemberDTO();
 			dto.setUserid(request.getParameter("id"));
 			dto.setPassword(request.getParameter("pw"));
@@ -55,7 +55,7 @@ public class MemberController extends HttpServlet {
 			isForward = true;
 			dst="userResult.jsp";
 			
-		}else if(command.equals("/navlogin.do")) {
+		} else if(command.equals("/navlogin.do")) {
 			
 			String id = request.getParameter("id");
 			String name = request.getParameter("name");

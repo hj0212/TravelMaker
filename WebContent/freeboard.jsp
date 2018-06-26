@@ -71,6 +71,13 @@ div {
 	float: right;
 }
 </style>
+<script>
+	$(document).ready(function() {
+		$("#searchbtn").click(function() {
+			location.href = "freeboard.bo?search=" + $("#search").val();
+		})
+	})
+</script>
 
 </head>
 <body>
@@ -88,11 +95,11 @@ div {
 				<table class="table table-light">
 					<thead>
 						<tr>
-							<th scope="col">글번호</th>
-							<th scope="col">제목</th>
-							<th scope="col">작성자</th>
-							<th scope="col">작성일</th>
-							<th scope="col">조회수</th>
+							<th scope="col" style="width: 10%; text-align:center;">글번호</th>
+							<th scope="col" style="width: 55%; text-align:center;">제목</th>
+							<th scope="col" style="width: 15%; text-align:center;">작성자</th>
+							<th scope="col" style="width: 10%; text-align:center;">작성일</th>
+							<th scope="col" style="width: 10%; text-align:center;">조회수</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -100,12 +107,12 @@ div {
 							<c:when test="${freeboardlist[0] != null}">
 								<c:forEach var="item" items="${freeboardlist}">
 									<tr>
-										<td>${item.seq}</td>
+										<td align="center">${item.free_seq}</td>
 										<td class="titlearea"><a
-											href="viewArticle.bo?seq=${item.seq}&writer=${item.writer}&proc=view&comseq=0">${item.title}</a></td>
-										<td><a href="">${item.writer}</a></td>
-										<td>${item.writedate}</td>
-										<td>${item.viewcount}</td>
+											href="viewArticle.bo?seq=${item.free_seq}&writer=${item.free_writer}&proc=view&comseq=0">${item.free_title}</a></td>
+										<td align="center"><a href="">${item.free_writer}</a></td>
+										<td align="center">${item.free_writedate}</td>
+										<td align="center">${item.free_viewcount}</td>
 									</tr>
 								</c:forEach>
 							</c:when>
@@ -116,20 +123,10 @@ div {
 							</c:otherwise>
 						</c:choose>
 						<tr>
-							<td colspan="5">
+							<td colspan="5" align="center">
 								<nav aria-label="Page navigation example">
 									<ul class="pagination">
-										<li class="page-item"><a class="page-link" href="#"
-											aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-												<span class="sr-only">Previous</span>
-										</a></li>
-										<li class="page-item"><a class="page-link" href="#">1</a></li>
-										<li class="page-item"><a class="page-link" href="#">2</a></li>
-										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#"
-											aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-												<span class="sr-only">Next</span>
-										</a></li>
+										${pageNavi}
 									</ul>
 								</nav>
 							</td>
@@ -139,7 +136,7 @@ div {
 							<button type="button" class="btn btn-primary" id="writebtn">글쓰기</button>
 								<div class="input-group mb-3" id="search_area">
 									<input type="text" class="form-control" placeholder="제목 검색"
-										aria-label="reply" aria-describedby="basic-addon2">
+										aria-label="reply" aria-describedby="basic-addon2" id="search">
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="button"
 											id="searchbtn" name="searchbtn">검색</button>
