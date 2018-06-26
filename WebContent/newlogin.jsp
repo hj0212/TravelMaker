@@ -9,14 +9,16 @@
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
 <link rel="stylesheet" href="source/css/codepenNavi.css">
+
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript"
 	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
 	charset="utf-8"></script>
 <style>
-#container {
+#container {  
 	width: 800px;
 	margin: 0 auto;
 	padding-top: 100px;
@@ -171,10 +173,13 @@
 	</script>
 </head>
 <body>
-	<h1 id="title" class="center">
+	
+	<div id="container">
+		<div class="row">
+			<h1 id="title" class="center col s12">
 		<a href="main.jsp">TRAVEL MAKER</a>
 	</h1>
-	<div id="container">
+		</div>
 		<div class="row">
 			<div id="loginarea">
 				<div class="card white hoverable" id="loginbox">
@@ -225,10 +230,44 @@
 								<a class="btn-login btn blue lighten-1 waves-effect white-text"
 									id="loginbtn">Log In</a>
 							</div>
+							
 							<div class="row_margin forgot-password-row">
 								<div id="kakao_btn_changed">
 									<a id="kakao-login-btn"></a> <a
 										href="http://developers.kakao.com/logout"></a>
+									<script>
+									Kakao.init('cf3c8a92c56d57b527e32f7519a7a4f6');
+								    // 카카오 로그인 버튼을 생성합니다.
+								    Kakao.Auth.createLoginButton({
+								      	container: '#kakao-login-btn',
+								      	success: function(authObj) {
+								    	 	 Kakao.API.request({
+								    	       	url: '/v1/user/me',
+								    	      	success: function(res) {								    	             
+								    	            $.ajax({
+								    	            	type:"post",
+								    	            	dataType:"json",
+								    	            	url:"kakaologin.do",
+								    	            	data:{
+								    	            		id:res.id,
+								    	            		name:res.properties.nickname,
+								    	            		email:res.kaccount_email
+								    	             	},
+								    	            	success:function(data) {
+								    	            		location.href = "main.jsp";
+								    	            	},
+								    	            	error:function(data) {
+								    	            		location.href = "main.jsp";
+								    	            	}
+													})
+												},
+								      			fail: function(err) {
+								         			alert(JSON.stringify(err));
+								      			}
+								    		});
+								    	}
+								     });
+									</script>
 								</div>
 								<script>
 									Kakao.init('cf3c8a92c56d57b527e32f7519a7a4f6');
@@ -265,5 +304,4 @@
 		</div>
 	</div>
 </body>
-<!--  <script src="source/js/kakaologin.js"></script>-->
 </html>
