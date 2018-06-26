@@ -77,7 +77,7 @@ public class MemberController extends HttpServlet {
 		
 			isForward = true;
 			dst="newlogin.jsp";	
-<<<<<<< Updated upstream
+
 		}else if(command.equals("/kakao.do")) {
 			String id = request.getParameter("id");
 			String email = request.getParameter("email");
@@ -92,7 +92,7 @@ public class MemberController extends HttpServlet {
 			dto.setNaver_nickname(nickname);
 			
 			
-=======
+
 		}else if(command.equals("/admin.do")) {
 			String part = (String)request.getSession().getAttribute("part");
 			String id = (String)request.getSession().getAttribute("loginId");
@@ -132,7 +132,7 @@ public class MemberController extends HttpServlet {
 			
 			isForward = true;
 			dst="mypage.jsp";
->>>>>>> Stashed changes
+
 		}
 			
 		
