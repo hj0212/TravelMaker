@@ -11,8 +11,8 @@ import javax.mail.internet.MimeMessage;
 
 public class SendMail {
 	String host     = "smtp.gmail.com";
-	final String user   = "winhae@gmail.com";	// ³×ÀÌ¹ö ¾ÆÀÌµð
-	final String password  = "eunice93";	// ³×ÀÌ¹ö ºñ¹ø
+	final String user   = "winhae@gmail.com";	// ï¿½ï¿½ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½Ìµï¿½
+	final String password  = "";	// ï¿½ï¿½ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½
 
 
 
@@ -32,7 +32,7 @@ public class SendMail {
 
 	public void send(String id, String email, String pw){
 
-		String mailTo = email;  //¼ö½ÅÀÚ¸ÞÀÏÁÖ¼Ò
+		String mailTo = email;  //ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½
 		// Get the session object
 		Properties props = new Properties();
 		props.put("mail.smtp.host", host);
@@ -55,13 +55,13 @@ public class SendMail {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
 
 			// Subject
-			message.setSubject("[TravelMaker] ÀÓ½Ãºñ¹Ð¹øÈ£ ¹ß¼Û");
+			message.setSubject("[TravelMaker] ï¿½Ó½Ãºï¿½Ð¹ï¿½È£ ï¿½ß¼ï¿½");
 
 			// Text
 			message.setText("----------TravelMaker-----------"
-					+ id +" ´ÔÀÇ ÀÓ½Ã ºñ¹Ð¹øÈ£´Â "
-							+ "["   + pw +   "]ÀÔ´Ï´Ù. "
-							+ "ÇØ´ç ºñ¹Ð¹øÈ£·Î ·Î±×ÀÎ ÈÄ, ºñ¹Ð¹øÈ£¸¦ ¼öÁ¤ÇØÁÖ¼¼¿ä.");
+					+ id +" ï¿½ï¿½ï¿½ï¿½ ï¿½Ó½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ "
+							+ "["   + pw +   "]ï¿½Ô´Ï´ï¿½. "
+							+ "ï¿½Ø´ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
 
 			// send the message
 			Transport.send(message);
