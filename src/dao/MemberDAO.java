@@ -71,7 +71,27 @@ public class MemberDAO {
 
 		return 0;
 	}
+	
+	public int addKakaoMember(MemberDTO dto) throws Exception {
+		if(!kakaocheck(dto.getKakao_id())) {
+			Connection con = DBConnection.getConnection();
+			String sql = "insert into users (seq, kakao_id, kakao_nickname, kakao_email, part) VALUES (users_seq.nextval, ?, ?, ?, 'kakao')";
+			PreparedStatement pstmt = con.prepareStatement(sql);
 
+			pstmt.setString(1, dto.getKakao_id());
+			pstmt.setString(2, dto.getKakao_nickname());
+			pstmt.setString(3, dto.getKakao_email());
+
+			int result = pstmt.executeUpdate();		
+			con.commit();
+			pstmt.close();
+			con.close();
+			return result;	
+		}
+
+		return 0;
+	}
+	
 	private boolean check(String id) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where userid=?";
@@ -96,6 +116,27 @@ public class MemberDAO {
 	private boolean navercheck(String id) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where naver_id=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+
+		pstmt.setString(1, id);
+		ResultSet rs = pstmt.executeQuery();
+		boolean result;
+		if(rs.next()) {
+			result = true;
+		} else {
+			result = false;
+		}
+
+		rs.close();
+		con.close();
+		pstmt.close();
+
+		return result;
+	}
+	
+	private boolean kakaocheck(String id) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from users where kakao_id=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 
 		pstmt.setString(1, id);

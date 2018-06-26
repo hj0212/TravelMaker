@@ -6,19 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
 <link rel="stylesheet" href="source/css/codepenNavi.css">
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+	charset="utf-8"></script>
 <style>
 #container {
 	width: 800px;
@@ -75,8 +73,6 @@
 	border-bottom: 2px solid #64b5f6;
 }
 
-
-
 .row_margin {
 	margin-left: auto;
 	margin-right: auto;
@@ -126,15 +122,13 @@
 </script>
 </head>
 <body>
-	<c:choose>
-		<c:when test="${sessionScope.loginId !=null}">
-			<%@include file="include/mainNavi_login.jsp"%>
-		</c:when>
-		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
-		</c:otherwise>
-	</c:choose>
+	
 	<div id="container">
+		<div class="row">
+			<h1 id="title" class="center col s12">
+		<a href="main.jsp">TRAVEL MAKER</a>
+	</h1>
+		</div>
 		<div class="row">
 			<div id="loginarea">
 				<div class="card white hoverable" id="loginbox">
@@ -148,35 +142,37 @@
 							</div>
 						</div>
 						<form id="userform" method="post">
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="user_id" type="text" class="validate" name="id"> <label for="user_id">id</label>
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="user_id" type="text" class="validate" name="id">
+									<label for="user_id">id</label>
+								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="password" type="password" class="validate" name="pw"> <label
-									for="password" class="grey-text text-lighten-1">password</label>
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="password" type="password" class="validate" name="pw">
+									<label for="password" class="grey-text text-lighten-1">password</label>
+								</div>
 							</div>
-						</div>
-						<div class="row confirm-password-row">
-							<div class="input-field confirm-password-field col s12">
-								<input id="confirm-password" type="password" class="validate" name="cpw">
-								<label for="confirm-password">confirm password</label>
+							<div class="row confirm-password-row">
+								<div class="input-field confirm-password-field col s12">
+									<input id="confirm-password" type="password" class="validate"
+										name="cpw"> <label for="confirm-password">confirm
+										password</label>
+								</div>
 							</div>
-						</div>
-						<div class="row confirm-password-row">
-							<div class="input-field confirm-password-field col s12">
-								<input id="nickname" type="text" class="validate" name="nickname"> <label
-									for="nickname">name</label>
+							<div class="row confirm-password-row">
+								<div class="input-field confirm-password-field col s12">
+									<input id="nickname" type="text" class="validate"
+										name="nickname"> <label for="nickname">name</label>
+								</div>
 							</div>
-						</div>
-						<div class="row confirm-password-row">
-							<div class="input-field confirm-password-field col s12">
-								<input id="email" type="email" class="validate" name="email"> <label
-									for="email">Email</label>
+							<div class="row confirm-password-row">
+								<div class="input-field confirm-password-field col s12">
+									<input id="email" type="email" class="validate" name="email">
+									<label for="email">Email</label>
+								</div>
 							</div>
-						</div>
 						</form>
 						<div class="card-action center" id="card_bottom">
 							<div class="row_margin">
@@ -188,6 +184,39 @@
 								<div id="kakao_btn_changed">
 									<a id="kakao-login-btn"></a> <a
 										href="http://developers.kakao.com/logout"></a>
+									<script>
+									Kakao.init('cf3c8a92c56d57b527e32f7519a7a4f6');
+								    // 카카오 로그인 버튼을 생성합니다.
+								    Kakao.Auth.createLoginButton({
+								      	container: '#kakao-login-btn',
+								      	success: function(authObj) {
+								    	 	 Kakao.API.request({
+								    	       	url: '/v1/user/me',
+								    	      	success: function(res) {								    	             
+								    	            $.ajax({
+								    	            	type:"post",
+								    	            	dataType:"json",
+								    	            	url:"kakaologin.do",
+								    	            	data:{
+								    	            		id:res.id,
+								    	            		name:res.properties.nickname,
+								    	            		email:res.kaccount_email
+								    	             	},
+								    	            	success:function(data) {
+								    	            		location.href = "main.jsp";
+								    	            	},
+								    	            	error:function(data) {
+								    	            		location.href = "main.jsp";
+								    	            	}
+													})
+												},
+								      			fail: function(err) {
+								         			alert(JSON.stringify(err));
+								      			}
+								    		});
+								    	}
+								     });
+									</script>
 								</div>
 							</div>
 							<div class="row_margin forgot-password-row">
@@ -212,5 +241,4 @@
 		</div>
 	</div>
 </body>
-<script src="source/js/kakaologin.js"></script>	
 </html>

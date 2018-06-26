@@ -18,26 +18,6 @@ public class MemberDTO {
 	private String block;
 	
 	public MemberDTO() {}
-	public MemberDTO(int seq, String userid, String password, String email, String nickname, String naver_id,
-			String naver_nickname, String naver_email, String kakao_id, String kakao_nickname, String kakao_email,
-			String modify_date, String create_date , String part, String block) {
-		super();
-		this.seq = seq;
-		this.userid = userid;
-		this.password = password;
-		this.email = email;
-		this.nickname = nickname;
-		this.naver_id = naver_id;
-		this.naver_nickname = naver_nickname;
-		this.naver_email = naver_email;
-		this.kakao_id = kakao_id;
-		this.kakao_nickname = kakao_nickname;
-		this.kakao_email = kakao_email;
-		this.modify_date = modify_date;
-		this.create_date = create_date;
-		this.part = part;
-		this.block = block;
-	}
 	
 	public int getSeq() {
 		return seq;
