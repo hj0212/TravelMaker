@@ -111,7 +111,6 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("nickname", mdto.getKakao_nickname());
 				request.setAttribute("email", mdto.getKakao_email());
 			}
-			
 			isForward = true;
 			dst="admin.jsp";
 		}else if(command.equals("/mypage.do")) {
