@@ -13,8 +13,7 @@ hr{
 	margin-bottom:5px;
 }
 .divLine{
-	margin-top:20px;
-	
+	margin-top:20px;	
 }
 
 
@@ -25,9 +24,6 @@ hr{
 	line-height: 1.9;
 } */
 
-.navbar-brand{
-	font-size:30px;
-}
 article p {
 	margin-bottom: 1em;
 }
@@ -68,6 +64,17 @@ footer a {
 	color: #666;
 	text-decoration: none;
 }
+
+/*네비 관련 css입니다. */
+.navbar-brand{
+	font-size:30px;
+}
+.dropdown-menu{
+	margin-right:10px;
+	
+}
+
+
 
 /* Best Images div 관련 css 입니다.  */
 .hls_sol {
@@ -125,7 +132,7 @@ footer a {
 	padding-right: 5px;
 	font-family: sans-serif;
 	border: #fff 1px solid;
-	transition: .5s;
+	/* transition: .1s; */
 	border-radius: 0px;
 }
 
