@@ -8,40 +8,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:choose>
-		<c:when test="${proc==login}">
-			<c:choose>
-				<c:when test="${loginResult==true}">
-					<script>
-						alert("로그인 성공");
-						location.href = "index.jsp";
-					</script>
-				</c:when>
-				<c:otherwise>
-					<script>
-						alert("로그인 실패");
-						location.href = "login.jsp";
-					</script>
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-		<c:otherwise>
-			<c:choose>
-				<c:when test="${addResult==1}">
-					<script>
-						alert("가입을 축하합니다! 로그인해주세요");
-						location.href = "login.jsp";
-					</script>
-				</c:when>
-				<c:otherwise>
-					<script>
-						alert("다시 시도해 주세요.");
-						location.href = "login.jsp";
-					</script>
-				</c:otherwise>
-			</c:choose>
-		</c:otherwise>
-	</c:choose>
+	<script>
+		if(${proc=="login"}) {
+			if(${loginResult==true}) {
+				console.log("로그인 성공");
+			} else {
+				console.log("로그인 실패");
+			}
+		} else if(${proc=="join"}){
+			if(${joinResult==1}) {
+				console.log("가입 성공");
+			} else {
+				console.log("가입 실패");
+			}
+		}
+	
+	</script>
 
 </body>
 </html>

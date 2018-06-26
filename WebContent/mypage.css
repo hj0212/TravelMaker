@@ -3131,7 +3131,7 @@ tbody.collapse.show {
 .card-columns .card {
   margin-bottom: 0.75rem; }
 
-@media (min-width: 576px) {
+@media (min-width: 300px) {
   .card-columns {
     column-count: 3;
     column-gap: 1.25rem; }

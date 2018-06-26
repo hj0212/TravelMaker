@@ -15,11 +15,8 @@
 				
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-<<<<<<< HEAD
-					" ws://192.168.20.31:8080/WEB_SOCKET_0611/websocket ");
-=======
 					" ws://192.168.20.37:8080/TravelMaker/websocket");
->>>>>>> newlogin
+
 		
 			var str;
 		

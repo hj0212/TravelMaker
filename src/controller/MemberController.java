@@ -33,9 +33,10 @@ public class MemberController extends HttpServlet {
 			dto.setUserid(request.getParameter("id"));
 			dto.setPassword(request.getParameter("pw"));
 			boolean result = mdao.loginMember(dto);
+			request.setAttribute("proc", "login");
 			request.setAttribute("loginResult", result);	
 			isForward = true;
-			dst="userResult.jsp?proc=login";
+			dst="userResult.jsp";
 			
 		}else if(command.equals("/join.do")) {
 			MemberDTO dto = new MemberDTO();
@@ -44,9 +45,11 @@ public class MemberController extends HttpServlet {
 			dto.setNickname(request.getParameter("nickname"));
 			dto.setEmail(request.getParameter("email"));
 			int result=mdao.addMember(dto);	
+			request.setAttribute("proc", "join");
 			request.setAttribute("joinResult", result);	
 			isForward = true;
-			dst="userResult.jsp?proc=join";
+			dst="userResult.jsp";
+			
 		}else if(command.equals("/navlogin.do")) {
 			
 			String id = request.getParameter("id");
@@ -63,11 +66,27 @@ public class MemberController extends HttpServlet {
 			isForward = false;
 			dst="index.jsp";		
 
+		}else if(command.equals("/kakaologin.do")) {
+			String id = request.getParameter("id");
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			System.out.println("id: " + id + ", name: " + name + ", email: " + email);
+			MemberDTO dto = new MemberDTO();
+			dto.setKakao_id(id);
+			dto.setKakao_nickname(name);
+			dto.setKakao_email(email);
+			
+			request.getSession().setAttribute("loginId", id);
+			int result=mdao.addKakaoMember(dto);
+			
+			isForward = false;
+			dst="index.jsp";		
+
 		}else if(command.equals("/logout.do")) {
 			request.getSession().invalidate();
 		
 			isForward = true;
-			dst="login.html";	
+			dst="newlogin.jsp";	
 		}
 		
 		if(isForward) {
