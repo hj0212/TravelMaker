@@ -17,7 +17,6 @@ public class MemberDTO {
 	private String part;
 	private String block;
 	
-	
 	public MemberDTO() {}
 	
 	public int getSeq() {
