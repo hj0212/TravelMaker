@@ -10,6 +10,7 @@
 	
 %>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<<<<<<< HEAD
 <script>
 	window.onload = function() {
 				
@@ -44,26 +45,29 @@
 				$("#livechathistory").append("<hr class=livehr><div class=chat-message clearfix><img src=https://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32 alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>" + obj.id + "</h5><p class=livep>" + obj.msg + "</p></div></div>");
 			};
 			ws.onclose = function() {
+=======
+>>>>>>> KakaoAPI
 
-			};
 
-		} else {
-			alert("브라우저가 웹소켓을 지원하지 않습니다");
-		}
-		
-	}
-</script>
-<link rel="stylesheet" href="css/livechat.css" type="text/css">
 </head>
 <body>
 
 <p id="p">${sessionScope.loginId }</p>
 <button id="logout" type="button" >logout</button>
+<button id="board" type="button" >board</button>
+<jsp:include page="chat.jsp" flush="false"/>
+
+
 
 <script src='https://developers.kakao.com/sdk/js/kakao.min.js'></script>
 <script src="js/kakaologin.js">
 </script>
+
 <script>
+$("#board").click(function(){
+	location.href="freeboardlist.jsp";
+	
+});
 document.getElementById("logout").onclick = function(){	
 		setTimeout(function() {
 		    Kakao.Auth.logout(function() { alert("로그아웃되었습니다"); });
@@ -72,6 +76,7 @@ document.getElementById("logout").onclick = function(){
 	
 <<<<<<< Updated upstream
 }
+<<<<<<< HEAD
 =======
 
 	
@@ -156,6 +161,8 @@ $("#admin").click(function(){
 $("#mypage").click(function(){
 	location.href="mypage.do";
 })
+=======
+>>>>>>> KakaoAPI
 </script>
 </body>
 </html>
