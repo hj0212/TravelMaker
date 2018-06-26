@@ -8,8 +8,15 @@
 
 body {
 	font-family: 'Lato', sans-serif;
-	background: #eee;
 }
+hr{
+	margin-bottom:5px;
+}
+.divLine{
+	margin-top:20px;
+	
+}
+
 
 /* article {
 	height: 1000px;
@@ -17,6 +24,10 @@ body {
 	text-align: center;
 	line-height: 1.9;
 } */
+
+.navbar-brand{
+	font-size:30px;
+}
 article p {
 	margin-bottom: 1em;
 }
@@ -27,6 +38,7 @@ a {
 
 #bestPlan {
 	height: 400px;
+	margin-bottom:20px;
 }
 
 #bests {
@@ -37,18 +49,9 @@ a {
 	height: 100px;
 }
 
-body {
-	background: #1d76a6;
-	background: -webkit-linear-gradient(90deg, #f9fafc 10%, #84dcf9 90%);
-	background: -moz-linear-gradient(90deg, #f9fafc 10%, #84dcf9 90%);
-	background: -ms-linear-gradient(90deg, #f9fafc 10%, #84dcf9 90%);
-	background: -o-linear-gradient(90deg, #f9fafc 10%, #84dcf9 90%);
-	background: linear-gradient(90deg, #f9fafc 10%, #84dcf9 90%);
-	height: 1200px;
-}
-
 .container {
 	padding-top: 140px;
+	height:100%;
 }
 
 #foot {

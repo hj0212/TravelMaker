@@ -8,24 +8,15 @@
 <title>Insert title here</title>
 <!-- 부트 스트랩 코드-->
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-	integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
-	crossorigin="anonymous">
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-	crossorigin="anonymous"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
-	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-	crossorigin="anonymous"></script>
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
-
-<link rel="stylesheet" href="source/css/codepenNavi.css">
+<link rel="stylesheet" href="source/css/mainPage.css">
 
 
 
@@ -60,7 +51,7 @@ div {
 	height: 100px;
 }
 
-.data, .data div{
+.data, .data div {
 	height: 400px;
 }
 
@@ -80,133 +71,137 @@ div {
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
-		<div class="row">
+
+		<h1 class="divLine">BEST PLAN</h1>
+		<hr />
+		<div class="row" id="bestPlanRow">
 			<div class="col-md-12" id="bestPlan">
-				<div class="data" data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
-				<div class="item">
-					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
+				<div class="data"
+					data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
+					<div class="item">
+						<div class="card col-md-12 col-sm-12 w-100">
+							<div class="card-header">Header</div>
+							<div class="card-body">
+								<h4>Card title</h4>
+								<h6 class="text-muted">Subtitle</h6>
+								<p>Some quick example text to build on the card title .</p>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<div class="card col-md-12 col-sm-12 w-100">
+							<div class="card-header">Header</div>
+							<div class="card-body">
+								<h4>Card title</h4>
+								<h6 class="text-muted">Subtitle</h6>
+								<p>Some quick example text to build on the card title .</p>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<div class="card col-md-12 col-sm-12 w-100">
+							<div class="card-header">Header</div>
+							<div class="card-body">
+								<h4>Card title</h4>
+								<h6 class="text-muted">Subtitle</h6>
+								<p>Some quick example text to build on the card title .</p>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<div class="card col-md-12 col-sm-12 w-100">
+							<div class="card-header">Header</div>
+							<div class="card-body">
+								<h4>Card title</h4>
+								<h6 class="text-muted">Subtitle</h6>
+								<p>Some quick example text to build on the card title .</p>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<div class="card col-md-12 col-sm-12 w-100">
+							<div class="card-header">Header</div>
+							<div class="card-body">
+								<h4>Card title</h4>
+								<h6 class="text-muted">Subtitle</h6>
+								<p>Some quick example text to build on the card title .</p>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<div class="card col-md-12 col-sm-12 w-100">
+							<div class="card-header">Header</div>
+							<div class="card-body">
+								<h4>Card title</h4>
+								<h6 class="text-muted">Subtitle</h6>
+								<p>Some quick example text to build on the card title .</p>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="item">
-					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item">
-					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item">
-					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item">
-					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item">
-					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-			</div>
-			</div>
-		</div>
-
-				<div class="row" id="bestImage">
-			<h1>BEST IMAGE</h1>
-			<div class="col-md-12">
-				<div class="hls_sol">
-					<ul>
-						<li><img src="travel1.jpg" alt="">
-							<div class="hls_sol_data">
-								<h3>1위</h3>
-								<div class="hls_data">
-									<a href="https://500px.com/ravi7284007" target="_blank"
-										class="hls_title">여행자님</a> <a
-										href="#https://www.facebook.com/ravi7284007"
-										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
-								</div>
-							</div></li>
-						<li><img src="travel1.jpg" alt="">
-							<div class="hls_sol_data">
-								<h3>2위</h3>
-								<div class="hls_data">
-									<a href="https://500px.com/ravi7284007" target="_blank"
-										class="hls_title">여행자님</a> <a
-										href="https://www.facebook.com/ravi7284007"
-										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
-								</div>
-							</div></li>
-						<li><img src="travel1.jpg" alt="">
-							<div class="hls_sol_data">
-								<h3>3위</h3>
-								<div class="hls_data">
-									<a href="https://500px.com/ravi7284007" target="_blank"
-										class="hls_title">여행자님</a> <a
-										href="https://www.facebook.com/ravi7284007"
-										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
-								</div>
-							</div></li>
-						<li><img src="travel1.jpg" alt="">
-							<div class="hls_sol_data">
-								<h3>4위</h3>
-								<div class="hls_data">
-									<a href="https://500px.com/ravi7284007" target="_blank"
-										class="hls_title">여행자님</a> <a
-										href="https://www.facebook.com/ravi7284007"
-										class="btn btn-pro" target="_blank"> 여행기록 보러가기</a>
-								</div>
-							</div></li>
-					</ul>
-				</div>
-
 			</div>
 		</div>
 
+		<h1 class="divLine">BEST IMAGE</h1>
+		<hr />
+		<div class="row" id="bestImage">
+
+			<div class="col-md-3 hls_sol">
+				<img src="travel1.jpg" alt="">
+				<div class="hls_sol_data">
+					<h1>1</h1>
+					<div class="hls_data">
+						<a href="" target="" class="hls_title">여행자님</a> <a href=""
+							class="btn btn-pro">여행계획보기</a>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 hls_sol">
+				<img src="travel1.jpg" alt="">
+				<div class="hls_sol_data">
+					<h1>2</h1>
+					<div class="hls_data">
+						<a href="" target="" class="hls_title">여행자님</a> <a href=""
+							class="btn btn-pro">여행계획보기</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 hls_sol">
+				<img src="travel1.jpg" alt="">
+				<div class="hls_sol_data">
+					<h1>3</h1>
+					<div class="hls_data">
+						<a href="" target="" class="hls_title">여행자님</a> <a href=""
+							class="btn btn-pro">여행계획보기</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 hls_sol">
+				<img src="travel1.jpg" alt="">
+				<div class="hls_sol_data">
+					<h1>4</h1>
+					<div class="hls_data">
+						<a href="" target="" class="hls_title">여행자님</a> <a href=""
+							class="btn btn-pro">여행계획보기</a>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+		<!--bestImage 영역 끝 -->
+		<h1 class="divLine">푸터올 곳</h1>
+		<hr />
 		<div class="row">
 			<div class="col-md-12" id="foot">
-				<h1>푸터올 곳</h1>
+				
 			</div>
 		</div>
 
 	</div>
-	<script
-		src='source/lib/slick/slick.js'></script>
+	<script src='source/lib/slick/slick.js'></script>
 	<script>
 		$('.data').slick({
 			dots : true,

@@ -2,9 +2,10 @@
 	pageEncoding="UTF-8"%> --%>
 
 <header>
-	
-	<nav class="navbar fixed-top navbar-expand-lg navbar-light shadow-sm" style="background-color: #e3f2fd;" id="naviId">		
-		<a class="navbar-brand" href="#">TravelMaker</a>
+
+	<nav class="navbar fixed-top navbar-right navbar-expand-lg navbar-light shadow-sm"
+		style="background-color: #e3f2fd;" id="naviId">
+		<a class="navbar-brand" href="main.jsp">TravelMaker</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -22,13 +23,16 @@
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> userId </a>
-					<div class="dropdown-menu mt-5" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="#">MyPage</a> <a
-							class="dropdown-item" href="#">MyPlans</a> <a
-							class="dropdown-item" href="#">LogOut</a>
-					</div></li>
-			</ul>
+					aria-haspopup="true" aria-expanded="false"> userId<b class="caret"></b> <span
+						class="caret"></span></a>
+					<ul class="dropdown-menu mt-1 mr-5"
+						aria-labelledby="navbarDropdownMenuLink">
+						<li><a class="dropdown-item" href="mypage.jsp">MyPage</a></li>
+						<li><a class="dropdown-item" href="traveldiary.html">MyPlans</a></li>
+						<li><a class="dropdown-item" href="#">LogOut</a></li>
+					</ul>
+		</li>
+		</ul>
 		</div>
 	</nav>
 
