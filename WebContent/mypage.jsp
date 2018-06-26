@@ -52,7 +52,15 @@
             <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
             <div class="card-body h-100 py-4 my-5">
               <h4 class="card-title my-4">${nickname}</h4>
-              <script>
+              <c:choose>
+              <c:when test="${email eq null}">
+              <h4 class="my-4">이메일을 입력해주세요</h4>
+              </c:when>
+              <c:otherwise>
+               <h4 class="my-4">${email}</h4>
+              </c:otherwise>
+              </c:choose>
+              <%-- <script>
               if(${email eq null}){
             	  </script>
             	  <h4 class="my-4">이메일을 입력해주세요</h4>
@@ -62,8 +70,21 @@
               <h4 class="my-4">${email}</h4>
               <script>
               }
-              </script>
-  		<a href="#" class="btn">정보수정</a>
+              </script> --%>
+  		<a href="#" class="btn dropdown-toggle" id="editlink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">정보수정</a>
+  		<div class="dropdown mt-5 z-index:3" aria-labelledby="editlink">
+  		<c:choose>
+  		<c:when test="${sessionScope.part eq 'home'}">
+  		<a class="dropdown-item " href="#" id="editInfo">회원정보</a>
+  		<a class="dropdown-item" href="#" id="editPw">비밀번호</a>
+  		<a class="dropdown-item" href="#" id="updateEmail">이메일</a>
+  		</c:when>
+  		<c:otherwise>
+  		<a class="dropdown-item" href="#" id="updateEmail">이메일</a>
+  		</c:otherwise>
+  		</c:choose>
+  		
+  		</div>
             </div>
           </div>
         </div>
@@ -287,6 +308,36 @@
 
 })(jQuery);
 
+
+$(function() {
+	$('.dropdown').hide(); 
+	// Dropdown toggle
+	$('.dropdown-toggle').click(function(){
+	  $(this).next('.dropdown').toggle();
+	});
+
+	$(document).click(function(e) {
+	  var target = e.target;
+	  if (!$(target).is('.dropdown-toggle') && !$(target).parents().is('.dropdown-toggle')) {
+	    $('.dropdown').hide();
+	  }
+	});
+
+	});
+
+$("#editInfo").click(function(){
+	/* location.href="toPwCheck.do"; */
+	window.open("toPwCheck.do","_blank","width=500, height=300, scrollbars=no");
+})
+
+$("#updateEmail").click(function(){
+	/* location.href="toUpdateEmail.do"; */
+	window.open("toUpdateEmail.do","_blank","width=500, height=300, scrollbars=no");
+})
+
+$("#editPw").click(function(){
+	window.open("toPwTrueCheck.do","_blank","width=500, height=300, scrollbars=no");
+})
 </script>
 
 

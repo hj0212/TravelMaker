@@ -192,8 +192,8 @@
 								      	success: function(authObj) {
 								    	 	 Kakao.API.request({
 								    	       	url: '/v1/user/me',
-								    	      	success: function(res) {								    	             
-								    	            $.ajax({
+								    	      	success: function(res) {							
+								    	        	 $.ajax({
 								    	            	type:"post",
 								    	            	dataType:"json",
 								    	            	url:"kakaologin.do",
