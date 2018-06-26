@@ -8,12 +8,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="mypage.css" type="text/css">
-  <style>
-  .py-5{
-  padding: 0 !important;
-  }
-  </style>
+  <link rel="stylesheet" href="source/css/mypage.css" type="text/css">
 </head>
 
 <body>
