@@ -87,11 +87,6 @@ public class MemberController extends HttpServlet {
 			isForward = false;
 			dst="index.jsp";		
 
-		}else if(command.equals("/logout.do")) {
-			request.getSession().invalidate();
-		
-			isForward = true;
-			dst="newlogin.jsp";	
 		}else if(command.equals("/admin.do")) {
 			String part = (String)request.getSession().getAttribute("part");
 			String id = (String)request.getSession().getAttribute("loginId");
