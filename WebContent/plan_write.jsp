@@ -70,6 +70,19 @@
 	text-align: center;
 	vertical-align: middle;
 }
+
+tr.active{
+  background-color: #eee;
+}
+
+tr.new th, tr.new td {
+	border: 1px solid black;
+	box-sizing: border-box;
+}
+
+#schedule-plan div {
+	display:inline;
+}
 </style>
 
 </head>
@@ -106,57 +119,17 @@
 				</thead>
 				<tbody id="schedule-tbody"
 					style="table-layout: fixed; word-break: break-all;">
-					<tr>
-						<th scope="row">1</th>
-						<td>Mark</td>
-						<td style="padding: 0px;"><textarea class="form-control"
-								readonly
-								style="overflow-y: auto; background-color: white; resize: none;"></textarea></td>
-						<td style="padding: 0px;"><textarea class="form-control"
-								readonly
-								style="overflow-y: auto; background-color: white; resize: none;"></textarea></td>
-						<td style="padding: 0px;"><textarea class="form-control"
-								readonly
-								style="overflow-y: auto; background-color: white; resize: none;"></textarea></td>
+					<tr class="clickable-row active new">
+						<th scope="row" style="height:50px;"></th>
+						<td name="place"></td>
+						<td name="schedule"></td>
+						<td name="money"></td>
+						<td name="reference"></td>
 						<td><button style="float: left; border: none" type="button"
 								class="btn btn-outline-danger">
 								<i class="far fa-times-circle"></i>
 							</button></td>
 
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>Jacob</td>
-						<td style="padding: 0px;"><textarea class="form-control"
-								readonly
-								style="overflow-y: auto; background-color: white; resize: none;"></textarea></td>
-						<td style="padding: 0px;"><textarea class="form-control"
-								readonly
-								style="overflow-y: auto; background-color: white; resize: none;"></textarea></td>
-						<td style="padding: 0px;"><textarea class="form-control"
-								readonly
-								style="overflow-y: auto; background-color: white; resize: none;"></textarea></td>
-						<td><button style="float: left; border: none" type="button"
-								class="btn btn-outline-danger">
-								<i class="far fa-times-circle"></i>
-							</button></td>
-					</tr>
-					<tr>
-						<th scope="row">3</th>
-						<td>Larry the Bird</td>
-						<td style="padding: 0px;"><textarea class="form-control"
-								readonly
-								style="overflow-y: auto; background-color: white; resize: none;"></textarea></td>
-						<td style="padding: 0px;"><textarea class="form-control"
-								readonly
-								style="overflow-y: auto; background-color: white; resize: none;"></textarea></td>
-						<td style="padding: 0px;"><textarea class="form-control"
-								readonly
-								style="overflow-y: auto; background-color: white; resize: none;"></textarea></td>
-						<td><button style="float: left; border: none" type="button"
-								class="btn btn-outline-danger">
-								<i class="far fa-times-circle"></i>
-							</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -246,7 +219,7 @@
 			<table class="table table-bordered" id="plan-table">
 				<thead></thead>
 				<tbody id="plan-tbody">
-
+					<tr><th style='background-color: #e9e9e9 ;text-align: center;vertical-align: middle' >1일차</th><td style='width: 70%'></td></tr>
 
 				</tbody>
 
@@ -264,7 +237,6 @@
 </body>
 <script>
     $(document).ready(function() {
-
         var datecount = 1;
         $("#plus-plan").click(function() {
 
@@ -321,7 +293,7 @@
             var con = confirm("일정추가하시겠습니까?");
             var starttime = $("#start-time").val();
             var endtime = $("#end-time").val();
-            var place = $("#place").val("이레빌딩");
+            var place = "이레빌딩"; /*  $("#place").val("이레빌딩");*/
             var schedule = $("#schedule").val();
             var money = $("#money").val();
             var reference = $("#reference").val();
@@ -334,29 +306,53 @@
                 } else if (schedule == "") {
                     alert("일정을적어주세요");
                 } else if (con) {
+                	var cursor = "#schedule-plan>tbody>.active";
+                	$(cursor + ">th").html("<div name='start'>"+starttime+"</div>~<div name='end'>"+endtime+"</div>");
+                	$(cursor + ">td[name='place']").html(place);
+                	$(cursor + ">td[name='schedule']").html(schedule);
+                	$(cursor + ">td[name='money']").html(money);
+                	$(cursor + ">td[name='reference']").html(reference);
+                	
                     var contents = '';
-                    contents += '<tr>';
-                    contents += '<th>' + starttime + "~" + endtime + '</th>';
-                    contents += '<td>' + place + '</td>';
-                    contents += '<td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;">' + schedule + '</textarea></td>';
-                    contents += '<td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;">' + money + '</textarea></td>';
-                    contents += '<td style="padding:0px;"><textarea class="form-control" readonly style="overflow-y:auto;background-color:white;resize:none;">' + reference + '</textarea></td>';
+                    contents += '<tr class="clickable-row active new"><th style="height:50px;"></th><td name="place"></td><td name="schedule"></td>';
+                    contents += '<td name="money"></td>';
+                    contents += '<td name="reference"></td>';
                     contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button></td>';
                     contents += '</tr>';
-
-                    $("#schedule-plan>tbody:last").append(contents);
-                    $("#schedule-plan td:last-child").hide();
+                
+					
+                    console.log($("#schedule-plan>tbody>.active>th>div").length);
+                    if($("#schedule-plan>tbody>.active>th>div").length > 0 ) {
+                    	$("#schedule-plan>tbody>tr").removeClass('active');
+                    	$("#schedule-plan>tbody>tr").removeClass('new');
+                    	$("#schedule-plan>tbody:last").append(contents);
+                        $("#schedule-plan td:last-child").hide();
+                       
+                    } else {
+                    	console.log("다름")
+                    }
 
                     $("#start-time").val("");
                     $("#end-time").val("");
                     $("#place").val("");
-                    $("#schedule").text("");
+                    $("#schedule").val("");
                     $("#money").val("");
                     $("#reference").val("");
                 }
             } else {
                 alert("아직지원하지않습니다");
             }
+        });
+        
+        $("#schedule-plan").on('click', '.clickable-row', function(event) {
+        	  $(this).addClass('active').siblings().removeClass('active');
+        	  console.log("같음 " + $("#schedule-plan>tbody>.active>th>div").length);
+        	  $("#start-time").val($("#schedule-plan>tbody>.active>th>div[name='start']").html());
+              $("#end-time").val($("#schedule-plan>tbody>.active>th>div[name='end']").html());
+              $("#place").val($("#schedule-plan>tbody>.active>td[name='place']").html());
+              $("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
+              $("#money").val($("#schedule-plan>tbody>.active>td[name='money']").html());
+              $("#reference").val($("#schedule-plan>tbody>.active>td[name='reference']").html());
         });
 
     });
