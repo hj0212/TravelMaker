@@ -69,7 +69,7 @@
 	box-shadow: 0 1px 0 0 #64b5f6;
 }
 
-.login-link span:hover, .signup-link span:hover {
+.login-link span:hover, .find-link span:hover {
 	border-bottom: 2px solid #64b5f6;
 }
 
@@ -85,10 +85,10 @@
 </style>
 <script>
 	$(document).ready(() => {
-	  $(".login-link").on("click", showLogin);
+/* 	  $(".login-link").on("click", showLogin);
 	  $(".signup-link").on("click", showSignup);
 	  $(".confirm-password-row").hide();
-	  $(".btn-login").text("Log in");
+	  $(".btn-login").text("Log in"); */
 	  
 	  $(".btn-login").click(function() { 		  
 			  $("#userCheckform").attr('action','checkEmail.do').submit();	  
@@ -96,14 +96,14 @@
 	  
 	});
 	
-	const showSignup = () => {
+/* 	const showSignup = () => {
 		 $(".signup-link").addClass("active");
 		 $(".login-link").removeClass("active");
 		 $("#loginbox").height(700);
 		 $(".btn-login").text("Sign up");
 		 $(".forgot-password-row").hide();
 		 $(".confirm-password-row").show();
-	};
+	}; */
 
 </script>
 
@@ -118,7 +118,7 @@
 		</div>
 
 
-		<div class="col s6 right-align signup-link active">
+		<div class="col s6 right-align find-link active">
 		</div>
 		<form id="userCheckform" method="post">
 			<div class="row">
