@@ -9,6 +9,10 @@
 *{
 text-align: center;
 }
+fieldset{
+width:30%;
+margin: 200px auto;
+}
 h1{
 color:red;
 font-weight: 300;
@@ -20,8 +24,11 @@ font-weight: 100;
 </style>
 </head>
 <body>
-	<h1>잘못된 접근입니다</h1><hr>
+	<fieldset>
+	<legend><h1>잘못된 접근입니다</h1></legend>
+	<hr>
 	<h5>3초 후 자동으로 페이지가 전환됩니다</h5>
+	</fieldset>
 	<script>
 		//setTimeout(함수,시간); 시간후 함수를 실행한다.
 		setTimeout(function() {

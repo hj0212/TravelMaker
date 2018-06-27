@@ -184,8 +184,7 @@ public class MemberController extends HttpServlet {
 			request.setAttribute("result", result);		
 			isForward = true;
 			dst="pwTrueCheckView.jsp";
-		}else if(command.equals("/toModiPw.do")) {
-			
+		}else if(command.equals("/toModiPw.do")) {			
 			isForward=true;
 			dst="modiPw.jsp";
 		}else if(command.equals("/modiPw.do")) {
