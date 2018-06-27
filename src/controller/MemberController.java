@@ -200,6 +200,9 @@ public class MemberController extends HttpServlet {
 			}else {
 				isForward = false;
 			}
+		}else if(command.equals("/toLogin.do")) {
+			isForward=true;
+			dst="newlogin.jsp";
 		}
 			
 		
@@ -207,7 +210,7 @@ public class MemberController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(dst);
 			rd.forward(request, response);
 		} else {
-			response.sendRedirect(dst);
+			response.sendRedirect("/error.jsp");
 		}
 	}catch(Exception e) {e.printStackTrace();}		
 	}

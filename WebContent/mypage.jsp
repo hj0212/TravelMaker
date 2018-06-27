@@ -27,12 +27,7 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
 	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 	crossorigin="anonymous"></script>
-  
-  <style>
-  svg{
-  cursor: default;
-  }
-  </style>
+ 
 </head>
 
 <body>
@@ -44,7 +39,7 @@
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary no-padding-bottom">
+  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary no-padding-bottom mt-5">
     <div class="container w-100 h-100 py-0">
       <div class="row">
         <div class="col-sm-8 col-md-3 col-lg-3">
@@ -60,17 +55,6 @@
                <h4 class="my-4">${email}</h4>
               </c:otherwise>
               </c:choose>
-              <%-- <script>
-              if(${email eq null}){
-            	  </script>
-            	  <h4 class="my-4">이메일을 입력해주세요</h4>
-            	  <script>
-              }else{
-            	  </script>
-              <h4 class="my-4">${email}</h4>
-              <script>
-              }
-              </script> --%>
   		<a href="#" class="btn dropdown-toggle" id="editlink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">정보수정</a>
   		<div class="dropdown mt-5 z-index:3" aria-labelledby="editlink">
   		<c:choose>
@@ -88,7 +72,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-9 col-12 col-xl-9 w-100 h-100 align-items-center">
+        <div class="col-sm-12 col-md-6 col-lg-9 col-12 col-xl-9 w-100 h-100 align-items-center mt-5">
           <div id="tb" class="py-5 my-5">
             <table class="table col-mt-5 col-md-5 col-sm-12 text-center">
               <thead>
@@ -147,11 +131,11 @@
           </ul>
           </div>
           
-          <div class="pannel-body">
+         <!--  <div class="pannel-body">
           <div class="tab-content mt-2">
-            <div class="tab-pane fade in active align-items-start bg-primary border border-info" id="tabone" role="tabpanel">
+            <div class="tab-pane fade in active align-items-start bg-primary border border-info " id="tabone" role="tabpanel">
               <div class="card col-md-3 col-sm-12 w-100">
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <img class="card-img-top float-left rounded " src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
                 <div class="card-body w-100">
                   <h5 class="card-title">Card title</h5>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -182,10 +166,59 @@
                   <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
               </div>
-            </div>
-            
-            
-               <div class="tab-pane fade align-items-start bg-primary border border-info" role="tabpanel" id="tabtwo"> 
+            </div> -->
+            <div class="pannel-body">
+            <div class="row tab-content">
+            <div class="col tab-pane active" id="tabone" role="tabpanel">
+            <div class="row">
+            <div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				</div>
+				</div>
+				
+<!--                <div class="tab-pane fade align-items-start bg-primary border border-info" role="tabpanel" id="tabtwo"> 
               <div class="card col-md-3 col-sm-12 w-100">
                 <div class="card-header"> Header </div>
                 <div class="card-body">
@@ -223,10 +256,54 @@
                 </div>
               </div>
               
-            </div>
+            </div> -->
             
+            <div class="col tab-pane fade" id="tabtwo" role="tabpanel">
+            <div class="row">
+            <div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				</div>
+				</div>
             
-                           <div class="tab-pane fade align-items-start bg-primary border border-info" role="tabpanel" id="tabthree">
+                      <!--      <div class="tab-pane fade align-items-start bg-primary border border-info" role="tabpanel" id="tabthree">
                  
                               <div class="card col-md-3 col-sm-12 w-100">
                 <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
@@ -261,53 +338,65 @@
                 </div>
               </div>
                            
-                           </div>
-            
-          </div>
+                           </div> -->
+                       <div class="col tab-pane fade" id="tabthree" role="tabpanel">
+            <div class="row">
+            <div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				</div>
+				</div>    
+                           
+            </div>
+          
         </div>
         </div>
       </div>
   
 
-  <!-- <!-- 합쳐지고 최소화된 최신 CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  부가적인 테마
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
-
+ 
 <script>
-
-/* $(function() {
-
-	// Menu Tabular
-	var $nav_tabs = $('.nav nav-tabs li a'); 
-	$nav_tabs.on('click', function(e) {
-		e.preventDefault();
-		$nav_tabs.removeClass('active');
-		$(this).addClass('active');
-
-		$('.tab-pane').fadeOut(300);
-		$(this.hash).delay(300).fadeIn();
-	});
-
-}); */
-
-
-(function($) {
-	var tabs =  $(".nav nav-tabs li a");
-  
-	tabs.click(function() {
-		var content = this.hash.replace('/','');
-		tabs.removeClass("active");
-		$(this).addClass("active");
-    $(".tab-content").find('.tab-pane').hide();
-    $(content).fadeIn(200);
-	});
-
-})(jQuery);
-
 
 $(function() {
 	$('.dropdown').hide(); 
