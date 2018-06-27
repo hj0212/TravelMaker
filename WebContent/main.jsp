@@ -33,7 +33,6 @@
 <link rel="stylesheet" type="text/css"
 	href="source/lib/slick/slick-theme.css" />
 
-<link rel="stylesheet" href="mypage.css" type="text/css">
 
 <style>
 div {
