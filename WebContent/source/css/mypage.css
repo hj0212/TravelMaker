@@ -6269,3 +6269,6 @@ a.btn:hover {
   padding: 0 !important;
   }
     
+    svg{
+  cursor: default;
+  }
