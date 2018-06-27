@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -133,6 +134,9 @@ public class MemberController extends HttpServlet {
 			isForward = true;
 			dst="main.jsp";	
 		}
+			
+			
+		
 			
 		
 		if(isForward) {
