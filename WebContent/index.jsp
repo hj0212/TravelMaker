@@ -5,12 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<%
-	String nickname =request.getParameter("nickname");
-	
-%>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<<<<<<< HEAD
+
 <script>
 	window.onload = function() {
 				

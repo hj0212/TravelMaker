@@ -18,18 +18,14 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
-	crossorigin="anonymous">
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/js/tempusdominus-bootstrap-4.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/css/tempusdominus-bootstrap-4.min.css" />
-<script type="text/javascript" src="source/js/plan_write.js"></script>
+<script src="source/lib/lightswitch05-table-to-json/jquery.tabletojson.min.js"></script>
 <style>
 #title-board {
 	font-size: 15px;
@@ -208,12 +204,13 @@
 						</th>
 						<td name="budget">
 							<div class="input-group mb-1">
-								<input type="text" class="form-control" id="ex1"
+								<!-- <input type="text" class="form-control" id="ex1"
 									placeholder="예) 입장료"> <input type="text"
 									class="form-control" id="money1" placeholder="10000">
 								<div class="input-group-prepend">
 									<span class="input-group-text">원</span>
-								</div>
+								</div> -->
+								<input type="text" class="form-control" id="money">
 							</div>
 						</td>
 					</tr>
@@ -226,12 +223,12 @@
 			</table>
 			<div style="text-align: right">
 				<button type="button" class="btn btn-outline-primary"
-					id="success-primary">완료</button>
+					id="success-primary">등록</button>
 			</div>
 		</div>
 		<div style="width: 40%; float: right" id="plan-div">
 			<div style="text-align: right">
-				<button class="btn btn-inline-primary btn-lg" id="end-bt">여행계획
+				<button class="btn btn-inline-primary btn-lg" id="endbtn">여행계획
 					완료</button>
 
 			</div>
@@ -241,7 +238,32 @@
 	</div>
 <script>
 $(document).ready(function() {
-	budgetcount = 1;
+	$("#endbtn").click(function() {
+		$("#schedule-plan tr:last").remove();
+		$("#schedule-plan thead tr th:last").remove();
+		$("#schedule-plan tbody tr td:last").remove();
+        
+		var table = $("#schedule-plan").tableToJSON();
+		var table_json = JSON.stringify(table);
+		alert(table_json);
+		
+		$.ajax({
+			url:"saveschedule.plan",
+			dataType:"json",
+			type:"POST",
+			data:table_json,
+			contentType:"application/x-www-form-urlencoded",
+			success: function() {
+				location.href("plan_write.jsp?day=2");
+			},
+			error:function() {
+        		location.href = "plan_write.jsp?day=2";
+        	}
+		})
+	});
+	
+	
+	/* budgetcount = 1;
 	$("#moneyaddbtn").click(function() {
 		budgetcount++;
 	 	$("#schedule-boarder>tbody>tr>td[name='budget']").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'>"
@@ -250,29 +272,8 @@ $(document).ready(function() {
 
 	$("#moneyxbtn").click(function() {
 		
-	});
+	}); */
 	
-    var datecount = 2;
-    $("#plus-plan").click(function() {
-
-        var plustext = $("#plus-text").val();
-        $("#plan-table>tbody>tr").removeClass('active');
-
-        if (datecount <= 14) {
-            $("#plan-table>tbody:last").append("<tr class='clickable-row active'><th style='background-color: #e9e9e9 ;text-align: center;vertical-align: middle' >" + datecount++ + "일차</th><td style='width: 70%'>" + datecount + "</td></tr>");
-
-
-            if ($("#plan-table tr:last")) {
-
-                $("#plan-table button[type='button']").hide();
-            }
-            $("#plan-table tr:last td:last-child").append("<button type='button' class='btn btn-outline-danger btn-sm'style='float: right'><i class='fa fa-times'></i></button>");
-
-
-        } else {
-            alert("최대 14일까지 제공하고있습니다");
-        }
-    });
     $("#plan-table").on('click', "button[type='button']", function(event) {
         var index = $(event.currentTarget).closest("tr").index();
         var info = $("#plan-tbody")[0];
@@ -312,10 +313,10 @@ $(document).ready(function() {
         endtime = $("#end-time").val();
         place = "이레빌딩"; /*  $("#place").val("이레빌딩");*/
         schedule = $("#schedule").val();
-        /* money = $("#money").val(); */
+        money = $("#money").val();
         reference = $("#reference").val();
         
-        check = true;
+        
         /* for(i = 1; i <= budgetcount;i++) {
         	if($("#ex" + i).val() == "") {
         		alert("예산 내용을 입력해주세요");
@@ -329,13 +330,15 @@ $(document).ready(function() {
         	console.log(check);
         } */
         
-        if (check) {
+        
             if (starttime == "" || endtime == "") {
             	alert("시간을정해주세요");
             } else if (place == "") {
                 alert("장소를정해주세요");
             } else if (schedule == "") {
                 alert("일정을적어주세요");
+            } else if (money == "") {
+                alert("예산을적어주세요");
             } else if (con) {
             	
             	var contents = '';
@@ -346,14 +349,15 @@ $(document).ready(function() {
                 contents += '</tr>';
                 
             	if($("#schedule-plan>tbody>.active>th>div").length == 0 ) {	// 빈칸 = 마지막줄
+            		console.log("빈칸");
             		$("#schedule-plan>tbody>tr").removeClass('new');
                 	var cursor = "#schedule-plan>tbody>.active";
                 	$(cursor + ">th").html("<div name='start'>"+starttime+"</div>~<div name='end'>"+endtime+"</div>");
                 	$(cursor + ">td[name='place']").html(place);
                 	$(cursor + ">td[name='schedule']").html(schedule);
-                	for(i = 1; i <= budgetcount;i++) {
+                	/* for(i = 1; i <= budgetcount;i++) {
                 		$(cursor + ">td[name='money']").html("<div id='ex"+i+"'>"+$("#ex" + i).val()+"</div>(<div id='money"+i+"'>"+$("#money" + i).val()+"</div>)");
-                    }
+                    } */
                 	$(cursor + ">td[name='money']").html(money);
                 	$(cursor + ">td[name='reference']").html(reference);
                 	$("#schedule-plan>tbody>tr").removeClass('active');
@@ -361,7 +365,7 @@ $(document).ready(function() {
                     $("#schedule-plan td:last-child").hide();
                    
                 } else { // 빈칸x = 마지막줄x
-                	console.log("다름" + $("#schedule-plan>tbody>.active>th>div").length);
+                	console.log("수정" + $("#schedule-plan>tbody>.active>th>div").length);
                 	var cursor = "#schedule-plan>tbody>.active";
                 	$(cursor + ">th").html("<div name='start'>"+starttime+"</div>~<div name='end'>"+endtime+"</div>");
                 	$(cursor + ">td[name='place']").html(place);
@@ -369,7 +373,7 @@ $(document).ready(function() {
                 	$(cursor + ">td[name='money']").html(money);
                 	$(cursor + ">td[name='reference']").html(reference);
                 	$("#schedule-plan>tbody>tr").removeClass('active');
-                	$("div .show>#schedule-plan>tbody>.new").addClass('active');
+                	$("#schedule-plan>tbody>.new").addClass('active');
                 }
 
                 $("#start-time").val("");
@@ -379,7 +383,7 @@ $(document).ready(function() {
                 $("td[name='budget'] input").val("");
                 $("#reference").val("");
             }
-        }
+        
     });
     
     $("#schedule-plan").on('click', '.clickable-row', function(event) {
