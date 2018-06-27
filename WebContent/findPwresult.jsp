@@ -19,26 +19,26 @@
 </head>
 <body>
 
-<c:choose>
-	<c:when test="${checkEmailResult==0}">
-		<div class="alert alert-warning" role="alert">존재하지 않는 아이디입니다.</div>
-		<script>
-		location.href="newlogin.jsp";
-		</script>		
-	</c:when>
-	<c:when test="${checkEmailResult==10}">
-		<div class="alert alert-warning" role="alert">가입 시 입력하신 이메일이 아닙니다.</div>	
-		<script>
-		location.href="newlogin.jsp?id=${inputid}";
-		</script>		
-	</c:when>
-	<c:when test="${checkEmailResult==11}">
-		location.href="sendtmpPw.do?id=${inputId}&email=${inputEmail}";
-		
-			
-	</c:when>
-	
-</c:choose>
+ 	<c:choose>
+		<c:when test="${checkEmailResult==0}">			
+			<script>
+			alert("존재하지 않는 아이디 입니다.");
+				location.href = "newlogin.jsp";
+			</script>
+		</c:when>
+		<c:when test="${checkEmailResult==10}">		
+			<script>
+			alert("가입 시 입력하신 이메일이 아닙니다.");
+				location.href = "newlogin.jsp?id=${inputid}";
+			</script>
+		</c:when>
+		<c:when test="${checkEmailResult==11}">
+			 <script>
+				location.href ="sendtmpPw.do?id=${inputId}&email=${inputEmail}";
+			</script> 
+		</c:when>
+
+	</c:choose> 
 
 
 </body>

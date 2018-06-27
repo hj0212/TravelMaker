@@ -270,8 +270,8 @@
   								</script>
 							</div>
 							<div class="row forgot-password-row">
-								<span class="blue-text text-lighten-1 waves-effect">Forgot
-									Password?</span>
+								<span class="blue-text text-lighten-1 waves-effect"><a href="findPw.jsp">Forgot
+									Password?</a></span>
 							</div>
 						</div>
 					</div>

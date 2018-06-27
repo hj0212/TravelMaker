@@ -226,8 +226,8 @@ public class MemberDAO {
 		Connection con = DBConnection.getConnection();
 		String sql = "update users set password =? where userid=?";
 		PreparedStatement pstmt=con.prepareStatement(sql);
-		pstmt.setString(1, id);
-		pstmt.setString(2, pw);
+		pstmt.setString(1, pw);
+		pstmt.setString(2, id);
 		int result = pstmt.executeUpdate();
 				
 		con.commit();
