@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -9,9 +10,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="source/css/mypage.css" type="text/css">
+  
+  <link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+	integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+	crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+	crossorigin="anonymous"></script>
+  
+  <style>
+  svg{
+  cursor: default;
+  }
+  </style>
 </head>
 
 <body>
+<c:choose>
+		<c:when test="${sessionScope.loginId !=null}">
+			<%@include file="include/mainNavi_login.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="include/mainNavi.jsp"%>
+		</c:otherwise>
+	</c:choose>
   <div class="py-5 text-center w-100 h-75 text-lowercase text-primary no-padding-bottom">
     <div class="container w-100 h-100 py-0">
       <div class="row">
@@ -20,8 +52,39 @@
             <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
             <div class="card-body h-100 py-4 my-5">
               <h4 class="card-title my-4">${nickname}</h4>
+              <c:choose>
+              <c:when test="${email eq null}">
+              <h4 class="my-4">이메일을 입력해주세요</h4>
+              </c:when>
+              <c:otherwise>
+               <h4 class="my-4">${email}</h4>
+              </c:otherwise>
+              </c:choose>
+              <%-- <script>
+              if(${email eq null}){
+            	  </script>
+            	  <h4 class="my-4">이메일을 입력해주세요</h4>
+            	  <script>
+              }else{
+            	  </script>
               <h4 class="my-4">${email}</h4>
-  		<a href="#" class="btn">정보수정</a>
+              <script>
+              }
+              </script> --%>
+  		<a href="#" class="btn dropdown-toggle" id="editlink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">정보수정</a>
+  		<div class="dropdown mt-5 z-index:3" aria-labelledby="editlink">
+  		<c:choose>
+  		<c:when test="${sessionScope.part eq 'home'}">
+  		<a class="dropdown-item " href="#" id="editInfo">회원정보</a>
+  		<a class="dropdown-item" href="#" id="editPw">비밀번호</a>
+  		<a class="dropdown-item" href="#" id="updateEmail">이메일</a>
+  		</c:when>
+  		<c:otherwise>
+  		<a class="dropdown-item" href="#" id="updateEmail">이메일</a>
+  		</c:otherwise>
+  		</c:choose>
+  		
+  		</div>
             </div>
           </div>
         </div>
@@ -206,13 +269,13 @@
       </div>
   
 
-  <!-- 합쳐지고 최소화된 최신 CSS -->
+  <!-- <!-- 합쳐지고 최소화된 최신 CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <!-- 부가적인 테마 -->
+  부가적인 테마
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
 
 <script>
 
@@ -245,6 +308,36 @@
 
 })(jQuery);
 
+
+$(function() {
+	$('.dropdown').hide(); 
+	// Dropdown toggle
+	$('.dropdown-toggle').click(function(){
+	  $(this).next('.dropdown').toggle();
+	});
+
+	$(document).click(function(e) {
+	  var target = e.target;
+	  if (!$(target).is('.dropdown-toggle') && !$(target).parents().is('.dropdown-toggle')) {
+	    $('.dropdown').hide();
+	  }
+	});
+
+	});
+
+$("#editInfo").click(function(){
+	/* location.href="toPwCheck.do"; */
+	window.open("toPwCheck.do","_blank","width=500, height=300, scrollbars=no");
+})
+
+$("#updateEmail").click(function(){
+	/* location.href="toUpdateEmail.do"; */
+	window.open("toUpdateEmail.do","_blank","width=500, height=300, scrollbars=no");
+})
+
+$("#editPw").click(function(){
+	window.open("toPwTrueCheck.do","_blank","width=500, height=300, scrollbars=no");
+})
 </script>
 
 
