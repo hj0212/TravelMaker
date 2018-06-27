@@ -15,7 +15,7 @@ pageEncoding="UTF-8"%>
             crossorigin="anonymous"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
-        <script src="dist/lang/summernote-ko-KR.js"></script>
+        <script src="../dist/lang/summernote-ko-KR.js"></script>
         <style>
         	/* 에디터 p태그의 높이 조절 */
             .note-editable p { margin: 0 0 0.0001pt; }
@@ -25,7 +25,7 @@ pageEncoding="UTF-8"%>
     <body>
         <div class="container">
             <h1>summernote</h1>
-            <form action="hello.jsp" method="post" onsubmit="return sendContents()" name="writeContents">
+            <form action="freeview.jsp" method="post" onsubmit="return sendContents()" name="writeContents">
                 <textarea id="summernote" name="contents"></textarea>
                 <input type="submit" class="btn btn-primary" value="글쓰기">
             </form>
@@ -59,6 +59,7 @@ pageEncoding="UTF-8"%>
                     processData: false,
                     success: function (data) {
                         // 서버에 이미지 저장 성공 후 에디터에 이미지 넣음
+                              	console.log("찍힙니까?...");
                         $(editor).summernote('editor.insertImage', data.url);
                     }
                 })

@@ -18,6 +18,7 @@
 
         .container {
             width: 970px;
+            margin-top : 100px;
         }
 
         .title {
@@ -64,6 +65,14 @@
     </style>
 </head>
 <body>
+	<c:choose>
+		<c:when test="${sessionScope.loginId !=null}">
+			<%@include file="../include/mainNavi_login.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="../include/mainNavi.jsp"%>
+		</c:otherwise>
+	</c:choose>
 	<%
 		request.setCharacterEncoding("UTF-8");
 	%>

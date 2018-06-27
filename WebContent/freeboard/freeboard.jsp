@@ -143,14 +143,15 @@ div {
 									</div>
 								</div>
 						</tr>
-
 					</tbody>
 				</table>
 			</div>
 		</div>
-
 	</div>
-
 </body>
-
+<script>
+	document.getElementById("writebtn").onclick = function() {
+		location.href = "freewrite.jsp";
+	}
+</script>
 </html>

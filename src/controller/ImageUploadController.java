@@ -22,11 +22,13 @@ public class ImageUploadController extends HttpServlet {
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = requestURI.substring(contextPath.length());
+		System.out.println(command);
 		
-		if(command.equals("/imageUpload.iu")) {
+		if(command.equals("/freeboard/imageUpload.iu")) {
 			// 이미지를 업로드할 경로
 			String uploadPath = request.getServletContext().getRealPath("/files/");
 			int size = 10 * 1024 * 1024;	// 업로드 사이즈 10M 이하,
+			System.out.println(command);
 			
 			// 경로가 없을 경우 결로 생성
 			File f = new File(uploadPath);
