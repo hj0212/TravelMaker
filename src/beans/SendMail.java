@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 public class SendMail {
 	String host     = "smtp.gmail.com";
 	final String user   = "winhae@gmail.com";	// 구글 아이디
-	final String password  = "";	// 구글 비번
+	final String password  = "eunice93";	// 구글 비번
 
 
 
@@ -109,11 +109,6 @@ public class SendMail {
 	}
 
 
-
-
-
 	public static void main(String[] args) {
-
-
 	}
 }

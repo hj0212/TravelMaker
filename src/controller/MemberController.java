@@ -42,7 +42,7 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("loginId", id);
 				isForward = true;
 				dst="userResult.jsp";
-				System.out.println("�넻怨�1");
+				
 
 			} else if(command.equals("/join.do")) {
 				MemberDTO dto = new MemberDTO();
@@ -77,7 +77,7 @@ public class MemberController extends HttpServlet {
 				String id = request.getParameter("id");
 				String name = request.getParameter("name");
 				String email = request.getParameter("email");
-				System.out.println("id: " + id + ", name: " + name + ", email: " + email);
+				//System.out.println("id: " + id + ", name: " + name + ", email: " + email);
 				MemberDTO dto = new MemberDTO();
 				dto.setKakao_id(id);
 				dto.setKakao_nickname(name);
@@ -135,7 +135,7 @@ public class MemberController extends HttpServlet {
 				dst="main.jsp";	
 
 
-				//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
+			//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
 			}else if(command.equals("/checkEmail.do")){
 				String id=request.getParameter("id");				
 				String email = request.getParameter("email");
