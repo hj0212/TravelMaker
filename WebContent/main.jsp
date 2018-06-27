@@ -84,7 +84,6 @@ div {
 				<div class="data" data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
 				<div class="item">
 					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
                 <div class="card-body">
                   <h4 >Card title</h4>
                   <h6 class="text-muted">Subtitle</h6>
@@ -94,7 +93,6 @@ div {
 				</div>
 				<div class="item">
 					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
                 <div class="card-body">
                   <h4 >Card title</h4>
                   <h6 class="text-muted">Subtitle</h6>
@@ -104,7 +102,6 @@ div {
 				</div>
 				<div class="item">
 					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
                 <div class="card-body">
                   <h4 >Card title</h4>
                   <h6 class="text-muted">Subtitle</h6>
@@ -114,7 +111,6 @@ div {
 				</div>
 				<div class="item">
 					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
                 <div class="card-body">
                   <h4 >Card title</h4>
                   <h6 class="text-muted">Subtitle</h6>
@@ -124,7 +120,6 @@ div {
 				</div>
 				<div class="item">
 					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
                 <div class="card-body">
                   <h4 >Card title</h4>
                   <h6 class="text-muted">Subtitle</h6>
@@ -134,7 +129,6 @@ div {
 				</div>
 				<div class="item">
 					<div class="card col-md-12 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
                 <div class="card-body">
                   <h4 >Card title</h4>
                   <h6 class="text-muted">Subtitle</h6>
