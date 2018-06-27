@@ -129,44 +129,7 @@
               <a href="#tabthree" data-toggle="tab" data-target="#tabthree" role="presentation">Tab 3</a>
             </li>
           </ul>
-          </div>
-          
-         <!--  <div class="pannel-body">
-          <div class="tab-content mt-2">
-            <div class="tab-pane fade in active align-items-start bg-primary border border-info " id="tabone" role="tabpanel">
-              <div class="card col-md-3 col-sm-12 w-100">
-                <img class="card-img-top float-left rounded " src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body w-100">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-              <div class="card col-md-3 col-sm-12 w-100">
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body w-100">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-              <div class="card col-md-3 col-sm-12 w-100">
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body w-100">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-              <div class="card col-md-3 col-sm-12 w-100">
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body w-100">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-            </div> -->
+          </div>     
             <div class="pannel-body">
             <div class="row tab-content">
             <div class="col tab-pane active" id="tabone" role="tabpanel">
@@ -217,47 +180,7 @@
 				</div>
 				</div>
 				</div>
-				
-<!--                <div class="tab-pane fade align-items-start bg-primary border border-info" role="tabpanel" id="tabtwo"> 
-              <div class="card col-md-3 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-              
-              <div class="card col-md-3 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-              
-              
-              <div class="card col-md-3 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-              
-               <div class="card col-md-3 col-sm-12 w-100">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-              
-            </div> -->
-            
+
             <div class="col tab-pane fade" id="tabtwo" role="tabpanel">
             <div class="row">
             <div class="item col-md-3 col-sm-3 w-25">
@@ -302,43 +225,6 @@
 				</div>
 				</div>
 				</div>
-            
-                      <!--      <div class="tab-pane fade align-items-start bg-primary border border-info" role="tabpanel" id="tabthree">
-                 
-                              <div class="card col-md-3 col-sm-12 w-100">
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body w-100">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-              <div class="card col-md-3 col-sm-12 w-100">
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body w-100">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-              <div class="card col-md-3 col-sm-12 w-100">
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body w-100">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-              <div class="card col-md-3 col-sm-12 w-100">
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body w-100">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-                           
-                           </div> -->
                        <div class="col tab-pane fade" id="tabthree" role="tabpanel">
             <div class="row">
             <div class="item col-md-3 col-sm-3 w-25">
