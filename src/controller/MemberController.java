@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.SendMail;
 import dao.MemberDAO;
 import dto.MemberDTO;
 
@@ -41,7 +42,7 @@ public class MemberController extends HttpServlet {
 			request.getSession().setAttribute("loginId", id);
 			isForward = true;
 			dst="userResult.jsp";
-			System.out.println("통과1");
+			System.out.println("�넻怨�1");
 			
 		} else if(command.equals("/join.do")) {
 			MemberDTO dto = new MemberDTO();
@@ -132,8 +133,41 @@ public class MemberController extends HttpServlet {
 		
 			isForward = true;
 			dst="main.jsp";	
+		
+		
+//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
+		}else if(command.equals("/checkEmail.do")){
+			String id=request.getParameter("id");
+			String email = request.getParameter("email");
+			int result =mdao.getEmail(id, email);
+			request.setAttribute("checkEmailResult",result);
+			if(result==10) {
+				request.setAttribute("inputId",id);
+				if(result==11) {
+					request.setAttribute("inputEmail", email);			
+				}			
+			}
+			isForward = true;
+			dst="findPwresult.jsp";
 		}
+//////////////임시비밀번호 전송 기능	
+		else if(command.equals("/sendtmpPw.do")) {
+			String id=request.getParameter("id");
+			String email=request.getParameter("email");
+			SendMail smail = new SendMail();
+			String pw =smail.maketmpPw();
+			int changeResult = mdao.changePw(id, pw);
+			if(changeResult==1) {
+				smail.send(id, email, pw);			
+				request.setAttribute("mailResult", true);		
+			}else {
+				request.setAttribute("mailResult", false);
+			}
 			
+		
+			isForward = true;
+			dst = "sendtmpPwResult";
+		}
 		
 		if(isForward) {
 			RequestDispatcher rd = request.getRequestDispatcher(dst);

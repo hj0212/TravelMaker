@@ -4,7 +4,7 @@
 <header>
 	
 	<nav class="navbar fixed-top navbar-expand-lg navbar-light shadow-sm" style="background-color: #e3f2fd;" id="naviId">		
-		<a class="navbar-brand" href="#">TravelMaker</a>
+		<a class="navbar-brand" href="main.jsp">TravelMaker</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
 			aria-expanded="false" aria-label="Toggle navigation">

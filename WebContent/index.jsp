@@ -74,15 +74,7 @@ document.getElementById("logout").onclick = function(){
 		    location.href="login.jsp";
 		}, 1000);
 	
-<<<<<<< Updated upstream
 }
-<<<<<<< HEAD
-=======
-
-	
-	}
-
->>>>>>> Stashed changes
 
 
 
