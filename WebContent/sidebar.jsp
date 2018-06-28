@@ -20,6 +20,7 @@ border: 1px solid red;
 }
 #plan{
 position:absoluete;
+box-sizing: border-box;
 }
 #menubar {
 	width: 10%;
@@ -27,6 +28,7 @@ position:absoluete;
 	z-index: 100px;
 	right:100%;
 	margin: auto 0 auto auto;
+	
 }
 
 li {
@@ -36,7 +38,7 @@ li {
 	-webkit-border-radius: 12px;
  -moz-border-radius: 12px;
  border-radius: 12px;
- background-color: rgba(0,0,0,0.5);
+ background-color: rgba(0,0,0,0.3);
  color: #fff;
  height: 50px;
  line-height: 50px;
