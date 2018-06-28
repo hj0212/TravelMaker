@@ -44,14 +44,13 @@
 	            // }
 	        }
 	    })
-	})
+	});
 	
 	// summernote에서 이미지를 업로드 할 시 실행할 함수
 	function sendFile(file, editor) {
 	    // 파일 전송을 위한 폼생성
 	    var data = new FormData();
 	    data.append('uploadFile', file);
-	    data.append('boardnum', 1);
 	    $.ajax({
 	        data: data,
 	        type: "POST",
@@ -64,13 +63,17 @@
 	            $(editor).summernote('editor.insertImage', data.url);
 	        }
 	    })
-	}
+	};
 	
 	function sendContents() {
 	    $("#editor").html($("#editor").summernote('code'));
 	    document.writeContents.submit();
-	}
+	};
 	
 	$("#cancel").click(function(){
 		$("#editor").summernote('reset');
+	});
+	
+	$("#list").click(function() {
+		location.href="freeboard.bo";
 	})

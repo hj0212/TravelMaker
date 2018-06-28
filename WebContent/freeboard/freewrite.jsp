@@ -31,7 +31,6 @@ pageEncoding="UTF-8"%>
 		</c:otherwise>
 		</c:choose>
         <div class="container">
-            <h1>summernote</h1>
             <form action="freeview.jsp" method="post" onsubmit="return sendContents()" name="writeContents">
             	<div class="form-group">
             		<input type="text" class="form-control" name="title" placeholder="제목을 입력해주세요" maxlength="50">
@@ -42,6 +41,7 @@ pageEncoding="UTF-8"%>
                 <div class="text-right">
         		    <input type="submit" class="btn btn-primary" value="작성"></button>
             		<button type="button" class="btn btn-primary" id="cancel">취소</button>
+            		<button type="button" class="btn btn-primary" id="list">목록</button>
         		</div>
             </form>
         </div>
