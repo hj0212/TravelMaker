@@ -42,10 +42,6 @@ div {
 #search_area[type="button"] {
 	align: right;
 }
-
-.card {
-	display: inline-block;
-}
 </style>
 </head>
 <body>
@@ -53,30 +49,21 @@ div {
 	<div class="container">
 		<h1 class="divLine">계획, 그리고</h1>
 		<hr />
-		<!--review 카드 모음영역 -->
-		
-		<!-- <script>
-		if($("div[name="cardCount"]").length==4n){
-			</script>	
-			
-			
-		} -->
-		
-		
-		<div class=" col-md-12 card-deck" id="cardArea">
-			<c:forEach var="item" items="${reviewList}">
-				<div class="card col-md-3" name="cardCount">
-					<img class="card-img-top" src="Charlie-Chaplin-PNG-Image-17681.png"
-						alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">${item.review_title}</h5>
-						<p class="card-text">${item.review_writer}</p>
-						<a href="#" class="btn btn-primary">Read</a>
-						<div class="card-footer bg-transparent">
-							<small class="text-muted">"${item.review_writedate}"</small>
+
+		<div class="row mx-0" id="cardArea">
+			<c:forEach var="item" items="${reviewList}">			
+					<div class="card col-md-3 ">
+						<img class="card-img-top"
+							src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
+						<div class="card-body">
+							<h5 class="card-title">${item.review_title}</h5>
+							<p class="card-text">${item.review_writer}</p>
+							<a href="reviewArticle.bo?review_seq=${item.review_seq}" class="btn btn-primary">Read</a>						
+							<div class="card-footer bg-transparent">
+								<small class="text-muted">"${item.review_writedate}"</small>
+							</div>
 						</div>
-					</div>
-				</div>
+					</div>	
 			</c:forEach>
 		</div>
 		<!-- review 카드 모음영역 끝 -->
@@ -97,16 +84,23 @@ div {
 		</div>
 
 		<!-- 페이지 네비 -->
-		<div class="row col-md-12">
-			<nav aria-label="Page navigation">
-				<ul class="pagination">${pageNavi}</ul>
+		<div class="col-md-12 mt-2">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">${pageNavi}</ul>
 			</nav>
 		</div>
+		
+		
 		<h1 class="divLine">푸터올 곳</h1>
 		<hr />
 		<div class="row">
 			<div class="col-md-12" id="foot"></div>
 		</div>
 	</div>
+	<script>
+	$("#searchbtn").click(function() {
+			location.href = "reviewboard.bo?search=" + $("#search").val();
+		})
+</script>
 </body>
 </html>

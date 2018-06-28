@@ -75,10 +75,10 @@ public class FrontController extends HttpServlet {
 				
 				String searchTerm = request.getParameter("search");
 				List<ReviewDTO> reviewList = new ArrayList<>();
-				reviewList = rdao.getAllReview();
+				reviewList = rdao.getSomeReview(currentPage*12-11, currentPage*12, searchTerm);
 				request.setAttribute("reviewList", reviewList);
 			
-				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
+				String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);
 								
 				isForward = true;

@@ -230,7 +230,7 @@ public class MemberDAO {
 		ResultSet rs = pstmt.executeQuery();
 		rs.next();
 		String part = rs.getString(1);
-		System.out.println(part);
+	/*	System.out.println(part);*/
 		String nickname = "";
 		if(part.equals("home")) {
 			sql = "select nickname from users where seq=?";
