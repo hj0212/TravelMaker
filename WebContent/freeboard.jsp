@@ -133,7 +133,7 @@ div {
 						</tr>
 						<tr>
 							<td colspan="5" id="input_area">
-							<button type="button" class="btn btn-primary" id="writebtn">글쓰기</button>
+							<button type="button" class="btn btn-primary " id="writebtn">글쓰기</button>
 								<div class="input-group mb-3" id="search_area">
 									<input type="text" class="form-control" placeholder="제목 검색"
 										aria-label="reply" aria-describedby="basic-addon2" id="search">
