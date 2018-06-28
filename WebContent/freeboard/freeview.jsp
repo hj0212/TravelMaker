@@ -18,7 +18,6 @@
 
         .container {
             width: 970px;
-            margin-top : 100px;
         }
 
         .title {
@@ -41,7 +40,6 @@
         }
 
         /* 편법임... */
-
         .contents p {
             margin: 0 0 0.0001pt;
         }
@@ -65,14 +63,6 @@
     </style>
 </head>
 <body>
-	<c:choose>
-		<c:when test="${sessionScope.loginId !=null}">
-			<%@include file="../include/mainNavi_login.jsp"%>
-		</c:when>
-		<c:otherwise>
-			<%@include file="../include/mainNavi.jsp"%>
-		</c:otherwise>
-	</c:choose>
 	<%
 		request.setCharacterEncoding("UTF-8");
 	%>

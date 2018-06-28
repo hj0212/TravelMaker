@@ -142,6 +142,7 @@ div {
 											id="searchbtn" name="searchbtn">검색</button>
 									</div>
 								</div>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -151,7 +152,7 @@ div {
 </body>
 <script>
 	document.getElementById("writebtn").onclick = function() {
-		location.href = "freewrite.jsp";
+		location.href = "freewrite.bo";
 	}
 </script>
 </html>

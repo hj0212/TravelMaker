@@ -58,12 +58,9 @@ public class FrontController extends HttpServlet {
 				isForward = true;
 				dst="freeboard/freeboard.jsp";
 
-			} else if(command.equals("/")) {
-				
-				
+			} else if(command.equals("/freewrite.bo")) {
 				isForward = true;
-				dst="";
-
+				dst = "freeboard/freewrite.jsp";
 			}
 
 
