@@ -30,7 +30,7 @@ pageEncoding="UTF-8"%>
 		</c:otherwise>
 		</c:choose>
         <div class="container">
-            <form action="freeview.jsp" method="post" onsubmit="return sendContents()" name="writeContents">
+            <form action="writeArticlefree.bo" method="post" onsubmit="return sendContents()" name="writeContents">
             	<div class="form-group">
             		<input type="text" class="form-control" name="title" placeholder="제목을 입력해주세요" maxlength="50">
         		</div>
