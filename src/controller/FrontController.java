@@ -51,21 +51,34 @@ public class FrontController extends HttpServlet {
 				
 				//------------------------------------------------------
 				
-				System.out.println("ê²€ìƒ‰ì–´: " + searchTerm);
+			
 				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);
 				
 				isForward = true;
 				dst="freeboard.jsp";
 
-			} else if(command.equals("/")) {
+//--------------------------------------------------------ÈÄ±â °øÀ¯ °Ô½ÃÆÇ º¸±â
+			} else if(command.equals("/reviewboard.bo")) {
+				int currentPage = 0;
+				String currentPageString = request.getParameter("currentPage");
 				
+				if(currentPageString == null) {
+					currentPage = 1;
+				} else {
+					currentPage = Integer.parseInt(currentPageString);
+				}
 				
+				String searchTerm = request.getParameter("search");
+				ArrayList<reviewDTO> list = fbdao.selectBoard(currentPage*10-9, currentPage*10, searchTerm);
+				request.setAttribute("reviewList", list);
+			
+				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
+				request.setAttribute("pageNavi", pageNavi);
+								
 				isForward = true;
-				dst="";
-
+				dst="share_review.jsp";
 			}
-
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
