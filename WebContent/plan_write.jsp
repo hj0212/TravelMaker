@@ -101,12 +101,14 @@
 	</c:choose>
 	<div class="container">
 		<div class="input-group input-group-lg">
+		
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-lg">제목</span>
 			</div>
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
 				name="plantitle">
+			
 		</div>
 
 		<div class="schedule">
@@ -157,18 +159,15 @@
 						<td style="width: 70%; text-align: center;">
 
 							<div class="col-10">
-								<input class="form-control" type="time" value="13:45:00"
+								<input class="form-control" type="time" value="13:45"
 									id="start-time" />
 							</div>
 							<div class="cococo">~</div>
 							<div class="col-10">
-								<input class="form-control" type="time" value="14:45:00"
+								<input class="form-control" type="time" value="14:45"
 									id="end-time" />
 							</div>
 						</td>
-
-
-
 					</tr>
 					<tr>
 						<th scope="row"
@@ -185,8 +184,6 @@
 								</div>
 							</div>
 						</td>
-
-
 					</tr>
 					<tr>
 						<th scope="row"
@@ -239,7 +236,7 @@
 <script>
 $(document).ready(function() {
 	$("#endbtn").click(function() {
-		$("#schedule-plan tr:last").remove();
+		/*$("#schedule-plan tr:last").remove();
 		$("#schedule-plan thead tr th:last").remove();
 		$("#schedule-plan tbody tr td:last").remove();
         
@@ -247,19 +244,17 @@ $(document).ready(function() {
 		var table_json = JSON.stringify(table);
 		alert(table_json);
 		
-		$.ajax({
+		 $.ajax({
 			url:"saveschedule.plan",
 			dataType:"json",
 			type:"POST",
 			data:table_json,
 			contentType:"application/x-www-form-urlencoded",
 			success: function() {
-				location.href("plan_write.jsp?day=2");
 			},
 			error:function() {
-        		location.href = "plan_write.jsp?day=2";
         	}
-		})
+		}) */
 	});
 	
 	
@@ -307,6 +302,7 @@ $(document).ready(function() {
     });
 
     var schedulecount = 1;
+    timeArray = new Array();
     $("#success-primary").click(function() {
         var con = confirm("일정추가하시겠습니까?");
         starttime = $("#start-time").val();
@@ -351,13 +347,16 @@ $(document).ready(function() {
             	if($("#schedule-plan>tbody>.active>th>div").length == 0 ) {	// 빈칸 = 마지막줄
             		console.log("빈칸");
             		$("#schedule-plan>tbody>tr").removeClass('new');
+            		
+            		var startsplit = starttime.split(":");
+            		for (var i in startsplit) {
+            			console.log(startsplit[i]);
+            		}
+            		
                 	var cursor = "#schedule-plan>tbody>.active";
                 	$(cursor + ">th").html("<div name='start'>"+starttime+"</div>~<div name='end'>"+endtime+"</div>");
                 	$(cursor + ">td[name='place']").html(place);
                 	$(cursor + ">td[name='schedule']").html(schedule);
-                	/* for(i = 1; i <= budgetcount;i++) {
-                		$(cursor + ">td[name='money']").html("<div id='ex"+i+"'>"+$("#ex" + i).val()+"</div>(<div id='money"+i+"'>"+$("#money" + i).val()+"</div>)");
-                    } */
                 	$(cursor + ">td[name='money']").html(money);
                 	$(cursor + ">td[name='reference']").html(reference);
                 	$("#schedule-plan>tbody>tr").removeClass('active');
@@ -383,7 +382,22 @@ $(document).ready(function() {
                 $("td[name='budget'] input").val("");
                 $("#reference").val("");
             }
-        
+        	
+        	
+        	/* var rowLength = document.getElementById("schedule-plan").rows.length - 1;
+        	for(var i = 0; i<rowLength-1; i++) {
+        		timeArray[i] = new Array();
+        	}
+        	for(var i = 1; i<rowLength; i++) {
+        		var row = table.rows[i];
+        		var cell = row.cells[0];
+        		
+        		var split = cell.split(":");
+        		for (var i in split) {
+        			console.log(split[i]);
+        		}
+        		
+        	} */
     });
     
     $("#schedule-plan").on('click', '.clickable-row', function(event) {
