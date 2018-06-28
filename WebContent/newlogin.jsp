@@ -99,6 +99,7 @@
 			  $("#userform").attr('action','join.do').submit();
 		  }
 	  })
+	  
 	});
 	
 	const showLogin = () => {
@@ -107,7 +108,7 @@
 		 $("#loginbox").height(560);
 		 $(".confirm-password-row").hide();
 		 $(".btn-login").text("Log in");
-		 $(".forgot-password-row").show();
+		 $(".forgot-password-row").show();	
 	};
 
 	const showSignup = () => {
@@ -121,55 +122,7 @@
 
 </script>
 <script>
-		$(document).ready(function(){
-			Kakao.init("cf3c8a92c56d57b527e32f7519a7a4f6");
-			function getKakaotalkUserProfile(){
-				Kakao.API.request({
-					url: '/v1/user/me',
-					success: function(res) {
-						$("#kakao-profile").append(res.properties.nickname);
-						$("#kakao-profile").append($("<img/>",{"src":res.properties.profile_image,"alt":res.properties.nickname+"님의 프로필 사진"}));
-					},
-					fail: function(error) {
-						console.log(error);
-					}
-				});
-			}
-			function createKakaotalkLogin(){
-				$("#kakao-logged-group .kakao-logout-btn,#kakao-logged-group .kakao-login-btn").remove();
-				var loginBtn = $("<a/>",{"class":"kakao-login-btn","text":"로그인"});
-				loginBtn.click(function(){
-					Kakao.Auth.login({
-						persistAccessToken: true,
-						persistRefreshToken: true,
-						success: function(authObj) {
-							getKakaotalkUserProfile();
-							createKakaotalkLogout();
-						},
-						fail: function(err) {
-							console.log(err);
-						}
-					});
-				});
-				$("#kakao-logged-group").prepend(loginBtn)
-			}
-			function createKakaotalkLogout(){
-				$("#kakao-logged-group .kakao-logout-btn,#kakao-logged-group .kakao-login-btn").remove();
-				var logoutBtn = $("<a/>",{"class":"kakao-logout-btn","text":"로그아웃"});
-				logoutBtn.click(function(){
-					Kakao.Auth.logout();
-					createKakaotalkLogin();
-					$("#kakao-profile").text("");
-				});
-				$("#kakao-logged-group").prepend(logoutBtn);
-			}
-			if(Kakao.Auth.getRefreshToken()!=undefined&&Kakao.Auth.getRefreshToken().replace(/ /gi,"")!=""){
-				createKakaotalkLogout();
-				getKakaotalkUserProfile();
-			}else{
-				createKakaotalkLogin();
-			}
-		});
+		
 	</script>
 </head>
 <body>
@@ -271,16 +224,39 @@
 								</div>
 								<script>
 									Kakao.init('cf3c8a92c56d57b527e32f7519a7a4f6');
-									Kakao.Auth.createLoginButton({
-								          container: '#kakao-login-btn',
-								          success: function(authObj) {
-								            alert(JSON.stringify(authObj));
-								          },
-								          fail: function(err) {
-								             alert(JSON.stringify(err));
-								          }
-								        });
+								    // 카카오 로그인 버튼을 생성합니다.
+								    Kakao.Auth.createLoginButton({
+								      	container: '#kakao-login-btn',
+								      	success: function(authObj) {
+								    	 	 Kakao.API.request({
+								    	       	url: '/v1/user/me',
+								    	      	success: function(res) {								    	             
+								    	            $.ajax({
+								    	            	type:"post",
+								    	            	dataType:"json",
+								    	            	url:"kakaologin.do",
+								    	            	data:{
+								    	            		id:res.id,
+								    	            		name:res.properties.nickname,
+								    	            		email:res.kaccount_email
+								    	             	},
+								    	            	success:function(data) {
+								    	            		location.href = "main.jsp";
+								    	            	},
+								    	            	error:function(data) {
+								    	            		location.href = "main.jsp";
+								    	            	}
+													})
+												},
+								      			fail: function(err) {
+								         			alert(JSON.stringify(err));
+								      			}
+								    		});
+								    	}
+								     });
 									</script>
+								</div>
+								
 							</div>
 							<div class="row_margin forgot-password-row">
 								<div id="naver_id_login"></div>
