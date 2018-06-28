@@ -26,8 +26,72 @@ public class FrontController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
+			String requestURI= request.getRequestURI();
+			String contextPath = request.getContextPath();
+			String command = requestURI.substring(contextPath.length());
+			request.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("utf8");
+
+			//MemberDAO mdao = new MemberDAO();
+			FreeboardDAO fbdao = new FreeboardDAO();
+
+			boolean isForward = true;
+			String dst = null;
+
+			if(command.equals("/freeboard.bo")) {
+				int currentPage = 0;
+				String currentPageString = request.getParameter("currentPage");
+				
+				if(currentPageString == null) {
+					currentPage = 1;
+				} else {
+					currentPage = Integer.parseInt(currentPageString);
+				}
+				
+				String searchTerm = request.getParameter("search");
+				
+				ArrayList<FreeboardDTO> list = fbdao.selectBoard(currentPage*10-9, currentPage*10, searchTerm);
+				request.setAttribute("freeboardlist", list);
+				
+				//------------------------------------------------------
+				
+			
+				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
+				request.setAttribute("pageNavi", pageNavi);
+				
+				isForward = true;
+				dst="freeboard.jsp";
+
+//--------------------------------------------------------�ı� ���� �Խ��� ����
+			} else if(command.equals("/reviewboard.bo")) {
+				int currentPage = 0;
+				String currentPageString = request.getParameter("currentPage");
+				
+				if(currentPageString == null) {
+					currentPage = 1;
+				} else {
+					currentPage = Integer.parseInt(currentPageString);
+				}
+				
+				String searchTerm = request.getParameter("search");
+				ArrayList<reviewDTO> list = fbdao.selectBoard(currentPage*10-9, currentPage*10, searchTerm);
+				request.setAttribute("reviewList", list);
+			
+				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
+				request.setAttribute("pageNavi", pageNavi);
+								
+				isForward = true;
+				dst="share_review.jsp";
+			}
+
+			if(isForward) {
+				RequestDispatcher rd = request.getRequestDispatcher(dst);
+				rd.forward(request, response);
+			} else {
+				response.sendRedirect(dst);
+			}
+		}catch(Exception e) {e.printStackTrace();}		
 	}
 
 	/**

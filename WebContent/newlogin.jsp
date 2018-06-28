@@ -18,7 +18,7 @@
 	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
 	charset="utf-8"></script>
 <style>
-#container {  
+#container {
 	width: 800px;
 	margin: 0 auto;
 	padding-top: 100px;
@@ -122,12 +122,12 @@
 </script>
 </head>
 <body>
-	
+
 	<div id="container">
 		<div class="row">
 			<h1 id="title" class="center col s12">
-		<a href="main.jsp">TRAVEL MAKER</a>
-	</h1>
+				<a href="main.jsp">TRAVEL MAKER</a>
+			</h1>
 		</div>
 		<div class="row">
 			<div id="loginarea">
@@ -179,7 +179,7 @@
 								<a class="btn-login btn blue lighten-1 waves-effect white-text"
 									id="loginbtn">Log In</a>
 							</div>
-							
+
 							<div class="row_margin forgot-password-row">
 								<div id="kakao_btn_changed">
 									<a id="kakao-login-btn"></a> <a
@@ -219,6 +219,7 @@
 									</script>
 								</div>
 							</div>
+							
 							<div class="row_margin forgot-password-row">
 								<div id="naver_id_login"></div>
 								<script type="text/javascript">
@@ -235,10 +236,12 @@
 									Password?</span>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 </body>
 </html>
