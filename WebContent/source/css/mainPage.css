@@ -1,0 +1,155 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Lato', sans-serif;
+}
+hr{
+	margin-bottom:5px;
+}
+.divLine{
+	margin-top:20px;	
+}
+
+
+/* article {
+	height: 1000px;
+	margin: 100px auto;
+	text-align: center;
+	line-height: 1.9;
+} */
+
+article p {
+	margin-bottom: 1em;
+}
+
+a {
+	color: #0b8793;
+}
+
+#bestPlan {
+	height: 400px;
+	margin-bottom:20px;
+}
+
+#bests {
+	height: 1200px;
+}
+
+/* #naviId {
+	height: 100px;
+} */
+
+.container {
+	padding-top: 140px;
+	height:100%;
+}
+
+#foot {
+	height: 100px;
+}
+
+footer {
+	padding: 30px;
+	text-align: center;
+	border-top: solid 1px #bbb;
+}
+
+footer a {
+	color: #666;
+	text-decoration: none;
+}
+
+/*네비 관련 css입니다. */
+.navbar-brand{
+	font-size:30px;
+}
+.dropdown-menu{
+	margin-right:10px;
+	
+}
+
+
+
+/* Best Images div 관련 css 입니다.  */
+.hls_sol {
+	height: 300px;
+	overflow: hidden;
+	padding: 0px;
+}
+
+.hls_sol img {
+	height: 100%;
+	width: 100%;
+	opacity: 1;
+	transform: scale(1);
+	-webkit-transition: .2s ease-in-out;
+	transition: .2s ease-in-out;
+}
+
+.hls_sol:hover img {
+	opacity: 0.5;
+	transform: scale(1.2);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+.hls_sol:hover .hls_sol_data {
+	visibility: visible;
+	/* 	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out; */
+}
+
+.hls_sol_data {
+	width: 100%;
+	height: 200px;
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	visibility: hidden;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	-webkit-transition: .2s ease-in-out;
+	transition: .2s ease-in-out;
+}
+
+.hls_sol_data a {
+	color: white;
+	text-decoration: none;
+	text-align: center;
+}
+
+.hls_sol_data .btn {
+	position: absolute;
+	bottom: 0px;
+	color: white;
+	padding-right: 5px;
+	font-family: sans-serif;
+	border: #fff 1px solid;
+	/* transition: .1s; */
+	border-radius: 0px;
+}
+
+.hls_sol_data .btn:active {
+	color: #000;
+	border: #1A1A1A 1px solid;
+	transition: .07s;
+	background-color: #FFF;
+}
+
+.hls_sol_data .btn:hover {
+	
+	-webkit-transition: .1s ease-in-out;
+	transition: .1s ease-in-out;
+	color: #10FF58;
+	padding-right: 5px;
+	transition: .5s;
+	border: #10FF58 1px solid;
+	border-radius: 10px;
+}

@@ -17,7 +17,6 @@
 <script type="text/javascript"
 	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
 	charset="utf-8"></script>
-	
 <style>
 #container {  
 	width: 800px;
@@ -223,6 +222,40 @@
 								     });
 									</script>
 								</div>
+								<script>
+									Kakao.init('cf3c8a92c56d57b527e32f7519a7a4f6');
+								    // 카카오 로그인 버튼을 생성합니다.
+								    Kakao.Auth.createLoginButton({
+								      	container: '#kakao-login-btn',
+								      	success: function(authObj) {
+								    	 	 Kakao.API.request({
+								    	       	url: '/v1/user/me',
+								    	      	success: function(res) {								    	             
+								    	            $.ajax({
+								    	            	type:"post",
+								    	            	dataType:"json",
+								    	            	url:"kakaologin.do",
+								    	            	data:{
+								    	            		id:res.id,
+								    	            		name:res.properties.nickname,
+								    	            		email:res.kaccount_email
+								    	             	},
+								    	            	success:function(data) {
+								    	            		location.href = "main.jsp";
+								    	            	},
+								    	            	error:function(data) {
+								    	            		location.href = "main.jsp";
+								    	            	}
+													})
+												},
+								      			fail: function(err) {
+								         			alert(JSON.stringify(err));
+								      			}
+								    		});
+								    	}
+								     });
+									</script>
+								</div>
 								
 							</div>
 							<div class="row_margin forgot-password-row">
@@ -237,8 +270,8 @@
   								</script>
 							</div>
 							<div class="row forgot-password-row">
-								<span class="blue-text text-lighten-1 waves-effect">Forgot
-									Password?</span>
+								<span class="blue-text text-lighten-1 waves-effect"><a href="findPw.jsp">Forgot
+									Password?</a></span>
 							</div>
 						</div>
 					</div>
