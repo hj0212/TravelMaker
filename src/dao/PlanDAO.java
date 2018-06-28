@@ -52,6 +52,25 @@ public class PlanDAO {
 
 		return result;
 	}
+	
+	public int updateSchedule(ScheduleDTO dto) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "update schedule set schedule_starttime=?, schedule_endtime=?, location_id=?,schedule_plan=?,schedule_ref=? where schedule_seq=? ";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, dto.getSchedule_starttime());
+		pstmt.setString(2, dto.getSchedule_endtime());
+		pstmt.setString(3, dto.getLocation_id());
+		pstmt.setString(4, dto.getSchedule_plan());
+		pstmt.setString(5, dto.getSchedule_ref());
+		pstmt.setInt(6, dto.getSchedule_seq());
+		int result = pstmt.executeUpdate();
+		
+		pstmt.close();
+		con.commit();
+		con.close();
+
+		return result;
+	}
 
 	public List<ScheduleDTO> selectSchedule(int plan, int day) throws Exception {
 		Connection con = DBConnection.getConnection();

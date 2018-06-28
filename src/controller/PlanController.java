@@ -38,28 +38,38 @@ public class PlanController extends HttpServlet {
 				ScheduleDTO tmp = new ScheduleDTO();
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
-				System.out.println("starttime" + request.getParameter("starttime"));
 				tmp.setPlan_seq(plan);
 				tmp.setDay_seq(day);
 				tmp.setSchedule_starttime(request.getParameter("starttime"));
 				tmp.setSchedule_endtime(request.getParameter("endtime"));
 				tmp.setLocation_id(request.getParameter("place")); 
-				tmp.setSchedule_plan(request.getParameter("plan"));
+				tmp.setSchedule_plan(request.getParameter("schedule"));
 				tmp.setSchedule_ref(request.getParameter("reference"));
-				
-				int result = pdao.addSchedule(tmp);
-				
-				if(result > 0) {
-					System.out.println("성공");
+				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
+				if(schedule_seq > 0) {	// 수정
+					tmp.setSchedule_seq(schedule_seq);
+					int result = pdao.updateSchedule(tmp);
+					
+					if(result > 0) {
+						System.out.println("수정성공");
+					} else {
+						System.out.println("수정실패");
+					}
 				} else {
-					System.out.println("실패");
+					int result = pdao.addSchedule(tmp);
+					
+					if(result > 0) {
+						System.out.println("성공");
+					} else {
+						System.out.println("실패");
+					}
 				}
+				
 				
 				isForward = true;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 
 			} else if(command.equals("/selectSchedule.plan")) {
-				System.out.println("여기");
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
 				String create = request.getParameter("create");

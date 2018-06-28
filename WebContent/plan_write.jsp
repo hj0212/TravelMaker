@@ -127,7 +127,6 @@
 				<tbody id="schedule-tbody"
 					style="table-layout: fixed; word-break: break-all;">
 					<c:if test="${create == 'f'}">
-					<script>console.log("리스트불러오기");</script>
 					<c:forEach var="item" items="${scheduleList}">
 					<tr class="clickable-row">
 						<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
@@ -138,8 +137,9 @@
 						<td><button style="float: left; border: none;" type="button"
 								class="btn btn-outline-danger">
 								<i class="far fa-times-circle"></i>
-							</button></td>
-
+							</button>
+						<input type="hidden" class="schedule_seq" value="${item.schedule_seq}">	
+						</td>
 					</tr>
 					</c:forEach>
 					</c:if>
@@ -166,8 +166,8 @@
 
 		<div id="plan-board">
 			<form action="addSchedule.plan" method="post" id="scheduleform">
-			<input type="hidden" name="plan" value="1">
-			<input type="hidden" name="day" value="1">
+			<input type="hidden" name="plan" value="${param.plan}">
+			<input type="hidden" name="day" value="${param.day}">
 			<table class="table table-bordered" id="schedule-boarder">
 				<thead>
 				</thead>
@@ -207,7 +207,7 @@
 					<tr>
 						<th scope="row"
 							style="background-color: #e9e9e9; text-align: center; vertical-align: middle">일정</th>
-						<td><input class="form-control" id="schedule" name="plan"></td>
+						<td><input class="form-control" id="schedule" name="schedule"></td>
 
 					</tr>
 					<tr>
@@ -229,7 +229,7 @@
 				</tbody>
 			</table>
 			<div style="text-align: right">
-				<button type="submit" class="btn btn-outline-primary"
+				<button type="button" class="btn btn-outline-primary"
 					id="success-primary">등록</button>
 			</div>
 			</form>
@@ -315,7 +315,12 @@ $(document).ready(function() {
     var schedulecount = 1;
     timeArray = new Array();
     $("#success-primary").click(function() {
-        var con = confirm("일정추가하시겠습니까?");
+        con = "";
+        if($(".schedule_seq").val()>0) {
+        	con = confirm("일정을 수정하시겠습니까?");
+        } else {
+        	con = confirm("일정을 추가하시겠습니까?");
+        }
         
             if (starttime == "" || endtime == "") {
             	alert("시간을정해주세요");
@@ -326,7 +331,7 @@ $(document).ready(function() {
             } else if (money == "") {
                 alert("예산을적어주세요");
             } else if (con) {
-            	
+            	$("#scheduleform").submit();
             	var contents = '';
                 contents += '<tr class="clickable-row new active"><th style="height:50px;"></th><td name="place"></td><td name="schedule"></td>';
                 contents += '<td name="money"></td>';
@@ -334,7 +339,7 @@ $(document).ready(function() {
                 contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button></td>';
                 contents += '</tr>';
                 
-            	if($("#schedule-plan>tbody>.active>th>div").length == 0 ) {	// 빈칸 = 마지막줄
+            	if($("#schedule-plan>tbody>.active>th").val() == "") {	// 빈칸 = 마지막줄
             		console.log("빈칸");
             		$("#schedule-plan>tbody>tr").removeClass('new');
                 	$("#schedule-plan>tbody>tr").removeClass('active');
@@ -343,7 +348,6 @@ $(document).ready(function() {
                    
                 } else { // 빈칸x = 마지막줄x
                 	var cursor = "#schedule-plan>tbody>.active";
-
                 	$("#schedule-plan>tbody>tr").removeClass('active');
                 	$("#schedule-plan>tbody>.new").addClass('active');
                 }
@@ -359,8 +363,11 @@ $(document).ready(function() {
     
     $("#schedule-plan").on('click', '.clickable-row', function(event) {
     	  $(this).addClass('active').siblings().removeClass('active');
-    	  $("#start-time").val($("#schedule-plan>tbody>.active>th>div[name='start']").html());
-          $("#end-time").val($("#schedule-plan>tbody>.active>th>div[name='end']").html());
+    	  var seq = $(".schedule_seq").val();
+    	  $("#scheduleform").append('<input type="hidden" name="schedule_seq" value="'+seq+'">');
+    	  var timestr = $("#schedule-plan>tbody>.active>th").html().split("~");
+    	  $("#start-time").val(timestr[0]);
+          $("#end-time").val(timestr[1]);
           $("#place").val($("#schedule-plan>tbody>.active>td[name='place']").html());
           $("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
           
