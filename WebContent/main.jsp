@@ -44,10 +44,6 @@ div {
 	height: 100%;
 }
 
-#navi {
-	height: 70px;
-}
-
 #bestPlan {
 	height: 400px;
 }
@@ -93,6 +89,7 @@ div {
                 </div>
               </div>
 				</div>
+<<<<<<< HEAD
 				<div class="item">
 					<div class="card col-md-12 col-sm-12 w-100">
                 <div class="card-header"> Header </div>
@@ -112,6 +109,33 @@ div {
                   <p>Some quick example text to build on the card title .</p>
                 </div>
               </div>
+=======
+			</div>
+		</div>
+
+		<h1 class="divLine">BEST IMAGE</h1>
+		<hr />
+		<div class="row col-md-12" id="bestImage">
+			<div class="col-md-3 hls_sol">
+				<img src="travel1.jpg" alt="">
+				<div class="hls_sol_data">
+					<h1>1</h1>
+					<div class="hls_data">
+						<a href="" target="" class="hls_title">여행자님</a> <a href=""
+							class="btn btn-pro">여행계획보기</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="hls_sol col-md-3">
+				<img src="travel1.jpg" style="width:100%" alt="">
+				<div class="hls_sol_data px-1">
+					<h1>2</h1>
+					<div class="hls_data">
+						<a href="" target="" class="hls_title">여행자님</a> <a href=""
+							class="btn btn-pro">여행계획보기</a>
+					</div>
+>>>>>>> 비밀번호찾기
 				</div>
 				<div class="item">
 					<div class="card col-md-12 col-sm-12 w-100">

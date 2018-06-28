@@ -250,6 +250,134 @@ public class MemberDAO {
 		}
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public MemberDTO getHomeMemberInfo(String id, String part) throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where USERID=?";
@@ -275,6 +403,7 @@ public class MemberDAO {
 		Connection con = DBConnection.getConnection();
 		String sql = "update users set password=?, nickname=?, email=? where userid=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
+<<<<<<< HEAD
 		pstmt.setString(1, pw);
 		pstmt.setString(2, nickname);
 		pstmt.setString(3, email);
@@ -289,6 +418,14 @@ public class MemberDAO {
 	public int updateEmail (String id, String part, String email) throws Exception{
 		Connection con = DBConnection.getConnection();
 		PreparedStatement pstmt=null;
+=======
+		pstmt.setInt(1, seq);
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		String part = rs.getString(1);
+	/*	System.out.println(part);*/
+		String nickname = "";
+>>>>>>> 비밀번호찾기
 		if(part.equals("home")) {
 			String sql = "update users set email=? where userid=?";
 			pstmt = con.prepareStatement(sql);
