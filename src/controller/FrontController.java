@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeboardDAO;
 import dao.ReviewDAO;
-import dao.MemberDAO;
 import dto.FreeboardDTO;
 import dto.ReviewCommentDTO;
 import dto.ReviewDTO;
@@ -47,8 +46,7 @@ public class FrontController extends HttpServlet {
 			ReviewDAO rdao = new ReviewDAO();
 			//MemberDAO mdao = new MemberDAO();
 			FreeboardDAO fbdao = new FreeboardDAO();
-			ReviewDAO rdao = new ReviewDAO();
-		
+			
 
 			boolean isForward = true;
 			String dst = null;
@@ -122,14 +120,23 @@ public class FrontController extends HttpServlet {
 			
 			
 			
-			if(command.equals("/reviewArticel.bo")) {
+			if(command.equals("/reviewArticle.bo")) {
 				int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 				
 				ReviewDTO result1 = rdao.getReviewArticle(review_seq);
-				request.setAttribute("result1", result1);
+				request.setAttribute("reviw_seq", result1.getReview_seq());
+				request.setAttribute("review_title", result1.getReview_title());
+				request.setAttribute("review_contents", result1.getReview_contents());
+				request.setAttribute("review_writeedate", result1.getReview_writedate());
+				request.setAttribute("review_writer", result1.getReview_writer());
+				request.setAttribute("review_viewcount", result1.getReview_viewcount());
 				
+				ReviewCommentDTO cdto = new ReviewCommentDTO();
 				List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);
-				request.setAttribute("result2", result2);
+				request.setAttribute("comment_writer", cdto.getComment_writer());
+				request.setAttribute("comment_text", cdto.getComment_text());
+				request.setAttribute("comment_time", cdto.getComment_time());
+				
 				
 				isForward = true;
 				dst = "reviewArticle.bo?reveiw_seq="+ review_seq;
@@ -137,14 +144,13 @@ public class FrontController extends HttpServlet {
 				String comment_text = request.getParameter("comment_text");
 				int comment_writer_seq = Integer.parseInt(request.getParameter("comment_writer_seq"));
 				int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-				int result3 = rdao.insertReviewComment(comment_text, comment_writer_seq, review_seq);
-				request.setAttribute("result3", result3);
+				int result = rdao.insertReviewComment(comment_text, comment_writer_seq, review_seq);
+				request.setAttribute("result", result);
+				request.setAttribute("review_seq", review_seq);
 				
-				List<ReviewCommentDTO> result4 = rdao.getReviewComment(review_seq);
-				request.setAttribute("result4", result4);
 
 				isForward = true;
-				dst= "reviewArticle.bo?reveiw_seq="+ review_seq;
+				dst= "reviewCommentView.bo";
 			}
 			
 			if(isForward) {

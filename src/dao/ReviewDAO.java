@@ -59,12 +59,26 @@ public class ReviewDAO {
 	
 	
 	
-	
+	public int getArticleViewCount (int review_seq) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "select review_viewcount from reviewboard where review_seq = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, review_seq);
+		ResultSet rs = pstmt.executeQuery();
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt("review_viewcount");
+		}
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
 	
 	
 	public ReviewDTO getReviewArticle(int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from reviewboard where review_seq = ?";
+		String sql = "select reviw_seq, review_title, reviw_contents, review_writer, review_writedate, review_viewcount.nextval from reviewboard where review_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
 		ResultSet rs = pstmt.executeQuery();

@@ -69,17 +69,17 @@
     <div class="container">
         <div class="row title  text-center">
             <div class="col-sm-12">
-                안녕하세요       
+               ${review_title}      
             </div>
         </div>
         <div class="row writer">
-            <div class="col-sm-6 text-left">김모씨</div>
-            <div class="col-sm-4 text-right">2018-07-12</div>
-            <div class="col-sm-2 text-right">20</div>
+            <div class="col-sm-6 text-left">${review_writer}</div>
+            <div class="col-sm-4 text-right">${review_writeedate}</div>
+            <div class="col-sm-2 text-right">${review_viewcount}</div>
         </div>
         <div class="row contents">
             <div class="col-sm-12">
-                <%=request.getParameter("contents") %>
+               ${review_contents}
             </div>
         </div>
         <div class="row function">
@@ -97,9 +97,9 @@
         </div>
         <div class="comments">
             <div class="comment row">
-                <div class="col-sm-2">송호진</div>
-                <div class="col-sm-7">댓글입니다... 마동석송호진댓글입니다... 마동석송호진댓글입니다... 마동석송호진댓글입니다... 마동석송호진</div>
-                <div class="col-sm-2">2018-02-23</div>
+                <div class="col-sm-2">${comment_writer}</div>
+                <div class="col-sm-7">${comment_text}</div>
+                <div class="col-sm-2">${comment_time}</div>
                 <div class="col-sm-1">
                     <a href="#">
                         <i class="fas fa-times-circle"></i>
