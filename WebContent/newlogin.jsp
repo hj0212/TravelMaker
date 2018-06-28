@@ -82,6 +82,7 @@
 #kakao_btn_changed {
 	height: 49px;
 }
+
 </style>
 <script>
 	$(document).ready(() => {
@@ -116,7 +117,7 @@
 			  }else if(name ==""){		  	  
 				  alert("이름을 입력해주세요.");
 		 	  }else if(!emailcheck(email)){
-			       alert("유요한 형식의 이메일이아닙니다.");
+			       alert("유효한 형식의 이메일이아닙니다.");
 			  }else if(conpw != pw){
 				  alert("패스워드가 일치 하지않습니다");
 			  }else{
@@ -315,9 +316,7 @@ $("#user_idchek").keyup(function(){
 								     });
 									</script>
 								</div>
-								
-							</div>
-							<div class="row_margin forgot-password-row">
+								<div class="row_margin forgot-password-row">
 								<div id="naver_id_login"></div>
 								<script type="text/javascript">
 								  	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://59.10.249.73/Test/loginProc.html");
@@ -332,6 +331,9 @@ $("#user_idchek").keyup(function(){
 								<span class="blue-text text-lighten-1 waves-effect"><a href="findPw.jsp">Forgot
 									Password?</a></span>
 							</div>
+							</div>
+							
+							
 						</div>
 					</div>
 				</div>
