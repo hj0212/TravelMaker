@@ -7,11 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBUtils.DBConnection;
-<<<<<<< HEAD
 import dto.ReviewCommentDTO;
-=======
 import dto.FreeboardDTO;
->>>>>>> 비밀번호찾기
 import dto.ReviewDTO;
 
 public class ReviewDAO {
@@ -42,26 +39,9 @@ public class ReviewDAO {
 		return result;
 	}
 	
-<<<<<<< HEAD
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	public int getArticleViewCount (int review_seq) throws Exception{
@@ -136,7 +116,7 @@ public class ReviewDAO {
 		con.close();
 		return result;
 	}
-=======
+
 //-----------------------네비에 정한 개수만큼 기록 가져오기
 	public ArrayList<ReviewDTO> getSomeReview(int startNum, int endNum, String searchTerm) throws Exception {
 		Connection con = DBConnection.getConnection();
@@ -259,6 +239,5 @@ public class ReviewDAO {
 		return sb.toString();
 	}	
 	
-	
->>>>>>> 비밀번호찾기
 }
+

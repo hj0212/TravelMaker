@@ -89,7 +89,7 @@ div {
                 </div>
               </div>
 				</div>
-<<<<<<< HEAD
+
 				<div class="item">
 					<div class="card col-md-12 col-sm-12 w-100">
                 <div class="card-header"> Header </div>
@@ -109,7 +109,7 @@ div {
                   <p>Some quick example text to build on the card title .</p>
                 </div>
               </div>
-=======
+
 			</div>
 		</div>
 
@@ -135,7 +135,7 @@ div {
 						<a href="" target="" class="hls_title">여행자님</a> <a href=""
 							class="btn btn-pro">여행계획보기</a>
 					</div>
->>>>>>> 비밀번호찾기
+
 				</div>
 				<div class="item">
 					<div class="card col-md-12 col-sm-12 w-100">

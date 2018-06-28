@@ -17,13 +17,11 @@
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">Schedules</a>
 				</li>
-<<<<<<< HEAD
-				<li class="nav-item"><a class="nav-link" href="#">Review</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Board</a></li>
-=======
+
+
 				<li class="nav-item"><a class="nav-link" href="reviewboard.bo">Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
->>>>>>> 비밀번호찾기
+
 				<li class="nav-item"><a class="nav-link" href="newlogin.jsp">Login</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">Join</a></li>
 
