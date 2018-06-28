@@ -10,6 +10,23 @@ import DBUtils.DBConnection;
 import dto.ScheduleDTO;
 
 public class PlanDAO {
+	public String getPlantitle(int plan_seq) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select plan_title from plan where plan_seq = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, plan_seq);
+		ResultSet rs = pstmt.executeQuery();
+		String result = "";
+		if(rs.next()) {
+			result = rs.getString(1);
+		}
+		
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
 	public int addScheduleList(List<ScheduleDTO> list) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "insert into schedule VALUES (schedule_seq.nextval, ?, ?, ?, ?, ?, ?)";

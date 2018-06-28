@@ -46,6 +46,7 @@ public class PlanController extends HttpServlet {
 				tmp.setSchedule_plan(request.getParameter("schedule"));
 				tmp.setSchedule_ref(request.getParameter("reference"));
 				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
+
 				if(schedule_seq > 0) {	// 수정
 					tmp.setSchedule_seq(schedule_seq);
 					int result = pdao.updateSchedule(tmp);
@@ -70,6 +71,7 @@ public class PlanController extends HttpServlet {
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 
 			} else if(command.equals("/selectSchedule.plan")) {
+				
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
 				String create = request.getParameter("create");
@@ -83,9 +85,11 @@ public class PlanController extends HttpServlet {
 					
 					request.setAttribute("create", create);
 				}
+				String plan_title = pdao.getPlantitle(plan);
+				request.setAttribute("plan_title", plan_title);
 				
 				isForward = true;
-				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create=f";
+				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
 			} 
 
 			if(isForward) {

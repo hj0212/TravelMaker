@@ -103,11 +103,11 @@
 		<div class="input-group input-group-lg">
 		
 			<div class="input-group-prepend">
-				<span class="input-group-text" id="inputGroup-sizing-lg">제목</span>
+				<span class="input-group-text" id="inputGroup-sizing-lg">여행</span>
 			</div>
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
-				name="plantitle">
+				name="plantitle" value="${plan_title}">
 			
 		</div>
 
@@ -152,7 +152,7 @@
 						<td><button style="float: left; border: none;" type="button"
 								class="btn btn-outline-danger">
 								<i class="far fa-times-circle"></i>
-							</button></td>
+							</button><input type="hidden" class="schedule_seq" value="0"></td>
 
 					</tr>
 				</tbody>
@@ -168,6 +168,7 @@
 			<form action="addSchedule.plan" method="post" id="scheduleform">
 			<input type="hidden" name="plan" value="${param.plan}">
 			<input type="hidden" name="day" value="${param.day}">
+			<input type="hidden" name="schedule_seq" value="0">
 			<table class="table table-bordered" id="schedule-boarder">
 				<thead>
 				</thead>
@@ -315,12 +316,20 @@ $(document).ready(function() {
     var schedulecount = 1;
     timeArray = new Array();
     $("#success-primary").click(function() {
+    	console.log("active:" + $("#schedule-plan>tbody>.active>th").html());
         con = "";
-        if($(".schedule_seq").val()>0) {
-        	con = confirm("일정을 수정하시겠습니까?");
+        if($("#schedule-plan>tbody>.active>th").html() != "") {
+        	con = "일정을 수정하시겠습니까?";
         } else {
-        	con = confirm("일정을 추가하시겠습니까?");
+        	con = "일정을 추가하시겠습니까?";
         }
+        
+        starttime = $("#start-time").val();
+        endtime = $("#end-time").val();
+        place = "이레빌딩"; /*  $("#place").val("이레빌딩");*/
+        schedule = $("#schedule").val();
+        money = $("#money").val();
+        reference = $("#reference").val();
         
             if (starttime == "" || endtime == "") {
             	alert("시간을정해주세요");
@@ -328,15 +337,13 @@ $(document).ready(function() {
                 alert("장소를정해주세요");
             } else if (schedule == "") {
                 alert("일정을적어주세요");
-            } else if (money == "") {
-                alert("예산을적어주세요");
-            } else if (con) {
+            } else if (confirm(con)) {
             	$("#scheduleform").submit();
             	var contents = '';
                 contents += '<tr class="clickable-row new active"><th style="height:50px;"></th><td name="place"></td><td name="schedule"></td>';
                 contents += '<td name="money"></td>';
                 contents += '<td name="reference"></td>';
-                contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button></td>';
+                contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button><input type="hidden" name="schedule_seq" value="0"></td>';
                 contents += '</tr>';
                 
             	if($("#schedule-plan>tbody>.active>th").val() == "") {	// 빈칸 = 마지막줄
@@ -363,8 +370,10 @@ $(document).ready(function() {
     
     $("#schedule-plan").on('click', '.clickable-row', function(event) {
     	  $(this).addClass('active').siblings().removeClass('active');
-    	  var seq = $(".schedule_seq").val();
-    	  $("#scheduleform").append('<input type="hidden" name="schedule_seq" value="'+seq+'">');
+    	  var seq = $(".active .schedule_seq").val();
+    	  console.log("선택:" + seq);
+    	  $("#plan-board input[name='schedule_seq']").val(seq);
+    	  console.log("seq셋팅: " + $("#plan-board input[name='schedule_seq']").val());
     	  var timestr = $("#schedule-plan>tbody>.active>th").html().split("~");
     	  $("#start-time").val(timestr[0]);
           $("#end-time").val(timestr[1]);
