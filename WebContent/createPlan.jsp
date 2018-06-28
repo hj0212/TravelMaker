@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js" type="text/javascript"></script>
-<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-    
+   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
@@ -123,7 +123,7 @@
 
         <div id="picker-div">
             <div class="picker-pic">여행 시작 날짜<input id="datepicker" width="170" /></div>
-            <div class="picker-pic">여행 종료 날짜<input id="datepicker2" width="170" /></div>
+            <div class="picker-pic">여행 종료 날짜<input id="datepicker-end" width="170" /></div>
 
         </div>
 
@@ -135,18 +135,55 @@
 
 
     <script>
-        $('#datepicker').datepicker({
+    $(document).ready(function(){
+    	 var minDate = new Date();
+    	    var maxDate = new Date();
+    	    var mm = minDate.getDate()-1;
+    	    var dd = maxDate.getDate()+ 62;
+    	    minDate.setDate(mm);
+    	    maxDate.setDate(dd);
+    	    
+        $("#datepicker").datepicker({
             uiLibrary: 'bootstrap4',
             format: 'yyyy/mm/dd',
             language: "ko",
-            defalutDate: new Date()
+            minDate:minDate,
+            maxDate : maxDate,
+            constrainInput: true, 
+            
+          
         });
-        $('#datepicker2').datepicker({
+        $("#datepicker-end").datepicker({
             uiLibrary: 'bootstrap4',
             format: 'yyyy/mm/dd',
-            language: "ko"
+            language: "ko",
+            constrainInput: true, 
+            minDate:minDate,
+            maxDate : maxDate,
+         
         });
-
+		
+        $("#start-bt").click(function(){
+        var todate=	$("#datepicker").val();
+        var enddate=$("#datepicker-end").val();
+         
+        	
+        	var arrtodate = todate.split("/");
+        	var arrenddate = enddate.split("/");
+        	
+         
+        	
+        	var formdt =new Date(arrtodate[0],arrtodate[1],arrtodate[2]);
+        	var todt =new Date(arrenddate[0],arrenddate[1],arrenddate[2]);
+        	
+        	console.log((todt.getTime()-formdt.getTime())/(24*60*60*1000));//일수
+   
+        	
+        });
+        
+    });
+    
+        
     </script>
 
 </body>
