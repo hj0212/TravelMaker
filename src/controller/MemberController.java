@@ -27,21 +27,6 @@ public class MemberController extends HttpServlet {
 
 			MemberDAO mdao = new MemberDAO();
 
-		}else if(command.equals("/kakaologin.do")) {
-			String id = request.getParameter("id");
-			String name = request.getParameter("name");
-			String email = request.getParameter("email");
-			System.out.println("id: " + id + ", name: " + name + ", email: " + email);
-			MemberDTO dto = new MemberDTO();
-			dto.setKakao_id(id);
-			dto.setKakao_nickname(name);
-			dto.setKakao_email(email);
-			
-			request.getSession().setAttribute("loginId", id);
-			int result=mdao.addKakaoMember(dto);
-			
-			isForward = false;
-			dst="index.jsp";		
 			boolean isForward = true;
 			String dst = null;
 

@@ -29,7 +29,6 @@
 						aria-labelledby="navbarDropdownMenuLink">
 						<li><a class="dropdown-item" href="mypage.jsp">MyPage</a></li>
 						<li><a class="dropdown-item" href="traveldiary.html">MyPlans</a></li>
-						<li><a class="dropdown-item" href="#">LogOut</a></li>
 					</ul>
 		</li>
 		</ul>
