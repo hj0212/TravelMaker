@@ -17,9 +17,19 @@ pageEncoding="UTF-8"%>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
     	<script src="./freeboard/summernote-ko-KR.js"></script>
         <link rel="stylesheet" href="./freeboard/freewrite.css">
+        <link rel="stylesheet" href="./freeboard/freewrite.css">
+        <link rel="stylesheet" href="source/css/codepenNavi.css">
     </head>
 
     <body>
+    	<c:choose>
+		<c:when test="${sessionScope.loginId !=null}">
+			<%@include file="../include/mainNavi_login.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="../include/mainNavi.jsp"%>
+		</c:otherwise>
+		</c:choose>
         <div class="container">
             <h1>summernote</h1>
             <form action="freeview.jsp" method="post" onsubmit="return sendContents()" name="writeContents">
