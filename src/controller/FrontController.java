@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeboardDAO;
+import dao.ReviewDAO;
 import dto.FreeboardDTO;
+import dto.ReviewCommentDTO;
+import dto.ReviewDTO;
 
 /**
  * Servlet implementation class FrontController
@@ -39,6 +43,7 @@ public class FrontController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
 
+			ReviewDAO rdao = new ReviewDAO();
 			//MemberDAO mdao = new MemberDAO();
 			FreeboardDAO fbdao = new FreeboardDAO();
 
@@ -103,10 +108,40 @@ public class FrontController extends HttpServlet {
 			
 			
 			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			if(command.equals("/reviewArticel.bo")) {
 				int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-				String review_title = request.getParameter("title");
 				
+				ReviewDTO result1 = rdao.getReviewArticle(review_seq);
+				request.setAttribute("result1", result1);
+				
+				List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);
+				request.setAttribute("result2", result2);
+				
+				isForward = true;
+				dst = "reviewArticle.bo?reveiw_seq="+ review_seq;
+			}if(command.equals("/addReviewComment.bo")) {
+				String comment_text = request.getParameter("comment_text");
+				int comment_writer_seq = Integer.parseInt(request.getParameter("comment_writer_seq"));
+				int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+				int result3 = rdao.insertReviewComment(comment_text, comment_writer_seq, review_seq);
+				request.setAttribute("result3", result3);
+				
+				List<ReviewCommentDTO> result4 = rdao.getReviewComment(review_seq);
+				request.setAttribute("result4", result4);
+
+				isForward = true;
+				dst= "reviewArticle.bo?reveiw_seq="+ review_seq;
 			}
 			
 			if(isForward) {
