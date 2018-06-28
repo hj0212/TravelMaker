@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import dao.PlanDAO;
 import dto.ScheduleDTO;
@@ -39,49 +34,21 @@ public class PlanController extends HttpServlet {
 			boolean isForward = true;
 			String dst = null;
 
-			if(command.equals("/saveschedules.plan")) {
-				
-				JsonParser parser = new JsonParser();
-				JsonArray arr = (JsonArray) parser.parse(request.getReader());
-				
-				List<ScheduleDTO> list = new ArrayList<>();
-				for(int i = 0; i < arr.size(); i++) {
-					ScheduleDTO tmp = new ScheduleDTO();
-					String timestr = arr.get(i).getAsJsonObject().get("시간").getAsString();
-					String starttime = timestr.split("~")[0];
-					String endtime = timestr.split("~")[1];
-					tmp.setSchedule_starttime(starttime);
-					tmp.setSchedule_endtime(endtime);
-					tmp.setLocation_id(arr.get(i).getAsJsonObject().get("장소").getAsString());
-					tmp.setSchedule_plan(arr.get(i).getAsJsonObject().get("일정").getAsString());
-					tmp.setSchedule_budget(arr.get(i).getAsJsonObject().get("예산").getAsString());
-					tmp.setSchedule_ref(arr.get(i).getAsJsonObject().get("참조").getAsString());
-					list.add(tmp);
-				}
-				int result = pdao.addScheduleList(list);
-				if(result > 0) {
-					System.out.println("성공");
-				} else {
-					System.out.println("실패");
-				}
-				isForward = false;
-				dst="plan_write.jsp?day=2";
-				
-			} else if(command.equals("/saveSchedule.plan")) {
-				JsonParser parser = new JsonParser();
-				JsonObject obj = (JsonObject) parser.parse(request.getReader());
-				
+			if(command.equals("/addSchedule.plan")) {
 				ScheduleDTO tmp = new ScheduleDTO();
-				String timestr = obj.get("시간").getAsString();
-				String starttime = timestr.split("~")[0];
-				String endtime = timestr.split("~")[1];
-				tmp.setSchedule_starttime(starttime);
-				tmp.setSchedule_endtime(endtime);
-				tmp.setLocation_id(obj.get("장소").getAsString());
-				tmp.setSchedule_plan(obj.get("일정").getAsString());
-				tmp.setSchedule_ref(obj.get("참조").getAsString());
+				int plan = Integer.parseInt(request.getParameter("plan"));
+				int day = Integer.parseInt(request.getParameter("day"));
+				System.out.println("starttime" + request.getParameter("starttime"));
+				tmp.setPlan_seq(plan);
+				tmp.setDay_seq(day);
+				tmp.setSchedule_starttime(request.getParameter("starttime"));
+				tmp.setSchedule_endtime(request.getParameter("endtime"));
+				tmp.setLocation_id(request.getParameter("place")); 
+				tmp.setSchedule_plan(request.getParameter("plan"));
+				tmp.setSchedule_ref(request.getParameter("reference"));
 				
 				int result = pdao.addSchedule(tmp);
+				
 				if(result > 0) {
 					System.out.println("성공");
 				} else {
@@ -89,13 +56,26 @@ public class PlanController extends HttpServlet {
 				}
 				
 				isForward = true;
-				dst="userResult.jsp";
+				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 
 			} else if(command.equals("/selectSchedule.plan")) {
+				System.out.println("여기");
+				int plan = Integer.parseInt(request.getParameter("plan"));
+				int day = Integer.parseInt(request.getParameter("day"));
+				String create = request.getParameter("create");
+				
+				if(create.equals("f")) {
+					List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
+					
+					request.setAttribute("create", create);
+					request.setAttribute("scheduleList", list);
+				} else {
+					
+					request.setAttribute("create", create);
+				}
 				
 				isForward = true;
-				dst="userResult.jsp";
-
+				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create=f";
 			} 
 
 			if(isForward) {

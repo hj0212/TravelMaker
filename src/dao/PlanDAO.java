@@ -27,6 +27,7 @@ public class PlanDAO {
 		}
 
 		con.commit();
+		
 		con.close();
 
 		return result;
@@ -34,14 +35,15 @@ public class PlanDAO {
 
 	public int addSchedule(ScheduleDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "insert into schedule VALUES (schedule_seq.nextval, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into schedule VALUES (?,?,schedule_seq.nextval, ?, ?, ?, ?, ?)";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, dto.getSchedule_starttime());
-		pstmt.setString(2, dto.getSchedule_endtime());
-		pstmt.setString(3, dto.getLocation_id());
-		pstmt.setString(4, dto.getSchedule_plan());
-		pstmt.setString(5, dto.getSchedule_budget());
-		pstmt.setString(6, dto.getSchedule_ref());
+		pstmt.setInt(1, dto.getPlan_seq());
+		pstmt.setInt(2, dto.getDay_seq());
+		pstmt.setString(3, dto.getSchedule_starttime());
+		pstmt.setString(4, dto.getSchedule_endtime());
+		pstmt.setString(5, dto.getLocation_id());
+		pstmt.setString(6, dto.getSchedule_plan());
+		pstmt.setString(7, dto.getSchedule_ref());
 		int result = pstmt.executeUpdate();
 		
 		pstmt.close();
@@ -51,21 +53,26 @@ public class PlanDAO {
 		return result;
 	}
 
-	public List<ScheduleDTO> selectSchedule(int day_seq) throws Exception {
+	public List<ScheduleDTO> selectSchedule(int plan, int day) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from day where day_seq = ?";
+		String sql = "select * from schedule where plan_seq = ? and day_seq = ? order by 4";
 		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, plan);
+		pstmt.setInt(2, day);
+		
 		ResultSet rs = pstmt.executeQuery();
 
 		List<ScheduleDTO> result = new ArrayList<>();
 		while(rs.next()) {
 			ScheduleDTO tmp = new ScheduleDTO();
-			tmp.setSchedule_seq(rs.getInt(1));
-			tmp.setSchedule_starttime(rs.getString(2));
-			tmp.setSchedule_endtime(rs.getString(3));
-			tmp.setLocation_id(rs.getString(4));
-			tmp.setSchedule_plan(rs.getString(5));
-			tmp.setSchedule_ref(rs.getString(6));
+			tmp.setPlan_seq(rs.getInt(1));
+			tmp.setDay_seq(rs.getInt(2));
+			tmp.setSchedule_seq(rs.getInt(3));
+			tmp.setSchedule_starttime(rs.getString(4));
+			tmp.setSchedule_endtime(rs.getString(5));
+			tmp.setLocation_id(rs.getString(6));
+			tmp.setSchedule_plan(rs.getString(7));
+			tmp.setSchedule_ref(rs.getString(8));
 			result.add(tmp);
 		}
 
@@ -73,5 +80,21 @@ public class PlanDAO {
 		pstmt.close();
 		con.close();
 		return result;
+	}
+	
+	private int getSchedule_seq() throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select max(schedule_Seq) from schedule";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		int seq = 0;
+		if(rs.next()) {
+			seq = rs.getInt(1);
+		}
+		
+		rs.close();
+		pstmt.close();
+		con.close();
+		return seq;
 	}
 }

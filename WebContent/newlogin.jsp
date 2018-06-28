@@ -207,7 +207,7 @@ $("#user_idchek").keyup(function(){
 							</div>
 								<div class="row confirm-password-row" id="idcheck-div">
 								<div class="input-field col s12" >
-									<input id="user_idchek" type="text" class="validate" name="idchek" maxlength="45">
+									<input id="user_idchek" type="text" class="validate" name="idcheck" maxlength="45">
 									<label for="user_idchek" id="label-text">id</label>
 								</div>	
 							</div>
@@ -282,44 +282,12 @@ $("#user_idchek").keyup(function(){
 								     });
 									</script>
 								</div>
-								<script>
-									Kakao.init('cf3c8a92c56d57b527e32f7519a7a4f6');
-								    // 카카오 로그인 버튼을 생성합니다.
-								    Kakao.Auth.createLoginButton({
-								      	container: '#kakao-login-btn',
-								      	success: function(authObj) {
-								    	 	 Kakao.API.request({
-								    	       	url: '/v1/user/me',
-								    	      	success: function(res) {								    	             
-								    	            $.ajax({
-								    	            	type:"post",
-								    	            	dataType:"json",
-								    	            	url:"kakaologin.do",
-								    	            	data:{
-								    	            		id:res.id,
-								    	            		name:res.properties.nickname,
-								    	            		email:res.kaccount_email
-								    	             	},
-								    	            	success:function(data) {
-								    	            		location.href = "main.jsp";
-								    	            	},
-								    	            	error:function(data) {
-								    	            		location.href = "main.jsp";
-								    	            	}
-													})
-												},
-								      			fail: function(err) {
-								         			alert(JSON.stringify(err));
-								      			}
-								    		});
-								    	}
-								     });
-									</script>
+								
 								</div>
 								<div class="row_margin forgot-password-row">
 								<div id="naver_id_login"></div>
 								<script type="text/javascript">
-								  	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://59.10.249.73/Test/loginProc.html");
+								  	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://59.10.249.73/TravelMaker/loginProc.html");
 								  	var state = naver_id_login.getUniqState();
 								  	naver_id_login.setButton("green", 3, 48);
 								  	naver_id_login.setDomain("http://59.10.249.73/");

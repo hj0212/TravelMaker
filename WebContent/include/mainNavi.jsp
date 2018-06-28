@@ -15,7 +15,7 @@
 				<li class="nav-item active"><a class="nav-link" href="#">Plans
 						<span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Schedules</a>
+				<li class="nav-item"><a class="nav-link" href="selectSchedule.plan?plan=1&day=1&create=t">Schedules</a>
 				</li>
 				<li class="nav-item"><a class="nav-link" href="#">Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>

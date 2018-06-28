@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script
@@ -126,13 +126,30 @@
 				</thead>
 				<tbody id="schedule-tbody"
 					style="table-layout: fixed; word-break: break-all;">
+					<c:if test="${create == 'f'}">
+					<script>console.log("리스트불러오기");</script>
+					<c:forEach var="item" items="${scheduleList}">
+					<tr class="clickable-row">
+						<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
+						<td name="place">${item.schedule_place}</td>
+						<td name="schedule">${item.schedule_plan}</td>
+						<td name="money">${item.schedule_budget}</td>
+						<td name="reference">${item.schedule_ref}</td>
+						<td><button style="float: left; border: none;" type="button"
+								class="btn btn-outline-danger">
+								<i class="far fa-times-circle"></i>
+							</button></td>
+
+					</tr>
+					</c:forEach>
+					</c:if>
 					<tr class="clickable-row active new">
 						<th scope="row" style="height: 50px;"></th>
 						<td name="place"></td>
 						<td name="schedule"></td>
 						<td name="money"></td>
 						<td name="reference"></td>
-						<td><button style="float: left; border: none" type="button"
+						<td><button style="float: left; border: none;" type="button"
 								class="btn btn-outline-danger">
 								<i class="far fa-times-circle"></i>
 							</button></td>
@@ -148,10 +165,12 @@
 		</div>
 
 		<div id="plan-board">
+			<form action="addSchedule.plan" method="post" id="scheduleform">
+			<input type="hidden" name="plan" value="1">
+			<input type="hidden" name="day" value="1">
 			<table class="table table-bordered" id="schedule-boarder">
 				<thead>
 				</thead>
-
 				<tbody>
 					<tr>
 						<th scope="row"
@@ -159,13 +178,13 @@
 						<td style="width: 70%; text-align: center;">
 
 							<div class="col-10">
-								<input class="form-control" type="time" value="13:45"
-									id="start-time" />
+								<input class="form-control" type="time"
+									id="start-time" name="starttime"/>
 							</div>
 							<div class="cococo">~</div>
 							<div class="col-10">
-								<input class="form-control" type="time" value="14:45"
-									id="end-time" />
+								<input class="form-control" type="time"
+									id="end-time" name="endtime"/>
 							</div>
 						</td>
 					</tr>
@@ -175,7 +194,7 @@
 						<td>
 							<div class="input-group">
 								<input type="text" class="form-control" placeholder="Search"
-									readonly id="place">
+									readonly id="place" name="place">
 								<div class="input-btn">
 									<button class="btn btn-default" type="button"
 										style="height: 100%; border: 1px">
@@ -188,7 +207,7 @@
 					<tr>
 						<th scope="row"
 							style="background-color: #e9e9e9; text-align: center; vertical-align: middle">일정</th>
-						<td><textarea class="form-control" id="schedule"></textarea></td>
+						<td><input class="form-control" id="schedule" name="plan"></td>
 
 					</tr>
 					<tr>
@@ -199,29 +218,21 @@
 								<i class='fa fa-plus'></i>
 							</button>
 						</th>
-						<td name="budget">
-							<div class="input-group mb-1">
-								<!-- <input type="text" class="form-control" id="ex1"
-									placeholder="예) 입장료"> <input type="text"
-									class="form-control" id="money1" placeholder="10000">
-								<div class="input-group-prepend">
-									<span class="input-group-text">원</span>
-								</div> -->
-								<input type="text" class="form-control" id="money">
-							</div>
-						</td>
+						<td><input type="text" class="form-control" id="money" name="money"></td>
+			
 					</tr>
 					<tr>
 						<th scope="row"
 							style="background-color: #e9e9e9; text-align: center; vertical-align: middle">참조</th>
-						<td><input type="text" class="form-control" id="reference"></td>
+						<td><input type="text" class="form-control" id="reference" name="reference"></td>
 					</tr>
 				</tbody>
 			</table>
 			<div style="text-align: right">
-				<button type="button" class="btn btn-outline-primary"
+				<button type="submit" class="btn btn-outline-primary"
 					id="success-primary">등록</button>
 			</div>
+			</form>
 		</div>
 		<div style="width: 40%; float: right" id="plan-div">
 			<div style="text-align: right">
@@ -305,13 +316,6 @@ $(document).ready(function() {
     timeArray = new Array();
     $("#success-primary").click(function() {
         var con = confirm("일정추가하시겠습니까?");
-        starttime = $("#start-time").val();
-        endtime = $("#end-time").val();
-        place = "이레빌딩"; /*  $("#place").val("이레빌딩");*/
-        schedule = $("#schedule").val();
-        money = $("#money").val();
-        reference = $("#reference").val();
-        
         
             if (starttime == "" || endtime == "") {
             	alert("시간을정해주세요");
@@ -333,30 +337,13 @@ $(document).ready(function() {
             	if($("#schedule-plan>tbody>.active>th>div").length == 0 ) {	// 빈칸 = 마지막줄
             		console.log("빈칸");
             		$("#schedule-plan>tbody>tr").removeClass('new');
-            		
-            		var startsplit = starttime.split(":");
-            		for (var i in startsplit) {
-            			console.log(startsplit[i]);
-            		}
-            		
-                	var cursor = "#schedule-plan>tbody>.active";
-                	$(cursor + ">th").html("<div name='start'>"+starttime+"</div>~<div name='end'>"+endtime+"</div>");
-                	$(cursor + ">td[name='place']").html(place);
-                	$(cursor + ">td[name='schedule']").html(schedule);
-                	$(cursor + ">td[name='money']").html(money);
-                	$(cursor + ">td[name='reference']").html(reference);
                 	$("#schedule-plan>tbody>tr").removeClass('active');
                 	$("#schedule-plan>tbody:last").append(contents);
                     $("#schedule-plan td:last-child").hide();
                    
                 } else { // 빈칸x = 마지막줄x
-                	console.log("수정" + $("#schedule-plan>tbody>.active>th>div").length);
                 	var cursor = "#schedule-plan>tbody>.active";
-                	$(cursor + ">th").html("<div name='start'>"+starttime+"</div>~<div name='end'>"+endtime+"</div>");
-                	$(cursor + ">td[name='place']").html(place);
-                	$(cursor + ">td[name='schedule']").html(schedule);
-                	$(cursor + ">td[name='money']").html(money);
-                	$(cursor + ">td[name='reference']").html(reference);
+
                 	$("#schedule-plan>tbody>tr").removeClass('active');
                 	$("#schedule-plan>tbody>.new").addClass('active');
                 }
@@ -368,22 +355,6 @@ $(document).ready(function() {
                 $("td[name='budget'] input").val("");
                 $("#reference").val("");
             }
-        	
-        	
-        	/* var rowLength = document.getElementById("schedule-plan").rows.length - 1;
-        	for(var i = 0; i<rowLength-1; i++) {
-        		timeArray[i] = new Array();
-        	}
-        	for(var i = 1; i<rowLength; i++) {
-        		var row = table.rows[i];
-        		var cell = row.cells[0];
-        		
-        		var split = cell.split(":");
-        		for (var i in split) {
-        			console.log(split[i]);
-        		}
-        		
-        	} */
     });
     
     $("#schedule-plan").on('click', '.clickable-row', function(event) {

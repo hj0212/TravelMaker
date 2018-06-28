@@ -43,11 +43,10 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("loginId", id);
 				isForward = true;
 				dst="userResult.jsp";
-				System.out.println("�넻怨�1");
 
 			} else if(command.equals("/join.do")) {
 				MemberDTO dto = new MemberDTO();
-				dto.setUserid(request.getParameter("id"));
+				dto.setUserid(request.getParameter("idcheck"));
 				dto.setPassword(request.getParameter("pw"));
 				dto.setNickname(request.getParameter("nickname"));
 				dto.setEmail(request.getParameter("email"));
