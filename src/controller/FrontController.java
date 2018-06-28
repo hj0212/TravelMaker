@@ -1,11 +1,17 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dao.FreeboardDAO;
+import dto.FreeboardDTO;
 
 /**
  * Servlet implementation class FrontController
@@ -75,7 +81,7 @@ public class FrontController extends HttpServlet {
 				}
 				
 				String searchTerm = request.getParameter("search");
-				ArrayList<reviewDTO> list = fbdao.selectBoard(currentPage*10-9, currentPage*10, searchTerm);
+				ArrayList<ReviewDTO> list = fbdao.selectBoard(currentPage*10-9, currentPage*10, searchTerm);
 				request.setAttribute("reviewList", list);
 			
 				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
