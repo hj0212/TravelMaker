@@ -58,7 +58,7 @@ public class FrontController extends HttpServlet {
 				isForward = true;
 				dst="freeboard.jsp";
 
-//--------------------------------------------------------ÈÄ±â °øÀ¯ °Ô½ÃÆÇ º¸±â
+//--------------------------------------------------------ï¿½Ä±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			} else if(command.equals("/reviewboard.bo")) {
 				int currentPage = 0;
 				String currentPageString = request.getParameter("currentPage");
