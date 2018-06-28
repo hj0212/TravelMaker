@@ -67,16 +67,16 @@ public class FrontController extends HttpServlet {
 				
 				if(dto == null) {
 					System.out.println("비회원이니까...");
+					isForward = false;
 					dst = "freeboard/freeBoardList.jsp";
 				}else {
 					int writer = dto.getSeq();
 					String title = request.getParameter("title");
 					String contents = request.getParameter("contents");
-					
+			
 					int result = fbdao.insertArticle(writer, title, contents);
+					dst = "freeboard/freeBoardList.jsp";
 				}
-				
-				isForward = false;
 			}
 
 
