@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeboardDAO;
+import dao.MemberDAO;
+import dao.ReviewDAO;
 import dto.FreeboardDTO;
+import dto.ReviewDTO;
 
 /**
  * Servlet implementation class FrontController
@@ -28,8 +31,10 @@ public class FrontController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
 
-			//MemberDAO mdao = new MemberDAO();
+			MemberDAO mdao = new MemberDAO();
 			FreeboardDAO fbdao = new FreeboardDAO();
+			ReviewDAO rdao = new ReviewDAO();
+		
 
 			boolean isForward = true;
 			String dst = null;
@@ -50,8 +55,7 @@ public class FrontController extends HttpServlet {
 				request.setAttribute("freeboardlist", list);
 				
 				//------------------------------------------------------
-				
-			
+							
 				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);
 				
@@ -70,8 +74,9 @@ public class FrontController extends HttpServlet {
 				}
 				
 				String searchTerm = request.getParameter("search");
-				ArrayList<reviewDTO> list = fbdao.selectBoard(currentPage*10-9, currentPage*10, searchTerm);
-				request.setAttribute("reviewList", list);
+				List<ReviewDTO> reviewList = new ArrayList<>();
+				reviewList = rdao.getAllReview();
+				request.setAttribute("reviewList", reviewList);
 			
 				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);

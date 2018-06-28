@@ -9,9 +9,7 @@ public class ReviewDTO {
 	private String review_writedate;
 	private int review_viewcount;
 	
-	public ReviewDTO() {
-		super();
-	}
+	public ReviewDTO() {}
 
 	public ReviewDTO(int review_seq, String review_title, String review_contents, String review_writer,
 			String review_writedate, int review_viewcount) {
@@ -71,7 +69,6 @@ public class ReviewDTO {
 	public void setReview_viewcount(int review_viewcount) {
 		this.review_viewcount = review_viewcount;
 	}
-	
 	
 	
 }
