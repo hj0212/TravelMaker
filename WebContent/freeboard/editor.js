@@ -8,40 +8,33 @@
 	                sendFile(files[0], this);
 	            },
 	
-	            // onKeydown: function (e) { 
-	            //     var t = e.currentTarget.innerText; 
-	
-	
-	            //     if (t.trim().length >= 400) {
-	            //         //delete keys, arrow keys, copy, cut
-	            //         if (e.keyCode != 8 && !(e.keyCode >=37 && e.keyCode <=40) && e.keyCode != 46 && !(e.keyCode == 88 && e.ctrlKey) && !(e.keyCode == 67 && e.ctrlKey))
-	            //         e.preventDefault(); 
-	            //     } 
-	            // },
-	
-	            // onKeyup: function (e) {
-	            //     var t = e.currentTarget.innerText;
-	            //     $('#summernote').text(400 - t.trim().length);
-	
-	            //     //나중에 코드 길이로... 
-	            //     //console.log($("#summernote").summernote('code').length);
-	            // },
-	
-	            // onPaste: function (e) {
-	            //     var t = e.currentTarget.innerText;
-	
-	            //     var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-	            //     e.preventDefault();
-	            //     var maxPaste = bufferText.length;
-	            //     if(t.length + bufferText.length > 400){
-	            //         maxPaste = 400 - t.length;
-	            //     }
-	            //     if(maxPaste > 0){
-	            //         document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
-	            //     }
-	
-	            //     $('#summernote').text(400 - t.length);
-	            // }
+	            onKeydown: function (e) { 
+                    var t = e.currentTarget.innerText; 
+                    if (t.trim().length >= 400) {
+                        //delete keys, arrow keys, copy, cut
+                        if (e.keyCode != 8 && !(e.keyCode >=37 && e.keyCode <=40) && e.keyCode != 46 && !(e.keyCode == 88 && e.ctrlKey) && !(e.keyCode == 67 && e.ctrlKey))
+                        e.preventDefault(); 
+                    } 
+                },
+                
+                onKeyup: function (e) {
+                    var t = e.currentTarget.innerText;
+                    $('#editor').text(400 - t.trim().length);
+                },
+                
+                onPaste: function (e) {
+                    var t = e.currentTarget.innerText;
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                    e.preventDefault();
+                    var maxPaste = bufferText.length;
+                    if(t.length + bufferText.length > 400){
+                        maxPaste = 400 - t.length;
+                    }
+                    if(maxPaste > 0){
+                        document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
+                    }
+                    $('#editor').text(400 - t.length);
+                }
 	        }
 	    })
 	});
