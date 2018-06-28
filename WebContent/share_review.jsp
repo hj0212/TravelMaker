@@ -25,16 +25,17 @@ div {
 }
 
 #cardArea .card .card-img-top {
-	height:250px;
-	padding:0px;
+	height: 250px;
+	padding: 0px;
 }
 
-.card-body .card-title,.card-text{
-	text-align:center;
+.card-body .card-title, .card-text {
+	text-align: center;
 }
 
-.card-body{text-align:right;}
-
+.card-body {
+	text-align: right;
+}
 </style>
 </head>
 <body>
@@ -53,11 +54,11 @@ div {
 						<p class="card-text">3일</p>
 						<a href="#" class="btn btn-primary">읽기</a>
 						<div class="card-footer bg-transparent">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</div>
+							<small class="text-muted">Last updated 3 mins ago</small>
+						</div>
 					</div>
 				</div>
-				
+
 				<div class="card col-md-3 ">
 					<img class="card-img-top" src="Charlie-Chaplin-PNG-Image-17681.png"
 						alt="Card image cap">
@@ -66,8 +67,8 @@ div {
 						<p class="card-text">3일</p>
 						<a href="#" class="btn btn-primary ml-auto">읽기</a>
 						<div class="card-footer bg-transparent">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</div>	
+							<small class="text-muted">Last updated 3 mins ago</small>
+						</div>
 					</div>
 
 				</div>
@@ -79,8 +80,8 @@ div {
 						<p class="card-text">3일</p>
 						<a href="#" class="btn btn-primary">읽기</a>
 						<div class="card-footer bg-transparent">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</div>
+							<small class="text-muted">Last updated 3 mins ago</small>
+						</div>
 					</div>
 				</div>
 				<div class="card col-md-3">
@@ -90,16 +91,23 @@ div {
 						<p class="card-text">3일</p>
 						<a href="#" class="btn btn-primary">읽기</a>
 						<div class="card-footer bg-transparent">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</div>
+							<small class="text-muted">Last updated 3 mins ago</small>
+						</div>
 					</div>
 				</div>
 
 			</div>
 		</div>
-
-
-		<!--review 카드 모음영역 끝 -->
+		<!-- review 카드 모음영역 끝 -->
+		<!-- 페이지 네비 -->
+		<div class="row">
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+			${pageNavi}
+			</ul>
+		</nav>
+		</div>
+		
 		<h1 class="divLine">푸터올 곳</h1>
 		<hr />
 		<div class="row">
