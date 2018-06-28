@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBUtils.DBConnection;
+import dto.BudgetDTO;
 import dto.ScheduleDTO;
 
 public class PlanDAO {
@@ -27,24 +28,33 @@ public class PlanDAO {
 		return result;
 	}
 	
-	public int addScheduleList(List<ScheduleDTO> list) throws Exception {
+	public int getScheduleseq() throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "insert into schedule VALUES (schedule_seq.nextval, ?, ?, ?, ?, ?, ?)";
+		String sql = "select max(schedule_seq) from schedule";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
 		int result = 0;
-		for(int i = 0; i < list.size(); i++) {
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, list.get(i).getSchedule_starttime());
-			pstmt.setString(2, list.get(i).getSchedule_endtime());
-			pstmt.setString(3, list.get(i).getLocation_id());
-			pstmt.setString(4, list.get(i).getSchedule_plan());
-			pstmt.setString(5, list.get(i).getSchedule_budget());
-			pstmt.setString(6, list.get(i).getSchedule_ref());
-			result = pstmt.executeUpdate();
-			pstmt.close();
+		if(rs.next()) {
+			result = rs.getInt(1);
 		}
-
-		con.commit();
 		
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	public int addBudget(BudgetDTO dto) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "insert into budget VALUES (budget_seq.nextval, ?, ?, ?)";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, dto.getSchedule_seq());
+		pstmt.setString(2, dto.getBudget_plan());
+		pstmt.setInt(3, dto.getBudget_amount());
+		int result = pstmt.executeUpdate();
+		
+		pstmt.close();
+		con.commit();
 		con.close();
 
 		return result;
@@ -118,7 +128,35 @@ public class PlanDAO {
 		return result;
 	}
 	
-	private int getSchedule_seq() throws Exception {
+	public List<BudgetDTO> selectBudget(int plan, int day) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from budget where plan_seq = ? and day_seq = ? order by 2";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, plan);
+		pstmt.setInt(2, day);
+		
+		ResultSet rs = pstmt.executeQuery();
+
+		List<BudgetDTO> result = new ArrayList<>();
+		while(rs.next()) {
+			BudgetDTO tmp = new BudgetDTO();
+			tmp.setPlan_seq(plan);
+			tmp.setDay_seq(day);
+			tmp.setBudget_seq(rs.getInt(3));
+			tmp.setSchedule_seq(rs.getInt(4));
+			tmp.setBudget_plan(rs.getString(5));
+			tmp.setBudget_amount(rs.getInt(6));
+			System.out.println(tmp.getBudget_amount());
+			result.add(tmp);
+		}
+
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	public int getSchedule_seq() throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select max(schedule_Seq) from schedule";
 		PreparedStatement pstmt = con.prepareStatement(sql);

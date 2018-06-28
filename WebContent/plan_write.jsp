@@ -41,7 +41,7 @@
 
 #plan-board {
 	margin-top: 20px;
-	width: 55%;
+	width: 70%;
 	float: left
 }
 
@@ -77,6 +77,7 @@
 	padding: 0px;
 	text-align: center;
 	vertical-align: middle;
+	margin-bottom: 10px;
 }
 
 .active {
@@ -86,6 +87,26 @@
 #schedule-plan div {
 	display: inline;
 }
+
+/* #schedulearea {
+	height: 300px;
+	overflow: auto;
+} */
+
+#extraarea {
+	height: 38px;;
+}
+
+
+#totalbudget {
+	width: 150px;
+	float: left;
+}
+
+#delete-table {
+	float: right;
+}
+
 </style>
 
 </head>
@@ -111,8 +132,7 @@
 			
 		</div>
 
-		<div class="schedule">
-
+		<div id="schedulearea">
 			<table class="table table-bordered" id="schedule-plan">
 				<thead>
 					<tr>
@@ -132,7 +152,14 @@
 						<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
 						<td name="place">${item.schedule_place}</td>
 						<td name="schedule">${item.schedule_plan}</td>
-						<td name="money">${item.schedule_budget}</td>
+						<c:forEach var="bitem" items="${budgetList}">
+							<c:if test="${item.schedule_seq == bitem.schedule_seq}">
+								<td name="money">${bitem.budget_amount}</td>
+							</c:if>
+							<c:if test="${item.schedule_seq != bitem.schedule_seq}">
+								<td name="money"></td>
+							</c:if>
+						</c:forEach>
 						<td name="reference">${item.schedule_ref}</td>
 						<td><button style="float: left; border: none;" type="button"
 								class="btn btn-outline-danger">
@@ -157,8 +184,9 @@
 					</tr>
 				</tbody>
 			</table>
-			<div id="bt-div" style="text-align: right;">
-
+			
+			<div id="extraarea">
+				<input type="text" id="totalbudget" class="form-control" value="원" readonly>
 				<button type="button" class="btn btn-outline-danger"
 					id="delete-table">삭제</button>
 			</div>
@@ -175,7 +203,7 @@
 				<tbody>
 					<tr>
 						<th scope="row"
-							style="background-color: #e9e9e9; text-align: center; vertical-align: middle">시간</th>
+							style="background-color: #e9e9e9; text-align: center; vertical-align: middle;">시간</th>
 						<td style="width: 70%; text-align: center;">
 
 							<div class="col-10">
@@ -214,10 +242,10 @@
 					<tr>
 						<th scope="row"
 							style="background-color: #e9e9e9; text-align: center; vertical-align: middle">예산
-							<button type='button' class='btn btn-outline-primary btn-sm'
+							<!-- <button type='button' class='btn btn-outline-primary btn-sm'
 								style='float: right' id="moneyaddbtn">
 								<i class='fa fa-plus'></i>
-							</button>
+							</button> -->
 						</th>
 						<td><input type="text" class="form-control" id="money" name="money"></td>
 			
@@ -235,15 +263,13 @@
 			</div>
 			</form>
 		</div>
-		<div style="width: 40%; float: right" id="plan-div">
+		<!-- <div style="width: 40%; float: right" id="plan-div">
 			<div style="text-align: right">
 				<button class="btn btn-inline-primary btn-lg" id="endbtn">여행계획
 					완료</button>
 
 			</div>
-
-
-		</div>
+		</div> -->
 	</div>
 <script>
 $(document).ready(function() {

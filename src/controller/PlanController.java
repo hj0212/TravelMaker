@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import dao.PlanDAO;
+import dto.BudgetDTO;
 import dto.ScheduleDTO;
 
 /**
@@ -46,20 +47,27 @@ public class PlanController extends HttpServlet {
 				tmp.setSchedule_plan(request.getParameter("schedule"));
 				tmp.setSchedule_ref(request.getParameter("reference"));
 				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
+				
+				BudgetDTO btmp = new BudgetDTO();
+				btmp.setBudget_plan(request.getParameter("budget_plan"));
+				btmp.setBudget_amount(Integer.parseInt(request.getParameter("money")));
 
 				if(schedule_seq > 0) {	// 수정
 					tmp.setSchedule_seq(schedule_seq);
 					int result = pdao.updateSchedule(tmp);
 					
-					if(result > 0) {
+					btmp.setSchedule_seq(schedule_seq);
+					result += pdao.addBudget(btmp);
+					if(result > 1) {
 						System.out.println("수정성공");
 					} else {
 						System.out.println("수정실패");
 					}
 				} else {
 					int result = pdao.addSchedule(tmp);
-					
-					if(result > 0) {
+					btmp.setSchedule_seq(pdao.getScheduleseq());
+					result += pdao.addBudget(btmp);
+					if(result > 1) {
 						System.out.println("성공");
 					} else {
 						System.out.println("실패");
@@ -78,9 +86,10 @@ public class PlanController extends HttpServlet {
 				
 				if(create.equals("f")) {
 					List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
-					
+					List<BudgetDTO> blist = pdao.selectBudget(plan, day);
 					request.setAttribute("create", create);
 					request.setAttribute("scheduleList", list);
+					request.setAttribute("budgetList", blist);
 				} else {
 					
 					request.setAttribute("create", create);
