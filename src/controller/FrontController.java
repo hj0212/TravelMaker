@@ -91,15 +91,34 @@ public class FrontController extends HttpServlet {
 				dst="share_review.jsp";
 			}
 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			if(command.equals("/reviewArticel.bo")) {
+				int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+				String review_title = request.getParameter("title");
+				
+			}
+			
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
 			} else {
-				response.sendRedirect(dst);
+				response.sendRedirect("error.jsp");
 			}
 		}catch(Exception e) {e.printStackTrace();}		
 	}
 
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

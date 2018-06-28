@@ -155,53 +155,44 @@ public class MemberDAO {
 		return result;
 	}
 
-	public MemberDTO getProfileInfo(String part, String id)throws Exception{
-		Connection con = DBConnection.getConnection();
-		MemberDTO dto = null;
-		PreparedStatement pstmt=null;
-		ResultSet rs = null;
-			if(part.equals("home")) {
-				String sql = "select nickname, email, part from users where userid=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, id);		
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					dto = new MemberDTO();
-					dto.setNickname(rs.getString("nickname"));
-					dto.setEmail(rs.getString("email"));
-					dto.setPart(rs.getString("part"));
-				}
-			}else if (part.equals("naver")) {
-				String sql = "select naver_nickname, naver_email, part from users where naver_id =?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, id);
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					dto = new MemberDTO();
-					dto.setNaver_nickname(rs.getString("naver_nickname"));
-					dto.setNaver_email(rs.getString("naver_email"));
-					dto.setPart(rs.getString("part"));
-				}
-			}
-			else if (part.equals("kakao")) {
-				String sql = "select kakao_nickname, kakao_email, part from users where kakao_id = ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, id);
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					dto = new MemberDTO();
-					dto.setKakao_nickname(rs.getString("KAKAO_NICKNAME"));
-					dto.setKakao_email(rs.getString("kakao_email"));
-					dto.setPart(rs.getString("part"));
-				}
-			}
-			
-			pstmt.close();
-			rs.close();
-			con.close();
-			return dto;
-		
-	}
+	public static String getUserNickname(int seq)throws Exception{
+	      Connection con = DBConnection.getConnection();
+	      String sql = "select part from users where seq=?";
+	      PreparedStatement pstmt = con.prepareStatement(sql);
+	      pstmt.setInt(1, seq);
+	      ResultSet rs = pstmt.executeQuery();
+	      rs.next();
+	      String part = rs.getString(1);
+	      System.out.println(part);
+	      String nickname = "";
+	         if(part.equals("home")) {
+	            sql = "select nickname from users where seq=?";
+	            pstmt = con.prepareStatement(sql);
+	            pstmt.setInt(1, seq);      
+	            rs = pstmt.executeQuery();
+	            rs.next();
+	            nickname = rs.getString(1);
+	         }else if (part.equals("naver")) {
+	            sql = "select naver_nickname from users where seq =?";
+	            pstmt = con.prepareStatement(sql);
+	            pstmt.setInt(1, seq);
+	            rs = pstmt.executeQuery();
+	            rs.next();
+	            nickname = rs.getString(1);
+	         }
+	         else if (part.equals("kakao")) {
+	            sql = "select kakao_nickname from users where seq = ?";
+	            pstmt = con.prepareStatement(sql);
+	            pstmt.setInt(1, seq);
+	            rs = pstmt.executeQuery();
+	            rs.next();
+	            nickname = rs.getString(1);
+	         }
+	         pstmt.close();
+	         rs.close();
+	         con.close();
+	         return nickname;   
+	   }
 	
 	public boolean isHomeMemberPW (String id, String pw) throws Exception{
 		Connection con = DBConnection.getConnection();
