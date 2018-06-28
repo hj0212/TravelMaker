@@ -109,8 +109,15 @@ $('.btn-view').mouseleave(function(){
 	$('.btn-view').html('<i class="far fa-caret-square-right"></i>');
 	
 })
+var num =1;
 $('.btn-like').click(function(){
+	if(num==1){
 	$('.btn-like').html('<i class="fas fa-heart"></i>');
+	num++;
+	}else{
+		$('.btn-like').html('<i class="far fa-heart"></i>');
+		num--;
+	}
 })
 </script>
 </body>
