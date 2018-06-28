@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import dao.PlanDAO;
@@ -33,12 +34,13 @@ public class PlanController extends HttpServlet {
 			response.setCharacterEncoding("utf8");
 
 			PlanDAO pdao = new PlanDAO();
+			Gson gson = new Gson();
 
 			boolean isForward = true;
 			String dst = null;
 
-			if(command.equals("/saveschedule.plan")) {
-				Gson gson = new Gson();
+			if(command.equals("/saveschedules.plan")) {
+				
 				JsonParser parser = new JsonParser();
 				JsonArray arr = (JsonArray) parser.parse(request.getReader());
 				
@@ -56,7 +58,7 @@ public class PlanController extends HttpServlet {
 					tmp.setSchedule_ref(arr.get(i).getAsJsonObject().get("참조").getAsString());
 					list.add(tmp);
 				}
-				int result = pdao.addSchedule(list);
+				int result = pdao.addScheduleList(list);
 				if(result > 0) {
 					System.out.println("성공");
 				} else {
@@ -65,6 +67,30 @@ public class PlanController extends HttpServlet {
 				isForward = false;
 				dst="plan_write.jsp?day=2";
 				
+			} else if(command.equals("/saveSchedule.plan")) {
+				JsonParser parser = new JsonParser();
+				JsonObject obj = (JsonObject) parser.parse(request.getReader());
+				
+				ScheduleDTO tmp = new ScheduleDTO();
+				String timestr = obj.get("시간").getAsString();
+				String starttime = timestr.split("~")[0];
+				String endtime = timestr.split("~")[1];
+				tmp.setSchedule_starttime(starttime);
+				tmp.setSchedule_endtime(endtime);
+				tmp.setLocation_id(obj.get("장소").getAsString());
+				tmp.setSchedule_plan(obj.get("일정").getAsString());
+				tmp.setSchedule_ref(obj.get("참조").getAsString());
+				
+				int result = pdao.addSchedule(tmp);
+				if(result > 0) {
+					System.out.println("성공");
+				} else {
+					System.out.println("실패");
+				}
+				
+				isForward = true;
+				dst="userResult.jsp";
+
 			} else if(command.equals("/selectSchedule.plan")) {
 				
 				isForward = true;

@@ -245,7 +245,7 @@ $(document).ready(function() {
 		alert(table_json);
 		
 		 $.ajax({
-			url:"saveschedule.plan",
+			url:"saveschedules.plan",
 			dataType:"json",
 			type:"POST",
 			data:table_json,
@@ -311,20 +311,6 @@ $(document).ready(function() {
         schedule = $("#schedule").val();
         money = $("#money").val();
         reference = $("#reference").val();
-        
-        
-        /* for(i = 1; i <= budgetcount;i++) {
-        	if($("#ex" + i).val() == "") {
-        		alert("예산 내용을 입력해주세요");
-        		check = false;
-        		break;
-        	} else if($("#money" + i).val() == ""){
-        		alert("예산 내용을 입력해주세요");
-        		check = false;
-        		break;
-        	}
-        	console.log(check);
-        } */
         
         
             if (starttime == "" || endtime == "") {

@@ -10,7 +10,7 @@ import DBUtils.DBConnection;
 import dto.ScheduleDTO;
 
 public class PlanDAO {
-	public int addSchedule(List<ScheduleDTO> list) throws Exception {
+	public int addScheduleList(List<ScheduleDTO> list) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "insert into schedule VALUES (schedule_seq.nextval, ?, ?, ?, ?, ?, ?)";
 		int result = 0;
@@ -25,19 +25,38 @@ public class PlanDAO {
 			result = pstmt.executeUpdate();
 			pstmt.close();
 		}
-		
+
 		con.commit();
 		con.close();
 
 		return result;
 	}
-	
+
+	public int addSchedule(ScheduleDTO dto) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "insert into schedule VALUES (schedule_seq.nextval, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, dto.getSchedule_starttime());
+		pstmt.setString(2, dto.getSchedule_endtime());
+		pstmt.setString(3, dto.getLocation_id());
+		pstmt.setString(4, dto.getSchedule_plan());
+		pstmt.setString(5, dto.getSchedule_budget());
+		pstmt.setString(6, dto.getSchedule_ref());
+		int result = pstmt.executeUpdate();
+		
+		pstmt.close();
+		con.commit();
+		con.close();
+
+		return result;
+	}
+
 	public List<ScheduleDTO> selectSchedule(int day_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from day where day_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
-		
+
 		List<ScheduleDTO> result = new ArrayList<>();
 		while(rs.next()) {
 			ScheduleDTO tmp = new ScheduleDTO();
@@ -49,7 +68,7 @@ public class PlanDAO {
 			tmp.setSchedule_ref(rs.getString(6));
 			result.add(tmp);
 		}
-		
+
 		rs.close();
 		pstmt.close();
 		con.close();
