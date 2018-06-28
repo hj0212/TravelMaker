@@ -56,11 +56,11 @@ public class FrontController extends HttpServlet {
 				request.setAttribute("pageNavi", pageNavi);
 				
 				isForward = true;
-				dst="freeboard/freeboard.jsp";
+				dst="freeboard/freeBoardList.jsp";
 
 			} else if(command.equals("/freewrite.bo")) {
 				isForward = true;
-				dst = "freeboard/freewrite.jsp";
+				dst = "freeboard/freeArticleWrite.jsp";
 			}
 
 
