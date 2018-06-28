@@ -17,6 +17,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import dao.PlanDAO;
+import dto.PlanDTO;
 import dto.ScheduleDTO;
 
 /**
@@ -33,7 +34,7 @@ public class PlanController extends HttpServlet {
 			response.setCharacterEncoding("utf8");
 
 			PlanDAO pdao = new PlanDAO();
-
+		
 			boolean isForward = true;
 			String dst = null;
 
@@ -70,7 +71,28 @@ public class PlanController extends HttpServlet {
 				isForward = true;
 				dst="userResult.jsp";
 
-			} 
+			} else if(command.equals("/createPlan.plan")) {
+				int plan_writer = 17;//Integer.parseInt((String)request.getSession().getAttribute("seq"));
+				String plan_startdate = request.getParameter("plan_startdate");
+				String plan_enddate = request.getParameter("plan_enddate");
+				String plan_title = request.getParameter("plan_title");
+				PlanDTO pdto = new PlanDTO(0,plan_writer,plan_startdate,plan_enddate,plan_title,0,0,0,0);
+				int result =pdao.startPlanInsertData(pdto);
+				
+				if(result>0) {
+					System.out.println("입력성공");
+				}else {
+					System.out.println("입력실패");
+				}
+				
+				request.setAttribute("result", result);
+				isForward=true;
+				dst="createPlan.jsp";
+				
+			}
+			
+			
+			
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
