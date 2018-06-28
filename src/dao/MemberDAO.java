@@ -32,7 +32,7 @@ public class MemberDAO {
 
 	public int addMember(MemberDTO dto) throws Exception {
 		if(!check(dto.getUserid())) {
-			System.out.println("여기");
+		
 			Connection con = DBConnection.getConnection();
 			String sql = "insert into users (seq, userid, password, nickname, email) VALUES (users_seq.nextval, ?, ?, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -194,9 +194,48 @@ public class MemberDAO {
 			pstmt.close();
 			rs.close();
 			con.close();
-			return dto;
-		
-
-		
+			return dto;	
 	}
+	
+	public int getEmail(String id, String email)throws Exception{
+		Connection con = DBConnection.getConnection();
+		int result =0;
+		ResultSet rs = null;
+		if(this.check(id)==false) {
+			return result; //아이디가 없음
+		}else if(this.check(id)==true) {
+			String sql = "select * from users where userid=? and email=?";
+			PreparedStatement pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, email);
+			rs = pstmt.executeQuery();			
+	
+		if(rs.next()) {
+			result=11;	//아이디 있고 이메일 확인도 됨		
+		}else {	
+			result=10; // 아이디 있고 이메일 불일치
+		}
+			pstmt.close();
+			rs.close();
+			con.close();		
+		}
+		return result;	
+	}
+	
+	public int changePw(String id, String pw)throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "update users set password =? where userid=?";
+		PreparedStatement pstmt=con.prepareStatement(sql);
+		pstmt.setString(1, pw);
+		pstmt.setString(2, id);
+		int result = pstmt.executeUpdate();
+				
+		con.commit();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	
+	
 }
