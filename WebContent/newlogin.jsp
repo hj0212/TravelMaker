@@ -96,9 +96,36 @@
 			  $("#userform").attr('action','login.do').submit();
 		  } else if($(".btn-login").text()=="Sign up"){
 			  console.log("사인업");
-			  $("#userform").attr('action','join.do').submit();
+			  var id = $("#user_idcheck").val();
+			  var pw = $("#password").val();
+			  var conpw = $("#confirm-password").val();
+			  var name = $("#nickname").val();
+			  var email = $("#email").val();
+			  
+			  function emailcheck(email){
+				  var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  
+				  return regex.test(email);
+			  };
+		 
+		  	  if(id==""){
+					alert("아이디를 입력해주세요.");
+			  }else if(pw ==""){
+				  alert("패스워드를 입력해주세요.");
+			  }else if(conpw ==""){
+				  alert("패스워드 확인을 입력해주세요.");
+			  }else if(name ==""){		  	  
+				  alert("이름을 입력해주세요.");
+		 	  }else if(!emailcheck(email)){
+			       alert("유요한 형식의 이메일이아닙니다.");
+			  }else if(conpw != pw){
+				  alert("패스워드가 일치 하지않습니다");
+			  }else{
+				  $("#userform").attr('action','join.do').submit();
+			  }		  
+			  
+			  
 		  }
-	  })
+	  });
 	  
 	});
 	
@@ -108,7 +135,8 @@
 		 $("#loginbox").height(560);
 		 $(".confirm-password-row").hide();
 		 $(".btn-login").text("Log in");
-		 $(".forgot-password-row").show();	
+		 $(".forgot-password-row").show();
+		 $("#id-div").show();
 	};
 
 	const showSignup = () => {
@@ -118,12 +146,36 @@
 		 $(".btn-login").text("Sign up");
 		 $(".forgot-password-row").hide();
 		 $(".confirm-password-row").show();
+		 $("#id-div").hide();
 	};
 
 </script>
+<script src="https://code.jquery.com/jquery-3.3.1.js" ></script>
 <script>
-		
-	</script>
+$(document).ready(function(){	
+
+
+$("#user_idchek").keyup(function(){
+	
+	var userid = $("#user_idchek").val();
+
+	$.ajax({
+		url:"idcheck.Ajax",
+		type:"post",
+		data:{userid:userid},
+		success:function(data){		
+ 				$("#label-text").html(data); 				   							 			
+		}
+	});
+});	
+});
+
+</script>
+
+
+<script type="text/javascript" src="source/js/login.js"></script>
+
+
 </head>
 <body>
 	
@@ -146,22 +198,29 @@
 							</div>
 						</div>
 						<form id="userform" method="post">
-							<div class="row">
-								<div class="input-field col s12">
+							<div class="row" id="id-div">
+								<div class="input-field col s12" >
 									<input id="user_id" type="text" class="validate" name="id">
-									<label for="user_id">id</label>
-								</div>
+									<label  for="user_id" >id</label>
+								</div>	
 							</div>
+								<div class="row confirm-password-row" id="idcheck-div">
+								<div class="input-field col s12" >
+									<input id="user_idchek" type="text" class="validate" name="idchek" maxlength="45">
+									<label for="user_idchek" id="label-text">id</label>
+								</div>	
+							</div>
+							
 							<div class="row">
 								<div class="input-field col s12">
-									<input id="password" type="password" class="validate" name="pw">
-									<label for="password" class="grey-text text-lighten-1">password</label>
+									<input id="password" type="password" class="validate" name="pw" maxlength="45">
+									<label for="password" class="grey-text text-lighten-1" id="password-label" >password</label>
 								</div>
 							</div>
 							<div class="row confirm-password-row">
 								<div class="input-field confirm-password-field col s12">
 									<input id="confirm-password" type="password" class="validate"
-										name="cpw"> <label for="confirm-password">confirm
+										name="cpw" maxlength="45"> <label for="confirm-password" id="confirm-label" >confirm
 										password</label>
 								</div>
 							</div>
@@ -173,8 +232,8 @@
 							</div>
 							<div class="row confirm-password-row">
 								<div class="input-field confirm-password-field col s12">
-									<input id="email" type="email" class="validate" name="email">
-									<label for="email">Email</label>
+									<input id="email" type="email" class="validate" name="email"maxlength="45">
+									<label for="email" >Email</label>
 								</div>
 							</div>
 						</form>

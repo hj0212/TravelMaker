@@ -92,11 +92,10 @@ public class MemberDAO {
 		return 0;
 	}
 	
-	private boolean check(String id) throws Exception {
+	public boolean check(String id) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where userid=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-
 		pstmt.setString(1, id);
 		ResultSet rs = pstmt.executeQuery();
 		boolean result;
