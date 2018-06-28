@@ -45,6 +45,8 @@
         <div class="col-sm-8 col-md-3 col-lg-3">
           <div class="card w-100 h-100">
             <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
+            <svg class="upload-btn" width="130" height="65" viewBox="0 0 130 65"><input class="file-upload" type="file" accept="image/*"/></svg>
+            
             <div class="card-body h-100 py-4 my-5">
               <h4 class="card-title my-4">${nickname}</h4>
               <c:choose>
@@ -299,6 +301,30 @@ $(function() {
 	});
 
 	});
+
+
+var readURL = $(function(input){
+	
+	if(input.files && input.files[0]){
+		var reader = new FileReader();
+		
+		reader.onload = function(e){
+			$('img.card').attr('src',e.target.result);
+		}
+		reader.readAsDataURL(input.files[0]);
+	}
+});
+
+	$('.file-upload').change(function(){
+		readURL(this);
+	});
+	$('.upload-btn').click(function(){
+		$('.file-upload').click();
+	});
+
+
+
+
 
 $("#editInfo").click(function(){
 	/* location.href="toPwCheck.do"; */
