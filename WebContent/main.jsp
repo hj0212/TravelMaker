@@ -27,7 +27,7 @@
 
 <style>
 div {
-	box-sizing: border-box;ㄴ
+	box-sizing: border-box;
 }
 
 .container {
@@ -199,7 +199,7 @@ div {
 		<!--bestImage 영역 끝 -->
 		<h1 class="divLine">푸터올 곳</h1>
 		<hr />
-		<div class="row">
+		<div class="row">s
 			<div class="col-md-12" id="foot"></div>
 		</div>
 

@@ -295,9 +295,12 @@ tr {
             location.href = "freeboard.bo";
       })
 
-      if(("#goDelete") != null) {
-            console.log("지워야한다..");
-      }
+      <c:if test="${article.free_writer == sessionScope.user.seq}">
+	  	$("#delete").click(function(){
+	  		location.href = "deleteCheck.bo?articlenum=${article.free_seq}";
+	  	})
+      </c:if>
+		
    </script>
 </body>
 </html>
