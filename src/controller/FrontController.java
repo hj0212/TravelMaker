@@ -95,32 +95,7 @@ public class FrontController extends HttpServlet {
 								
 				isForward = true;
 				dst="share_review.jsp";
-			}
-
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			if(command.equals("/reviewArticle.bo")) {
+			}else if(command.equals("/reviewArticle.bo")) {
 				int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 				
 				ReviewDTO result1 = rdao.getReviewArticle(review_seq);

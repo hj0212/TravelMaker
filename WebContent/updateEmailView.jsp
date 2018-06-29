@@ -10,14 +10,13 @@
 <script>
 if(${result}>0){
 	 alert("이메일 수정이 완료되었습니다");
-		 /*opener.location.href="mypage.do";
-	 close(); */
+	opener.location.href="mypage.do";
+	 close(); 
 }else{
 	alert("이메일 수정에 실패하였습니다 \n\t 관리자에게 문의해주세요");
-	/*opener.location.href="mypage.do";
-	 close(); */
-}
-location.href="mypage.do";
+	opener.location.href="mypage.do";
+	 close(); 
+	 }
 </script>
 </body>
 </html>
