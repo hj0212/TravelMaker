@@ -308,4 +308,94 @@ public class MemberDAO {
 		return result;
 	}
 	
+	public boolean isHomeMemberPW (String id, String pw) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from users where userid=? and password= ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, id);
+		pstmt.setString(2, pw);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public MemberDTO getHomeMemberInfo(String id, String part) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from users where USERID=?";
+		PreparedStatement pstmt= con.prepareStatement(sql);
+		pstmt.setString(1, id);
+		ResultSet rs= pstmt.executeQuery();
+		if(part.equals("home")) {
+			MemberDTO dto = new MemberDTO();
+			if(rs.next()) {
+				dto.setUserid(rs.getString("userid"));
+				dto.setPassword(rs.getString("password"));
+				dto.setNickname(rs.getString("nickname"));
+				dto.setEmail(rs.getString("email"));
+			}
+			return dto;
+		}else {
+			return null;
+		}
+	}
+	
+	
+	public int updateHomeMemberInfo(String id, String pw, String email, String nickname) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "update users set password=?, nickname=?, email=? where userid=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, pw);
+		pstmt.setString(2, nickname);
+		pstmt.setString(3, email);
+		pstmt.setString(4, id);
+		int result = pstmt.executeUpdate();
+		con.commit();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	public int updateEmail (String id, String part, String email) throws Exception{
+		Connection con = DBConnection.getConnection();
+		PreparedStatement pstmt=null;
+		if(part.equals("home")) {
+			String sql = "update users set email=? where userid=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setString(2, id);
+		}else if(part.equals("naver")) {
+			String sql = "upadate users set naver_email=? where naver_id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setString(2, id);
+		}else if(part.equals("kakao")) {
+			String sql = "update users set kakao_email=? where kakao_id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setString(2, id);
+		}
+		int result = pstmt.executeUpdate();
+		con.commit();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	public int updatePw (String id, String pw) throws Exception{
+	Connection con = DBConnection.getConnection();
+	String sql = "update users set password =? where userid = ?";
+	PreparedStatement pstmt = con.prepareStatement(sql);
+	pstmt.setString(1, pw);
+	pstmt.setString(2, id);
+	int result = pstmt.executeUpdate();
+	con.commit();
+	pstmt.close();
+	con.close();
+	return result;
+	}
+	
 }
+

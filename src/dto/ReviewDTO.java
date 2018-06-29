@@ -66,6 +66,14 @@ public class ReviewDTO {
 		this.review_writer = review_writer;
 	}
 
+	public String getReview_writerN() {
+		return review_writerN;
+	}
+
+	public void setReview_writerN(String review_writerN) {
+		this.review_writerN = review_writerN;
+	}
+
 	public String getReview_writedate() {
 		return review_writedate;
 	}
