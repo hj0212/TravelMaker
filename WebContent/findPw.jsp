@@ -26,7 +26,7 @@
 
 #loginbox {
 	width: 400px;
-	height: 560px;
+	height: 500px;
 	margin: 50px auto;
 }
 
@@ -109,25 +109,28 @@
 
 </head>
 <body>
-
 	<div id="container">
 		<div class="row">
 			<h1 id="title" class="center col s12">
 				<a href="main.jsp">TRAVEL MAKER</a>
 			</h1>
 		</div>
-
-
-		<div class="col s6 right-align find-link active">
-		</div>
-		<form id="userCheckform" method="post">
-			<div class="row">
-				<div class="input-field col s12">
-					<input id="user_id" type="text" class="validate" name="id">
-					<label for="user_id">id</label>
-				</div>
-			</div>
-<!-- 			<div class="row confirm-password-row">
+		<div class="row">
+			<div id="loginarea">
+				<div class="card white hoverable" id="loginbox">
+					<div class="card-content black-text">
+						<div class="row card-title center-align" id="card-title">							
+						<div class="col s12 center-align find-link">
+						<span cla>Find Password</span>
+						</div>
+						<form id="userCheckform" method="post">
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="user_id" type="text" class="validate" name="id">
+									<label for="user_id">id</label>
+								</div>
+							</div>
+							<!-- 			<div class="row confirm-password-row">
 				<div class="input-field confirm-password-field col s12">
 					<input id="confirm-password" type="password" class="validate"
 						name="cpw"> <label for="confirm-password">가입할 때
@@ -135,26 +138,30 @@
 				</div>
 			</div> -->
 
-			<div class="row confirm-password-row">
-				<div class="input-field confirm-password-field col s12">
-					<input id="email" type="email" class="validate" name="email">
-					<label for="email">Email (가입할 때
-						입력하신 이메일을 입력해주세요)</label>
+							<div class="row confirm-password-row">
+								<div class="input-field confirm-password-field col s12">
+									<input id="email" type="email" class="validate" name="email">
+									<label for="email">Email (가입할 때 입력하신 이메일을 입력해주세요)</label>
+								</div>
+							</div>
+						</form>
+						<div class="card-action center" id="card_bottom">
+							<div class="row_margin">
+								<a class="btn-login btn blue lighten-1 waves-effect white-text"
+									id="findbtn">FIND</a>
+							</div>
+
+
+							<div class="row forgot-password-row">
+								<span class="blue-text text-lighten-1 waves-effect" style="font-size:15px">Log
+									in으로 가기</span>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</form>
-		<div class="card-action center" id="card_bottom">
-			<div class="row_margin">
-				<a class="btn-login btn blue lighten-1 waves-effect white-text"
-					id="findbtn">FIND</a>
-			</div>
-
-
-			<div class="row forgot-password-row">
-				<span class="blue-text text-lighten-1 waves-effect">Log in으로
-					가기</span>
-			</div>
 		</div>
+	</div>
 	</div>
 </body>
 </html>

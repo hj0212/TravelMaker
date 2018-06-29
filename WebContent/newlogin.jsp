@@ -18,7 +18,7 @@
 	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
 	charset="utf-8"></script>
 <style>
-#container {  
+#container {
 	width: 800px;
 	margin: 0 auto;
 	padding-top: 100px;
@@ -179,12 +179,12 @@ $("#user_idchek").keyup(function(){
 
 </head>
 <body>
-	
+
 	<div id="container">
 		<div class="row">
 			<h1 id="title" class="center col s12">
-		<a href="main.jsp">TRAVEL MAKER</a>
-	</h1>
+				<a href="main.jsp">TRAVEL MAKER</a>
+			</h1>
 		</div>
 		<div class="row">
 			<div id="loginarea">
@@ -243,7 +243,7 @@ $("#user_idchek").keyup(function(){
 								<a class="btn-login btn blue lighten-1 waves-effect white-text"
 									id="loginbtn">Log In</a>
 							</div>
-							
+
 							<div class="row_margin forgot-password-row">
 								<div id="kakao_btn_changed">
 									<a id="kakao-login-btn"></a> <a
@@ -296,17 +296,19 @@ $("#user_idchek").keyup(function(){
   								</script>
 							</div>
 							<div class="row forgot-password-row">
-								<span class="blue-text text-lighten-1 waves-effect"><a href="findPw.jsp">Forgot
-									Password?</a></span>
+								<span class="blue-text text-lighten-1 waves-effect">
+								<a href="findPw.jsp" style="margin-right:0px">Forgot Password?</a></span>
 							</div>
 							</div>
 							
 							
 						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 </body>
 </html>
