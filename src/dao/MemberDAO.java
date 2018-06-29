@@ -126,11 +126,10 @@ public class MemberDAO {
 		return tmp;
 	}
 
-	private boolean check(String id) throws Exception {
+	public static boolean check(String id) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where userid=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-
 		pstmt.setString(1, id);
 		ResultSet rs = pstmt.executeQuery();
 		boolean result;
@@ -188,7 +187,7 @@ public class MemberDAO {
 
 		return result;
 	}
-
+	
 	public MemberDTO getProfileInfo(String part, String id)throws Exception{
 		Connection con = DBConnection.getConnection();
 		MemberDTO dto = null;
@@ -256,21 +255,7 @@ public class MemberDAO {
 		return result;	
 	}
 
-	public int changePw(String id, String pw)throws Exception{
-		Connection con = DBConnection.getConnection();
-		String sql = "update users set password =? where userid=?";
-		PreparedStatement pstmt=con.prepareStatement(sql);
-		pstmt.setString(1, pw);
-		pstmt.setString(2, id);
-		int result = pstmt.executeUpdate();
-
-		con.commit();
-		pstmt.close();
-		con.close();
-		return result;
-	}
-
-	public static String getUserNickname(int seq)throws Exception{
+	public String getUserNickname(int seq)throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql = "select part from users where seq=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
@@ -278,7 +263,7 @@ public class MemberDAO {
 		ResultSet rs = pstmt.executeQuery();
 		rs.next();
 		String part = rs.getString(1);
-		System.out.println(part);
+	/*	System.out.println(part);*/
 		String nickname = "";
 		if(part.equals("home")) {
 			sql = "select nickname from users where seq=?";
@@ -308,4 +293,19 @@ public class MemberDAO {
 		con.close();
 		return nickname;   
 	}
+
+	public int changePw(String id, String pw)throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "update users set password =? where userid=?";
+		PreparedStatement pstmt=con.prepareStatement(sql);
+		pstmt.setString(1, pw);
+		pstmt.setString(2, id);
+		int result = pstmt.executeUpdate();
+
+		con.commit();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
 }

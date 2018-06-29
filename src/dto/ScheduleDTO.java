@@ -1,10 +1,13 @@
 package dto;
 
 public class ScheduleDTO {
+	private int plan_seq;
+	private int day_seq;
 	private int schedule_seq;
 	private String schedule_starttime;
 	private String schedule_endtime;
 	private String location_id;
+	private String schedule_place;
 	private String schedule_plan;
 	private String schedule_budget;
 	private String schedule_ref;
@@ -51,4 +54,23 @@ public class ScheduleDTO {
 	public void setSchedule_ref(String schedule_ref) {
 		this.schedule_ref = schedule_ref;
 	}
+	public int getPlan_seq() {
+		return plan_seq;
+	}
+	public void setPlan_seq(int plan_seq) {
+		this.plan_seq = plan_seq;
+	}
+	public int getDay_seq() {
+		return day_seq;
+	}
+	public void setDay_seq(int day_seq) {
+		this.day_seq = day_seq;
+	}
+	public String getSchedule_place() {
+		return schedule_place;
+	}
+	public void setSchedule_place(String schedule_place) {
+		this.schedule_place = schedule_place;
+	}
+	
 }
