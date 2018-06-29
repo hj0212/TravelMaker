@@ -23,37 +23,41 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
 	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="source/css/codepenNavi.css">
-<style>
-	.container {
-		margin-top : 15%;
-		width: 970px;
-	}
-</style>
-</head>
-<body>
-	<c:choose>
+        <style>
+        	.container {
+        		margin-top : 15%;
+        	}
+        	
+        	body {
+				background: #1d76a6;
+				background: -webkit-linear-gradient(90deg, #f9fafc 10%, #84dcf9 90%);
+				background: -moz-linear-gradient(90deg, #f9fafc 10%, #84dcf9 90%);
+				background: -ms-linear-gradient(90deg, #f9fafc 10%, #84dcf9 90%);
+				background: -o-linear-gradient(90deg, #f9fafc 10%, #84dcf9 90%);
+				background: linear-gradient(90deg, #f9fafc 10%, #84dcf9 90%);
+				height: 1200px;
+			}
+        </style>
+    </head>
+    <body>
+        <c:choose>
 		<c:when test="${sessionScope.loginId !=null}">
 			<%@include file="../include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
 			<%@include file="../include/mainNavi.jsp"%>
 		</c:otherwise>
-	</c:choose>
-	<div class="container text-center">
-		<h1>비회원은 이용할 수 없습니다.</h1>
-		<button type="button" class="btn btn-light" id="goLogin">로그인하기</button>
-		<button type="button" class="btn btn-light" id="goList">목록으로</button>
-	</div>
-	
-	<script>
-		$("#goLogin").click(function(){
-			location.href = "newlogin.jsp";
-		});
+		</c:choose>
 		
-		$("#goList").click(function(){
-			location.href = "freeboard.bo";
-		});
+    	<div class="container text-center">
+   			<h1>부적절한 접근!</h1>
+   			<p>부적절한 경로로 접근하셨습니다</p>
+   			<button type="button" class="btn btn-light" id="back">메인으로가기</button>
+    	</div>
+	</body>
+	<script>
+		$("#back").click(function(){
+			location.href = "../main.jsp";
+		})
 	</script>
-</body>
-</html>
+    </html>
