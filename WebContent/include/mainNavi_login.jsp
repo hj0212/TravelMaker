@@ -28,7 +28,7 @@
 						class="caret"></span></a>
 					<ul class="dropdown-menu mt-1 mr-5"
 						aria-labelledby="navbarDropdownMenuLink">
-						<li><a class="dropdown-item" href="mypage.jsp">My Page</a></li>
+						<li><a class="dropdown-item" href="mypage.do">My Page</a></li>
 						<li><a class="dropdown-item" href="traveldiary.html">My
 								Plans</a></li>
 						<li><a class="dropdown-item" href="logout.do">Log Out</a></li>

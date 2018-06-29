@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeboardDAO;
 import dao.MemberDAO;
-import dao.MemberDAO;
 import dao.ReviewDAO;
 import dto.FreeboardDTO;
 import dto.MemberDTO;
+import dto.ReviewCommentDTO;
 import dto.ReviewDTO;
 
 /**
@@ -72,31 +72,32 @@ public class FrontController extends HttpServlet {
 				
 				if(dto == null) {
 					isForward = false;
+					dst = "login.bo";
 				}else {
 					int writer = dto.getSeq();
 					String title = request.getParameter("title");
 					String contents = request.getParameter("contents");
 			
 					int result = fbdao.insertArticle(writer, title, contents);
+					dst = "freeboard.bo";
 				}
 				
-				dst = "freeboard.bo";
 			} else if(command.equals("/viewArticle.bo")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				
 				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 				
 				if(dto == null) {
-					System.out.println("아이디가 업습니다...");
 					isForward = false;
 					dst = "login.bo";
 				}else {
-					String nickname = mdao.getUserNickname(dto.getSeq());
-					
 					FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
+					int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
+					String nickname = mdao.getUserNickname(writerNumber);
 					
 					request.setAttribute("article", boardDTO);
 					request.setAttribute("writer", nickname);
+					
 					dst = "freeboard/freeArticleView.jsp";
 				}
 			} else if(command.equals("/login.bo")) {
@@ -121,7 +122,39 @@ public class FrontController extends HttpServlet {
 	                        
 	            isForward = true;
 	            dst="share_review.jsp";
-	         }
+	         }else if(command.equals("/reviewArticle.bo")) {
+	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+	             
+	             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
+	             request.setAttribute("review_seq", review_seq);
+	             request.setAttribute("review_title", result1.getReview_title());
+	             request.setAttribute("review_contents", result1.getReview_contents());
+	             request.setAttribute("review_writedate", result1.getReview_writedate());
+	             request.setAttribute("review_writer", result1.getReview_writer());
+	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
+	             
+	             
+	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);
+	             for(ReviewCommentDTO tmp: result2) {
+	             request.setAttribute("comment_writer", tmp.getComment_writer());
+	             request.setAttribute("comment_text", tmp.getComment_text());
+	             request.setAttribute("comment_time", tmp.getComment_time());
+	             }
+	             
+	             isForward = true;            
+	             dst = "reviewArticle.jsp";
+	          }else if(command.equals("/addReviewComment.bo")) {
+	             String comment_text = request.getParameter("comment_text");
+	             int comment_writer_seq = Integer.parseInt(request.getParameter("comment_writer_seq"));
+	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+	             int result = rdao.insertReviewComment(comment_text, comment_writer_seq, review_seq);
+	             request.setAttribute("result", result);
+	             request.setAttribute("review_seq", review_seq);
+	             
+
+	             isForward = true;
+	             dst= "reviewCommentView.bo";
+	          }
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
@@ -129,7 +162,9 @@ public class FrontController extends HttpServlet {
 			} else {
 				response.sendRedirect(dst);
 			}
-		}catch(Exception e) {e.printStackTrace();}		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}		
 	}
 
 

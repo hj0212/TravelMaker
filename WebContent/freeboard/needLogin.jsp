@@ -12,7 +12,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 <style>
 	.container {
-		margin-top : 140px;
+		margin-top : 15%;
+		width: 970px;
 	}
 </style>
 </head>
@@ -26,7 +27,19 @@
 		</c:otherwise>
 	</c:choose>
 	<div class="container text-center">
-		
+		<h1>비회원은 이용할 수 없습니다.</h1>
+		<button type="button" class="btn btn-light" id="goLogin">로그인하기</button>
+		<button type="button" class="btn btn-light" id="goList">목록으로</button>
 	</div>
+	
+	<script>
+		$("#goLogin").click(function(){
+			location.href = "newlogin.jsp";
+		});
+		
+		$("#goList").click(function(){
+			location.href = "freeboard.bo";
+		});
+	</script>
 </body>
 </html>

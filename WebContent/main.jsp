@@ -27,7 +27,7 @@
 
 <style>
 div {
-	box-sizing: border-box;
+	box-sizing: border-box;ㄴ
 }
 
 .container {
