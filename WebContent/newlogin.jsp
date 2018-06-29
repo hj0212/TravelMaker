@@ -308,7 +308,6 @@ $("#user_idchek").keyup(function(){
 				</div>
 			</div>
 		</div>
-	</div>
 	
 </body>
 </html>

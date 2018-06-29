@@ -32,7 +32,6 @@ public class MemberController extends HttpServlet {
 			String dst = null;
 
 			if(command.equals("/login.do")) {
-				String id = request.getParameter("id");
 				MemberDTO dto = new MemberDTO();
 				dto.setUserid(request.getParameter("id"));
 				dto.setPassword(request.getParameter("pw"));
@@ -46,7 +45,9 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("loginResult", result);
 				request.getSession().setAttribute("part", "home");
 				request.getSession().setAttribute("user", user);
+				request.getSession().setAttribute("loginId", dto.getUserid());
 				
+				System.out.println(((MemberDTO)request.getSession().getAttribute("user")).getSeq());
 				
 				isForward = true;
 				dst="userResult.jsp";
@@ -79,6 +80,7 @@ public class MemberController extends HttpServlet {
 				
 				request.getSession().setAttribute("part", "naver");
 				request.getSession().setAttribute("user", user);
+				request.getSession().setAttribute("loginId", user.getUserid());
 				
 				isForward = false;
 				dst="index.jsp";		
@@ -97,6 +99,7 @@ public class MemberController extends HttpServlet {
 
 				request.getSession().setAttribute("part", "kakao");
 				request.getSession().setAttribute("user", user);
+				request.getSession().setAttribute("loginId", user.getUserid());
 
 				isForward = false;
 				dst="index.jsp";		
