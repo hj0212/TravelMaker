@@ -53,8 +53,18 @@ div {
 .item {
 	width: 300px;
 }
-.hls_sol .btn-pro {
-	right:0px;
+
+.hls_sol_data {
+	text-align: center;
+}
+
+.hls_sol a {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.hls_sol .btn {
+	bottom: 10px;
 }
 </style>
 
@@ -153,7 +163,7 @@ div {
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="hls_sol col-md-3 px-1">
 				<img src="travel1.jpg" alt="">
 				<div class="hls_sol_data">
@@ -185,16 +195,12 @@ div {
 				</div>
 			</div>
 
-
-
 		</div>
 		<!--bestImage 영역 끝 -->
 		<h1 class="divLine">푸터올 곳</h1>
 		<hr />
 		<div class="row">
-			<div class="col-md-12" id="foot">
-				
-			</div>
+			<div class="col-md-12" id="foot"></div>
 		</div>
 
 	</div>
