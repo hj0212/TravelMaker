@@ -51,6 +51,20 @@ public class FreeboardDAO {
 		return result;
 	}
 	
+	public int deleteArticle(int seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "delete from freeboard where free_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, seq);
+		
+		int result = pstmt.executeUpdate();
+		
+		conn.commit();
+		pstmt.close();
+		conn.close();
+		return result;
+	}
+	
 	public FreeboardDTO readFreeArticle(int seq) throws Exception {
 		Connection conn = DBConnection.getConnection();
 		String sql = "select * from freeboard where free_seq = ?";
@@ -72,6 +86,21 @@ public class FreeboardDAO {
 		pstmt.close();
 		conn.close();
 		return tmp;
+	}
+	
+	public int writerCheck(int seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "select free_writer from freeboard where free_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, seq);
+		ResultSet rs = pstmt.executeQuery();
+		int writer = 0;
+		
+		if(rs.next()) {
+			writer = rs.getInt(1);
+		}
+		
+		return writer;
 	}
 	
 	public ArrayList<FreeboardDTO> selectBoard(int startNum, int endNum, String searchTerm) throws Exception {
