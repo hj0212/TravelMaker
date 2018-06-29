@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBUtils.DBConnection;
-import dto.FreeboardDTO;
+import dto.ReviewCommentDTO;
 import dto.ReviewDTO;
 
 public class ReviewDAO {
@@ -160,6 +160,88 @@ public class ReviewDAO {
 		
 		return sb.toString();
 	}	
+	
+	public int getArticleViewCount (int review_seq) throws Exception{
+	      Connection con = DBConnection.getConnection();
+	      String sql = "select review_viewcount from reviewboard where review_seq = ?";
+	      PreparedStatement pstmt = con.prepareStatement(sql);
+	      pstmt.setInt(1, review_seq);
+	      ResultSet rs = pstmt.executeQuery();
+	      int result = 0;
+	      if(rs.next()) {
+	         result = rs.getInt("review_viewcount");
+	      }
+	      rs.close();
+	      pstmt.close();
+	      con.close();
+	      return result;
+	   }
+	   
+	   
+	   public ReviewDTO getReviewArticle(int review_seq) throws Exception{
+	      Connection con = DBConnection.getConnection();
+	      String sql = "select review_title, review_contents, review_writer, review_writedate, review_viewcount from reviewboard where review_seq = ?";
+	      PreparedStatement pstmt = con.prepareStatement(sql);
+	      pstmt.setInt(1, review_seq);
+	      ResultSet rs = pstmt.executeQuery();
+	      ReviewDTO rdto = new ReviewDTO();
+	      if(rs.next()) {
+	         rdto.setReview_title(rs.getString("review_title"));
+	         rdto.setReview_contents(rs.getString("review_contents"));
+	         rdto.setReview_writer(mdao.getUserNickname(rs.getInt("review_writer")));
+	         rdto.setReview_writedate(rs.getString("review_writedate"));
+	         rdto.setReview_viewcount(rs.getInt("review_viewcount"));
+	      }
+	   
+	      return rdto;
+	      
+	   }
+	   
+	   public int insertReviewComment(String comment_text, int comment_writer_seq, int review_seq) throws Exception{
+	      Connection con = DBConnection.getConnection();
+	      String sql = "insert into review_comment values(comment_seq.nextval,?,?,sysdate) select comment_text, comment_writer from review_comment where review_seq=?";
+	      PreparedStatement pstmt = con.prepareStatement(sql);
+	      pstmt.setString(1, comment_text);
+	      pstmt.setInt(2, comment_writer_seq);
+	      pstmt.setInt(3, review_seq);
+	      int result = pstmt.executeUpdate();
+	      con.commit();
+	      pstmt.close();
+	      con.close();
+	      return result;
+	   }
+	   
+	   public List<ReviewCommentDTO> getReviewComment(int review_seq) throws Exception{
+	      Connection con = DBConnection.getConnection();
+	      String sql = "select * from review_comment where review_seq=?";
+	      PreparedStatement pstmt = con.prepareStatement(sql);
+	      pstmt.setInt(1, review_seq);
+	      ResultSet rs = pstmt.executeQuery();
+	      List<ReviewCommentDTO> result = new ArrayList<>();
+	      while(rs.next()) {
+	         ReviewCommentDTO rdto = new ReviewCommentDTO();
+	         rdto.setComment_writer(mdao.getUserNickname(rs.getInt("comment_writer")));
+	         rdto.setComment_text(rs.getString("comment_text"));
+	         rdto.setComment_time(rs.getString("comment_time"));
+	         result.add(rdto);
+	      }
+	      rs.close();
+	      pstmt.close();
+	      con.close();
+	      return result;
+	   }
+	   
+	   public int viewCount(int seq) throws Exception{
+	      Connection con = DBConnection.getConnection();
+	      String sql = "update reviewboard set review_viewcount=nvl(viewcount,0)+1 where review_seq=?";
+	      PreparedStatement pstat = con.prepareStatement(sql);
+	      pstat.setInt(1, seq);
+	      int result = pstat.executeUpdate();
+	      con.commit();
+	      pstat.close();
+	      con.close();
+	      return result;
+	   }
 	
 	
 }

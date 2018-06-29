@@ -46,6 +46,8 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", dto.getUserid());
 				
+				System.out.println(((MemberDTO)request.getSession().getAttribute("user")).getSeq());
+				
 				isForward = true;
 				dst="userResult.jsp";
 				

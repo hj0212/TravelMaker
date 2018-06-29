@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
+import dao.MemberDAO;
 import dao.PlanDAO;
 import dto.BudgetDTO;
 import dto.FreeboardDTO;
@@ -34,6 +33,8 @@ public class PlanController extends HttpServlet {
 			response.setCharacterEncoding("utf8");
 
 			PlanDAO pdao = new PlanDAO();
+			MemberDAO mdao = new MemberDAO();
+		
 
 			boolean isForward = true;
 			String dst = null;
@@ -42,6 +43,7 @@ public class PlanController extends HttpServlet {
 				ScheduleDTO tmp = new ScheduleDTO();
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
+				System.out.println(plan+":"+day);
 				tmp.setPlan_seq(plan);
 				tmp.setDay_seq(day);
 				tmp.setSchedule_starttime(request.getParameter("starttime"));
@@ -108,7 +110,7 @@ public class PlanController extends HttpServlet {
 				isForward = true;
 				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
 			} else if(command.equals("/createPlan.plan")) {
-				int plan_writer = 17;//Integer.parseInt((String)request.getSession().getAttribute("seq"));
+				int plan_writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
 				String plan_startdate = request.getParameter("plan_startdate");
 				String plan_enddate = request.getParameter("plan_enddate");
 				String plan_title = request.getParameter("plan_title");
@@ -121,10 +123,14 @@ public class PlanController extends HttpServlet {
 					System.out.println("�엯�젰�떎�뙣");
 				}
 
+				
+				int plan_seq = pdao.getPlan_seq();
+				
 				request.setAttribute("result", result);
 				isForward=true;
 				dst="createPlan.jsp";
 
+				dst="selectSchedule.plan?plan="+plan_seq+"&day=1";
 			}
 
 //----------------------------------planList 가져오기
