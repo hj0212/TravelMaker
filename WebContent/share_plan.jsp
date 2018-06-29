@@ -94,11 +94,7 @@ div {
 	text-align: center;
 	margin: 0px auto;
 	display: block;
-	color: white;
-	margin-top: 20px;
-	font-size: 30px;
-	text-shadow: black 2px 2px 2px;
-	box-sizing: border-box;
+	text-align: center;
 }
 
 .mobile-title {
@@ -181,7 +177,7 @@ div {
 				<div class="modal-content">
 					<form method="post" id="plan-form">
 						<div class="modal-header">
-							<div class="mobile-header">나의 여행계획 세우기</div>
+							<div class="h1" style="margin: 0 auto;">나의 여행계획 세우기</div>
 						</div>
 						<div class="modal-body">
 							<div class="mobile-title">
@@ -216,7 +212,7 @@ div {
 				</div>
 			</div>
 		</div>
-	</div>
+		
 		<!-- 검색/ 글쓰기 버튼  -->
 		<div class="row col-md-12">
 			<div class="input-group mt-2 col-md-12" id="search_area">
@@ -229,7 +225,7 @@ div {
 						id="searchbtn" name="searchbtn">검색</button>
 				</div>
 				<button type="button" class="btn btn-primary ml-auto" data-toggle="modal"
-			data-target="#exampleModalCenter">Launch demo modal</button>
+			data-target="#exampleModalCenter">나의 여행 계획 세우기</button>
 			</div>
 		</div>
 
@@ -276,6 +272,7 @@ div {
 		</div>
 
 	</div>
+		
 	<script>
 		$("#searchbtn").click(function() {
 			location.href = "planboard.plan?search=" + $("#search").val();
