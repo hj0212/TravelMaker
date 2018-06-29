@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,6 +18,10 @@
 
 <title>Insert title here</title>
 <style>
+#container {
+	margin-top: 140px;
+}
+
 .mobile-wrap {
 	text-align: center;
 	margin: auto;
@@ -113,6 +117,16 @@
 </style>
 </head>
 <body>
+	<c:choose>
+		<c:when test="${sessionScope.loginId !=null}">
+			<%@include file="include/mainNavi_login.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="include/mainNavi.jsp"%>
+		</c:otherwise>
+	</c:choose>
+	
+	<div id="container">
 	<div class="mobile-wrap">
 	<form  method="post" id="plan-form">
 		<div class="mobile-header">나의 여행계획 세우기</div>
@@ -140,7 +154,7 @@
 		</div>
 		</form>
 	</div>
-
+	</div>
 
 	<script>
     $(document).ready(function(){
@@ -232,7 +246,9 @@
    			 }
    		 });
    			 
-
+   		$('#myModal').on('shown.bs.modal', function () {
+   		  $('#myInput').trigger('focus')
+   		})
         
     });
     
