@@ -154,45 +154,6 @@ public class MemberDAO {
 		return result;
 	}
 	
-	public static String getUserNickname(int seq)throws Exception{
-		Connection con = DBConnection.getConnection();
-		String sql = "select part from users where seq=?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, seq);
-		ResultSet rs = pstmt.executeQuery();
-		rs.next();
-		String part = rs.getString(1);
-		System.out.println(part);
-		String nickname = "";
-			if(part.equals("home")) {
-				sql = "select nickname from users where seq=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, seq);		
-				rs = pstmt.executeQuery();
-				rs.next();
-				nickname = rs.getString(1);
-			}else if (part.equals("naver")) {
-				sql = "select naver_nickname from users where seq =?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, seq);
-				rs = pstmt.executeQuery();
-				rs.next();
-				nickname = rs.getString(1);
-			}
-			else if (part.equals("kakao")) {
-				sql = "select kakao_nickname from users where seq = ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, seq);
-				rs = pstmt.executeQuery();
-				rs.next();
-				nickname = rs.getString(1);
-			}
-			pstmt.close();
-			rs.close();
-			con.close();
-			return nickname;	
-	}
-
 	public MemberDTO getProfileInfo(String part, String id)throws Exception{
 		Connection con = DBConnection.getConnection();
 		MemberDTO dto = null;

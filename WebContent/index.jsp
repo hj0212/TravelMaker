@@ -19,7 +19,7 @@
 			var str;
 		
 			
-			 $("input").keydown(function(event) {
+			<%--  $("input").keydown(function(event) {
 		            if (event.which === 13) {
 		            	var id = "<%=nickname%>";
 		            	var msg = $("#livemsg").val();
@@ -29,7 +29,7 @@
 		    			  
 		            }
 		        });
-
+ --%>
 					
 			ws.onopen = function() {
 			
@@ -83,7 +83,7 @@ document.getElementById("logout").onclick = function(){
 
                 <a href="#" class="chat-close">x</a>
 
-                <h4 class="live4"><%=nickname %></h4>
+            <%--     <h4 class="live4"><%=nickname %></h4> --%>
 
                 <span class="chat-message-counter">!</span>
 
