@@ -45,8 +45,8 @@ div {
 	text-align: center;
 }
 
-.card-body {
-	text-align: right;
+.card-body{
+	text-align:justify;
 	padding: 0px;
 }
 
@@ -105,9 +105,9 @@ div {
 					<div class="card text-center">
 						<div class="card-header planTitle">${item.plan_title}</div>
 						
-						<div class="card-body mt-1">
+						<div class="card-body mt-1 justify-content-end">
 							<h6 class="text-muted d-inline" name="subTitle">${item.plan_writerN}</h6>
-							<div class="btn-list d-inline justify-content-end">
+							<div class="btn-list d-inline">
 
 								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
 									class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
