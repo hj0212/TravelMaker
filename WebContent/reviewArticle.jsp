@@ -31,64 +31,50 @@
 * {
    box-sizing: border-box;
 }
-
 .container {
    width: 970px;
 }
-
 .title {
    font-size: 35px;
 }
-
 .writer {
    font-size: 17px;
 }
-
 .writer * {
    padding: 0px;
 }
-
 .contents {
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
    min-height: 100px;
 }
-
 /* 편법임... */
 .contents p {
    margin: 0 0 0.0001pt;
 }
-
 .function {
    margin-top: 15px;
 }
-
 .move {
    padding: 0px;
 }
-
 .comments {
    margin-top: 15px;
 }
-
 .comment {
    background-color: #e9e9e9;
    margin-bottom: 3px;
 }
-
 #comment-bnt:hover {
    color: red;
 }
-
 #comment-table {
    text-align: center;
 }
-
 tr {
    border-bottom: 3px dotted #e9e9e9;
 }
-
 #comment-write-bnt {
    -webkit-transition: all 50ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
    -moz-transition: all 500ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -104,7 +90,6 @@ tr {
    font-size: 16px;
    font-family: fantasy;
 }
-
 #comment-write-bnt:hover {
    color: white;
    box-shadow: #827e7e 0 0px 0px 60px inset;
@@ -112,12 +97,9 @@ tr {
 </style>
 <script>
    $(document).ready(function() {
-
-
       $("#reviewboard-bt").click(function() {
          $(location).attr("href", "reviewboard.bo");
       });
-
    });
 </script>
 </head>
@@ -211,17 +193,10 @@ tr {
                   </tr>
                </c:forEach>
             </tbody>
-
          </table>
-
-
       </div>
    </div>
-
-
    </div>
-
-
    <script>
       $('.inputComment').click(function() {
          $('#inputCommentForm').submit();
@@ -229,7 +204,6 @@ tr {
    </script>
    <script>
       var commentBntCount = 2;
-
       $("#comment-bnt").click(function() {
          var writer = $(".writer").text();
          if (commentBntCount == 1) {
@@ -237,7 +211,6 @@ tr {
             $("#comment-table").show();
             commentBntCount++;
          } else {
-
             $("#comment-bnt").text("댓글보기▼");
             $("#comment-table").hide();
             commentBntCount--;
@@ -246,10 +219,7 @@ tr {
       $("#comment-write-bnt").click(
                   function() {
                      var con = confirm("댓글을작성하시겠습니까?");
-
                      var comment = $("#comment").val();
-
-
                      if (con) {
                         if (comment != "") {
                            alert("댓글이 성공적으로 달렸습니다");
@@ -259,7 +229,6 @@ tr {
                         }
                      } else {
                      }
-
                   });
    </script>
 </body>
