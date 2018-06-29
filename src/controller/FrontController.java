@@ -91,7 +91,7 @@ public class FrontController extends HttpServlet {
 					isForward = false;
 					dst = "login.bo";
 				}else {
-					String nickname = MemberDAO.getUserNickname(dto.getSeq());
+					String nickname = mdao.getUserNickname(dto.getSeq());
 					
 					FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
 					
@@ -101,7 +101,27 @@ public class FrontController extends HttpServlet {
 				}
 			} else if(command.equals("/login.bo")) {
 				dst = "freeboard/needLogin.jsp";
-			}
+			} else if(command.equals("/reviewboard.bo")) {
+	            int currentPage = 0;
+	            String currentPageString = request.getParameter("currentPage");
+	            
+	            if(currentPageString == null) {
+	               currentPage = 1;
+	            } else {
+	               currentPage = Integer.parseInt(currentPageString);
+	            }
+	            
+	            String searchTerm = request.getParameter("search");
+	            List<ReviewDTO> reviewList = new ArrayList<>();
+	            reviewList = rdao.getSomeReview(currentPage*12-11, currentPage*12, searchTerm);
+	            request.setAttribute("reviewList", reviewList);
+	         
+	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
+	            request.setAttribute("pageNavi", pageNavi);
+	                        
+	            isForward = true;
+	            dst="share_review.jsp";
+	         }
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
