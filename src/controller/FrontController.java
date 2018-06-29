@@ -79,13 +79,24 @@ public class FrontController extends HttpServlet {
 				dst = "freeboard.bo";
 			} else if(command.equals("/viewArticle.bo")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
-				String user = MemberDAO.getUserNickname(seq);
-				System.out.println(user);
-//				FreeboardDTO dto = fbdao.readFreeArticle(seq);
 				
+				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 				
-//				request.setAttribute("article", dto);
-				dst = "freeboard/freeArticleView.jsp";
+				if(dto == null) {
+					System.out.println("아이디가 업습니다...");
+					isForward = false;
+					dst = "login.bo";
+				}else {
+					String nickname = MemberDAO.getUserNickname(dto.getSeq());
+					
+					FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
+					
+					request.setAttribute("article", boardDTO);
+					request.setAttribute("writer", nickname);
+					dst = "freeboard/freeArticleView.jsp";
+				}
+			} else if(command.equals("/login.bo")) {
+				dst = "freeboard/needLogin.jsp";
 			}
 
 			if(isForward) {
