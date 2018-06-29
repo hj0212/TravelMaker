@@ -115,7 +115,7 @@ public class PlanController extends HttpServlet {
 				String plan_title = request.getParameter("plan_title");
 				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0);
 				int result =pdao.startPlanInsertData(pdto);
-
+				int plan_seq = pdao.getPlanseq();
 				if(result>0) {
 					System.out.println("플랜생성완료");
 				}else {
