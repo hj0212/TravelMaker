@@ -12,7 +12,7 @@ import dto.ReviewDTO;
 
 public class ReviewDAO {
 	private MemberDAO mdao = new MemberDAO();
-//-------------------후기 글 전부 가져오기
+//-------------------�썑湲� 湲� �쟾遺� 媛��졇�삤湲�
 	public List<ReviewDTO> getAllReview() throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from reviewboard";
@@ -27,7 +27,7 @@ public class ReviewDAO {
 			rdto.setReview_seq(rs.getInt("review_seq"));
 			rdto.setReview_title(rs.getString("review_title"));
 			rdto.setReview_contents(rs.getString("review_contents"));
-			rdto.setReview_writer(mdao.getUserNickname(seq));
+			rdto.setReview_writerN(mdao.getUserNickname(seq));
 			rdto.setReview_writedate(rs.getString("review_writedate"));
 			rdto.setReview_viewcount(rs.getInt("review_viewcount"));
 			result.add(rdto);
@@ -38,7 +38,7 @@ public class ReviewDAO {
 		return result;
 	}
 	
-//-----------------------네비에 정한 개수만큼 기록 가져오기
+//-----------------------�꽕鍮꾩뿉 �젙�븳 媛쒖닔留뚰겮 湲곕줉 媛��졇�삤湲�
 	public ArrayList<ReviewDTO> getSomeReview(int startNum, int endNum, String searchTerm) throws Exception {
 		Connection con = DBConnection.getConnection();
 		
@@ -66,7 +66,7 @@ public class ReviewDAO {
 			tmp.setReview_seq(rs.getInt(1));
 			tmp.setReview_title(rs.getString(2));
 			tmp.setReview_contents(rs.getString(3));
-			tmp.setReview_writer(rs.getString(4));
+			tmp.setReview_writerN(mdao.getUserNickname(rs.getInt(4)));
 			tmp.setReview_writedate(rs.getString(5));
 			tmp.setReview_viewcount(rs.getInt(6));
 			reviewResult.add(tmp);
@@ -78,20 +78,21 @@ public class ReviewDAO {
 		return reviewResult;
 	}
 	
-	//-------------------페이지 네비	
+	//-------------------�럹�씠吏� �꽕鍮�	
 	public String getPageNavi(int currentPage, String searchTerm) throws Exception {
 		Connection con = DBConnection.getConnection();		
 		String sql;
 		PreparedStatement pstat;
 		ResultSet rs;
 		
-		if(searchTerm == null || searchTerm.equals("null")) {
+		if(searchTerm == null || searchTerm.equals("")) {
 			sql = "select count(*) totalCount from reviewboard";
 			pstat = con.prepareStatement(sql);
 		} else {
-			sql = "select count(*) totalCount from reviewboard where review_title like '%?%' || review_contents like '%?%'";
+			sql = "select count(*) totalCount from reviewboard where review_title like ? || review_contents like ?";
 			pstat = con.prepareStatement(sql);
-			pstat.setString(1, searchTerm);
+			pstat.setString(1, "%"+searchTerm+"%");
+			pstat.setString(2, "%"+searchTerm+"%");
 		}
 		
 		rs = pstat.executeQuery();
@@ -108,7 +109,7 @@ public class ReviewDAO {
 		} else {
 			pageTotalCount = recordTotalCount / recordCountPerPage;
 		}
-		System.out.println(pageTotalCount);
+		
 		//------------------------------------------------------------------------------------------	
 		//int currentPage = 1;		
 		if(currentPage < 1) {	

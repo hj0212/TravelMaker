@@ -32,7 +32,7 @@
 }
 
 .container {
-	margin-top: 100px;
+	margin-top: 120px;
 }
 
 .input-group {
@@ -106,7 +106,9 @@
 #delete-table {
 	float: right;
 }
-
+#title-board {
+	background: white;
+}
 </style>
 
 </head>
@@ -128,10 +130,9 @@
 			</div>
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
-				name="plantitle" value="${plan_title}">
+				name="plantitle" value="${plan_title}" readonly>
 			
 		</div>
-
 		<div id="schedulearea">
 			<table class="table table-bordered" id="schedule-plan">
 				<thead>
@@ -144,6 +145,7 @@
 						<th scope="col" style="width: 20px;">삭제</th>
 					</tr>
 				</thead>
+				
 				<tbody id="schedule-tbody"
 					style="table-layout: fixed; word-break: break-all;">
 					<c:if test="${create == 'f'}">
@@ -152,14 +154,25 @@
 						<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
 						<td name="place">${item.schedule_place}</td>
 						<td name="schedule">${item.schedule_plan}</td>
-						<c:forEach var="bitem" items="${budgetList}">
-							<c:if test="${item.schedule_seq == bitem.schedule_seq}">
-								<td name="money">${bitem.budget_amount}</td>
-							</c:if>
-							<c:if test="${item.schedule_seq != bitem.schedule_seq}">
-								<td name="money"></td>
+						
+						<c:if test="${!empty budgetList}">
+						<c:set var="loop_flag" value="false" />
+						<c:forEach var="bitem" items="${budgetList}" varStatus="index">
+							<c:if test="${not loop_flag }">
+								<c:if test="${item.schedule_seq == bitem.schedule_seq}">
+									<td name="money">${bitem.budget_amount}</td>
+									<c:set var="loop_flag" value="true" />
+								</c:if>
+								<c:if test="${index.last && item.schedule_seq != bitem.schedule_seq}">
+									<td name="money"></td>
+									<c:set var="loop_flag" value="true" />
+								</c:if>
 							</c:if>
 						</c:forEach>
+						</c:if>
+						<c:if test="${empty budgetList}">
+						<td name="money"></td>
+						</c:if>
 						<td name="reference">${item.schedule_ref}</td>
 						<td><button style="float: left; border: none;" type="button"
 								class="btn btn-outline-danger">
@@ -186,10 +199,11 @@
 			</table>
 			
 			<div id="extraarea">
-				<input type="text" id="totalbudget" class="form-control" value="원" readonly>
+				<input type="text" id="totalbudget" class="form-control" value="${totalBudget}원" readonly>
 				<button type="button" class="btn btn-outline-danger"
 					id="delete-table">삭제</button>
 			</div>
+			<script></script>
 		</div>
 
 		<div id="plan-board">
@@ -389,7 +403,7 @@ $(document).ready(function() {
                 $("#end-time").val("");
                 $("#place").val("");
                 $("#schedule").val("");
-                $("td[name='budget'] input").val("");
+                $("#money").val("");
                 $("#reference").val("");
             }
     });
@@ -405,13 +419,9 @@ $(document).ready(function() {
           $("#end-time").val(timestr[1]);
           $("#place").val($("#schedule-plan>tbody>.active>td[name='place']").html());
           $("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
-          
+          $("#money").val($("#schedule-plan>tbody>.active>td[name='money']").html());
           $("#reference").val($("#schedule-plan>tbody>.active>td[name='reference']").html());
     });
-    
-    $("#plan-table").on('click', '.clickable-row', function(event) {
-  		$(this).addClass('active').siblings().removeClass('active');
-	});
 
 });
 </script>

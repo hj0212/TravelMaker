@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,7 +31,6 @@ public class MemberController extends HttpServlet {
 			String dst = null;
 
 			if(command.equals("/login.do")) {
-				String id = request.getParameter("id");
 				MemberDTO dto = new MemberDTO();
 				dto.setUserid(request.getParameter("id"));
 				dto.setPassword(request.getParameter("pw"));
@@ -46,7 +44,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("loginResult", result);
 				request.getSession().setAttribute("part", "home");
 				request.getSession().setAttribute("user", user);
-				
+				request.getSession().setAttribute("loginId", dto.getUserid());
 				
 				isForward = true;
 				dst="userResult.jsp";
@@ -54,7 +52,7 @@ public class MemberController extends HttpServlet {
 
 			} else if(command.equals("/join.do")) {
 				MemberDTO dto = new MemberDTO();
-				dto.setUserid(request.getParameter("idcheck"));
+				dto.setUserid(request.getParameter("id"));
 				dto.setPassword(request.getParameter("pw"));
 				dto.setNickname(request.getParameter("nickname"));
 				dto.setEmail(request.getParameter("email"));
@@ -79,6 +77,7 @@ public class MemberController extends HttpServlet {
 				
 				request.getSession().setAttribute("part", "naver");
 				request.getSession().setAttribute("user", user);
+				request.getSession().setAttribute("loginId", user.getUserid());
 				
 				isForward = false;
 				dst="index.jsp";		
@@ -97,6 +96,7 @@ public class MemberController extends HttpServlet {
 
 				request.getSession().setAttribute("part", "kakao");
 				request.getSession().setAttribute("user", user);
+				request.getSession().setAttribute("loginId", user.getUserid());
 
 				isForward = false;
 				dst="index.jsp";		
