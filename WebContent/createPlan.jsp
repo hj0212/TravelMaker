@@ -14,9 +14,6 @@
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
 	rel="stylesheet" type="text/css" />
 
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script
@@ -82,18 +79,18 @@
 
 #picker-div {
 	width: 100%;
-	height: 10%;
+	height: 80px;
 	text-align: center;
 	margin: 0 auto;
 	box-sizing: border-box;
-	margin-top: 30px;
+	margin-top: 25px;
 }
 
 .picker-pic {
-	width: 170px;
+	width: 175px;
 	height: 100%;
 	text-align: center;
-	margin: auto;
+	margin: 0 auto;
 	box-sizing: border-box;
 	margin-left: 15px;
 	float: left;
@@ -102,31 +99,25 @@
 	color: gray;
 }
 
+#picker_wrap {
+	width: 390px; height : 100%;
+	margin: 0 auto;
+	height: 100%;
+}
+
 #start-plan {
 	width: 100%;
 	height: 10%;
 	text-align: center;
-	margin: 0px auto;
+	margin: 0 auto;
 	box-sizing: border-box;
-	margin-top: 90px;
-}
-
-#start-bt {
-	color: aliceblue;
-	background-color: aqua;
-}
-
-#start-bt:hover {
-	box-shadow: turquoise 2px 2px 2px;
-	opacity: 0.7;
-	color: chartreuse;
-	text-shadow: black 1px 1px 1px;
+	margin-top: 30px;
 }
 </style>
 </head>
 <body>
 	<c:choose>
-		<c:when test="${sessionScope.loginId !=null}">
+		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
@@ -143,31 +134,39 @@
 			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-					<div class="modal-header">
-						<div class="mobile-header">나의 여행계획 세우기</div>
-					</div>
-					<div class="modal-body">
-						<div class="mobile-title">
-							<input type="text" id="plan_title" name="plan_title"
-								class="from-contol" placeholder="여행 제목을 입력해주세요">
+					<form method="post" id="plan-form">
+						<div class="modal-header">
+							<div class="mobile-header">나의 여행계획 세우기</div>
 						</div>
-						<div id="picker-div">
-							<div class="picker-pic">
-								여행 시작 날짜<input id="datepicker" name="plan_startdate" readonly
-									width="170" style="background-color: white;" />
+						<div class="modal-body">
+							<div class="mobile-title">
+								<input type="text" id="plan_title" name="plan_title"
+									class="from-contol" maxlength=400 placeholder="여행 제목을 입력해주세요">
 							</div>
-							<div class="picker-pic">
-								여행 종료 날짜<input id="datepicker-end" name="plan_enddate" readonly
-									width="170" style="background-color: white;" />
+							<div id="picker-div">
+								<div id="picker_wrap">
+									<div class="picker-pic">
+										여행 시작 날짜<input id="datepicker" name="plan_startdate" readonly
+											width="170" style="background-color: white;" />
+									</div>
+									<div class="picker-pic" id="datepicker_endarea">
+										여행 종료 날짜<input id="datepicker-end" name="plan_enddate"
+											readonly width="170" style="background-color: white;" />
+									</div>
+								</div>
 							</div>
-
+							<div id="start-plan">
+								<p id="dayday" style="font-size: 13px; font-style: italic;">여행
+									일수</p>
+							</div>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">여행 계획 시작하기</button>
-					</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+							<button id="start-bt" type="button" class="btn btn-primary">여행
+								계획 시작하기</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -185,23 +184,20 @@
 					maxDate.setDate(dd);
 
 					$("#datepicker").datepicker({
-
 						uiLibrary : 'bootstrap4',
 						format : 'yyyy-mm-dd',
 						language : "ko",
 						minDate : minDate,
 						maxDate : maxDate,
-
 					});
-					$("#datepicker-end").datepicker({
 
+					$("#datepicker-end").datepicker({
 						uiLibrary : 'bootstrap4',
 						format : 'yyyy-mm-dd',
 						language : "ko",
 						constrainInput : true,
 						minDate : minDate,
 						maxDate : maxDate,
-
 					});
 
 					var todate = "";
@@ -214,7 +210,8 @@
 					$("#datepicker").change(
 							function() {
 								todate = $(this).val();
-
+								$("#datepicker-end").val("");
+								
 								if (enddate != "") {
 									var arrtodate = todate.split("/");
 									var arrenddate = enddate.split("/");
@@ -241,27 +238,31 @@
 
 					$("#datepicker-end").change(
 							function() {
-								enddate = $(this).val();
-								console.log(todate + ":" + enddate);
-
-								var arrtodate = todate.split("-");
-								var arrenddate = enddate.split("-");
-								formdt = new Date(arrtodate[0], arrtodate[1],
-										arrtodate[2]);
-								todt = new Date(arrenddate[0], arrenddate[1],
-										arrenddate[2]);
-								console.log((todt.getTime() - formdt.getTime())
-										/ (24 * 60 * 60 * 1000));
-								datepage = (todt.getTime() - formdt.getTime())
-										/ (24 * 60 * 60 * 1000);
-								if (datepage == 0) {
-									$("#dayday").html("당일 여행");
-								} else if (datepage < 0) {
-									$("#dayday").html("출발일이 더늦을수없습니다");
+								if (todate != "") {
+									enddate = $(this).val();
+									console.log(todate + ":" + enddate);
+									
+									var arrtodate = todate.split("-");
+									var arrenddate = enddate.split("-");
+									formdt = new Date(arrtodate[0], arrtodate[1],
+											arrtodate[2]);
+									todt = new Date(arrenddate[0], arrenddate[1],
+											arrenddate[2]);
+									console.log((todt.getTime() - formdt.getTime())
+											/ (24 * 60 * 60 * 1000));
+									datepage = (todt.getTime() - formdt.getTime())
+											/ (24 * 60 * 60 * 1000);
+									if (datepage == 0) {
+										$("#dayday").html("당일 여행");
+									} else if (datepage < 0) {
+										$("#dayday").html("출발일이 더늦을수없습니다");
+									}else {									
+										$("#dayday").html(datepage+1 + "일 여행");
+									}
 								} else {
-									$("#dayday").html(datepage + 1 + "일 여행");
+									alert("시작 날짜를 먼저 입력하세요.");
+									$(this).val("");
 								}
-
 							});
 
 					$("#start-bt").click(
@@ -274,11 +275,11 @@
 									$("#plan-form").attr("action",
 											"createPlan.plan").submit();
 								}
-							});
+					});
 
 					$('#myModal').on('shown.bs.modal', function() {
 						$('#myInput').trigger('focus')
-					})
+					});
 
 				});
 	</script>

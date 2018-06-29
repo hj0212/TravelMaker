@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
+import dao.MemberDAO;
 import dao.PlanDAO;
 import dto.BudgetDTO;
+import dto.MemberDTO;
 import dto.PlanDTO;
 import dto.ScheduleDTO;
 
@@ -31,6 +31,7 @@ public class PlanController extends HttpServlet {
 			response.setCharacterEncoding("utf8");
 
 			PlanDAO pdao = new PlanDAO();
+			MemberDAO mdao = new MemberDAO();
 		
 			boolean isForward = true;
 			String dst = null;
@@ -76,31 +77,26 @@ public class PlanController extends HttpServlet {
 				
 				
 				isForward = true;
-				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
+				dst="selectSchedule.plan?plan="+plan+"&day="+day;
 
 			} else if(command.equals("/selectSchedule.plan")) {
 				
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
-				String create = request.getParameter("create");
 				
-				if(create.equals("f")) {
-					List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
-					List<BudgetDTO> blist = pdao.selectBudget(plan, day);
-					request.setAttribute("create", create);
-					request.setAttribute("scheduleList", list);
-					request.setAttribute("budgetList", blist);
-				} else {
-					
-					request.setAttribute("create", create);
-				}
+				List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
+				System.out.println(list.get(0).getSchedule_seq());
+				List<BudgetDTO> blist = pdao.selectBudget(plan, day);
+				request.setAttribute("scheduleList", list);
+				request.setAttribute("budgetList", blist);
+				
 				String plan_title = pdao.getPlantitle(plan);
 				request.setAttribute("plan_title", plan_title);
 				
 				isForward = true;
-				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
+				dst="plan_write.jsp?plan="+plan+"&day="+day;
 			} else if(command.equals("/createPlan.plan")) {
-				int plan_writer = 17;//Integer.parseInt((String)request.getSession().getAttribute("seq"));
+				int plan_writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
 				String plan_startdate = request.getParameter("plan_startdate");
 				String plan_enddate = request.getParameter("plan_enddate");
 				String plan_title = request.getParameter("plan_title");
@@ -113,10 +109,11 @@ public class PlanController extends HttpServlet {
 					System.out.println("입력실패");
 				}
 				
+				int plan_seq = pdao.getPlan_seq();
+				
 				request.setAttribute("result", result);
 				isForward=true;
-				dst="createPlan.jsp";
-				
+				dst="selectSchedule.plan?plan="+plan_seq+"&day=1";
 			}
 			
 			

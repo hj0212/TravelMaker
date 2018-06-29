@@ -47,11 +47,13 @@ public class PlanDAO {
 	
 	public int addBudget(BudgetDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "insert into budget VALUES (budget_seq.nextval, ?, ?, ?)";
+		String sql = "insert into budget VALUES (?,?,budget_seq.nextval, ?, ?, ?)";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, dto.getSchedule_seq());
-		pstmt.setString(2, dto.getBudget_plan());
-		pstmt.setInt(3, dto.getBudget_amount());
+		pstmt.setInt(1, dto.getPlan_seq());
+		pstmt.setInt(2, dto.getDay_seq());
+		pstmt.setInt(3, dto.getSchedule_seq());
+		pstmt.setString(4, dto.getBudget_plan());
+		pstmt.setInt(5, dto.getBudget_amount());
 		int result = pstmt.executeUpdate();
 		
 		pstmt.close();
@@ -135,7 +137,7 @@ public class PlanDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan);
 		pstmt.setInt(2, day);
-		
+		System.out.println(plan + ":" + day);
 		ResultSet rs = pstmt.executeQuery();
 
 		List<BudgetDTO> result = new ArrayList<>();
@@ -176,6 +178,22 @@ public class PlanDAO {
 	public int getSchedule_seq() throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select max(schedule_Seq) from schedule";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		int seq = 0;
+		if(rs.next()) {
+			seq = rs.getInt(1);
+		}
+		
+		rs.close();
+		pstmt.close();
+		con.close();
+		return seq;
+	}
+	
+	public int getPlan_seq() throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select max(plan_seq) from plan";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		int seq = 0;
