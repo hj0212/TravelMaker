@@ -146,13 +146,19 @@ public class FrontController extends HttpServlet {
 	             String comment_text = request.getParameter("comment_text");
 	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-	             int result = rdao.insertReviewComment(comment_text, dto.getSeq(), review_seq);
+	             System.out.println(comment_text);
+	             System.out.println(dto.getSeq());
+	             System.out.println(review_seq);
+	             int user = dto.getSeq();
+	             int result = rdao.insertReviewComment( comment_text,user,review_seq);
 	             request.setAttribute("result", result);
 	             request.setAttribute("review_seq", review_seq);
-	             
 
+	             System.out.println("댓글 내용:"+comment_text+"유저 시퀀스: "+dto.getSeq()+"리뷰 시퀀스 :"+ review_seq);
+	             
+	  
 	             isForward = true;
-	             dst= "reviewCommentView.bo";
+	             dst= "reviewCommentView.jsp";
 	          }
 
 			if(isForward) {

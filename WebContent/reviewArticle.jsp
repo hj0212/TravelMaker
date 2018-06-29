@@ -73,7 +73,8 @@
             </div>
         </div>
         <div class="row writer">
-            <div class="col-sm-6 text-left">${review_writer}</div>
+        <div class="col-sm-1 text-left">${review_seq}</div>
+            <div class="col-sm-5 text-left">${review_writer}</div>
             <div class="col-sm-4 text-right">${review_writedate}</div>
             <div class="col-sm-2 text-right">${review_viewcount}</div>
         </div>
@@ -107,20 +108,19 @@
                 </div>
             </div>
         </div>
+        <form action="addReviewComment.bo?review_seq=${review_seq}" method="post" id="inputCommentForm">
           <div class="input_comments">
             <div class="input_comment row">
-                <div class="col-sm-2">${sessionScope.loginId}</div>
                 <!-- <div class="col-sm-7"><input type="text" id="input_comment_text" class="w-100"></div> -->
-                <div class="col-sm-7"><textarea class="w-100"></textarea></div>
-                <div class="col-sm-2">시간</div>
+                <div class="col-sm-7"><textarea class="w-100" name="comment_text"></textarea></div>
                 <div class="col-sm-1">
-                    <a href="#">
+                    <a href="#" type="submit" id="inputComment">
                         <i class="fas fa-pen"></i>
                     </a>
                 </div>
             </div>
         </div>
-        
+       </form> 
         
     </div>
 
@@ -131,6 +131,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
     <script>
+$('#inputComment').click(function(){
+	$('#inputCommentForm').submit();
+})
 
     </script>
 </body>
