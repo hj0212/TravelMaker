@@ -131,9 +131,19 @@ tr {
       </div>
       <div class="row writer">
          <div class="col-sm-1 text-left">${review_seq}</div>
-         <div class="col-sm-5 text-left">${review_writer}</div>
-         <div class="col-sm-4 text-right">${review_writedate}</div>
+         <div class="col-sm-5 text-left">${review_writerN}</div>
+         <div class="col-sm-3 text-right">${review_writedate}</div>
          <div class="col-sm-2 text-right">${review_viewcount}</div>
+          <c:choose>
+          <c:when test="${user eq review_writer}">
+          <div class="col-sm-1 text-right">
+          <a href="deleteArticle.bo?review_seq=${review_seq}"><i class="far fa-times-circle"></i></a>
+          </div>
+          </c:when>
+          <c:otherwise>
+          <div class="col-sm-1 text-right"></div>
+          </c:otherwise>
+          </c:choose>
       </div>
       <div class="row contents">
          <div class="col-sm-12">${review_contents}</div>

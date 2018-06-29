@@ -123,19 +123,24 @@ public class FrontController extends HttpServlet {
 	            dst="share_review.jsp";
 	         }else if(command.equals("/reviewArticle.bo")) {
 	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+	             rdao.getArticleViewCount(review_seq);
 	             
 	             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
 	             request.setAttribute("review_seq", review_seq);
 	             request.setAttribute("review_title", result1.getReview_title());
 	             request.setAttribute("review_contents", result1.getReview_contents());
 	             request.setAttribute("review_writedate", result1.getReview_writedate());
-	             request.setAttribute("review_writer", result1.getReview_writer());
+	             request.setAttribute("review_writerN", result1.getReview_writerN());
 	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
+
+	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+	             request.setAttribute("user", dto.getSeq());
 	             
-	             
-	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);
-	             
+	             System.out.println(result1.getReview_viewcount());
+        
+	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
 	             request.setAttribute("commentResult", result2);
+	             
 	             
 	             isForward = true;            
 	             dst = "reviewArticle.jsp";
@@ -153,13 +158,21 @@ public class FrontController extends HttpServlet {
 	  
 	             isForward = true;
 	             dst= "reviewCommentView.jsp";
+	          }else if(command.equals("/deleteArticle.bo")) {
+	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+	        	  int result = rdao.deleteReview(review_seq);
+	        	  
+	        	  request.setAttribute("result", result);
+	        	  request.setAttribute("review_seq", review_seq);
+	        	  isForward = true;
+	        	  dst="deleteReviewView.jsp";
 	          }
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
 			} else {
-				response.sendRedirect(dst);
+				response.sendRedirect("error.jsp");
 			}
 		}catch(Exception e) {e.printStackTrace();}		
 	}

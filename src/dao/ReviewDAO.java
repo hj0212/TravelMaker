@@ -232,11 +232,11 @@ public class ReviewDAO {
 	      return result;
 	   }
 	   
-	   public int viewCount(int seq) throws Exception{
+	   public int getReviewArticleCount(int review_seq) throws Exception{
 	      Connection con = DBConnection.getConnection();
-	      String sql = "update reviewboard set review_viewcount=nvl(viewcount,0)+1 where review_seq=?";
+	      String sql = "update reviewboard set review_viewcount=nvl(review_viewcount,0)+1 where review_seq=?";
 	      PreparedStatement pstat = con.prepareStatement(sql);
-	      pstat.setInt(1, seq);
+	      pstat.setInt(1, review_seq);
 	      int result = pstat.executeUpdate();
 	      con.commit();
 	      pstat.close();
@@ -246,7 +246,7 @@ public class ReviewDAO {
 	   
 	public int deleteReview(int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "delete * from reviewboard where review_seq=?";
+		String sql = "delete from reviewboard where review_seq=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
 		int result = pstmt.executeUpdate();
