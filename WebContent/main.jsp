@@ -53,6 +53,9 @@ div {
 .item {
 	width: 300px;
 }
+.hls_sol .btn-pro {
+	right:0px;
+}
 </style>
 
 </head>
@@ -139,8 +142,8 @@ div {
 
 		<h1 class="divLine">BEST IMAGE</h1>
 		<hr />
-		<div class="row col-md-12" id="bestImage">
-			<div class="col-md-3 hls_sol">
+		<div class="row col-md-12 mx-0" id="bestImage">
+			<div class="col-md-3 hls_sol px-1">
 				<img src="travel1.jpg" alt="">
 				<div class="hls_sol_data">
 					<h1>1</h1>
@@ -151,9 +154,9 @@ div {
 				</div>
 			</div>
 			
-			<div class="hls_sol col-md-3">
-				<img src="travel1.jpg" style="width:100%" alt="">
-				<div class="hls_sol_data px-1">
+			<div class="hls_sol col-md-3 px-1">
+				<img src="travel1.jpg" alt="">
+				<div class="hls_sol_data">
 					<h1>2</h1>
 					<div class="hls_data">
 						<a href="" target="" class="hls_title">여행자님</a> <a href=""
@@ -161,7 +164,7 @@ div {
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 hls_sol">
+			<div class="col-md-3 hls_sol px-1">
 				<img src="travel1.jpg" alt="">
 				<div class="hls_sol_data">
 					<h1>3</h1>
@@ -171,7 +174,7 @@ div {
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 hls_sol">
+			<div class="col-md-3 hls_sol px-1">
 				<img src="travel1.jpg" alt="">
 				<div class="hls_sol_data">
 					<h1>4</h1>
