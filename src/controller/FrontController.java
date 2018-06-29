@@ -72,31 +72,32 @@ public class FrontController extends HttpServlet {
 				
 				if(dto == null) {
 					isForward = false;
+					dst = "login.bo";
 				}else {
 					int writer = dto.getSeq();
 					String title = request.getParameter("title");
 					String contents = request.getParameter("contents");
 			
 					int result = fbdao.insertArticle(writer, title, contents);
+					dst = "freeboard.bo";
 				}
 				
-				dst = "freeboard.bo";
 			} else if(command.equals("/viewArticle.bo")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				
 				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 				
 				if(dto == null) {
-					System.out.println("아이디가 업습니다...");
 					isForward = false;
 					dst = "login.bo";
 				}else {
-					String nickname = mdao.getUserNickname(dto.getSeq());
-					
 					FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
+					int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
+					String nickname = mdao.getUserNickname(writerNumber);
 					
 					request.setAttribute("article", boardDTO);
 					request.setAttribute("writer", nickname);
+					
 					dst = "freeboard/freeArticleView.jsp";
 				}
 			} else if(command.equals("/login.bo")) {
@@ -161,7 +162,9 @@ public class FrontController extends HttpServlet {
 			} else {
 				response.sendRedirect(dst);
 			}
-		}catch(Exception e) {e.printStackTrace();}		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}		
 	}
 
 
