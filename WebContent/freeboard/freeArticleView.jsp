@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +34,7 @@
 
 .container {
    width: 970px;
+   margin-top: 130px;
 }
 
 .title {
@@ -120,6 +122,14 @@ tr {
 </script>
 </head>
 <body>
+	<c:choose>
+		<c:when test="${sessionScope.loginId !=null}">
+			<%@include file="../include/mainNavi_login.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="../include/mainNavi.jsp"%>
+		</c:otherwise>
+	</c:choose>
    <div class="container">
       <div class="row title  text-center">
          <div class="col-sm-12">안녕하세요</div>

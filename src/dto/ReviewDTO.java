@@ -30,35 +30,34 @@ public class ReviewDTO {
 		return review_seq;
 	}
 
+
 	public void setReview_seq(int review_seq) {
 		this.review_seq = review_seq;
 	}
+
 
 	public String getReview_title() {
 		return review_title;
 	}
 
+
 	public void setReview_title(String review_title) {
 		this.review_title = review_title;
 	}
+
 
 	public String getReview_contents() {
 		return review_contents;
 	}
 
+
 	public void setReview_contents(String review_contents) {
 		this.review_contents = review_contents;
 	}
 
-	
-	
-	public String getReview_writerN() {
-		return review_writerN;
-	}
 
-
-	public void setReview_writerN(String review_writerN) {
-		this.review_writerN = review_writerN;
+	public int getReview_writer() {
+		return review_writer;
 	}
 
 
@@ -66,29 +65,36 @@ public class ReviewDTO {
 		this.review_writer = review_writer;
 	}
 
+
 	public String getReview_writerN() {
 		return review_writerN;
 	}
+
 
 	public void setReview_writerN(String review_writerN) {
 		this.review_writerN = review_writerN;
 	}
 
+
 	public String getReview_writedate() {
 		return review_writedate;
 	}
+
 
 	public void setReview_writedate(String review_writedate) {
 		this.review_writedate = review_writedate;
 	}
 
+
 	public int getReview_viewcount() {
 		return review_viewcount;
 	}
 
+
 	public void setReview_viewcount(int review_viewcount) {
 		this.review_viewcount = review_viewcount;
 	}
-	
+
+
 	
 }

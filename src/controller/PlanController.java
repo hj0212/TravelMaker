@@ -43,7 +43,6 @@ public class PlanController extends HttpServlet {
 				ScheduleDTO tmp = new ScheduleDTO();
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
-				System.out.println(plan+":"+day);
 				tmp.setPlan_seq(plan);
 				tmp.setDay_seq(day);
 				tmp.setSchedule_starttime(request.getParameter("starttime"));
@@ -66,9 +65,9 @@ public class PlanController extends HttpServlet {
 					btmp.setSchedule_seq(schedule_seq);
 					result += pdao.addBudget(btmp);
 					if(result > 1) {
-						System.out.println("�닔�젙�꽦怨�");
+						System.out.println("수정성공");
 					} else {
-						System.out.println("�닔�젙�떎�뙣");
+						System.out.println("수정실패");
 					}
 				} else {
 					btmp.setSchedule_seq(pdao.getScheduleseq());
@@ -76,9 +75,9 @@ public class PlanController extends HttpServlet {
 					
 					result += pdao.addBudget(btmp);
 					if(result > 1) {
-						System.out.println("�꽦怨�");
+						System.out.println("등록성공");
 					} else {
-						System.out.println("�떎�뙣");
+						System.out.println("등록실패");
 					}
 				}
 
@@ -118,9 +117,9 @@ public class PlanController extends HttpServlet {
 				int result =pdao.startPlanInsertData(pdto);
 
 				if(result>0) {
-					System.out.println("�엯�젰�꽦怨�");
+					System.out.println("플랜생성완료");
 				}else {
-					System.out.println("�엯�젰�떎�뙣");
+					System.out.println("플랜생성실패");
 				}
 
 				
@@ -130,7 +129,7 @@ public class PlanController extends HttpServlet {
 				isForward=true;
 				dst="createPlan.jsp";
 
-				dst="selectSchedule.plan?plan="+plan_seq+"&day=1";
+				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";
 			}
 
 //----------------------------------planList 가져오기
@@ -155,10 +154,6 @@ public class PlanController extends HttpServlet {
 				isForward = true;
 				dst="share_plan.jsp";
 			}
-
-			
-			
-			
 			
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
