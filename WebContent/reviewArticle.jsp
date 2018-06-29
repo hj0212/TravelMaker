@@ -117,7 +117,9 @@ tr {
 		$("#reviewboard-bt").click(function() {
 			$(location).attr("href", "reviewboard.bo");
 		});
-
+	if(${sessionScop.user.seq}==wirter){
+		
+	}
 	});
 </script>
 </head>
@@ -234,44 +236,18 @@ tr {
 		$("#comment-write-bnt").click(
 						function() {
 							var con = confirm("댓글을작성하시겠습니까?");
-/* 
-							var Now = new Date();
-							var NowMonth = Now.getMonth() + 1;
-							var NowTime = Now.getFullYear();
-							NowTime += '-' + NowMonth;
-							NowTime += '-' + Now.getDate();
-							NowTime += ' ' + Now.getHours();
-							NowTime += ':' + Now.getMinutes();
-							NowTime += ':' + Now.getSeconds();
- */
+
 							var comment = $("#comment").val();
 
-						/* 	var commentinput = "";
-
-							commentinput += "<tr>";
-							commentinput += "<th scope='row' style='width:15%' class='writer'>"+ ${sessionScope.nickname}+"</th>";
-							commentinput += "<td style='width:70%;max-width: 60%;'>"+ comment + "</td>";
-							commentinput += "<td style='width:15%;font-size: 10px;'>"
-									+ NowTime
-									+ "   <button type='button' class='close' aria-label='Close'>"
-									+ "<span aria-hidden='true'>&times;</span>"
-									+ "</button></td>";
-							commentinput += "</tr>"; */
 
 							if (con) {
-
 								if (comment != "") {
-								/* 	$("#comment-table tbody").prepend( */
-											commentinput);
 									alert("댓글이 성공적으로 달렸습니다");
-
 									$("#comment").val("");
-
 								} else {
 									alert("댓글을 작성해주세요.");
 								}
 							} else {
-
 							}
 
 						});
