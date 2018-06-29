@@ -134,11 +134,8 @@ public class FrontController extends HttpServlet {
 	             
 	             
 	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);
-	             for(ReviewCommentDTO tmp: result2) {
-	             request.setAttribute("comment_writer", tmp.getComment_writer());
-	             request.setAttribute("comment_text", tmp.getComment_text());
-	             request.setAttribute("comment_time", tmp.getComment_time());
-	             }
+	             
+	             request.setAttribute("commentResult", result2);
 	             
 	             isForward = true;            
 	             dst = "reviewArticle.jsp";
@@ -150,7 +147,7 @@ public class FrontController extends HttpServlet {
 	             System.out.println(dto.getSeq());
 	             System.out.println(review_seq);
 	             int user = dto.getSeq();
-	             int result = rdao.insertReviewComment( comment_text,user,review_seq);
+	             int result = rdao.insertReviewComment(comment_text,user,review_seq);
 	             request.setAttribute("result", result);
 	             request.setAttribute("review_seq", review_seq);
 
