@@ -66,7 +66,6 @@ public class FrontController extends HttpServlet {
 				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 				
 				if(dto == null) {
-					System.out.println("비회원이니까...");
 					isForward = false;
 					dst = "freeboard/freeBoardList.jsp";
 				}else {
@@ -78,7 +77,6 @@ public class FrontController extends HttpServlet {
 					dst = "freeboard/freeBoardList.jsp";
 				}
 			}
-
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
