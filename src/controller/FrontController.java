@@ -118,7 +118,7 @@ public class FrontController extends HttpServlet {
 	         
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
 	            request.setAttribute("pageNavi", pageNavi);
-	                        
+	            
 	            isForward = true;
 	            dst="share_review.jsp";
 	         }else if(command.equals("/reviewArticle.bo")) {
@@ -144,9 +144,9 @@ public class FrontController extends HttpServlet {
 	             dst = "reviewArticle.jsp";
 	          }else if(command.equals("/addReviewComment.bo")) {
 	             String comment_text = request.getParameter("comment_text");
-	             int comment_writer_seq = Integer.parseInt(request.getParameter("comment_writer_seq"));
+	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-	             int result = rdao.insertReviewComment(comment_text, comment_writer_seq, review_seq);
+	             int result = rdao.insertReviewComment(comment_text, dto.getSeq(), review_seq);
 	             request.setAttribute("result", result);
 	             request.setAttribute("review_seq", review_seq);
 	             
