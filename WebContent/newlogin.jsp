@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -11,12 +11,12 @@
 <link rel="stylesheet" href="source/css/codepenNavi.css">
 
 <script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+   src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript"
-	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-	charset="utf-8"></script>
+   src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+   charset="utf-8"></script>
 <style>
 #container {
 	width: 800px;
@@ -25,62 +25,62 @@
 }
 
 #loginbox {
-	width: 400px;
-	height: 560px;
-	margin: 50px auto;
+   width: 400px;
+   height: 560px;
+   margin: 50px auto;
 }
 
 #loginbtn {
-	width: 222px;
-	height: 49px;
+   width: 222px;
+   height: 49px;
 }
 
 #naver_id_login a, #kakao_btn_changed a {
-	margin: 0 auto;
+   margin: 0 auto;
 }
 
 #loginbtn {
-	line-height: 49px;
+   line-height: 49px;
 }
 
 #card_bottom {
-	padding-top: 40px;
+   padding-top: 40px;
 }
 
 #card-title {
-	margin-bottom: 20px;
+   margin-bottom: 20px;
 }
 
 .login-link.active span, .signup-link.active span {
-	border-bottom: 2px solid #42a5f5;
+   border-bottom: 2px solid #42a5f5;
 }
 
 .card-action span:hover {
-	text-decoration: underline;
+   text-decoration: underline;
 }
 
 /* label focus color */
 .input-field input[type=text]:focus+label {
-	color: #64b5f6;
+   color: #64b5f6;
 }
 /* label underline focus color */
 .input-field input[type=text]:focus {
-	border-bottom: 1px solid #64b5f6;
-	box-shadow: 0 1px 0 0 #64b5f6;
+   border-bottom: 1px solid #64b5f6;
+   box-shadow: 0 1px 0 0 #64b5f6;
 }
 
 .login-link span:hover, .signup-link span:hover {
-	border-bottom: 2px solid #64b5f6;
+   border-bottom: 2px solid #64b5f6;
 }
 
 .row_margin {
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 10px;
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 10px;
 }
 
 #kakao_btn_changed {
-	height: 49px;
+   height: 49px;
 }
 
 </style>
