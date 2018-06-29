@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeboardDAO;
+import dao.MemberDAO;
 import dto.FreeboardDTO;
 import dto.MemberDTO;
 
@@ -78,10 +79,12 @@ public class FrontController extends HttpServlet {
 				dst = "freeboard.bo";
 			} else if(command.equals("/viewArticle.bo")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
-				FreeboardDTO dto = fbdao.readFreeArticle(seq);
+				String user = MemberDAO.getUserNickname(seq);
+				System.out.println(user);
+//				FreeboardDTO dto = fbdao.readFreeArticle(seq);
 				
 				
-				request.setAttribute("article", dto);
+//				request.setAttribute("article", dto);
 				dst = "freeboard/freeArticleView.jsp";
 			}
 
