@@ -180,6 +180,80 @@ public class MemberController extends HttpServlet {
 
 				isForward = true;
 				dst = "sendtmpPwResult.jsp";
+			}else if(command.equals("/homeMemInfo.do")) {
+				String part = (String)request.getSession().getAttribute("part");
+				String id = (String)request.getSession().getAttribute("loginId");
+				if(part.equals("home")) {
+					MemberDTO mdto = new MemberDTO();
+					mdto = mdao.getHomeMemberInfo(id, part);
+					request.setAttribute("id", mdto.getUserid());
+					request.setAttribute("pw", mdto.getPassword());
+					request.setAttribute("nickname", mdto.getNickname());
+					request.setAttribute("email", mdto.getEmail());
+				}
+				isForward = true;
+				dst="editInfo.jsp";
+			}else if(command.equals("/updateEmail.do")) {
+				String part = (String)request.getSession().getAttribute("part");
+				String id = (String)request.getSession().getAttribute("loginId");
+				String email = request.getParameter("email");
+				int result = mdao.updateEmail(id, part, email);
+				request.setAttribute("result", result);
+				
+				isForward = true;
+				dst="updateEmailView.jsp";
+			}else if(command.equals("/toUpdateEmail.do")) {
+				isForward=true;
+				dst="updateEmail.jsp";
+			}else if(command.equals("/toPwCheck.do")) {
+				isForward=true;
+				dst="pwCheck.jsp";
+			
+			}else if(command.equals("/pwCheck.do")) {
+				String id = (String)request.getSession().getAttribute("loginId");
+				String pw = request.getParameter("pw");
+				boolean result = mdao.isHomeMemberPW(id, pw);
+				request.setAttribute("result", result);		
+				isForward = true;
+				dst="pwCheckView.jsp";
+			}else if(command.equals("/modiHomeMemInfo.do")) {
+				String id = (String)request.getSession().getAttribute("loginId");
+				String email = request.getParameter("email");
+				String nickname = request.getParameter("nickname");
+				String pw = request.getParameter("pw");
+				int result = mdao.updateHomeMemberInfo(id, pw, email, nickname);
+				request.setAttribute("result", result);
+				
+				isForward = true;
+				dst = "editInfoView.jsp";
+			}else if(command.equals("/toPwTrueCheck.do")) {
+				isForward=true;
+				dst="pwTrueCheck.jsp";
+			}else if(command.equals("/pwTrueCheck.do")) {
+				String id = (String)request.getSession().getAttribute("loginId");
+				String pw = request.getParameter("pw");
+				boolean result = mdao.isHomeMemberPW(id, pw);
+				request.setAttribute("result", result);		
+				isForward = true;
+				dst="pwTrueCheckView.jsp";
+			}else if(command.equals("/toModiPw.do")) {			
+				isForward=true;
+				dst="modiPw.jsp";
+			}else if(command.equals("/modiPw.do")) {
+				String id = (String)request.getSession().getAttribute("loginId");
+				String pw = request.getParameter("pw");
+				String repw = request.getParameter("repw");
+				if(pw.equals(repw)) {
+				int result = mdao.updatePw(id, repw);
+				request.setAttribute("result", result);
+				isForward = true;
+				dst="modiPwView.jsp";
+				}else {
+					isForward = false;
+				}
+			}else if(command.equals("/toLogin.do")) {
+				isForward=true;
+				dst="newlogin.jsp";
 			}
 
 			if(isForward) {
