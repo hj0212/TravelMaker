@@ -76,12 +76,12 @@
             <div class="col-sm-6 text-left">${review_writer}</div>
             <div class="col-sm-4 text-right">${review_writedate}</div>
             <div class="col-sm-2 text-right">${review_viewcount}</div>
-            <c:choose>
-           <c:when test="${sessionScope.MemberDTO.getSeq}">
+            <%-- <c:choose>
+           <c:when test="${sessionScope.MemberDTO.getSeq == '${review}'}">
 		</c:when>
 		<c:otherwise>
 		</c:otherwise>
-            </c:choose>
+            </c:choose> --%>
         </div>
         <div class="row contents">
             <div class="col-sm-12">
