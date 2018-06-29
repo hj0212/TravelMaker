@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,11 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 
 import dao.PlanDAO;
+import dto.BudgetDTO;
 import dto.ScheduleDTO;
 
 /**
@@ -33,43 +30,75 @@ public class PlanController extends HttpServlet {
 			response.setCharacterEncoding("utf8");
 
 			PlanDAO pdao = new PlanDAO();
+			Gson gson = new Gson();
 
 			boolean isForward = true;
 			String dst = null;
 
-			if(command.equals("/saveschedule.plan")) {
-				Gson gson = new Gson();
-				JsonParser parser = new JsonParser();
-				JsonArray arr = (JsonArray) parser.parse(request.getReader());
+			if(command.equals("/addSchedule.plan")) {
+				ScheduleDTO tmp = new ScheduleDTO();
+				int plan = Integer.parseInt(request.getParameter("plan"));
+				int day = Integer.parseInt(request.getParameter("day"));
+				tmp.setPlan_seq(plan);
+				tmp.setDay_seq(day);
+				tmp.setSchedule_starttime(request.getParameter("starttime"));
+				tmp.setSchedule_endtime(request.getParameter("endtime"));
+				tmp.setLocation_id(request.getParameter("place")); 
+				tmp.setSchedule_plan(request.getParameter("schedule"));
+				tmp.setSchedule_ref(request.getParameter("reference"));
+				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
 				
-				List<ScheduleDTO> list = new ArrayList<>();
-				for(int i = 0; i < arr.size(); i++) {
-					ScheduleDTO tmp = new ScheduleDTO();
-					String timestr = arr.get(i).getAsJsonObject().get("시간").getAsString();
-					String starttime = timestr.split("~")[0];
-					String endtime = timestr.split("~")[1];
-					tmp.setSchedule_starttime(starttime);
-					tmp.setSchedule_endtime(endtime);
-					tmp.setLocation_id(arr.get(i).getAsJsonObject().get("장소").getAsString());
-					tmp.setSchedule_plan(arr.get(i).getAsJsonObject().get("일정").getAsString());
-					tmp.setSchedule_budget(arr.get(i).getAsJsonObject().get("예산").getAsString());
-					tmp.setSchedule_ref(arr.get(i).getAsJsonObject().get("참조").getAsString());
-					list.add(tmp);
-				}
-				int result = pdao.addSchedule(list);
-				if(result > 0) {
-					System.out.println("성공");
+				BudgetDTO btmp = new BudgetDTO();
+				btmp.setBudget_plan(request.getParameter("budget_plan"));
+				btmp.setBudget_amount(Integer.parseInt(request.getParameter("money")));
+
+				if(schedule_seq > 0) {	// 수정
+					tmp.setSchedule_seq(schedule_seq);
+					int result = pdao.updateSchedule(tmp);
+					
+					btmp.setSchedule_seq(schedule_seq);
+					result += pdao.addBudget(btmp);
+					if(result > 1) {
+						System.out.println("수정성공");
+					} else {
+						System.out.println("수정실패");
+					}
 				} else {
-					System.out.println("실패");
+					int result = pdao.addSchedule(tmp);
+					btmp.setSchedule_seq(pdao.getScheduleseq());
+					result += pdao.addBudget(btmp);
+					if(result > 1) {
+						System.out.println("성공");
+					} else {
+						System.out.println("실패");
+					}
 				}
-				isForward = false;
-				dst="plan_write.jsp?day=2";
 				
-			} else if(command.equals("/selectSchedule.plan")) {
 				
 				isForward = true;
-				dst="userResult.jsp";
+				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 
+			} else if(command.equals("/selectSchedule.plan")) {
+				
+				int plan = Integer.parseInt(request.getParameter("plan"));
+				int day = Integer.parseInt(request.getParameter("day"));
+				String create = request.getParameter("create");
+				
+				if(create.equals("f")) {
+					List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
+					List<BudgetDTO> blist = pdao.selectBudget(plan, day);
+					request.setAttribute("create", create);
+					request.setAttribute("scheduleList", list);
+					request.setAttribute("budgetList", blist);
+				} else {
+					
+					request.setAttribute("create", create);
+				}
+				String plan_title = pdao.getPlantitle(plan);
+				request.setAttribute("plan_title", plan_title);
+				
+				isForward = true;
+				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
 			} 
 
 			if(isForward) {

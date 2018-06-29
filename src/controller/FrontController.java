@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeboardDAO;
 import dao.MemberDAO;
+import dao.MemberDAO;
+import dao.ReviewDAO;
 import dto.FreeboardDTO;
 import dto.MemberDTO;
+import dto.ReviewDTO;
 
 /**
  * Servlet implementation class FrontController
@@ -30,8 +33,10 @@ public class FrontController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
 
-			//MemberDAO mdao = new MemberDAO();
+			MemberDAO mdao = new MemberDAO();
 			FreeboardDAO fbdao = new FreeboardDAO();
+			ReviewDAO rdao = new ReviewDAO();
+		
 
 			boolean isForward = true;
 			String dst = null;
@@ -52,8 +57,7 @@ public class FrontController extends HttpServlet {
 				request.setAttribute("freeboardlist", list);
 				
 				//------------------------------------------------------
-				
-//				System.out.println("검색어: " + searchTerm);
+							
 				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);
 				

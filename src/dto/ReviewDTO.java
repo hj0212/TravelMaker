@@ -7,14 +7,12 @@ public class ReviewDTO {
 	private String review_contents;
 	private String review_writer;
 	private String review_writedate;
-	private String review_viewcount;
+	private int review_viewcount;
 	
-	public ReviewDTO() {
-		super();
-	}
+	public ReviewDTO() {}
 
 	public ReviewDTO(int review_seq, String review_title, String review_contents, String review_writer,
-			String review_writedate, String review_viewcount) {
+			String review_writedate, int review_viewcount) {
 		super();
 		this.review_seq = review_seq;
 		this.review_title = review_title;
@@ -64,14 +62,13 @@ public class ReviewDTO {
 		this.review_writedate = review_writedate;
 	}
 
-	public String getReview_viewcount() {
+	public int getReview_viewcount() {
 		return review_viewcount;
 	}
 
-	public void setReview_viewcount(String review_viewcount) {
+	public void setReview_viewcount(int review_viewcount) {
 		this.review_viewcount = review_viewcount;
 	}
-	
 	
 	
 }
