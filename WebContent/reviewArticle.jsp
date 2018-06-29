@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -148,7 +148,8 @@ tr {
 				</button>
 			</div>
 			<div class="col-sm-4 text-right move">
-				<button type="button" class="btn btn-outline-secondary">목록</button>
+				<button type="button" class="btn btn-outline-secondary"
+					id="reviewboard-bt">목록</button>
 				<button type="button" class="btn btn-outline-secondary">스크랩</button>
 				<button type="button" class="btn btn-outline-danger">신고</button>
 			</div>
@@ -161,13 +162,15 @@ tr {
 				method="post" id="inputCommentForm">
 				<div style="width: 100%; margin: 0px;">
 					<div style="width: 80%">
-						<textarea class="form-control" rows="3" id="comment" name="comment_text" style="resize: none; width: 100%; margin: 0px; float: left;"
+						<textarea class="form-control" rows="3" id="comment"
+							name="comment_text"
+							style="resize: none; width: 100%; margin: 0px; float: left;"
 							maxlength="70"></textarea>
 					</div>
 					<div
 						style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-						<button style="width: 100%; height: 86px" id="comment-write-bnt" class="inputComment">댓글
-							작성</button>
+						<button style="width: 100%; height: 86px" id="comment-write-bnt"
+							class="inputComment">댓글 작성</button>
 					</div>
 				</div>
 			</form>
@@ -181,6 +184,7 @@ tr {
 					</tr>
 				</thead>
 				<tbody>
+
 					<c:forEach var="comment" items="${commentResult}">
 						<tr>
 							<th scope="row"
@@ -197,6 +201,8 @@ tr {
 				</tbody>
 
 			</table>
+
+
 		</div>
 	</div>
 
@@ -204,14 +210,13 @@ tr {
 	</div>
 
 
- 	<script>
+	<script>
 		$('.inputComment').click(function() {
 			$('#inputCommentForm').submit();
 		})
 	</script>
 	<script>
-		$("#comment-table").hide();
-		var commentBntCount = 1;
+		var commentBntCount = 2;
 
 		$("#comment-bnt").click(function() {
 			var writer = $(".writer").text();
@@ -229,7 +234,7 @@ tr {
 		$("#comment-write-bnt").click(
 						function() {
 							var con = confirm("댓글을작성하시겠습니까?");
-
+/* 
 							var Now = new Date();
 							var NowMonth = Now.getMonth() + 1;
 							var NowTime = Now.getFullYear();
@@ -238,31 +243,28 @@ tr {
 							NowTime += ' ' + Now.getHours();
 							NowTime += ':' + Now.getMinutes();
 							NowTime += ':' + Now.getSeconds();
-
+ */
 							var comment = $("#comment").val();
 
-							var commentinput = "";
+						/* 	var commentinput = "";
 
 							commentinput += "<tr>";
-							commentinput += "<th scope='row' style='width:15%' class='writer'>"
-									+ ${sessionScope.nickname} + "</th>";
-							commentinput += "<td style='width:70%;max-width: 60%;'>"
-									+ comment + "</td>";
+							commentinput += "<th scope='row' style='width:15%' class='writer'>"+ ${sessionScope.nickname}+"</th>";
+							commentinput += "<td style='width:70%;max-width: 60%;'>"+ comment + "</td>";
 							commentinput += "<td style='width:15%;font-size: 10px;'>"
 									+ NowTime
 									+ "   <button type='button' class='close' aria-label='Close'>"
 									+ "<span aria-hidden='true'>&times;</span>"
 									+ "</button></td>";
-							commentinput += "</tr>";
+							commentinput += "</tr>"; */
 
 							if (con) {
 
 								if (comment != "") {
-									$("#comment-table tbody").prepend(
+								/* 	$("#comment-table tbody").prepend( */
 											commentinput);
 									alert("댓글이 성공적으로 달렸습니다");
-									
-									
+
 									$("#comment").val("");
 
 								} else {
