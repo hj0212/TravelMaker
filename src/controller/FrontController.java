@@ -130,13 +130,14 @@ public class FrontController extends HttpServlet {
 	             request.setAttribute("review_title", result1.getReview_title());
 	             request.setAttribute("review_contents", result1.getReview_contents());
 	             request.setAttribute("review_writedate", result1.getReview_writedate());
+	             request.setAttribute("review_writer", result1.getReview_writer());
 	             request.setAttribute("review_writerN", result1.getReview_writerN());
 	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
 
 	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 	             request.setAttribute("user", dto.getSeq());
 	             
-	             System.out.println(result1.getReview_viewcount());
+	             System.out.println( result1.getReview_writer()+"*"+ dto.getSeq());
         
 	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
 	             request.setAttribute("commentResult", result2);
