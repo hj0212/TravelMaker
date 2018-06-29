@@ -162,28 +162,6 @@ public class ReviewDAO {
 	}	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public int getArticleViewCount (int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql = "select review_viewcount from reviewboard where review_seq = ?";
@@ -203,22 +181,19 @@ public class ReviewDAO {
 	
 	public ReviewDTO getReviewArticle(int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select reviw_seq, review_title, reviw_contents, review_writer, review_writedate, review_viewcount.nextval from reviewboard where review_seq = ?";
+		String sql = "select review_title, review_contents, review_writer, review_writedate, review_viewcount from reviewboard where review_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
 		ResultSet rs = pstmt.executeQuery();
 		ReviewDTO rdto = new ReviewDTO();
 		if(rs.next()) {
-			rdto.setReview_seq(rs.getInt("reviw_seq"));
 			rdto.setReview_title(rs.getString("review_title"));
-			rdto.setReview_contents(rs.getString("reviw_contents"));
-			rdto.setReview_writer(rs.getString(MemberDAO.getUserNickname(rs.getInt("review_writer"))));
+			rdto.setReview_contents(rs.getString("review_contents"));
+			rdto.setReview_writer(MemberDAO.getUserNickname(rs.getInt("review_writer")));
 			rdto.setReview_writedate(rs.getString("review_writedate"));
 			rdto.setReview_viewcount(rs.getInt("review_viewcount"));
 		}
-		rs.close();
-		pstmt.close();
-		con.close();
+	
 		return rdto;
 		
 	}
@@ -246,13 +221,25 @@ public class ReviewDAO {
 		List<ReviewCommentDTO> result = new ArrayList<>();
 		while(rs.next()) {
 			ReviewCommentDTO rdto = new ReviewCommentDTO();
-			rdto.setComment_writer(MemberDAO.getUserNickname(rs.getInt("comment_writer_seq")));
+			rdto.setComment_writer(MemberDAO.getUserNickname(rs.getInt("comment_writer")));
 			rdto.setComment_text(rs.getString("comment_text"));
 			rdto.setComment_time(rs.getString("comment_time"));
 			result.add(rdto);
 		}
 		rs.close();
 		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	public int viewCount(int seq) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "update reviewboard set review_viewcount=nvl(viewcount,0)+1 where review_seq=?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, seq);
+		int result = pstat.executeUpdate();
+		con.commit();
+		pstat.close();
 		con.close();
 		return result;
 	}

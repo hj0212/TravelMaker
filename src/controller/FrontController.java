@@ -99,22 +99,23 @@ public class FrontController extends HttpServlet {
 				int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 				
 				ReviewDTO result1 = rdao.getReviewArticle(review_seq);
-				request.setAttribute("reviw_seq", result1.getReview_seq());
+				request.setAttribute("review_seq", review_seq);
 				request.setAttribute("review_title", result1.getReview_title());
 				request.setAttribute("review_contents", result1.getReview_contents());
-				request.setAttribute("review_writeedate", result1.getReview_writedate());
+				request.setAttribute("review_writedate", result1.getReview_writedate());
 				request.setAttribute("review_writer", result1.getReview_writer());
 				request.setAttribute("review_viewcount", result1.getReview_viewcount());
 				
-				ReviewCommentDTO cdto = new ReviewCommentDTO();
+				
 				List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);
-				request.setAttribute("comment_writer", cdto.getComment_writer());
-				request.setAttribute("comment_text", cdto.getComment_text());
-				request.setAttribute("comment_time", cdto.getComment_time());
+				for(ReviewCommentDTO tmp: result2) {
+				request.setAttribute("comment_writer", tmp.getComment_writer());
+				request.setAttribute("comment_text", tmp.getComment_text());
+				request.setAttribute("comment_time", tmp.getComment_time());
+				}
 				
-				
-				isForward = true;
-				dst = "reviewArticle.bo?reveiw_seq="+ review_seq;
+				isForward = true;				
+				dst = "reviewArticle.jsp";
 			}if(command.equals("/addReviewComment.bo")) {
 				String comment_text = request.getParameter("comment_text");
 				int comment_writer_seq = Integer.parseInt(request.getParameter("comment_writer_seq"));

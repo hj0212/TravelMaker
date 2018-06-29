@@ -74,7 +74,7 @@
         </div>
         <div class="row writer">
             <div class="col-sm-6 text-left">${review_writer}</div>
-            <div class="col-sm-4 text-right">${review_writeedate}</div>
+            <div class="col-sm-4 text-right">${review_writedate}</div>
             <div class="col-sm-2 text-right">${review_viewcount}</div>
         </div>
         <div class="row contents">
@@ -106,8 +106,22 @@
                     </a>
                 </div>
             </div>
-
         </div>
+          <div class="input_comments">
+            <div class="input_comment row">
+                <div class="col-sm-2">${sessionScope.loginId}</div>
+                <!-- <div class="col-sm-7"><input type="text" id="input_comment_text" class="w-100"></div> -->
+                <div class="col-sm-7"><textarea class="w-100"></textarea></div>
+                <div class="col-sm-2">시간</div>
+                <div class="col-sm-1">
+                    <a href="#">
+                        <i class="fas fa-pen"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
