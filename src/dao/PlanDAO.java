@@ -47,7 +47,7 @@ public class PlanDAO {
 	
 	public int addBudget(BudgetDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "insert into budget VALUES (?,?,budget_seq.nextval, ?, ?, ?)";
+		String sql = "insert into budget (plan_seq,day_seq,budget_seq,schedule_seq,budget_plan,budget_amount) VALUES (?,?,budget_seq.nextval, ?, ?, ?)";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, dto.getPlan_seq());
 		pstmt.setInt(2, dto.getDay_seq());

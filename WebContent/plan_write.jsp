@@ -146,36 +146,29 @@
 				</thead>
 				<tbody id="schedule-tbody"
 					style="table-layout: fixed; word-break: break-all;">
-					<c:if test="${scheduleList != null}">
-						<c:forEach var="item" items="${scheduleList}">
-						<tr class="clickable-row">
-							<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
-							<td name="place">${item.schedule_place}</td>
-							<td name="schedule">${item.schedule_plan}</td>
-							<c:if test="${budgetList != null}">
-								<c:forEach var="bitem" items="${budgetList}">
-									<c:if test="${item.schedule_seq == bitem.schedule_seq}">
-										<td name="money">${bitem.budget_amount}</td>
-									</c:if>
-									<c:if test="${item.schedule_seq != bitem.schedule_seq}">
-										<td name="money"></td>
-									</c:if>
-								</c:forEach>
+					<c:if test="${create == 'f'}">
+					<c:forEach var="item" items="${scheduleList}">
+					<tr class="clickable-row">
+						<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
+						<td name="place">${item.schedule_place}</td>
+						<td name="schedule">${item.schedule_plan}</td>
+						<c:forEach var="bitem" items="${budgetList}">
+							<c:if test="${item.schedule_seq == bitem.schedule_seq}">
+								<td name="money">${bitem.budget_amount}</td>
 							</c:if>
-							<c:if test="${budgetList == null}">
-								<c:forEach var="bitem" items="${budgetList}">
-										<td name="money"></td>
-								</c:forEach>
+							<c:if test="${item.schedule_seq != bitem.schedule_seq}">
+								<td name="money"></td>
 							</c:if>
-							<td name="reference">${item.schedule_ref}</td>
-							<td><button style="float: left; border: none;" type="button"
-									class="btn btn-outline-danger">
-									<i class="far fa-times-circle"></i>
-								</button>
-							<input type="hidden" class="schedule_seq" value="${item.schedule_seq}">	
-							</td>
-						</tr>
 						</c:forEach>
+						<td name="reference">${item.schedule_ref}</td>
+						<td><button style="float: left; border: none;" type="button"
+								class="btn btn-outline-danger">
+								<i class="far fa-times-circle"></i>
+							</button>
+						<input type="hidden" class="schedule_seq" value="${item.schedule_seq}">	
+						</td>
+					</tr>
+					</c:forEach>
 					</c:if>
 					<tr class="clickable-row active new">
 						<th scope="row" style="height: 50px;"></th>

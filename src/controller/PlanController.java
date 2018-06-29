@@ -40,6 +40,7 @@ public class PlanController extends HttpServlet {
 				ScheduleDTO tmp = new ScheduleDTO();
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
+				System.out.println(plan+":"+day);
 				tmp.setPlan_seq(plan);
 				tmp.setDay_seq(day);
 				tmp.setSchedule_starttime(request.getParameter("starttime"));
@@ -77,23 +78,28 @@ public class PlanController extends HttpServlet {
 				
 				
 				isForward = true;
-				dst="selectSchedule.plan?plan="+plan+"&day="+day;
+				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 
 			} else if(command.equals("/selectSchedule.plan")) {
 				
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
+				String create = request.getParameter("create");
 				
+				if(create.equals("f")) {
 				List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
 				List<BudgetDTO> blist = pdao.selectBudget(plan, day);
 				request.setAttribute("scheduleList", list);
 				request.setAttribute("budgetList", blist);
-				
+				} else {
+					
+					request.setAttribute("create", create);
+				}
 				String plan_title = pdao.getPlantitle(plan);
 				request.setAttribute("plan_title", plan_title);
 				
 				isForward = true;
-				dst="plan_write.jsp?plan="+plan+"&day="+day;
+				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
 			} else if(command.equals("/createPlan.plan")) {
 				int plan_writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
 				String plan_startdate = request.getParameter("plan_startdate");
