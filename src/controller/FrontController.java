@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeboardDAO;
+import dao.MemberDAO;
 import dto.FreeboardDTO;
+import dto.MemberDTO;
 
 /**
  * Servlet implementation class FrontController
@@ -51,21 +53,51 @@ public class FrontController extends HttpServlet {
 				
 				//------------------------------------------------------
 				
-				System.out.println("검색어: " + searchTerm);
+//				System.out.println("검색어: " + searchTerm);
 				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);
 				
 				isForward = true;
-				dst="freeboard.jsp";
+				dst="freeboard/freeBoardList.jsp";
 
-			} else if(command.equals("/")) {
-				
-				
+			} else if(command.equals("/freewrite.bo")) {
 				isForward = true;
-				dst="";
-
+				dst = "freeboard/freeArticleWrite.jsp";
+			} else if(command.equals("/writeArticlefree.bo")) {
+				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+				
+				if(dto == null) {
+					isForward = false;
+				}else {
+					int writer = dto.getSeq();
+					String title = request.getParameter("title");
+					String contents = request.getParameter("contents");
+			
+					int result = fbdao.insertArticle(writer, title, contents);
+				}
+				
+				dst = "freeboard.bo";
+			} else if(command.equals("/viewArticle.bo")) {
+				int seq = Integer.parseInt(request.getParameter("seq"));
+				
+				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+				
+				if(dto == null) {
+					System.out.println("아이디가 업습니다...");
+					isForward = false;
+					dst = "login.bo";
+				}else {
+					String nickname = MemberDAO.getUserNickname(dto.getSeq());
+					
+					FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
+					
+					request.setAttribute("article", boardDTO);
+					request.setAttribute("writer", nickname);
+					dst = "freeboard/freeArticleView.jsp";
+				}
+			} else if(command.equals("/login.bo")) {
+				dst = "freeboard/needLogin.jsp";
 			}
-
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);

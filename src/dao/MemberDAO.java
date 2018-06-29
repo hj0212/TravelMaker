@@ -9,30 +9,32 @@ import dto.MemberDTO;
 
 public class MemberDAO {
 
-	public boolean loginMember(MemberDTO dto) throws Exception {
+	public MemberDTO loginMember(MemberDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where userid = ? and password = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setString(1, dto.getUserid());
 		pstmt.setString(2, dto.getPassword());
 		ResultSet rs = pstmt.executeQuery();
-		boolean result;
+		MemberDTO tmp = new MemberDTO();
 		if(rs.next()) {
-			result = true;
-		} else {
-			result = false;
+			tmp.setSeq(rs.getInt(1));
+			tmp.setUserid(rs.getString(2));
+			tmp.setPassword(rs.getString(3));
+			tmp.setEmail(rs.getString(4));
+			tmp.setNickname(rs.getString(5));
 		}
 
 		con.close();
 		pstmt.close();
 		rs.close();
 
-		return result;
+		return tmp;
 	}
 
 	public int addMember(MemberDTO dto) throws Exception {
 		if(!check(dto.getUserid())) {
-		
+
 			Connection con = DBConnection.getConnection();
 			String sql = "insert into users (seq, userid, password, nickname, email) VALUES (users_seq.nextval, ?, ?, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -41,18 +43,18 @@ public class MemberDAO {
 			pstmt.setString(3, dto.getNickname());
 			pstmt.setString(4, dto.getEmail());
 			int result = pstmt.executeUpdate();
-			
+
 			con.commit();
 			con.close();
 			pstmt.close();
 
 			return result;
 		}
-		
+
 		return -1;
 	}
 
-	public int addNaverMember(MemberDTO dto) throws Exception {
+	public MemberDTO addNaverMember(MemberDTO dto) throws Exception {
 		if(!navercheck(dto.getNaver_id())) {
 			Connection con = DBConnection.getConnection();
 			String sql = "insert into users (seq, naver_id, naver_nickname, naver_email, part) VALUES (users_seq.nextval, ?, ?, ?, 'naver')";
@@ -66,13 +68,29 @@ public class MemberDAO {
 			con.commit();
 			pstmt.close();
 			con.close();
-			return result;	
+		} 
+
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from users where naver_id = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, dto.getNaver_id());
+		ResultSet rs = pstmt.executeQuery();
+		MemberDTO tmp = new MemberDTO();
+		if(rs.next()) {
+			tmp.setSeq(rs.getInt(1));
+			tmp.setNaver_id(rs.getString(6));
+			tmp.setNaver_nickname(rs.getString(7));
+			tmp.setNaver_email(rs.getString(8));
 		}
 
-		return 0;
+		con.close();
+		pstmt.close();
+		rs.close();
+
+		return tmp;
 	}
-	
-	public int addKakaoMember(MemberDTO dto) throws Exception {
+
+	public MemberDTO addKakaoMember(MemberDTO dto) throws Exception {
 		if(!kakaocheck(dto.getKakao_id())) {
 			Connection con = DBConnection.getConnection();
 			String sql = "insert into users (seq, kakao_id, kakao_nickname, kakao_email, part) VALUES (users_seq.nextval, ?, ?, ?, 'kakao')";
@@ -86,12 +104,28 @@ public class MemberDAO {
 			con.commit();
 			pstmt.close();
 			con.close();
-			return result;	
 		}
 
-		return 0;
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from users where kakao_id = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, dto.getKakao_id());
+		ResultSet rs = pstmt.executeQuery();
+		MemberDTO tmp = new MemberDTO();
+		if(rs.next()) {
+			tmp.setSeq(rs.getInt(1));
+			tmp.setNaver_id(rs.getString(9));
+			tmp.setNaver_nickname(rs.getString(10));
+			tmp.setNaver_email(rs.getString(11));
+		}
+
+		con.close();
+		pstmt.close();
+		rs.close();
+
+		return tmp;
 	}
-	
+
 	private boolean check(String id) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where userid=?";
@@ -133,7 +167,7 @@ public class MemberDAO {
 
 		return result;
 	}
-	
+
 	private boolean kakaocheck(String id) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where kakao_id=?";
@@ -160,43 +194,43 @@ public class MemberDAO {
 		MemberDTO dto = null;
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
-			if(part.equals("home")) {
-				String sql = "select nickname, email, part from users where userid=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, id);		
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					dto = new MemberDTO();
-					dto.setNickname(rs.getString("nickname"));
-					dto.setEmail(rs.getString("email"));
-					dto.setPart(rs.getString("part"));
-				}
-			}else if (part.equals("naver")) {
-				String sql = "select naver_nickname, naver_email from users where naver_id =?";
-				pstmt = con.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-				pstmt.setString(1, id);
-				if(rs.next()) {
-					dto.setNaver_nickname(rs.getString("naver_nickname"));
-					dto.setNaver_email(rs.getString("naver_email"));
-				}
+		if(part.equals("home")) {
+			String sql = "select nickname, email, part from users where userid=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);		
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new MemberDTO();
+				dto.setNickname(rs.getString("nickname"));
+				dto.setEmail(rs.getString("email"));
+				dto.setPart(rs.getString("part"));
 			}
-			else if (part.equals("kakao")) {
-				String sql = "select kakao_nickname, kakao_email form users where kakao id = ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, id);
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					dto.setKakao_nickname(rs.getString("kakao_nickname"));
-					dto.setKakao_email(rs.getString("kakao_email"));
-				}
+		}else if (part.equals("naver")) {
+			String sql = "select naver_nickname, naver_email from users where naver_id =?";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			pstmt.setString(1, id);
+			if(rs.next()) {
+				dto.setNaver_nickname(rs.getString("naver_nickname"));
+				dto.setNaver_email(rs.getString("naver_email"));
 			}
-			pstmt.close();
-			rs.close();
-			con.close();
-			return dto;	
+		}
+		else if (part.equals("kakao")) {
+			String sql = "select kakao_nickname, kakao_email form users where kakao id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto.setKakao_nickname(rs.getString("kakao_nickname"));
+				dto.setKakao_email(rs.getString("kakao_email"));
+			}
+		}
+		pstmt.close();
+		rs.close();
+		con.close();
+		return dto;	
 	}
-	
+
 	public int getEmail(String id, String email)throws Exception{
 		Connection con = DBConnection.getConnection();
 		int result =0;
@@ -209,19 +243,19 @@ public class MemberDAO {
 			pstmt.setString(1, id);
 			pstmt.setString(2, email);
 			rs = pstmt.executeQuery();			
-	
-		if(rs.next()) {
-			result=11;	//아이디 있고 이메일 확인도 됨		
-		}else {	
-			result=10; // 아이디 있고 이메일 불일치
-		}
+
+			if(rs.next()) {
+				result=11;	//아이디 있고 이메일 확인도 됨		
+			}else {	
+				result=10; // 아이디 있고 이메일 불일치
+			}
 			pstmt.close();
 			rs.close();
 			con.close();		
 		}
 		return result;	
 	}
-	
+
 	public int changePw(String id, String pw)throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql = "update users set password =? where userid=?";
@@ -229,13 +263,49 @@ public class MemberDAO {
 		pstmt.setString(1, pw);
 		pstmt.setString(2, id);
 		int result = pstmt.executeUpdate();
-				
+
 		con.commit();
 		pstmt.close();
 		con.close();
 		return result;
 	}
-	
-	
-	
+
+	public static String getUserNickname(int seq)throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "select part from users where seq=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, seq);
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		String part = rs.getString(1);
+		System.out.println(part);
+		String nickname = "";
+		if(part.equals("home")) {
+			sql = "select nickname from users where seq=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, seq);      
+			rs = pstmt.executeQuery();
+			rs.next();
+			nickname = rs.getString(1);
+		}else if (part.equals("naver")) {
+			sql = "select naver_nickname from users where seq =?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, seq);
+			rs = pstmt.executeQuery();
+			rs.next();
+			nickname = rs.getString(1);
+		}
+		else if (part.equals("kakao")) {
+			sql = "select kakao_nickname from users where seq = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, seq);
+			rs = pstmt.executeQuery();
+			rs.next();
+			nickname = rs.getString(1);
+		}
+		pstmt.close();
+		rs.close();
+		con.close();
+		return nickname;   
+	}
 }

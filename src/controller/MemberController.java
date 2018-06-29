@@ -35,11 +35,18 @@ public class MemberController extends HttpServlet {
 				MemberDTO dto = new MemberDTO();
 				dto.setUserid(request.getParameter("id"));
 				dto.setPassword(request.getParameter("pw"));
-				boolean result = mdao.loginMember(dto);
+				MemberDTO user = mdao.loginMember(dto);
+				user.setPart("home");
+				boolean result = false;
+				if(user.getSeq() > 0) {
+					result = true;
+				}
 				request.setAttribute("proc", "login");
 				request.setAttribute("loginResult", result);
 				request.getSession().setAttribute("part", "home");
-				request.getSession().setAttribute("loginId", id);
+				request.getSession().setAttribute("user", user);
+				
+				
 				isForward = true;
 				dst="userResult.jsp";
 				
@@ -65,11 +72,13 @@ public class MemberController extends HttpServlet {
 				dto.setNaver_id(id);
 				dto.setNaver_nickname(name);
 				dto.setNaver_email(email);
-
-				request.getSession().setAttribute("loginId", id);
+				
+				MemberDTO user = mdao.loginMember(dto);
+				user.setPart("naver");
+				
 				request.getSession().setAttribute("part", "naver");
-				int result=mdao.addNaverMember(dto);
-
+				request.getSession().setAttribute("user", user);
+				
 				isForward = false;
 				dst="index.jsp";		
 
@@ -77,14 +86,16 @@ public class MemberController extends HttpServlet {
 				String id = request.getParameter("id");
 				String name = request.getParameter("name");
 				String email = request.getParameter("email");
-				//System.out.println("id: " + id + ", name: " + name + ", email: " + email);
 				MemberDTO dto = new MemberDTO();
 				dto.setKakao_id(id);
 				dto.setKakao_nickname(name);
 				dto.setKakao_email(email);
+				
+				MemberDTO user = mdao.addKakaoMember(dto);
+				user.setPart("kakao");
 
-				request.getSession().setAttribute("loginId", id);
-				int result=mdao.addKakaoMember(dto);
+				request.getSession().setAttribute("part", "kakao");
+				request.getSession().setAttribute("user", user);
 
 				isForward = false;
 				dst="index.jsp";		
