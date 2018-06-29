@@ -105,8 +105,8 @@ div {
 					<div class="card text-center">
 						<div class="card-header planTitle">${item.plan_title}</div>
 						
-						<div class="card-body mt-1 justify-content-end">
-							<h6 class="text-muted d-inline" name="subTitle">${item.plan_writerN}</h6>
+						<div class="card-body mt-1 text-center">
+							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
 							<div class="btn-list d-inline">
 
 								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
