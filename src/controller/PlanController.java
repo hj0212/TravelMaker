@@ -85,7 +85,6 @@ public class PlanController extends HttpServlet {
 				int day = Integer.parseInt(request.getParameter("day"));
 				
 				List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
-				System.out.println(list.get(0).getSchedule_seq());
 				List<BudgetDTO> blist = pdao.selectBudget(plan, day);
 				request.setAttribute("scheduleList", list);
 				request.setAttribute("budgetList", blist);
