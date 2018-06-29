@@ -58,7 +58,7 @@ public class PlanController extends HttpServlet {
 				btmp.setBudget_plan(request.getParameter("budget_plan"));
 				btmp.setBudget_amount(Integer.parseInt(request.getParameter("money")));
 
-				if(schedule_seq > 0) {	// �닔�젙
+				if(schedule_seq > 0) {	// 수정
 					tmp.setSchedule_seq(schedule_seq);
 					int result = pdao.updateSchedule(tmp);
 

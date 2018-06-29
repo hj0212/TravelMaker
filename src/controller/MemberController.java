@@ -49,9 +49,6 @@ public class MemberController extends HttpServlet {
 				String nickname=	mdao.getUserNickname(user.getSeq());
 				request.getSession().setAttribute("nickname", nickname);
 				
-				
-				
-				
 				isForward = true;
 				dst="userResult.jsp";
 				
@@ -89,7 +86,7 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("loginId", user.getUserid());
 				
 				isForward = false;
-				dst="index.jsp";		
+				dst="main.jsp";		
 
 			}else if(command.equals("/kakaologin.do")) {
 				String id = request.getParameter("id");
@@ -111,7 +108,7 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("nickname", nickname);
 
 				isForward = false;
-				dst="index.jsp";		
+				dst="main.jsp";		
 
 			}else if(command.equals("/admin.do")) {
 				String part = (String)request.getSession().getAttribute("part");
