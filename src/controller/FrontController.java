@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeboardDAO;
 import dao.MemberDAO;
-import dao.MemberDAO;
 import dao.ReviewDAO;
 import dto.FreeboardDTO;
 import dto.MemberDTO;
+import dto.ReviewCommentDTO;
 import dto.ReviewDTO;
 
 /**
@@ -121,7 +121,39 @@ public class FrontController extends HttpServlet {
 	                        
 	            isForward = true;
 	            dst="share_review.jsp";
-	         }
+	         }else if(command.equals("/reviewArticle.bo")) {
+	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+	             
+	             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
+	             request.setAttribute("review_seq", review_seq);
+	             request.setAttribute("review_title", result1.getReview_title());
+	             request.setAttribute("review_contents", result1.getReview_contents());
+	             request.setAttribute("review_writedate", result1.getReview_writedate());
+	             request.setAttribute("review_writer", result1.getReview_writer());
+	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
+	             
+	             
+	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);
+	             for(ReviewCommentDTO tmp: result2) {
+	             request.setAttribute("comment_writer", tmp.getComment_writer());
+	             request.setAttribute("comment_text", tmp.getComment_text());
+	             request.setAttribute("comment_time", tmp.getComment_time());
+	             }
+	             
+	             isForward = true;            
+	             dst = "reviewArticle.jsp";
+	          }else if(command.equals("/addReviewComment.bo")) {
+	             String comment_text = request.getParameter("comment_text");
+	             int comment_writer_seq = Integer.parseInt(request.getParameter("comment_writer_seq"));
+	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+	             int result = rdao.insertReviewComment(comment_text, comment_writer_seq, review_seq);
+	             request.setAttribute("result", result);
+	             request.setAttribute("review_seq", review_seq);
+	             
+
+	             isForward = true;
+	             dst= "reviewCommentView.bo";
+	          }
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
