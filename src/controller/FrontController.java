@@ -81,7 +81,6 @@ public class FrontController extends HttpServlet {
 					int result = fbdao.insertArticle(writer, title, contents);
 					dst = "freeboard.bo";
 				}
-				
 			} else if(command.equals("/viewArticle.bo")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				
@@ -154,8 +153,21 @@ public class FrontController extends HttpServlet {
 
 	             isForward = true;
 	             dst= "reviewCommentView.bo";
+	          }else if(command.equals("/deleteCheck.bo")) {
+//	        	  int seq = Integer.parseInt(request.getParameter("articlenum"));
+	        	  request.setAttribute("articlenum", request.getParameter("articlenum"));
+	        	  dst = "freeboard/deleteCheck.jsp";
+	          }else if(command.equals("/deleteArticle.bo")) {
+	        	  int seq = Integer.parseInt(request.getParameter("seq"));
+	        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+	        	  
+	        	  if(user.getSeq() == fbdao.writerCheck(seq)) {
+	        		  fbdao.deleteArticle(seq);
+	        	  }
+	        	  
+	        	  isForward = false;
+	        	  dst = "freeboard.bo";
 	          }
-
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);

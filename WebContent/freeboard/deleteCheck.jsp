@@ -25,10 +25,9 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="source/css/codepenNavi.css">
 <style>
-	.container {
-		margin-top : 15%;
-		width: 970px;
-	}
+.container {
+	margin-top: 15%;
+}
 </style>
 </head>
 <body>
@@ -41,19 +40,18 @@
 		</c:otherwise>
 	</c:choose>
 	<div class="container text-center">
-		<h1>비회원은 이용할 수 없습니다.</h1>
-		<button type="button" class="btn btn-light" id="goLogin">로그인하기</button>
-		<button type="button" class="btn btn-light" id="goList">목록으로</button>
+		<h1>글을 삭제하시겠습니까?</h1>
+		<button type="button" class="btn btn-light" id="delete">삭제</button>
+		<button type="button" class="btn btn-light" id="list">게시글로가기</button>
 	</div>
-	
-	<script>
-		$("#goLogin").click(function(){
-			location.href = "newlogin.jsp";
-		});
-		
-		$("#goList").click(function(){
-			location.href = "freeboard.bo";
-		});
-	</script>
 </body>
+<script>
+	document.getElementById("delete").onclick = function(){
+		location.href = "deleteArticle.bo?seq="+${articlenum};
+	}
+	
+	document.getElementById("list").onclick = function() {
+		location.href = "viewArticle.bo?seq="+${articlenum};
+	}
+</script>
 </html>
