@@ -118,7 +118,7 @@ public class FrontController extends HttpServlet {
 	         
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
 	            request.setAttribute("pageNavi", pageNavi);
-	                        
+	            
 	            isForward = true;
 	            dst="share_review.jsp";
 	         }else if(command.equals("/reviewArticle.bo")) {
@@ -134,24 +134,28 @@ public class FrontController extends HttpServlet {
 	             
 	             
 	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);
-	             for(ReviewCommentDTO tmp: result2) {
-	             request.setAttribute("comment_writer", tmp.getComment_writer());
-	             request.setAttribute("comment_text", tmp.getComment_text());
-	             request.setAttribute("comment_time", tmp.getComment_time());
-	             }
+	             
+	             request.setAttribute("commentResult", result2);
 	             
 	             isForward = true;            
 	             dst = "reviewArticle.jsp";
 	          }else if(command.equals("/addReviewComment.bo")) {
 	             String comment_text = request.getParameter("comment_text");
-	             int comment_writer_seq = Integer.parseInt(request.getParameter("comment_writer_seq"));
+	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-	             int result = rdao.insertReviewComment(comment_text, comment_writer_seq, review_seq);
+	             System.out.println(comment_text);
+	             System.out.println(dto.getSeq());
+	             System.out.println(review_seq);
+	             int user = dto.getSeq();
+	             int result = rdao.insertReviewComment(comment_text,user,review_seq);
 	             request.setAttribute("result", result);
 	             request.setAttribute("review_seq", review_seq);
-	             
 
+	             System.out.println("댓글 내용:"+comment_text+"유저 시퀀스: "+dto.getSeq()+"리뷰 시퀀스 :"+ review_seq);
+	             
+	  
 	             isForward = true;
+<<<<<<< HEAD
 	             dst= "reviewCommentView.bo";
 	          }else if(command.equals("/deleteCheck.bo")) {
 //	        	  int seq = Integer.parseInt(request.getParameter("articlenum"));
@@ -167,6 +171,9 @@ public class FrontController extends HttpServlet {
 	        	  
 	        	  isForward = false;
 	        	  dst = "freeboard.bo";
+=======
+	             dst= "reviewCommentView.jsp";
+>>>>>>> ho
 	          }
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);

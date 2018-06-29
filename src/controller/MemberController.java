@@ -46,6 +46,12 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", dto.getUserid());
 				
+				String nickname=	mdao.getUserNickname(user.getSeq());
+				request.getSession().setAttribute("nickname", nickname);
+				
+				
+				
+				
 				isForward = true;
 				dst="userResult.jsp";
 				
@@ -75,6 +81,9 @@ public class MemberController extends HttpServlet {
 				MemberDTO user = mdao.loginMember(dto);
 				user.setPart("naver");
 				
+				String nickname=mdao.getUserNickname(user.getSeq());
+				request.getSession().setAttribute("nickname", nickname);
+				
 				request.getSession().setAttribute("part", "naver");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
@@ -93,10 +102,13 @@ public class MemberController extends HttpServlet {
 				
 				MemberDTO user = mdao.addKakaoMember(dto);
 				user.setPart("kakao");
-
+				
 				request.getSession().setAttribute("part", "kakao");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
+
+				String nickname=mdao.getUserNickname(user.getSeq());
+				request.getSession().setAttribute("nickname", nickname);
 
 				isForward = false;
 				dst="index.jsp";		

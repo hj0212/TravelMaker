@@ -396,5 +396,6 @@ public class MemberDAO {
 	con.close();
 	return result;
 	}
+	
 }
 

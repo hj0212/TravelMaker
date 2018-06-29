@@ -197,13 +197,13 @@ public class ReviewDAO {
 	      
 	   }
 	   
-	   public int insertReviewComment(String comment_text, int comment_writer_seq, int review_seq) throws Exception{
+	   public int insertReviewComment(String comment_text, int user, int review_seq) throws Exception{
 	      Connection con = DBConnection.getConnection();
-	      String sql = "insert into review_comment values(comment_seq.nextval,?,?,sysdate) select comment_text, comment_writer from review_comment where review_seq=?";
+	      String sql = "insert into review_comment values(?,review_comment_seq.nextval,?,?,sysdate)";
 	      PreparedStatement pstmt = con.prepareStatement(sql);
-	      pstmt.setString(1, comment_text);
-	      pstmt.setInt(2, comment_writer_seq);
-	      pstmt.setInt(3, review_seq);
+	      pstmt.setInt(1, review_seq);
+	      pstmt.setString(2, comment_text);
+	      pstmt.setInt(3, user);
 	      int result = pstmt.executeUpdate();
 	      con.commit();
 	      pstmt.close();
@@ -213,7 +213,7 @@ public class ReviewDAO {
 	   
 	   public List<ReviewCommentDTO> getReviewComment(int review_seq) throws Exception{
 	      Connection con = DBConnection.getConnection();
-	      String sql = "select * from review_comment where review_seq=?";
+	      String sql = "select * from review_comment where review_seq=? order by comment_time desc";
 	      PreparedStatement pstmt = con.prepareStatement(sql);
 	      pstmt.setInt(1, review_seq);
 	      ResultSet rs = pstmt.executeQuery();
