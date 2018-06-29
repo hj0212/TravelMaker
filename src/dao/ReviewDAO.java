@@ -85,13 +85,14 @@ public class ReviewDAO {
 		PreparedStatement pstat;
 		ResultSet rs;
 		
-		if(searchTerm == null || searchTerm.equals("null")) {
+		if(searchTerm == null || searchTerm.equals("")) {
 			sql = "select count(*) totalCount from reviewboard";
 			pstat = con.prepareStatement(sql);
 		} else {
-			sql = "select count(*) totalCount from reviewboard where review_title like '%?%' || review_contents like '%?%'";
+			sql = "select count(*) totalCount from reviewboard where review_title like ? || review_contents like ?";
 			pstat = con.prepareStatement(sql);
-			pstat.setString(1, searchTerm);
+			pstat.setString(1, "%"+searchTerm+"%");
+			pstat.setString(2, "%"+searchTerm+"%");
 		}
 		
 		rs = pstat.executeQuery();

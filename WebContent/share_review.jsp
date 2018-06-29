@@ -78,6 +78,7 @@ div {
 				<div class="input-group-append">
 					<button class="btn btn-outline-secondary mx-1" type="button"
 						id="searchbtn" name="searchbtn">검색</button>
+						<
 				</div>
 				<button type="button" class="btn btn-primary ml-auto" id="writebtn">글쓰기</button>
 			</div>
