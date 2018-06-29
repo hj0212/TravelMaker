@@ -242,6 +242,16 @@ public class ReviewDAO {
 	      con.close();
 	      return result;
 	   }
-	
-	
+	   
+	public int deleteReview(int review_seq) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "delete * from reviewboard where review_seq=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, review_seq);
+		int result = pstmt.executeUpdate();
+		con.commit();
+		pstmt.close();
+		con.close();
+		return result;
+	}
 }
