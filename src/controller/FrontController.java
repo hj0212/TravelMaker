@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeboardDAO;
+import dao.MemberDAO;
 import dto.FreeboardDTO;
 import dto.MemberDTO;
 
@@ -52,7 +53,7 @@ public class FrontController extends HttpServlet {
 				
 				//------------------------------------------------------
 				
-				System.out.println("검색어: " + searchTerm);
+//				System.out.println("검색어: " + searchTerm);
 				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);
 				
@@ -67,15 +68,24 @@ public class FrontController extends HttpServlet {
 				
 				if(dto == null) {
 					isForward = false;
-					dst = "freeboard/freeBoardList.jsp";
 				}else {
 					int writer = dto.getSeq();
 					String title = request.getParameter("title");
 					String contents = request.getParameter("contents");
 			
 					int result = fbdao.insertArticle(writer, title, contents);
-					dst = "freeboard/freeBoardList.jsp";
 				}
+				
+				dst = "freeboard.bo";
+			} else if(command.equals("/viewArticle.bo")) {
+				int seq = Integer.parseInt(request.getParameter("seq"));
+				String user = MemberDAO.getUserNickname(seq);
+				System.out.println(user);
+//				FreeboardDTO dto = fbdao.readFreeArticle(seq);
+				
+				
+//				request.setAttribute("article", dto);
+				dst = "freeboard/freeArticleView.jsp";
 			}
 
 			if(isForward) {
