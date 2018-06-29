@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeboardDAO;
 import dao.MemberDAO;
+import dao.MemberDAO;
+import dao.ReviewDAO;
 import dto.FreeboardDTO;
 import dto.MemberDTO;
+import dto.ReviewDTO;
 
 /**
  * Servlet implementation class FrontController
@@ -30,8 +33,10 @@ public class FrontController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
 
-			//MemberDAO mdao = new MemberDAO();
+			MemberDAO mdao = new MemberDAO();
 			FreeboardDAO fbdao = new FreeboardDAO();
+			ReviewDAO rdao = new ReviewDAO();
+		
 
 			boolean isForward = true;
 			String dst = null;
@@ -52,8 +57,7 @@ public class FrontController extends HttpServlet {
 				request.setAttribute("freeboardlist", list);
 				
 				//------------------------------------------------------
-				
-//				System.out.println("검색어: " + searchTerm);
+							
 				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);
 				
@@ -87,7 +91,7 @@ public class FrontController extends HttpServlet {
 					isForward = false;
 					dst = "login.bo";
 				}else {
-					String nickname = MemberDAO.getUserNickname(dto.getSeq());
+					String nickname = mdao.getUserNickname(dto.getSeq());
 					
 					FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
 					
@@ -97,7 +101,27 @@ public class FrontController extends HttpServlet {
 				}
 			} else if(command.equals("/login.bo")) {
 				dst = "freeboard/needLogin.jsp";
-			}
+			} else if(command.equals("/reviewboard.bo")) {
+	            int currentPage = 0;
+	            String currentPageString = request.getParameter("currentPage");
+	            
+	            if(currentPageString == null) {
+	               currentPage = 1;
+	            } else {
+	               currentPage = Integer.parseInt(currentPageString);
+	            }
+	            
+	            String searchTerm = request.getParameter("search");
+	            List<ReviewDTO> reviewList = new ArrayList<>();
+	            reviewList = rdao.getSomeReview(currentPage*12-11, currentPage*12, searchTerm);
+	            request.setAttribute("reviewList", reviewList);
+	         
+	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
+	            request.setAttribute("pageNavi", pageNavi);
+	                        
+	            isForward = true;
+	            dst="share_review.jsp";
+	         }
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);

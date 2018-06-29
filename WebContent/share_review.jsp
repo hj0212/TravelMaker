@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,16 +26,22 @@ div {
 }
 
 #cardArea .card .card-img-top {
-	height:250px;
-	padding:0px;
+	height: 250px;
+	padding: 0px;
 }
 
-.card-body .card-title,.card-text{
-	text-align:center;
+.card-body .card-title, .card-text {
+	text-align: center;
 }
 
-.card-body{text-align:right;}
+.card-body {
+	text-align: right;
+	padding: 0px;
+}
 
+#search_area[type="button"] {
+	align: right;
+}
 </style>
 </head>
 <body>
@@ -42,69 +49,58 @@ div {
 	<div class="container">
 		<h1 class="divLine">계획, 그리고</h1>
 		<hr />
-		<!--review 카드 모음영역 -->
-		<div class="row" id="cardArea">
-			<div class="col-md-12 card-deck">
-				<div class="card col-md-3 shadow">
-					<img class="card-img-top" src="Charlie-Chaplin-PNG-Image-17681.png"
-						alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">제주여행</h5>
-						<p class="card-text">3일</p>
-						<a href="#" class="btn btn-primary">읽기</a>
-						<div class="card-footer bg-transparent">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</div>
-					</div>
-				</div>
-				
-				<div class="card col-md-3 ">
-					<img class="card-img-top" src="Charlie-Chaplin-PNG-Image-17681.png"
-						alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">제주여행</h5>
-						<p class="card-text">3일</p>
-						<a href="#" class="btn btn-primary ml-auto">읽기</a>
-						<div class="card-footer bg-transparent">
-						<small class="text-muted">Last updated 3 mins ago</small>
+
+		<div class="row mx-0" id="cardArea">
+			<c:forEach var="item" items="${reviewList}">			
+					<div class="card col-md-3 ">
+						<img class="card-img-top"
+							src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
+						<div class="card-body">
+							<h5 class="card-title">${item.review_title}</h5>
+							<p class="card-text">${item.review_writer}</p>
+							<a href="reviewArticle.bo?review_seq=${item.review_seq}" class="btn btn-primary">Read</a>						
+							<div class="card-footer bg-transparent">
+								<small class="text-muted">"${item.review_writedate}"</small>
+							</div>
+						</div>
 					</div>	
-					</div>
+			</c:forEach>
+		</div>
+		<!-- review 카드 모음영역 끝 -->
 
+		<!-- 검색/ 글쓰기 버튼  -->
+		<div class="row col-md-12">
+			<div class="input-group mt-2 col-md-12" id="search_area">
+				<input type="text"
+					class="form-control ml-auto col-4 justify-content-center"
+					placeholder="제목 검색" aria-label="reply"
+					aria-describedby="basic-addon2" id="search">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary mx-1" type="button"
+						id="searchbtn" name="searchbtn">검색</button>
 				</div>
-				<div class="card col-md-3">
-					<img class="card-img-top" src="Charlie-Chaplin-PNG-Image-17681.png"
-						alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">제주여행</h5>
-						<p class="card-text">3일</p>
-						<a href="#" class="btn btn-primary">읽기</a>
-						<div class="card-footer bg-transparent">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</div>
-					</div>
-				</div>
-				<div class="card col-md-3">
-					<img class="card-img-top" src="travel1.jpg" alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">제주여행</h5>
-						<p class="card-text">3일</p>
-						<a href="#" class="btn btn-primary">읽기</a>
-						<div class="card-footer bg-transparent">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</div>
-					</div>
-				</div>
-
+				<button type="button" class="btn btn-primary ml-auto" id="writebtn">글쓰기</button>
 			</div>
 		</div>
 
-
-		<!--review 카드 모음영역 끝 -->
+		<!-- 페이지 네비 -->
+		<div class="col-md-12 mt-2">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">${pageNavi}</ul>
+			</nav>
+		</div>
+		
+		
 		<h1 class="divLine">푸터올 곳</h1>
 		<hr />
 		<div class="row">
 			<div class="col-md-12" id="foot"></div>
 		</div>
 	</div>
+	<script>
+	$("#searchbtn").click(function() {
+			location.href = "reviewboard.bo?search=" + $("#search").val();
+		})
+</script>
 </body>
 </html>
