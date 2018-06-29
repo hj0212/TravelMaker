@@ -121,9 +121,6 @@ public class PlanController extends HttpServlet {
 				}else {
 					System.out.println("플랜생성실패");
 				}
-
-				
-				int plan_seq = pdao.getPlan_seq();
 				
 				request.setAttribute("result", result);
 				isForward=true;
