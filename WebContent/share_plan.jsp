@@ -202,7 +202,7 @@ div {
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button id="start-bt" type="button" class="btn btn-primary">여행
+							<button id="start-btn" type="button" class="btn btn-primary">여행
 								계획 시작하기</button>
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">Close</button>
@@ -374,7 +374,7 @@ div {
 								}
 							});
 
-					$("#start-bt").click(
+					$("#start-btn").click(
 							function() {
 								if (datepage < 0) {
 									alert("여행일을 제대로 설정해주세요.");

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +27,7 @@
    src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
    integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
    crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="source/css/codepenNavi.css">
 <style>
 * {
    box-sizing: border-box;
@@ -111,42 +113,47 @@ tr {
    box-shadow: #827e7e 0 0px 0px 60px inset;
 }
 </style>
-<script>
-   $(document).ready(function() {
-      $(".close").hide();
-   
-
-   });
-</script>
 </head>
 <body>
+	<c:choose>
+		<c:when test="${sessionScope.loginId !=null}">
+			<%@include file="../include/mainNavi_login.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="../include/mainNavi.jsp"%>
+		</c:otherwise>
+	</c:choose>
    <div class="container">
       <div class="row title  text-center">
-         <div class="col-sm-12">안녕하세요</div>
+         <div class="col-sm-12">${article.free_title}</div>
       </div>
       <div class="row writer">
-         <div class="col-sm-6 text-left">김모씨</div>
-         <div class="col-sm-4 text-right">2018-07-12</div>
-         <div class="col-sm-2 text-right">20</div>
+         <div class="col-sm-6 text-left">${writer}</div>
+         <div class="col-sm-4 text-right">${article.free_writedate}</div>
+         <div class="col-sm-2 text-right">${article.free_viewcount}</div>
       </div>
       <div class="row contents">
          <div class="col-sm-12">
-            <%=request.getParameter("contents")%>
+            ${article.free_contents}
          </div>
       </div>
       <div class="row function">
-         <div class="col-sm-4 offset-sm-4 text-center vote">
+         <!-- <div class="col-sm-4 offset-sm-4 text-center vote">
             <button type="button" class="btn btn-outline-danger" id="goodbtn">
                <i class="fas fa-heart"></i>30
             </button>
             <button type="button" class="btn btn-outline-primary" id="badbtn">
                <i class="far fa-frown"></i>30
             </button>
-         </div>
-         <div class="col-sm-4 text-right move">
-            <button type="button" class="btn btn-outline-secondary">목록</button>
-            <button type="button" class="btn btn-outline-secondary">스크랩</button>
-            <button type="button" class="btn btn-outline-danger">신고</button>
+         </div> -->
+         <div class="col-sm-4 offset-sm-8 text-right move">
+            <button type="button" class="btn btn-outline-secondary" id="goList">목록</button>
+            <!-- <button type="button" class="btn btn-outline-secondary">스크랩</button>
+            <button type="button" class="btn btn-outline-danger">신고</button> -->
+            <c:if test="${article.free_writer == sessionScope.user.seq}">
+            	<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
+            	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
+            </c:if>
          </div>
       </div>
       <div class="comments">
@@ -237,53 +244,63 @@ tr {
       
          }
       });
-      $("#comment-write-bnt")
-            .click(
-                  function() {
-                     var con = confirm("댓글을작성하시겠습니까?");
-                     
-                     
-                     var Now = new Date();
-                     var NowMonth = Now.getMonth() + 1;
-                     var NowTime = Now.getFullYear();
-                     NowTime += '-' + NowMonth;
-                     NowTime += '-' + Now.getDate();
-                     NowTime += ' ' + Now.getHours();
-                     NowTime += ':' + Now.getMinutes();
-                     NowTime += ':' + Now.getSeconds();
 
-                     var writer = "논개";
-                     var comment = $("#comment").val();
+      $("#comment-write-bnt").click(function () {
+            var con = confirm("댓글을작성하시겠습니까?");
 
-                     var commentinput = "";
 
-                     commentinput += "<tr>";
-                     commentinput += "<th scope='row' style='width:15%' class='writer'>"
-                           + writer + "</th>";
-                     commentinput += "<td style='width:70%;max-width: 60%;'>"
-                           + comment + "</td>";
-                     commentinput += "<td style='width:15%;font-size: 10px;'>"
-                           + NowTime
-                           + "   <button type='button' class='close' aria-label='Close' hide>"
-                           + "<span aria-hidden='true'>&times;</span>"
-                           + "</button></td>";
-                     commentinput += "</tr>";
+            var Now = new Date();
+            var NowMonth = Now.getMonth() + 1;
+            var NowTime = Now.getFullYear();
+            NowTime += '-' + NowMonth;
+            NowTime += '-' + Now.getDate();
+            NowTime += ' ' + Now.getHours();
+            NowTime += ':' + Now.getMinutes();
+            NowTime += ':' + Now.getSeconds();
 
-                     if (con) {
+            var writer = "논개";
+            var comment = $("#comment").val();
 
-                        if (comment != "") {
-                           $("#comment-table tbody").prepend(
-                                 commentinput);
-                           $("#comment").val("");
+            var commentinput = "";
 
-                        } else {
-                           alert("댓글을 작성해주세요.");
-                        }
-                     } else {
+            commentinput += "<tr>";
+            commentinput += "<th scope='row' style='width:15%' class='writer'>"
+                  + writer + "</th>";
+            commentinput += "<td style='width:70%;max-width: 60%;'>"
+                  + comment + "</td>";
+            commentinput += "<td style='width:15%;font-size: 10px;'>"
+                  + NowTime
+                  + "   <button type='button' class='close' aria-label='Close' hide>"
+                  + "<span aria-hidden='true'>&times;</span>"
+                  + "</button></td>";
+            commentinput += "</tr>";
 
-                     }
+            if (con) {
 
-                  });
+                  if (comment != "") {
+                        $("#comment-table tbody").prepend(
+                              commentinput);
+                        $("#comment").val("");
+
+                  } else {
+                        alert("댓글을 작성해주세요.");
+                  }
+            } else {
+
+            }
+
+      });
+      
+      $("#goList").click(function(){
+            location.href = "freeboard.bo";
+      })
+
+      <c:if test="${article.free_writer == sessionScope.user.seq}">
+	  	$("#delete").click(function(){
+	  		location.href = "deleteCheck.bo?articlenum=${article.free_seq}";
+	  	})
+      </c:if>
+		
    </script>
 </body>
 </html>
