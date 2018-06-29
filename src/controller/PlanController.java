@@ -49,6 +49,8 @@ public class PlanController extends HttpServlet {
 				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
 				
 				BudgetDTO btmp = new BudgetDTO();
+				btmp.setPlan_seq(plan);
+				btmp.setDay_seq(day);
 				btmp.setBudget_plan(request.getParameter("budget_plan"));
 				btmp.setBudget_amount(Integer.parseInt(request.getParameter("money")));
 
@@ -64,8 +66,9 @@ public class PlanController extends HttpServlet {
 						System.out.println("수정실패");
 					}
 				} else {
-					int result = pdao.addSchedule(tmp);
 					btmp.setSchedule_seq(pdao.getScheduleseq());
+					int result = pdao.addSchedule(tmp);
+					
 					result += pdao.addBudget(btmp);
 					if(result > 1) {
 						System.out.println("성공");
@@ -87,6 +90,8 @@ public class PlanController extends HttpServlet {
 				if(create.equals("f")) {
 					List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
 					List<BudgetDTO> blist = pdao.selectBudget(plan, day);
+					int totalBudget = pdao.getTotalBudget(plan, day);
+					request.setAttribute("totalBudget", totalBudget);
 					request.setAttribute("create", create);
 					request.setAttribute("scheduleList", list);
 					request.setAttribute("budgetList", blist);

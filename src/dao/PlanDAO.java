@@ -47,17 +47,36 @@ public class PlanDAO {
 	
 	public int addBudget(BudgetDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "insert into budget VALUES (budget_seq.nextval, ?, ?, ?)";
+		String sql = "insert into budget VALUES (?,?,budget_seq.nextval, ?, ?, ?)";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, dto.getSchedule_seq());
-		pstmt.setString(2, dto.getBudget_plan());
-		pstmt.setInt(3, dto.getBudget_amount());
+		pstmt.setInt(1, dto.getPlan_seq());
+		pstmt.setInt(2, dto.getDay_seq());
+		pstmt.setInt(3, dto.getSchedule_seq());
+		pstmt.setString(4, dto.getBudget_plan());
+		pstmt.setInt(5, dto.getBudget_amount());
 		int result = pstmt.executeUpdate();
-		
-		pstmt.close();
 		con.commit();
+		pstmt.close();
 		con.close();
 
+		return result;
+	}
+	
+	public int getTotalBudget(int plan, int day) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select sum(budget_amount) from budget where plan_seq = ? and day_seq = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, plan);
+		pstmt.setInt(2, day);
+		
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		int result = rs.getInt(1);
+		
+		con.close();
+		pstmt.close();
+		rs.close();
+		
 		return result;
 	}
 
@@ -147,7 +166,6 @@ public class PlanDAO {
 			tmp.setSchedule_seq(rs.getInt(4));
 			tmp.setBudget_plan(rs.getString(5));
 			tmp.setBudget_amount(rs.getInt(6));
-			System.out.println(tmp.getBudget_amount());
 			result.add(tmp);
 		}
 
@@ -188,4 +206,5 @@ public class PlanDAO {
 		con.close();
 		return seq;
 	}
+	
 }
