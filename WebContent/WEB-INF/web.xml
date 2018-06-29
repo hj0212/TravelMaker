@@ -15,6 +15,7 @@
   	<web-resource-collection>
   		<web-resource-name>SecureJSPPages</web-resource-name>
   		<url-pattern>/freeboard/freeArticleWrite.jsp</url-pattern>
+  		<url-pattern>/freeboard/freeArticleView.jsp</url-pattern>
   	</web-resource-collection>
   	<auth-constraint>
   		<role-name>NoBody</role-name>
