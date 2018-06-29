@@ -23,14 +23,14 @@ public class ReviewDAO {
 		while(rs.next()) {
 			int seq = rs.getInt("review_writer");
 			
-			ReviewDTO rdto = new ReviewDTO();
-			rdto.setReview_seq(rs.getInt("review_seq"));
-			rdto.setReview_title(rs.getString("review_title"));
-			rdto.setReview_contents(rs.getString("review_contents"));
-			rdto.setReview_writer(mdao.getUserNickname(seq));
-			rdto.setReview_writedate(rs.getString("review_writedate"));
-			rdto.setReview_viewcount(rs.getInt("review_viewcount"));
-			result.add(rdto);
+			ReviewDTO tmp = new ReviewDTO();
+			tmp.setReview_seq(rs.getInt(1));
+			tmp.setReview_title(rs.getString(2));
+			tmp.setReview_contents(rs.getString(3));
+			tmp.setReview_writerN(mdao.getUserNickname(rs.getInt(4)));
+			tmp.setReview_writedate(rs.getString(5));
+			tmp.setReview_viewcount(rs.getInt(6));
+			result.add(tmp);
 		}
 		rs.close();
 		pstmt.close();
@@ -66,7 +66,7 @@ public class ReviewDAO {
 			tmp.setReview_seq(rs.getInt(1));
 			tmp.setReview_title(rs.getString(2));
 			tmp.setReview_contents(rs.getString(3));
-			tmp.setReview_writer(rs.getString(4));
+			tmp.setReview_writerN(mdao.getUserNickname(rs.getInt(4)));
 			tmp.setReview_writedate(rs.getString(5));
 			tmp.setReview_viewcount(rs.getInt(6));
 			reviewResult.add(tmp);
