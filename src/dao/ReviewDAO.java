@@ -187,7 +187,8 @@ public class ReviewDAO {
 	      if(rs.next()) {
 	         rdto.setReview_title(rs.getString("review_title"));
 	         rdto.setReview_contents(rs.getString("review_contents"));
-	         rdto.setReview_writer(mdao.getUserNickname(rs.getInt("review_writer")));
+	         rdto.setReview_writer(rs.getInt("review_writer"));
+	         rdto.setReview_writerN(mdao.getUserNickname(rs.getInt("review_writerN")));
 	         rdto.setReview_writedate(rs.getString("review_writedate"));
 	         rdto.setReview_viewcount(rs.getInt("review_viewcount"));
 	      }
@@ -219,6 +220,7 @@ public class ReviewDAO {
 	      List<ReviewCommentDTO> result = new ArrayList<>();
 	      while(rs.next()) {
 	         ReviewCommentDTO rdto = new ReviewCommentDTO();
+	         rdto.setComment_writer_seq(rs.getInt("comment_writer"));
 	         rdto.setComment_writer(mdao.getUserNickname(rs.getInt("comment_writer")));
 	         rdto.setComment_text(rs.getString("comment_text"));
 	         rdto.setComment_time(rs.getString("comment_time"));
