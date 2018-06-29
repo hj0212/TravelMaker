@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+/* 에디터 p태그의 높이 조절 */
+.note-editable p {
+     margin: 0 0 0.0001pt; 
+}
+
+.container {
+	margin-top : 140px;
+    width: 970px;
+}
