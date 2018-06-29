@@ -123,7 +123,7 @@ div {
 							</c:otherwise>
 						</c:choose>
 						<tr>
-							<td colspan="5" align="center">
+							<td colspan="5">
 								<nav aria-label="Page navigation example">
 									<ul class="pagination">
 										${pageNavi}

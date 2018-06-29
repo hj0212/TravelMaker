@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,7 +47,7 @@ public class MemberController extends HttpServlet {
 
 			} else if(command.equals("/join.do")) {
 				MemberDTO dto = new MemberDTO();
-				dto.setUserid(request.getParameter("id"));
+				dto.setUserid(request.getParameter("idcheck"));
 				dto.setPassword(request.getParameter("pw"));
 				dto.setNickname(request.getParameter("nickname"));
 				dto.setEmail(request.getParameter("email"));
