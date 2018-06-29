@@ -5,7 +5,7 @@
 
 	<nav
 		class="navbar fixed-top navbar-right navbar-expand-lg navbar-light shadow-sm"
-		style="background-color: #e3f2fd;" id="naviId">
+		style="background-color: #e3f2fd; height:100px" id="naviId">
 		<a class="navbar-brand" href="main.jsp" style="font-size: 30px">TravelMaker</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
