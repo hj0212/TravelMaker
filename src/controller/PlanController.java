@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
+import dao.MemberDAO;
 import dao.PlanDAO;
 import dto.BudgetDTO;
 import dto.FreeboardDTO;
@@ -34,6 +33,8 @@ public class PlanController extends HttpServlet {
 			response.setCharacterEncoding("utf8");
 
 			PlanDAO pdao = new PlanDAO();
+			MemberDAO mdao = new MemberDAO();
+		
 
 			boolean isForward = true;
 			String dst = null;
@@ -57,16 +58,16 @@ public class PlanController extends HttpServlet {
 				btmp.setBudget_plan(request.getParameter("budget_plan"));
 				btmp.setBudget_amount(Integer.parseInt(request.getParameter("money")));
 
-				if(schedule_seq > 0) {	// �닔�젙
+				if(schedule_seq > 0) {	// 수정
 					tmp.setSchedule_seq(schedule_seq);
 					int result = pdao.updateSchedule(tmp);
 
 					btmp.setSchedule_seq(schedule_seq);
 					result += pdao.addBudget(btmp);
 					if(result > 1) {
-						System.out.println("�닔�젙�꽦怨�");
+						System.out.println("수정성공");
 					} else {
-						System.out.println("�닔�젙�떎�뙣");
+						System.out.println("수정실패");
 					}
 				} else {
 					btmp.setSchedule_seq(pdao.getScheduleseq());
@@ -74,9 +75,9 @@ public class PlanController extends HttpServlet {
 					
 					result += pdao.addBudget(btmp);
 					if(result > 1) {
-						System.out.println("�꽦怨�");
+						System.out.println("등록성공");
 					} else {
-						System.out.println("�떎�뙣");
+						System.out.println("등록실패");
 					}
 				}
 
@@ -108,7 +109,7 @@ public class PlanController extends HttpServlet {
 				isForward = true;
 				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
 			} else if(command.equals("/createPlan.plan")) {
-				int plan_writer = 17;//Integer.parseInt((String)request.getSession().getAttribute("seq"));
+				int plan_writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
 				String plan_startdate = request.getParameter("plan_startdate");
 				String plan_enddate = request.getParameter("plan_enddate");
 				String plan_title = request.getParameter("plan_title");
@@ -116,16 +117,16 @@ public class PlanController extends HttpServlet {
 				int result =pdao.startPlanInsertData(pdto);
 				int plan_seq = pdao.getPlanseq();
 				if(result>0) {
-					System.out.println("성공");
+					System.out.println("플랜생성완료");
 				}else {
-					System.out.println("실패");
+					System.out.println("플랜생성실패");
 				}
-
+				
 				request.setAttribute("result", result);
 				isForward=true;
-				dst="";
-				
-				
+				dst="createPlan.jsp";
+
+				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";
 			}
 
 //----------------------------------planList 가져오기
@@ -150,10 +151,6 @@ public class PlanController extends HttpServlet {
 				isForward = true;
 				dst="share_plan.jsp";
 			}
-
-			
-			
-			
 			
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);

@@ -118,11 +118,12 @@ public class FrontController extends HttpServlet {
 	         
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
 	            request.setAttribute("pageNavi", pageNavi);
-	                        
+	            
 	            isForward = true;
 	            dst="share_review.jsp";
 	         }else if(command.equals("/reviewArticle.bo")) {
 	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+	             rdao.getArticleViewCount(review_seq);
 	             
 	             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
 	             request.setAttribute("review_seq", review_seq);
@@ -130,29 +131,42 @@ public class FrontController extends HttpServlet {
 	             request.setAttribute("review_contents", result1.getReview_contents());
 	             request.setAttribute("review_writedate", result1.getReview_writedate());
 	             request.setAttribute("review_writer", result1.getReview_writer());
+	             request.setAttribute("review_writerN", result1.getReview_writerN());
 	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
+
+	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+	             request.setAttribute("user", dto.getSeq());
 	             
+	             System.out.println( result1.getReview_writer()+"*"+ dto.getSeq());
+        
+	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
+	             request.setAttribute("commentResult", result2);
 	             
-	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);
-	             for(ReviewCommentDTO tmp: result2) {
-	             request.setAttribute("comment_writer", tmp.getComment_writer());
-	             request.setAttribute("comment_text", tmp.getComment_text());
-	             request.setAttribute("comment_time", tmp.getComment_time());
-	             }
 	             
 	             isForward = true;            
 	             dst = "reviewArticle.jsp";
 	          }else if(command.equals("/addReviewComment.bo")) {
 	             String comment_text = request.getParameter("comment_text");
-	             int comment_writer_seq = Integer.parseInt(request.getParameter("comment_writer_seq"));
+	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-	             int result = rdao.insertReviewComment(comment_text, comment_writer_seq, review_seq);
+	             int user = dto.getSeq();
+	             int result = rdao.insertReviewComment(comment_text,user,review_seq);
 	             request.setAttribute("result", result);
 	             request.setAttribute("review_seq", review_seq);
-	             
 
+	             System.out.println("댓글 내용:"+comment_text+"유저 시퀀스: "+dto.getSeq()+"리뷰 시퀀스 :"+ review_seq);
+	             
+	  
 	             isForward = true;
-	             dst= "reviewCommentView.bo";
+	             dst= "reviewCommentView.jsp";
+	          }else if(command.equals("/deleteArticle.bo")) {
+	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+	        	  int result = rdao.deleteReview(review_seq);
+	        	  
+	        	  request.setAttribute("result", result);
+	        	  request.setAttribute("review_seq", review_seq);
+	        	  isForward = true;
+	        	  dst="deleteReviewView.jsp";
 	          }else if(command.equals("/deleteCheck.bo")) {
 //	        	  int seq = Integer.parseInt(request.getParameter("articlenum"));
 	        	  request.setAttribute("articlenum", request.getParameter("articlenum"));
@@ -166,13 +180,13 @@ public class FrontController extends HttpServlet {
 	        	  }
 	        	  
 	        	  isForward = false;
-	        	  dst = "freeboard.bo";
 	          }
+	        	  dst = "freeboard.bo";
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
 			} else {
-				response.sendRedirect(dst);
+				response.sendRedirect("error.jsp");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

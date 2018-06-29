@@ -162,7 +162,7 @@ div {
 <body>
 	<!-- 네비  -->
 	<c:choose>
-		<c:when test="${sessionScope.userid != null}">
+		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>

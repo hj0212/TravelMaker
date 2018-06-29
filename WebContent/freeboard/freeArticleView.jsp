@@ -35,6 +35,7 @@
 
 .container {
    width: 970px;
+   margin-top: 130px;
 }
 
 .title {

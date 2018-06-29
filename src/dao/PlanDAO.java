@@ -173,7 +173,7 @@ public class PlanDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan);
 		pstmt.setInt(2, day);
-		
+		System.out.println(plan + ":" + day);
 		ResultSet rs = pstmt.executeQuery();
 
 		List<BudgetDTO> result = new ArrayList<>();
@@ -213,6 +213,22 @@ public class PlanDAO {
 	public int getSchedule_seq() throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select max(schedule_Seq) from schedule";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		int seq = 0;
+		if(rs.next()) {
+			seq = rs.getInt(1);
+		}
+		
+		rs.close();
+		pstmt.close();
+		con.close();
+		return seq;
+	}
+	
+	public int getPlan_seq() throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select max(plan_seq) from plan";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		int seq = 0;

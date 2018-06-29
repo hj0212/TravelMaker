@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
-<link rel="stylesheet" href="source/css/codepenNavi.css">
 
 <script type="text/javascript"
    src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -21,13 +20,13 @@
 #container {
 	width: 800px;
 	margin: 0 auto;
-	padding-top: 100px;
+	margin-top: 50px;
 }
 
 #loginbox {
    width: 400px;
    height: 560px;
-   margin: 50px auto;
+   margin: 20px auto;
 }
 
 #loginbtn {
@@ -143,7 +142,7 @@
 	const showSignup = () => {
 		 $(".signup-link").addClass("active");
 		 $(".login-link").removeClass("active");
-		 $("#loginbox").height(700);
+		 $("#loginbox").height(720);
 		 $(".btn-login").text("Sign up");
 		 $(".forgot-password-row").hide();
 		 $(".confirm-password-row").show();
@@ -308,6 +307,5 @@ $("#user_idchek").keyup(function(){
 				</div>
 			</div>
 		</div>
-	
 </body>
 </html>
