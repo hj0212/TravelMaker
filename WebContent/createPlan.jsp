@@ -1,152 +1,242 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js" type="text/javascript"></script>
-<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-    
+	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js"
+	type="text/javascript"></script>
+<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
+	rel="stylesheet" type="text/css" />
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <title>Insert title here</title>
 <style>
-        .mobile-wrap {
-            text-align: center;
-            margin: auto;
-            width: 400px;
-            height: 534px;
-            overflow: hidden;
-            position: relative;
-            background-color: white;
-            box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
-            box-sizing: border-box;
-        }
+.mobile-wrap {
+	text-align: center;
+	margin: auto;
+	width: 400px;
+	height: 534px;
+	overflow: hidden;
+	position: relative;
+	background-color: white;
+	box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0
+		rgba(0, 0, 0, .19);
+	box-sizing: border-box;
+}
 
-        .mobile-header {
-            width: 100%;
-            height: 15%;
-            text-align: center;
-            margin: 0px auto;
-            display: block;
-            color: white;
-            margin-top: 20px;
-            font-size: 30px;
-            text-shadow: black 2px 2px 2px;
-            box-sizing: border-box;
-        }
+.mobile-header {
+	width: 100%;
+	height: 15%;
+	text-align: center;
+	margin: 0px auto;
+	display: block;
+	color: white;
+	margin-top: 20px;
+	font-size: 30px;
+	text-shadow: black 2px 2px 2px;
+	box-sizing: border-box;
+}
 
-        .mobile-title {
-            width: 100%;
-            height: 10%;
-            text-align: center;
-            margin: 0px auto;
+.mobile-title {
+	width: 100%;
+	height: 10%;
+	text-align: center;
+	margin: 0px auto;
+	box-sizing: border-box;
+	margin-top: 30px;
+}
 
+.mobile-title>input {
+	text-align: center;
+	width: 70%;
+	height: 90%;
+	border: none;
+	box-sizing: border-box;
+	border-color: white;
+	border: none;
+	border-bottom: 1px solid gray;
+	border-top: 1px solid gray;
+	font-size: 15px;
+	font-style: italic;
+	color: gray;
+}
 
-            box-sizing: border-box;
-            margin-top: 30px;
-        }
+#picker-div {
+	width: 100%;
+	height: 10%;
+	text-align: center;
+	margin: 0px auto;
+	box-sizing: border-box;
+	margin-top: 30px;
+}
 
-        .mobile-title>input {
-            text-align: center;
-            width: 70%;
-            height: 90%;
-            border: none;
-            box-sizing: border-box;
-            border-color: white;
-            border: none;
-            border-bottom: 1px solid gray;
-            border-top: 1px solid gray;
+.picker-pic {
+	width: 170px;
+	height: 100%;
+	text-align: center;
+	margin: auto;
+	box-sizing: border-box;
+	margin-left: 15px;
+	float: left;
+	padding-top: 4px;
+	box-sizing: border-box;
+	color: gray;
+}
 
-            font-size: 15px;
-            font-style: italic;
+#start-plan {
+	width: 100%;
+	height: 10%;
+	text-align: center;
+	margin: 0px auto;
+	box-sizing: border-box;
+	margin-top: 90px;
+}
 
+#start-bt {
+	color: aliceblue;
+	background-color: aqua;
+}
 
-            color: gray;
-        }
-
-        #picker-div {
-            width: 100%;
-            height: 10%;
-            text-align: center;
-            margin: 0px auto;
-            box-sizing: border-box;
-            margin-top: 30px;
-        }
-
-        .picker-pic {
-            width: 170px;
-            height: 100%;
-            text-align: center;
-            margin: auto;
-            box-sizing: border-box;
-            margin-left: 15px;
-            float: left;
-            padding-top: 4px;
-            box-sizing: border-box;
-            color: gray;
-        }
-
-        #start-plan {
-            width: 100%;
-            height: 10%;
-            text-align: center;
-            margin: 0px auto;
-            box-sizing: border-box;
-            margin-top: 90px;
-        }
-
-        #start-bt {
-            color: aliceblue;
-            background-color: aqua;
-        }
-
-        #start-bt:hover {
-            box-shadow: turquoise 2px 2px 2px;
-            opacity: 0.7;
-            color: chartreuse;
-            text-shadow: black 1px 1px 1px;
-        }
-
-    </style>
+#start-bt:hover {
+	box-shadow: turquoise 2px 2px 2px;
+	opacity: 0.7;
+	color: chartreuse;
+	text-shadow: black 1px 1px 1px;
+}
+</style>
 </head>
 <body>
-  <div class="mobile-wrap">
+	<div class="mobile-wrap">
+	<form  method="post" id="plan-form">
+		<div class="mobile-header">나의 여행계획 세우기</div>
 
-        <div class="mobile-header">
-            나의 여행계획 세우기
-        </div>
+		<div class="mobile-title">
+			<input type="text" id="plan_title"name ="plan_title"class="from-contol" placeholder="여행 제목을 입력해주세요">
+		</div>
 
-        <div class="mobile-title">
-            <input type="text" class="from-contol" placeholder="여행 제목을 입력해주세요">
-        </div>
+		<div id="picker-div">
+			<div class="picker-pic">
+				여행 시작 날짜<input id="datepicker" name="plan_startdate"readonly width="170"
+					style="background-color: white;" />
+			</div>
+			<div class="picker-pic">
+				여행 종료 날짜<input id="datepicker-end" name="plan_enddate" readonly width="170"
+					style="background-color: white;" />
+			</div>
 
-        <div id="picker-div">
-            <div class="picker-pic">여행 시작 날짜<input id="datepicker" width="170" /></div>
-            <div class="picker-pic">여행 종료 날짜<input id="datepicker2" width="170" /></div>
+		</div>
 
-        </div>
-
-        <div id="start-plan">
-            <p>땡박 땡일</p>
-            <button class="btn btn-inline bt-lg" id="start-bt">여행 계획 시작하기</button>
-        </div>
-    </div>
+		<div id="start-plan">
+			<p id="dayday" style="font-size: 13px; font-style: italic;">여행 일수</p>
+			<button class="btn btn-inline bt-lg" id="start-bt">여행 계획
+				시작하기</button>
+		</div>
+		</form>
+	</div>
 
 
-    <script>
-        $('#datepicker').datepicker({
+	<script>
+    $(document).ready(function(){
+    	 var minDate = new Date();
+    	    var maxDate = new Date();
+    	    
+    	    var mm = minDate.getDate()-1;
+    	    var dd = maxDate.getDate()+ 62;
+    	    minDate.setDate(mm);
+    	    maxDate.setDate(dd);
+    	    
+        $("#datepicker").datepicker({
+        	
             uiLibrary: 'bootstrap4',
-            format: 'yyyy/mm/dd',
+            format: 'yyyy-mm-dd',
             language: "ko",
-            defalutDate: new Date()
+            minDate:minDate,
+            maxDate : maxDate,
+             
+            
+          
         });
-        $('#datepicker2').datepicker({
+        $("#datepicker-end").datepicker({
+        	
             uiLibrary: 'bootstrap4',
-            format: 'yyyy/mm/dd',
-            language: "ko"
+            format: 'yyyy-mm-dd',
+            language: "ko",
+            constrainInput: true,        
+            minDate :minDate,
+            maxDate : maxDate,
+         
+           });
+       		
+        var todate="";
+        var enddate="";
+    	
+    	var formdt =null;
+    	var todt =null;   
+    	var datepage ="";
+    	
+        $("#datepicker").change(function(){
+        	todate = $(this).val();
+        	
+        	if(enddate !=""){
+        	var arrtodate = todate.split("/");
+        	var arrenddate = enddate.split("/");
+    		formdt =new Date(arrtodate[0],arrtodate[1],arrtodate[2]);
+    		todt = new Date(arrenddate[0],arrenddate[1],arrenddate[2]);
+    		console.log((todt.getTime()-formdt.getTime())/(24*60*60*1000));
+    		datepage = (todt.getTime()-formdt.getTime())/(24*60*60*1000);
+    		if(datepage==0){
+    			$("#dayday").html("당일 여행");
+    		}else if(datepage<0){
+    			$("#dayday").html("출발일이 더늦을수없습니다");
+    		}else{
+    			$("#dayday").html(datepage+1 +"일 여행");
+    		}
+        	}
         });
+    
+   		 $("#datepicker-end").change(function(){
+    		enddate = $(this).val();
+    		console.log(todate+":"+enddate);
+    		
+    		
+    		var arrtodate = todate.split("-");
+        	var arrenddate = enddate.split("-");
+    		formdt =new Date(arrtodate[0],arrtodate[1],arrtodate[2]);
+    		todt = new Date(arrenddate[0],arrenddate[1],arrenddate[2]);
+    		console.log((todt.getTime()-formdt.getTime())/(24*60*60*1000));
+    		datepage = (todt.getTime()-formdt.getTime())/(24*60*60*1000);
+    		if(datepage==0){
+    			$("#dayday").html("당일 여행");
+    		}else if(datepage<0){
+    			$("#dayday").html("출발일이 더늦을수없습니다");
+    		}else{
+    			$("#dayday").html(datepage+1 +"일 여행");
+    		}
+    		 
+    	});
+     
+   		 $("#start-bt").click(function(){
+   			 if(datepage<0){
+   				 alert("여행일을 제대로 설정해주세요.");
+   			 }else if($("#plan_title").val()==""){
+   				 alert("여행 제목을 지어주세요.")
+   			 }else{
+   				 $("#plan-form").attr("action","createPlan.plan").submit();
+   			 }
+   		 });
+   			 
 
+        
+    });
+    
+        
     </script>
 
 </body>

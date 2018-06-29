@@ -8,6 +8,7 @@ import java.util.List;
 
 import DBUtils.DBConnection;
 import dto.BudgetDTO;
+import dto.PlanDTO;
 import dto.ScheduleDTO;
 
 public class PlanDAO {
@@ -153,6 +154,22 @@ public class PlanDAO {
 		rs.close();
 		pstmt.close();
 		con.close();
+		return result;
+	}
+	
+	public int startPlanInsertData(PlanDTO dto)throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql ="insert into plan values(plan_seq.nextval,?,?,?,?,0,0,0,0)";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, dto.getPlan_writer());
+		pstmt.setString(2,dto.getPlan_startdate());
+		pstmt.setString(3, dto.getPlan_enddate());
+		pstmt.setString(4, dto.getPlan_title());
+		int result = pstmt.executeUpdate();
+		
+		con.commit();
+		con.close();
+		pstmt.close();
 		return result;
 	}
 	
