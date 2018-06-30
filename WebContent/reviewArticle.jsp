@@ -80,7 +80,7 @@ tr {
 <script>
    $(document).ready(function() {
       $("#reviewboard-bt").click(function() {
-         $(location).attr("href", "reviewboard.bo");
+         $(location).attr("href", "reviewboard.bo?currentPage="+"${currentPage}");
       });
    });
 </script>

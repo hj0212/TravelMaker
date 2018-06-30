@@ -273,7 +273,7 @@ tr {
       });
       
       $("#goList").click(function(){
-            location.href = "freeboard.bo";
+            location.href = "freeboard.bo?currentPage="+${currentPage};
       })
 
       <c:if test="${article.free_writer == sessionScope.user.seq}">

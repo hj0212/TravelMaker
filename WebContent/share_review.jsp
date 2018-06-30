@@ -60,7 +60,7 @@ div {
 							<div class="card-body">
 								<h5 class="card-title">${item.review_title}</h5>
 								<p class="card-text">${item.review_writerN}</p>
-								<a href="reviewArticle.bo?review_seq=${item.review_seq}"
+								<a href="reviewArticle.bo?currentPage=${currentPage }&review_seq=${item.review_seq}"
 									class="btn btn-primary">Read</a>
 								<div class="card-footer bg-transparent">
 									<small class="text-muted">"${item.review_writedate}"</small>
