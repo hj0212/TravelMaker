@@ -99,6 +99,15 @@
 			  $("#userform").attr('action','join.do').submit();
 		  }
 	  })
+	  
+	  document.getElementById("pwcheck").onkeyup = function() {
+			if (document.getElementById("pwcheck").value == document
+					.getElementById("pwfield").value) {
+				document.getElementById("result").innerHTML = "<font color=blue size=2>패스워드가 일치합니다.</font>";
+			} else {
+				document.getElementById("result").innerHTML = "<font color=red size=2>패스워드가 일치하지 않습니다.</font>";
+			}
+	  }
 	});
 	
 	const showLogin = () => {
