@@ -40,6 +40,10 @@ public class PlanController extends HttpServlet {
 			String dst = null;
 
 			if(command.equals("/addSchedule.plan")) {
+//				세 값 다 넘어옵니다.
+//				System.out.println(request.getParameter("place"));
+//				System.out.println(request.getParameter("mapx"));
+//				System.out.println(request.getParameter("mapy"));
 				ScheduleDTO tmp = new ScheduleDTO();
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
@@ -84,7 +88,6 @@ public class PlanController extends HttpServlet {
 
 				isForward = true;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
-
 			} else if(command.equals("/selectSchedule.plan")) {
 
 				int plan = Integer.parseInt(request.getParameter("plan"));
