@@ -219,28 +219,17 @@
 
 								<c:if test="${!empty budgetList}">
 									<c:set var="loop_flag" value="false" />
-									<c:set var="count" value="1" />
 									<c:forEach var="bitem" items="${budgetList}" varStatus="index">
 										<c:if test="${not loop_flag }">
 											<c:if test="${item.schedule_seq == bitem.schedule_seq}">
-												<c:choose>
-													<c:when test="${count == 1}">
-														<td name="money">
-														<div>
-														<div class="budget_plan">${bitem.budget_plan}:</div>
-														<div class="budget_amount">${bitem.budget_amount}</div>
-														</div><br>
-														<c:set var="count" value="2" />
-													</c:when>
-													<c:otherwise>
-														<div>
-														<div class="budget_plan">${bitem.budget_plan}:</div>
-														<div class="budget_amount">${bitem.budget_amount}</div>
-														</div><br>
-													</c:otherwise>
-												</c:choose>
+												<td name="money">
+													<div class="budget_plan">${bitem.budget_plan}:</div>
+													<div class="budget_amount">${bitem.budget_amount}</div>
+												</td>
+												<c:set var="loop_flag" value="true" />
 											</c:if>
-											<c:if test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
+											<c:if
+												test="${index.last && item.schedule_seq != bitem.schedule_seq}">
 												<td name="money"></td>
 												<c:set var="loop_flag" value="true" />
 											</c:if>
@@ -342,7 +331,7 @@
 								<i class='fa fa-plus'></i>
 							</button>
 							</th>
-							<td class="budget">
+							<td class="budget" id="money">
 								<div class="input-group mb-1">
 									<input type="text" class="form-control" id="ex1"
 										placeholder="예) 입장료"> <input type="text"
@@ -351,7 +340,6 @@
 										<span class="input-group-text" >원</span>
 									</div>
 								</div>
-								<input type="hidden" name="budget">
 							</td>
 
 						</tr>
@@ -442,7 +430,10 @@ $(document).ready(function() {
 				+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+budgetcount+"'><i class='far fa-times-circle'></i></button></div></div>");
 	});
 
-	
+	$("button[id^=moneyxbtn]").click(function() {
+		console.log("예산 삭제");
+		$(this).parent().parent().remove();
+	});
 
 	$("#plan-table")
 			.on(
@@ -514,20 +505,7 @@ $(document).ready(function() {
 						endtime = $("#end-time").val();
 						place = "이레빌딩"; /*  $("#place").val("이레빌딩");*/
 						schedule = $("#schedule").val();
-						budget = "";
-						var budgetn = $("#schedule-boarder>tbody>tr>td.budget>div.input-group").length;
-						console.log("등록 예산 갯수" + budgetn);
-						budget_plan = "";
-						budget_amount = "";
-						for(var i = 0; i < budgetn; i++) {
-							budget_plan += $("#schedule-boarder>tbody>tr>td.budget>div.input-group:nth-child("+(i+1)+")>input:first").val();
-							budget_plan += "/";
-							console.log(i+":"+budget_plan);
-							budget_amount += $("#schedule-boarder>tbody>tr>td.budget>div.input-group:nth-child("+(i+1)+")>input:last").val();
-							budget_amount += "/";
-							console.log(i+":"+budget_amount);
-						}
-						
+						money = $("#money").val();
 						reference = $("#reference").val();
 
 						if (starttime == "" || endtime == "") {
@@ -537,7 +515,7 @@ $(document).ready(function() {
 						} else if (schedule == "") {
 							alert("일정을적어주세요");
 						} else if (confirm(con)) {
-							/* $("#scheduleform").submit(); */
+							$("#scheduleform").submit();
 							var contents = '';
 							contents += '<tr class="clickable-row new active"><th style="height:50px;"></th><td name="place"></td><td name="schedule"></td>';
 							contents += '<td name="money"></td>';
@@ -566,49 +544,18 @@ $(document).ready(function() {
 							$("#reference").val("");
 						}
 					});
-	
-	isFirst = true;
+
 	$("#schedule-plan").on('click','.clickable-row',function(event) {
 						$(this).addClass('active').siblings().removeClass('active');
 						var seq = $(".active .schedule_seq").val();
+						console.log("선택:" + seq);
 						$("#plan-board input[name='schedule_seq']").val(seq);
+						console.log("seq셋팅: "+ $("#plan-board input[name='schedule_seq']").val());
 						var timestr = $("#schedule-plan>tbody>.active>th").html().split("~");
 						$("#start-time").val(timestr[0]);
 						$("#end-time").val(timestr[1]);
 						$("#place").val($("#schedule-plan>tbody>.active>td[name='place']").html());
 						$("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
-						var budgetnum = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").length;
-						console.log("budgetnum: " + budgetnum);
-						if(budgetnum == 1) {
-							var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").html().split(":")[0];
-							var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_amount").html();
-							$("#schedule-boarder>tbody>tr>.budget>div input:first").val(budget_plan);
-							$("#schedule-boarder>tbody>tr>.budget>div input:last").val(budget_amount);
-						}
-						for(var j = 0; j < budgetnum; j++) {
-							if(j == 0) {
-								var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").html().split(":")[0];
-								var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_amount").html();
-								$("#schedule-boarder>tbody>tr>.budget>div input:first").val(budget_plan);
-								$("#schedule-boarder>tbody>tr>.budget>div input:last").val(budget_amount);
-								
-							} else {
-								if(isFirst) {
-									$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+(j+1)+"'><input type='text' class='form-control' placeholder='10000' id='money"+(j+1)+"'>"
-										+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+(j+1)+"'><j class='far fa-times-circle'></i></button></div></div>");
-									isFirst = false;
-								}
-								var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']> div.budget_plan:nth-child("+(j+1)+")").html();
-								var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div.budget_amount:nth-child("+(j+1)+")").html();
-								
-								
-								console.log(budget_plan +":"+ j +":"+budget_amount);
-								$("#schedule-boarder>tbody>tr>.budget div:nth-child("+(j+1)+") input:first").val(budget_plan);
-								$("#schedule-boarder>tbody>tr>.budget div:nth-child("+(j+1)+") input:last").val(budget_amount);
-							}
-						}
-						
-						
 						/* $("#money").val($("#schedule-plan>tbody>.active>td[name='money']").html()); */
 						$("#reference").val($("#schedule-plan>tbody>.active>td[name='reference']").html());
 					});

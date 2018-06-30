@@ -81,6 +81,27 @@ public class PlanDAO {
 		return result;
 	}
 	
+	public int addBudget(List<BudgetDTO> list) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "insert into budget VALUES (?,?,budget_seq.nextval, ?, ?, ?)";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		int result = 0;
+		for(BudgetDTO dto:list) {
+			pstmt.setInt(1, dto.getPlan_seq());
+			pstmt.setInt(2, dto.getDay_seq());
+			pstmt.setInt(3, dto.getSchedule_seq());
+			pstmt.setString(4, dto.getBudget_plan());
+			pstmt.setInt(5, dto.getBudget_amount());
+			result = pstmt.executeUpdate();
+		}
+		
+		con.commit();
+		pstmt.close();
+		con.close();
+
+		return result;
+	}
+	
 	public int getTotalBudget(int plan, int day) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select sum(budget_amount) from budget where plan_seq = ? and day_seq = ?";
