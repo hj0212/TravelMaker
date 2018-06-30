@@ -27,6 +27,7 @@
 <link rel='stylesheet prefetch' href='source/css/normalize.min_main.css'>
 <link rel='stylesheet prefetch' href='source/css/slick.css'>
 <link rel='stylesheet prefetch'
+<<<<<<< Updated upstream
 	href='source/css/slick-theme_mainnavi.css'>
 
 <link rel="stylesheet" type="text/css" href="source/lib/slick/slick.css" />
@@ -51,6 +52,19 @@
 	width: 240px;
 }
 </style>
+=======
+	href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
+<link rel='stylesheet prefetch'
+	href='//cdn.jsdelivr.net/jquery.slick/1.5.0/slick.css'>
+<link rel='stylesheet prefetch'
+	href='//cdn.jsdelivr.net/jquery.slick/1.5.0/slick-theme.css'>
+<style class="cp-pen-styles"></style>
+	<script
+		src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+	<script src='//cdn.jsdelivr.net/jquery.slick/1.5.0/slick.min.js'></script>
+	<script src="source/js/imageSlider.js" type="text/javascript"> </script>
+	<script src="js/jquery-1.11.0.min.js"></script>
+>>>>>>> Stashed changes
 </head>
 <!-- <div class="shadow-none p-3 mb-5 bg-light rounded">No shadow</div>
 <div class="shadow-sm p-3 mb-5 bg-white rounded">Small shadow</div>
@@ -204,6 +218,7 @@
 	<!--container 끝  -->
 
 
+<<<<<<< Updated upstream
 	<script src='source/lib/slick/slick.js'></script>
 	<script>
 		$('.data').slick({
@@ -217,5 +232,7 @@
 			autoplaySpeed : 5000
 		});
 	</script>
+=======
+>>>>>>> Stashed changes
 </body>
 </html>
