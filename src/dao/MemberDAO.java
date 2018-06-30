@@ -316,11 +316,13 @@ public class MemberDAO {
 		pstmt.setString(1, id);
 		pstmt.setString(2, pw);
 		ResultSet rs = pstmt.executeQuery();
-		if(rs.next()) {
-			return true;
-		}else {
-			return false;
-		}
+		boolean result = rs.next();
+		
+		rs.close();
+		pstmt.close();
+		con.close();
+		
+		return result;
 	}
 
 	public MemberDTO getHomeMemberInfo(String id, String part) throws Exception{
@@ -329,6 +331,7 @@ public class MemberDAO {
 		PreparedStatement pstmt= con.prepareStatement(sql);
 		pstmt.setString(1, id);
 		ResultSet rs= pstmt.executeQuery();
+		MemberDTO result = null;
 		if(part.equals("home")) {
 			MemberDTO dto = new MemberDTO();
 			if(rs.next()) {
@@ -337,10 +340,14 @@ public class MemberDAO {
 				dto.setNickname(rs.getString("nickname"));
 				dto.setEmail(rs.getString("email"));
 			}
-			return dto;
-		}else {
-			return null;
+			result = dto;
 		}
+		
+		rs.close();
+		pstmt.close();
+		con.close();
+		
+		return result;
 	}
 
 
