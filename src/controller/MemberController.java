@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -47,13 +46,16 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", dto.getUserid());
 				
+				String nickname=	mdao.getUserNickname(user.getSeq());
+				request.getSession().setAttribute("nickname", nickname);
+				
 				isForward = true;
 				dst="userResult.jsp";
 				
 
 			} else if(command.equals("/join.do")) {
 				MemberDTO dto = new MemberDTO();
-				dto.setUserid(request.getParameter("idcheck"));
+				dto.setUserid(request.getParameter("id"));
 				dto.setPassword(request.getParameter("pw"));
 				dto.setNickname(request.getParameter("nickname"));
 				dto.setEmail(request.getParameter("email"));
@@ -76,12 +78,15 @@ public class MemberController extends HttpServlet {
 				MemberDTO user = mdao.loginMember(dto);
 				user.setPart("naver");
 				
+				String nickname=mdao.getUserNickname(user.getSeq());
+				request.getSession().setAttribute("nickname", nickname);
+				
 				request.getSession().setAttribute("part", "naver");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
 				
 				isForward = false;
-				dst="index.jsp";		
+				dst="main.jsp";		
 
 			}else if(command.equals("/kakaologin.do")) {
 				String id = request.getParameter("id");
@@ -94,13 +99,16 @@ public class MemberController extends HttpServlet {
 				
 				MemberDTO user = mdao.addKakaoMember(dto);
 				user.setPart("kakao");
-
+				
 				request.getSession().setAttribute("part", "kakao");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
 
+				String nickname=mdao.getUserNickname(user.getSeq());
+				request.getSession().setAttribute("nickname", nickname);
+
 				isForward = false;
-				dst="index.jsp";		
+				dst="main.jsp";		
 
 			}else if(command.equals("/admin.do")) {
 				String part = (String)request.getSession().getAttribute("part");

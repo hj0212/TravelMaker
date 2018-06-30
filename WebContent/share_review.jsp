@@ -57,7 +57,7 @@ div {
 							src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
 						<div class="card-body">
 							<h5 class="card-title">${item.review_title}</h5>
-							<p class="card-text">${item.review_writer}</p>
+							<p class="card-text">${item.review_writerN}</p>
 							<a href="reviewArticle.bo?review_seq=${item.review_seq}" class="btn btn-primary">Read</a>						
 							<div class="card-footer bg-transparent">
 								<small class="text-muted">"${item.review_writedate}"</small>
@@ -78,6 +78,7 @@ div {
 				<div class="input-group-append">
 					<button class="btn btn-outline-secondary mx-1" type="button"
 						id="searchbtn" name="searchbtn">검색</button>
+						<
 				</div>
 				<button type="button" class="btn btn-primary ml-auto" id="writebtn">글쓰기</button>
 			</div>

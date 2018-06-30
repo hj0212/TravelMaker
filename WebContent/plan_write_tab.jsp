@@ -228,7 +228,7 @@
 									placeholder="예) 입장료"> <input type="text"
 									class="form-control" id="money1" placeholder="10000">
 								<div class="input-group-prepend">
-									<span class="input-group-text">원</span>
+									<span class="input-group-text" >원</span>
 								</div>
 							</div>
 						</td>
