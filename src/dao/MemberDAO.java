@@ -126,7 +126,7 @@ public class MemberDAO {
 		return tmp;
 	}
 
-	private boolean check(String id) throws Exception {
+	public static boolean check(String id) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where userid=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);

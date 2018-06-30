@@ -13,7 +13,7 @@
 		if(${proc=="login"}) {
 			if(${loginResult==true}) {
 				console.log("로그인 성공");
-				location.href="../main.jsp";
+				location.href="main.jsp";
 			} else {
 				console.log("로그인 실패");
 				location.href="newlogin.jsp";
