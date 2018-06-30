@@ -262,17 +262,8 @@ public class MemberController extends HttpServlet {
 			}else if(command.equals("/toLogin.do")) {
 				isForward=true;
 				dst="newlogin.jsp";
-			}
 			
-			isForward = true;
-			dst="mypage.jsp";
-		}else if(command.equals("/logout.do")) {
-			request.getSession().invalidate();
-		
-			isForward = true;
-			dst="main.jsp";	
-		
-		
+			
 //////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
 		}else if(command.equals("/checkEmail.do")){
 			String id=request.getParameter("id");
@@ -301,8 +292,7 @@ public class MemberController extends HttpServlet {
 			}else {
 				request.setAttribute("mailResult", false);
 			}
-			
-		
+
 			isForward = true;
 			dst = "sendtmpPwResult";
 		}
