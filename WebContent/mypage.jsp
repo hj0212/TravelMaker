@@ -27,7 +27,64 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
 	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 	crossorigin="anonymous"></script>
+ <style>
+ #box-container {
+  margin: 0px auto;
+  float: right;
+  background : rgba(0, 0, 0, 0.3);
+  width: 70%;
+  position: relative;
+  border-radius: 5px;
+  padding: 5px;
+  z-index:300;
+  filter: alpha(opacity:''80''); 
+ }
+ #box-container:after {
+	bottom: 100%;
+	left: 30%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-bottom-color: rgba(0, 0, 0, 0.3);
+	border-width: 8px;
+	margin-left: -8px;
+	z-index:300;
+  filter: alpha(opacity:''80''); 
+}
  
+ ul {
+    
+    li {
+      display: inline;
+      padding-left: 20px;
+	a{
+        color: #777777;
+        text-decoration: none;
+        
+        &:hover {
+          color: white;
+        }
+      }
+      }
+ }
+ 
+ .clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#box-container li a{
+color: #777777 !important;
+ text-decoration: none !important;
+}
+#box-container li{
+list-style: none !important;
+}
+ </style>
 </head>
 
 <body>
@@ -39,11 +96,13 @@
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary no-padding-bottom mt-5">
+	
+	<!--profile부분-->
+  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary mt-5 mb-10">
     <div class="container w-100 h-100 py-0">
       <div class="row">
         <div class="col-sm-8 col-md-3 col-lg-3">
-          <div class="card w-100 h-100">
+          <div class="card w-100 h-100" id="profile-container">
             <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
             <div class="card-body h-100 py-4 my-5">
               <h4 class="card-title my-4">${nickname}</h4>
@@ -55,20 +114,20 @@
                <h4 class="my-4">${email}</h4>
               </c:otherwise>
               </c:choose>
-  		<a href="#" class="btn dropdown-toggle" id="editlink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">정보수정</a>
-  		<div class="dropdown mt-5 z-index:3" aria-labelledby="editlink">
+         <a href="#"  id="editlink" >정보수정</a>
+  		<ul id="box-container">
   		<c:choose>
   		<c:when test="${sessionScope.part eq 'home'}">
-  		<a class="dropdown-item " href="#" id="editInfo">회원정보</a>
-  		<a class="dropdown-item" href="#" id="editPw">비밀번호</a>
-  		<a class="dropdown-item" href="#" id="updateEmail">이메일</a>
+  		<li class="clearfix"><a  href="#" id="editInfo">회원정보</a></li>
+  		<li class="clearfix"><a  href="#" id="editPw">비밀번호</a></li>
+  		<li class="clearfix"><a  href="#" id="updateEmail">이메일</a></li>
   		</c:when>
   		<c:otherwise>
-  		<a class="dropdown-item" href="#" id="updateEmail">이메일</a>
+  		<li class="clearfix"><a class="dropdown-item" href="#" id="updateEmail">이메일</a></li>
   		</c:otherwise>
   		</c:choose>
   		
-  		</div>
+  		</ul>
             </div>
           </div>
         </div>
@@ -113,8 +172,8 @@
       </div>
     </div>
   </div>
-  
-  <div class="py-5 no-padding-top">
+  <!--tab부분-->
+  <div class="py-5 mt-10">
     <div class="container">
    
        <div class="panel-heading">
@@ -284,7 +343,7 @@
  
 <script>
 
-$(function() {
+/* $(function() {
 	$('.dropdown').hide(); 
 	// Dropdown toggle
 	$('.dropdown-toggle').click(function(){
@@ -298,8 +357,20 @@ $(function() {
 	  }
 	});
 
-	});
+	}); */
 
+$(function(){
+	$("#box-container").hide();
+		  $("#editlink").on("click", function() {
+		    $("#box-container").toggle("fast");
+		  });
+		  
+	
+})
+
+	
+	
+	
 $("#editInfo").click(function(){
 	/* location.href="toPwCheck.do"; */
 	window.open("toPwCheck.do","_blank","width=500, height=300, scrollbars=no");
