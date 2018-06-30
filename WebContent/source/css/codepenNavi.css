@@ -8,7 +8,6 @@
 
 body {
 	font-family: 'Lato', sans-serif;
-	background: #eee;
 }
 
 /* article {
@@ -32,16 +31,6 @@ a {
 	height: 1200px;
 }
 
-
-body {
-	background: #1d76a6;
-	background: -webkit-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
-	background: -moz-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
-	background: -ms-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
-	background: -o-linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
-	background: linear-gradient(90deg, #f78360 10%, #84dcf9 90%);
-	height: 1200px;
-}
 .container{
 	padding-top:140px;
 	}
