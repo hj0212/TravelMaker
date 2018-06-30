@@ -211,8 +211,8 @@ tr {
 
 
    <script>
-      $("#comment-table").hide();
-      var commentBntCount = 1;
+    
+      var commentBntCount = 2;
       $("#comment-bnt").click(function() {
          if (commentBntCount == 1) {
             $("#comment-bnt").text("댓글감추기▲");
