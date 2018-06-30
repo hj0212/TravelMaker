@@ -98,7 +98,7 @@ list-style: none !important;
 	</c:choose>
 	
 	<!--profile부분-->
-  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary mt-5 mb-10">
+  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary">
     <div class="container w-100 h-100 py-0">
       <div class="row">
         <div class="col-sm-8 col-md-3 col-lg-3">
@@ -190,11 +190,15 @@ list-style: none !important;
           </ul>
           </div>     
             <div class="pannel-body">
+            
+            <!-- tabone -->
             <div class="row tab-content">
-            <div class="col tab-pane active" id="tabone" role="tabpanel">
-            <div class="row">
-            <div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
+             <div class="col-md-12 tab-pane active" id="tabone" role="tabpanel">
+            <div class="data"
+					data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
+            <!-- <div class="row"> -->
+            <div class="item ">
+					<div class="card col-md-3 col-sm-3 w-25">
                 <div class="card-header"> Header </div>
                 <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
                 <div class="card-body">
@@ -204,8 +208,8 @@ list-style: none !important;
                 </div>
               </div>
 				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
+				<div class="item ">
+					<div class="card col-md-3 col-sm-3 w-25">
                 <div class="card-header"> Header </div>
                 <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
                 <div class="card-body">
@@ -215,8 +219,8 @@ list-style: none !important;
                 </div>
               </div>
 				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
+				<div class="item ">
+					<div class="card col-md-3 col-sm-3 w-25">
                 <div class="card-header"> Header </div>
                 <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
                 <div class="card-body">
@@ -226,8 +230,8 @@ list-style: none !important;
                 </div>
               </div>
 				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
+				<div class="item ">
+					<div class="card col-md-3 col-sm-3 w-25">
                 <div class="card-header"> Header </div>
                 <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
                 <div class="card-body">
@@ -239,7 +243,9 @@ list-style: none !important;
 				</div>
 				</div>
 				</div>
-
+				</div>
+				
+<!-- tabtwo -->
             <div class="col tab-pane fade" id="tabtwo" role="tabpanel">
             <div class="row">
             <div class="item col-md-3 col-sm-3 w-25">
@@ -284,6 +290,8 @@ list-style: none !important;
 				</div>
 				</div>
 				</div>
+				
+				<!-- tabthree -->
                        <div class="col tab-pane fade" id="tabthree" role="tabpanel">
             <div class="row">
             <div class="item col-md-3 col-sm-3 w-25">
@@ -341,23 +349,19 @@ list-style: none !important;
   
 
  
+<script src='source/lib/slick/slick.js'></script>
 <script>
-
-/* $(function() {
-	$('.dropdown').hide(); 
-	// Dropdown toggle
-	$('.dropdown-toggle').click(function(){
-	  $(this).next('.dropdown').toggle();
+	$('.data').slick({
+		dots : true,
+		infinite : true,
+		slidesToShow : 3,
+		slidesToScroll : 1,
+		variableWidth : true,
+		autoplay : true,
+		speed : 500,
+		autoplaySpeed : 2000
 	});
 
-	$(document).click(function(e) {
-	  var target = e.target;
-	  if (!$(target).is('.dropdown-toggle') && !$(target).parents().is('.dropdown-toggle')) {
-	    $('.dropdown').hide();
-	  }
-	});
-
-	}); */
 
 $(function(){
 	$("#box-container").hide();
