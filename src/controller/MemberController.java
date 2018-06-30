@@ -28,6 +28,7 @@ public class MemberController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
 
+			ReviewDAO rdao = new ReviewDAO();
 			MemberDAO mdao = new MemberDAO();
 			ReviewDAO rdao = new ReviewDAO();
 
@@ -69,8 +70,7 @@ public class MemberController extends HttpServlet {
 				isForward = true;
 				dst="userResult.jsp";
 
-			} else if(command.equals("/navlogin.do")) {
-
+			} else if(command.equals("/navlogin.do")) {				
 				String id = request.getParameter("id");
 				String name = request.getParameter("name");
 				String email = request.getParameter("email");

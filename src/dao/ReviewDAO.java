@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBUtils.DBConnection;
+import dto.MemberDTO;
 import dto.ReviewCommentDTO;
 import dto.ReviewDTO;
 
