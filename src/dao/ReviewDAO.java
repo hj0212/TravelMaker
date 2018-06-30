@@ -45,7 +45,7 @@ public class ReviewDAO {
 		String sql;
 		PreparedStatement pstat = null;
 
-		if(searchTerm == null || searchTerm.equals("null")) {
+		if(searchTerm == null || searchTerm.equals("")) {
 			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, startNum);
@@ -83,21 +83,19 @@ public class ReviewDAO {
 		Connection con = DBConnection.getConnection();		
 		String sql;
 		PreparedStatement pstat;
-		ResultSet rs;
+		
 
 		if(searchTerm == null || searchTerm.equals("")) {
 			sql = "select count(*) totalCount from reviewboard";
 			pstat = con.prepareStatement(sql);
 		} else {
-			sql = "select count(*) totalCount from reviewboard where review_title like ? || review_contents like ?";
+			sql = "select count(*) totalCount from reviewboard where review_title like ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, "%"+searchTerm+"%");
-			pstat.setString(2, "%"+searchTerm+"%");
 		}
 
-		rs = pstat.executeQuery();
-		rs.next();
-
+		ResultSet rs= pstat.executeQuery();
+		if(rs.next());
 		int recordTotalCount = rs.getInt("totalCount"); 
 		//System.out.println(recordTotalCount);
 		int recordCountPerPage = 12;  

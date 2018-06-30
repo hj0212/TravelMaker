@@ -141,7 +141,7 @@ public class PlanController extends HttpServlet {
 				}
 				String searchTerm = request.getParameter("search");
 				List<PlanDTO>list = new ArrayList<>();
-				list = pdao.getSomePlan(currentPage*12-11, currentPage*10, searchTerm);
+				list = pdao.getSomePlan(currentPage*12-11, currentPage*12, searchTerm);
 				request.setAttribute("planList", list);
 				//------------------------------------------------------
 
