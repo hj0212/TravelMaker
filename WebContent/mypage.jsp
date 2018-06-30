@@ -27,10 +27,83 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
 	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 	crossorigin="anonymous"></script>
+ <style>
+ #box-container {
+  margin: 0px auto;
+  float: right;
+  background : rgba(0, 0, 0, 0.3);
+  width: 70%;
+  position: relative;
+  border-radius: 5px;
+  padding: 5px;
+  z-index:300;
+  filter: alpha(opacity:''80''); 
+ }
+ #box-container:after {
+	bottom: 100%;
+	left: 30%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-bottom-color: rgba(0, 0, 0, 0.3);
+	border-width: 8px;
+	margin-left: -8px;
+	z-index:300;
+  filter: alpha(opacity:''80''); 
+}
  
+ ul {
+    
+    li {
+      display: inline;
+      padding-left: 20px;
+	a{
+        color: #777777;
+        text-decoration: none;
+        
+        &:hover {
+          color: white;
+        }
+      }
+      }
+ }
+ 
+ .clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#box-container li a{
+color: #777777 !important;
+ text-decoration: none !important;
+}
+#box-container li{
+list-style: none !important;
+}
+#wrapper{
+width:970px;
+box-sizing: border-box;
+margin:0px auto;
+}
+
+.data, .data div {
+	height: 400px;
+}
+
+.item {
+	width: 300px;
+	padding:0;
+}
+
+ </style>
 </head>
 
 <body>
+<div id="wrapper">
 <c:choose>
 		<c:when test="${sessionScope.loginId != null}">
 			<%@include file="include/mainNavi_login.jsp"%>
@@ -39,11 +112,13 @@
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary no-padding-bottom mt-5">
+	
+	<!--profile부분-->
+  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary">
     <div class="container w-100 h-100 py-0">
       <div class="row">
         <div class="col-sm-8 col-md-3 col-lg-3">
-          <div class="card w-100 h-100">
+          <div class="card w-100 h-100" id="profile-container">
             <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
             <div class="card-body h-100 py-4 my-5">
               <h4 class="card-title my-4">${nickname}</h4>
@@ -55,20 +130,20 @@
                <h4 class="my-4">${email}</h4>
               </c:otherwise>
               </c:choose>
-  		<a href="#" class="btn dropdown-toggle" id="editlink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">정보수정</a>
-  		<div class="dropdown mt-5 z-index:3" aria-labelledby="editlink">
+         <a href="#"  id="editlink" >정보수정</a>
+  		<ul id="box-container">
   		<c:choose>
   		<c:when test="${sessionScope.part eq 'home'}">
-  		<a class="dropdown-item " href="#" id="editInfo">회원정보</a>
-  		<a class="dropdown-item" href="#" id="editPw">비밀번호</a>
-  		<a class="dropdown-item" href="#" id="updateEmail">이메일</a>
+  		<li class="clearfix"><a  href="#" id="editInfo">회원정보</a></li>
+  		<li class="clearfix"><a  href="#" id="editPw">비밀번호</a></li>
+  		<li class="clearfix"><a  href="#" id="updateEmail">이메일</a></li>
   		</c:when>
   		<c:otherwise>
-  		<a class="dropdown-item" href="#" id="updateEmail">이메일</a>
+  		<li class="clearfix"><a href="#" id="updateEmail">이메일</a></li>
   		</c:otherwise>
   		</c:choose>
   		
-  		</div>
+  		</ul>
             </div>
           </div>
         </div>
@@ -114,7 +189,8 @@
     </div>
   </div>
   
-  <div class="py-5 no-padding-top">
+  <!--tab부분-->
+  <div class="py-5 mt-10">
     <div class="container">
    
        <div class="panel-heading">
@@ -131,58 +207,34 @@
           </ul>
           </div>     
             <div class="pannel-body">
-            <div class="row tab-content">
+
+            <div class="row tab-content ">
+            
+            <!-- tabone -->
             <div class="col tab-pane active" id="tabone" role="tabpanel">
             <div class="row">
+            <c:forEach var="mrv" items="${MyReviewResult}">
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-header">${mrv.review_title}</div>
+                <img class="card-img-top float-left rounded" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
                 <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
+                  <h6 class="text-muted">${mrv.review_contents}</h6>
+                  <p>${mrv.review_writedate}</p>
                 </div>
               </div>
 				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
+			</c:forEach>
+	
+				
 				</div>
 				</div>
-				</div>
-
+				
+<!-- tabtwo -->
             <div class="col tab-pane fade" id="tabtwo" role="tabpanel">
             <div class="row">
+            
+            
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
                 <div class="card-header"> Header </div>
@@ -223,10 +275,16 @@
                 </div>
               </div>
 				</div>
+				
+				
 				</div>
 				</div>
+				
+				<!-- tabthree -->
                        <div class="col tab-pane fade" id="tabthree" role="tabpanel">
             <div class="row">
+            
+            
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
                 <div class="card-header"> Header </div>
@@ -271,35 +329,83 @@
                 </div>
               </div>
 				</div>
+				
+				
 				</div>
 				</div>    
+                   
+                   
                            
             </div>
-          
+          </div> 
         </div>
         </div>
       </div>
   
 
  
+
 <script>
+/*슬라이드*/
 
-$(function() {
-	$('.dropdown').hide(); 
-	// Dropdown toggle
-	$('.dropdown-toggle').click(function(){
-	  $(this).next('.dropdown').toggle();
-	});
 
-	$(document).click(function(e) {
-	  var target = e.target;
-	  if (!$(target).is('.dropdown-toggle') && !$(target).parents().is('.dropdown-toggle')) {
-	    $('.dropdown').hide();
-	  }
-	});
-
-	});
-
+/* $('.item').slick({
+	  dots: true,
+	  infinite: true,
+	  autoplay: true,
+	  variableWidth : true,
+	  autoplaySpeed: 1000,
+	  speed: 300,
+	  slidesToShow: 3,
+	  slidesToScroll : 1,
+	  adaptiveHeight: true
+	}); */
+	
+/* 	$('.item').slick({
+		  dots: true,
+		  infinite: false,
+		  speed: 300,
+		  slidesToShow: 4,
+		  slidesToScroll: 4,
+		  responsive: [
+		    {
+		      breakpoint: 1024,
+		      settings: {
+		        slidesToShow: 3,
+		        slidesToScroll: 3,
+		        infinite: true,
+		        dots: true
+		      }
+		    },
+		    {
+		      breakpoint: 600,
+		      settings: {
+		        slidesToShow: 2,
+		        slidesToScroll: 2
+		      }
+		    },
+		    {
+		      breakpoint: 480,
+		      settings: {
+		        slidesToShow: 1,
+		        slidesToScroll: 1
+		      }
+		    }
+		    // You can unslick at a given breakpoint now by adding:
+		    // settings: "unslick"
+		    // instead of a settings object
+		  ]
+		}); */
+	
+/* 정보수정버튼 */
+$(function(){
+		$("#box-container").hide();
+		  $("#editlink").on("click", function() {
+		    $("#box-container").toggle("fast");
+		  });
+		  
+})
+	
 $("#editInfo").click(function(){
 	/* location.href="toPwCheck.do"; */
 	window.open("toPwCheck.do","_blank","width=500, height=300, scrollbars=no");

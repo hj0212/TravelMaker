@@ -2080,7 +2080,7 @@ tbody.collapse.show {
   overflow: hidden;
   transition: height 0.35s ease; }
 
-.dropup,
+/* .dropup,
 .dropdown {
   position: relative; }
 
@@ -2230,7 +2230,7 @@ tbody.collapse.show {
   font-size: 0.875rem;
   color: #6c757d;
   white-space: nowrap; }
-
+ */
 .btn-group,
 .btn-group-vertical {
   position: relative;
@@ -6265,7 +6265,10 @@ a.btn:hover {
 	box-shadow: rgba(30, 22, 54, 0.7) 0 80px 0px 2px inset;
 }
 
-  .py-5{
+/*   .py-5{
   padding: 0 !important;
-  }
+  } */
     
+    #wrapper{
+    width:970px;
+    }

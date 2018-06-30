@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.SendMail;
 import dao.MemberDAO;
+import dao.ReviewDAO;
 import dto.MemberDTO;
+import dto.ReviewDTO;
 
 
 @WebServlet("*.do")
@@ -26,6 +29,7 @@ public class MemberController extends HttpServlet {
 			response.setCharacterEncoding("utf8");
 
 			MemberDAO mdao = new MemberDAO();
+			ReviewDAO rdao = new ReviewDAO();
 
 			boolean isForward = true;
 			String dst = null;
@@ -146,6 +150,12 @@ public class MemberController extends HttpServlet {
 					request.setAttribute("nickname", mdto.getKakao_nickname());
 					request.setAttribute("email", mdto.getKakao_email());
 				}
+				
+				MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        List<ReviewDTO> MyReviewResult = rdao.getAllMyReview(user.getSeq());
+		        request.setAttribute("MyReviewResult", MyReviewResult);
+		        System.out.println(mdto.getSeq());
+
 
 				isForward = true;
 				dst="mypage.jsp";
@@ -262,15 +272,48 @@ public class MemberController extends HttpServlet {
 			}else if(command.equals("/toLogin.do")) {
 				isForward=true;
 				dst="newlogin.jsp";
+			
+			
+//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
+		}else if(command.equals("/checkEmail.do")){
+			String id=request.getParameter("id");
+			String email = request.getParameter("email");
+			int result =mdao.getEmail(id, email);
+			request.setAttribute("checkEmailResult",result);
+			if(result==10) {
+				request.setAttribute("inputId",id);
+				if(result==11) {
+					request.setAttribute("inputEmail", email);			
+				}			
+			}
+			isForward = true;
+			dst="findPwresult.jsp";
+		}
+//////////////임시비밀번호 전송 기능	
+		else if(command.equals("/sendtmpPw.do")) {
+			String id=request.getParameter("id");
+			String email=request.getParameter("email");
+			SendMail smail = new SendMail();
+			String pw =smail.maketmpPw();
+			int changeResult = mdao.changePw(id, pw);
+			if(changeResult==1) {
+				smail.send(id, email, pw);			
+				request.setAttribute("mailResult", true);		
+			}else {
+				request.setAttribute("mailResult", false);
 			}
 
-			if(isForward) {
-				RequestDispatcher rd = request.getRequestDispatcher(dst);
-				rd.forward(request, response);
-			} else {
-				response.sendRedirect(dst);
-			}
-		}catch(Exception e) {e.printStackTrace();}		
+			isForward = true;
+			dst = "sendtmpPwResult";
+		}
+		
+		if(isForward) {
+			RequestDispatcher rd = request.getRequestDispatcher(dst);
+			rd.forward(request, response);
+		} else {
+			response.sendRedirect(dst);
+		}
+	}catch(Exception e) {e.printStackTrace();}		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -233,9 +233,9 @@ div {
 		<h1 class="divLine">Plan</h1>
 		<hr />
 
-		<div class="row mt-5 mx-0">
+		<div class="row mt-2 mx-0">
 			<c:forEach var="item" items="${planList}">
-				<div class="item col-md-3">
+				<div class="item col-md-3 mb-3">
 					<div class="card text-center">
 						<div class="card-header planTitle">${item.plan_title}</div>
 						

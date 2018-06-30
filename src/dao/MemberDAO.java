@@ -317,10 +317,11 @@ public class MemberDAO {
 		pstmt.setString(2, pw);
 		ResultSet rs = pstmt.executeQuery();
 		boolean result = rs.next();
-
+		
+		rs.close();
 		pstmt.close();
 		con.close();
-		rs.close();
+		
 		return result;
 	}
 
@@ -341,10 +342,11 @@ public class MemberDAO {
 			}
 			result = dto;
 		}
-
+		
+		rs.close();
 		pstmt.close();
 		con.close();
-		rs.close();
+		
 		return result;
 	}
 

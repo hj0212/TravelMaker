@@ -273,7 +273,7 @@
 									alert("여행 제목을 지어주세요.")
 								} else {
 									$("#plan-form").attr("action",
-											"createPlan.plan").submit();
+											"createPlan.plan?datePage="+datepage).submit();
 								}
 					});
 

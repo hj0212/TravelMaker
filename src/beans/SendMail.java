@@ -11,8 +11,8 @@ import javax.mail.internet.MimeMessage;
 
 public class SendMail {
 	String host     = "smtp.gmail.com";
-	final String user   = "winhae@gmail.com";	// ±¸±Û ¾ÆÀÌµð
-	final String password  = "eunice93";	// ±¸±Û ºñ¹ø
+	final String user   = "winhae@gmail.com";	// ï¿½ï¿½ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½Ìµï¿½
+	final String password  = "";	// ï¿½ï¿½ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½
 
 
 
@@ -32,7 +32,7 @@ public class SendMail {
 
 	public void send(String id, String email, String pw){
 
-		String mailTo = email;  //¼ö½ÅÀÚ¸ÞÀÏÁÖ¼Ò
+		String mailTo = email;  //ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½
 		String content = "<!DOCTYPE html>\r\n" + 
 				"<html>\r\n" + 
 				"<head>\r\n" + 
@@ -60,13 +60,13 @@ public class SendMail {
 				"    <div>\r\n" + 				
 				"    <fieldset>\r\n" + 
 				"        <legend>TravelMaker</legend>\r\n" + 
-				"        <h1> ÀÓ½Ã ºñ¹Ð¹øÈ£ ¹ß¼Û </h1>\r\n" + 
+				"        <h1> ï¿½Ó½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ ï¿½ß¼ï¿½ </h1>\r\n" + 
 				"        <hr>\r\n" + 
-				"        <p>"+id +" ´ÔÀÇ ÀÓ½Ã ºñ¹Ð¹øÈ£´Â </p>\r\n" + 
+				"        <p>"+id +" ï¿½ï¿½ï¿½ï¿½ ï¿½Ó½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ </p>\r\n" + 
 				"        <p><span>  "+ pw +"  </span></p>\r\n" + 
-				"        <p>ÀÔ´Ï´Ù. ·Î±×ÀÎ ÈÄ, Á¤º¸¼öÁ¤¿¡¼­ ºñ¹Ð¹øÈ£¸¦ ¼öÁ¤ÇØ ÁÖ¼¼¿ä.</p>\r\n" + 
-				"        <p>ÀÌ¿ëÇØÁÖ¼Å¼­ °¨»çÇÕ´Ï´Ù.</p>\r\n" + 
-                "        <a href=\"http://localhost:8080/WEB_SOCKET_0611/newlogin.jsp\">·Î±×ÀÎÀ¸·Î °¡±â</a>" +
+				"        <p>ï¿½Ô´Ï´ï¿½. ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½.</p>\r\n" + 
+				"        <p>ï¿½Ì¿ï¿½ï¿½ï¿½ï¿½Ö¼Å¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.</p>\r\n" + 
+                "        <a href=\"http://localhost:8080/WEB_SOCKET_0611/newlogin.jsp\">ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</a>" +
 				"    </fieldset>\r\n" + 
 				"</div>\r\n" +  
 				"</body>\r\n" +  
@@ -94,7 +94,7 @@ public class SendMail {
 			message.setContent(content,"text/html;charset=utf-8");
 			
 			// Subject
-			message.setSubject("[TravelMaker] ºñ¹Ð¹øÈ£ Ã£±â ¸ÞÀÏ");
+			message.setSubject("[TravelMaker] ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
 			// Text
 			/*message.setText("");*/

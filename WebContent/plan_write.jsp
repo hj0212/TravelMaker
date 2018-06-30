@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script
@@ -25,7 +26,10 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/js/tempusdominus-bootstrap-4.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/css/tempusdominus-bootstrap-4.min.css" />
-<script src="source/lib/lightswitch05-table-to-json/jquery.tabletojson.min.js"></script>
+<script
+	src="source/lib/lightswitch05-table-to-json/jquery.tabletojson.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="source/css/plan_writeNavi.css">
 <style>
 #title-board {
 	font-size: 15px;
@@ -92,11 +96,9 @@
 	height: 300px;
 	overflow: auto;
 } */
-
 #extraarea {
 	height: 38px;;
 }
-
 
 #totalbudget {
 	width: 150px;
@@ -106,6 +108,7 @@
 #delete-table {
 	float: right;
 }
+
 #title-board {
 	background: white;
 }
@@ -143,15 +146,55 @@
 	</c:choose>
 	<div class="container">
 		<div class="input-group input-group-lg">
-		
+
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-lg">여행</span>
 			</div>
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
 				name="plantitle" value="${plan_title}" readonly>
-			
+
 		</div>
+		<!-- 여기 몇일 여행인지 받아서 개수만큼 돌리기 -->
+		<div class="row col-md-12 days mt-0">
+			<div style="display: inline-block; width: 100%; overflow-y: auto;">
+				<ul class="timeline timeline-horizontal">
+					<c:forEach var="day" begin="1" end="5" step="1">
+						<li class="timeline-item">
+							<div class="timeline-badge">
+								<i class="dayCount">${day}일차</i>
+							</div>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h5 class="timeline-title text-center">${plan_startdate}</h5>
+									<p>
+										<small class="text-muted"><i
+											class="glyphicon glyphicon-time"></i>입력된 일정 수: 0</small>
+									</p>
+								</div>
+							</div>
+						</li>
+					</c:forEach>
+
+				</ul>
+			</div>
+		</div>
+		<script>
+			$(".timeline-item .timeline-badge").click(function() {
+				var t = $(this);
+				var isClicked = $('.timeline-horizontal li').find('.active');
+				console.log(isClicked);
+				if (isClicked == null) {
+					t.addClass("active");
+				} else {
+					isClicked.removeClass("active");
+					t.addClass("active");
+				}
+				$(location).attr('href',"plan_write.jsp");
+			})
+		</script>
+		<!-- 일차 페이징 끝 -->
+
 		<div id="schedulearea">
 			<table class="table table-bordered" id="schedule-plan">
 				<thead>
@@ -164,43 +207,43 @@
 						<th scope="col" style="width: 20px;">삭제</th>
 					</tr>
 				</thead>
-				
+
 				<tbody id="schedule-tbody"
 					style="table-layout: fixed; word-break: break-all;">
 					<c:if test="${create == 'f'}">
-					<c:forEach var="item" items="${scheduleList}">
-					<tr class="clickable-row">
-						<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
-						<td name="place">${item.schedule_place}</td>
-						<td name="schedule">${item.schedule_plan}</td>
-						
-						<c:if test="${!empty budgetList}">
-						<c:set var="loop_flag" value="false" />
-						<c:forEach var="bitem" items="${budgetList}" varStatus="index">
-							<c:if test="${not loop_flag }">
-								<c:if test="${item.schedule_seq == bitem.schedule_seq}">
-									<td name="money">${bitem.budget_amount}</td>
-									<c:set var="loop_flag" value="true" />
+						<c:forEach var="item" items="${scheduleList}">
+							<tr class="clickable-row">
+								<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
+								<td name="place">${item.schedule_place}</td>
+								<td name="schedule">${item.schedule_plan}</td>
+
+								<c:if test="${!empty budgetList}">
+									<c:set var="loop_flag" value="false" />
+									<c:forEach var="bitem" items="${budgetList}" varStatus="index">
+										<c:if test="${not loop_flag }">
+											<c:if test="${item.schedule_seq == bitem.schedule_seq}">
+												<td name="money">${bitem.budget_amount}</td>
+												<c:set var="loop_flag" value="true" />
+											</c:if>
+											<c:if
+												test="${index.last && item.schedule_seq != bitem.schedule_seq}">
+												<td name="money"></td>
+												<c:set var="loop_flag" value="true" />
+											</c:if>
+										</c:if>
+									</c:forEach>
 								</c:if>
-								<c:if test="${index.last && item.schedule_seq != bitem.schedule_seq}">
+								<c:if test="${empty budgetList}">
 									<td name="money"></td>
-									<c:set var="loop_flag" value="true" />
 								</c:if>
-							</c:if>
+								<td name="reference">${item.schedule_ref}</td>
+								<td><button style="float: left; border: none;"
+										type="button" class="btn btn-outline-danger">
+										<i class="far fa-times-circle"></i>
+									</button> <input type="hidden" class="schedule_seq"
+									value="${item.schedule_seq}"></td>
+							</tr>
 						</c:forEach>
-						</c:if>
-						<c:if test="${empty budgetList}">
-						<td name="money"></td>
-						</c:if>
-						<td name="reference">${item.schedule_ref}</td>
-						<td><button style="float: left; border: none;" type="button"
-								class="btn btn-outline-danger">
-								<i class="far fa-times-circle"></i>
-							</button>
-						<input type="hidden" class="schedule_seq" value="${item.schedule_seq}">	
-						</td>
-					</tr>
-					</c:forEach>
 					</c:if>
 					<tr class="clickable-row active new">
 						<th scope="row" style="height: 50px;"></th>
@@ -211,14 +254,15 @@
 						<td><button style="float: left; border: none;" type="button"
 								class="btn btn-outline-danger">
 								<i class="far fa-times-circle"></i>
-							</button><input type="hidden" class="schedule_seq" value="0"></td>
+							</button> <input type="hidden" class="schedule_seq" value="0"></td>
 
 					</tr>
 				</tbody>
 			</table>
-			
+
 			<div id="extraarea">
-				<input type="text" id="totalbudget" class="form-control" value="${totalBudget}원" readonly>
+				<input type="text" id="totalbudget" class="form-control"
+					value="${totalBudget}원" readonly>
 				<button type="button" class="btn btn-outline-danger"
 					id="delete-table">삭제</button>
 			</div>
@@ -227,17 +271,17 @@
 
 		<div id="plan-board">
 			<form action="addSchedule.plan" method="post" id="scheduleform">
-			<input type="hidden" name="plan" value="${param.plan}">
-			<input type="hidden" name="day" value="${param.day}">
-			<input type="hidden" name="schedule_seq" value="0">
-			<table class="table table-bordered" id="schedule-boarder">
-				<thead>
-				</thead>
-				<tbody>
-					<tr>
-						<th scope="row"
-							style="background-color: #e9e9e9; text-align: center; vertical-align: middle;">시간</th>
-						<td style="width: 70%; text-align: center;">
+				<input type="hidden" name="plan" value="${param.plan}"> <input
+					type="hidden" name="day" value="${param.day}"> <input
+					type="hidden" name="schedule_seq" value="0">
+				<table class="table table-bordered" id="schedule-boarder">
+					<thead>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"
+								style="background-color: #e9e9e9; text-align: center; vertical-align: middle;">시간</th>
+							<td style="width: 70%; text-align: center;">
 
 							<div class="col-10">
 								<input class="form-control" type="time"
@@ -275,29 +319,31 @@
 							style="background-color: #e9e9e9; text-align: center; vertical-align: middle">일정</th>
 						<td><input class="form-control" id="schedule" name="schedule"></td>
 
-					</tr>
-					<tr>
-						<th scope="row"
-							style="background-color: #e9e9e9; text-align: center; vertical-align: middle">예산
-							<!-- <button type='button' class='btn btn-outline-primary btn-sm'
+						</tr>
+						<tr>
+							<th scope="row"
+								style="background-color: #e9e9e9; text-align: center; vertical-align: middle">예산
+								<!-- <button type='button' class='btn btn-outline-primary btn-sm'
 								style='float: right' id="moneyaddbtn">
 								<i class='fa fa-plus'></i>
 							</button> -->
-						</th>
-						<td><input type="text" class="form-control" id="money" name="money"></td>
-			
-					</tr>
-					<tr>
-						<th scope="row"
-							style="background-color: #e9e9e9; text-align: center; vertical-align: middle">참조</th>
-						<td><input type="text" class="form-control" id="reference" name="reference"></td>
-					</tr>
-				</tbody>
-			</table>
-			<div style="text-align: right">
-				<button type="button" class="btn btn-outline-primary"
-					id="success-primary">등록</button>
-			</div>
+							</th>
+							<td><input type="text" class="form-control" id="money"
+								name="money"></td>
+
+						</tr>
+						<tr>
+							<th scope="row"
+								style="background-color: #e9e9e9; text-align: center; vertical-align: middle">참조</th>
+							<td><input type="text" class="form-control" id="reference"
+								name="reference"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div style="text-align: right">
+					<button type="button" class="btn btn-outline-primary"
+						id="success-primary">등록</button>
+				</div>
 			</form>
 		</div>
 		<!-- <div style="width: 40%; float: right" id="plan-div">
@@ -374,41 +420,38 @@ $(document).ready(function() {
 				+"<div class='input-group-prepend'><span class='input-group-text'>원</span></div></div><button style='float: left; border: none' type='button' class='btn btn-outline-danger'><i class='far fa-times-circle'></i></button>");
 	});
 
-	$("#moneyxbtn").click(function() {
-		
-	}); */
-	
-    $("#plan-table").on('click', "button[type='button']", function(event) {
-        var index = $(event.currentTarget).closest("tr").index();
-        var info = $("#plan-tbody")[0];
-        info.deleteRow(index, datecount--);
+							/* budgetcount = 1;
+							$("#moneyaddbtn").click(function() {
+								budgetcount++;
+							 	$("#schedule-boarder>tbody>tr>td[name='budget']").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'>"
+										+"<div class='input-group-prepend'><span class='input-group-text'>원</span></div></div><button style='float: left; border: none' type='button' class='btn btn-outline-danger'><i class='far fa-times-circle'></i></button>");
+							});
 
-        $("#plan-table tr:last td:last-child").append("<button type='button' class='btn btn-outline-danger btn-sm'style='float:right'><i class='fa fa-times'></i></button>");
+							$("#moneyxbtn").click(function() {
+								
+							}); */
 
-    });
+							$("#plan-table")
+									.on(
+											'click',
+											"button[type='button']",
+											function(event) {
+												var index = $(
+														event.currentTarget)
+														.closest("tr").index();
+												var info = $("#plan-tbody")[0];
+												info.deleteRow(index,
+														datecount--);
 
-    $("#schedule-plan td:last-child").hide();
-    $("#schedule-plan th:last-child").hide();
+												$(
+														"#plan-table tr:last td:last-child")
+														.append(
+																"<button type='button' class='btn btn-outline-danger btn-sm'style='float:right'><i class='fa fa-times'></i></button>");
 
-    $("#delete-table").click(function() {
-        if ($("#delete-table").text() == "삭제") {
-            $("#delete-table").text("완료");
-            $("#delete-table").attr("class", "btn btn-outline-primary");
-            $("#schedule-plan td:last-child").show();
-            $("#schedule-plan th:last-child").show();
-        } else {
-            $("#delete-table").text("삭제");
-            $("#delete-table").attr("class", "btn btn-outline-danger");
-            $("#schedule-plan td:last-child").hide();
-            $("#schedule-plan th:last-child").hide();
-        }
-    });
+											});
 
-    $("#schedule-plan").on('click', "button[type='button']", function(event) {
-        var index = $(event.currentTarget).closest("tr").index();
-        var info = $("#schedule-tbody")[0];
-        info.deleteRow(index);
-    });
+							$("#schedule-plan td:last-child").hide();
+							$("#schedule-plan th:last-child").hide();
 
     var schedulecount = 1;
     timeArray = new Array();
