@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -151,10 +152,25 @@ public class MemberController extends HttpServlet {
 				}
 
 				MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
-				List<ReviewDTO> MyReviewResult = rdao.getAllMyReview(user.getSeq());
-				request.setAttribute("MyReviewResult", MyReviewResult);
-				System.out.println(mdto.getSeq());
-
+				/*List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq());
+				request.setAttribute("MyReviewResult", MyReviewResult);*/
+				
+				   int currentPage = 0;
+		            String currentPageString = request.getParameter("currentPage");
+		            
+		            if(currentPageString == null) {
+		               currentPage = 1;
+		            } else {
+		               currentPage = Integer.parseInt(currentPageString);
+		            }
+		            
+		            String searchTerm = request.getParameter("search");
+		            List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq(), currentPage*12-11, currentPage*12, searchTerm);
+					request.setAttribute("MyReviewResult", MyReviewResult);
+		         
+		            String MyReviewPageNavi = rdao.getMyReviewPageNavi(user.getSeq(), currentPage, searchTerm);
+		            request.setAttribute("MyReviewPageNavi", MyReviewPageNavi);
+								
 						
 				isForward = true;
 				dst="mypage.jsp";
