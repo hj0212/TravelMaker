@@ -262,33 +262,37 @@ public class MemberDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, seq);
 		ResultSet rs = pstmt.executeQuery();
-		rs.next();
-		String part = rs.getString(1);
-		/*	System.out.println(part);*/
 		String nickname = "";
-		if(part.equals("home")) {
-			sql = "select nickname from users where seq=?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, seq);      
-			rs = pstmt.executeQuery();
-			rs.next();
-			nickname = rs.getString(1);
-		}else if (part.equals("naver")) {
-			sql = "select naver_nickname from users where seq =?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, seq);
-			rs = pstmt.executeQuery();
-			rs.next();
-			nickname = rs.getString(1);
+		if(rs.next()) {
+			String part = rs.getString(1);
+			System.out.println(part);
+			
+			if(part.equals("home")) {
+				sql = "select nickname from users where seq=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, seq);      
+				rs = pstmt.executeQuery();
+				if(rs.next())
+				nickname = rs.getString(1);
+			}else if (part.equals("naver")) {
+				sql = "select naver_nickname from users where seq =?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, seq);
+				rs = pstmt.executeQuery();
+				if(rs.next())
+				nickname = rs.getString(1);
+			}
+			else if (part.equals("kakao")) {
+				sql = "select kakao_nickname from users where seq = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, seq);
+				rs = pstmt.executeQuery();
+				if(rs.next())
+				nickname = rs.getString(1);
+			}
 		}
-		else if (part.equals("kakao")) {
-			sql = "select kakao_nickname from users where seq = ?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, seq);
-			rs = pstmt.executeQuery();
-			rs.next();
-			nickname = rs.getString(1);
-		}
+		
+		System.out.println(nickname);
 		pstmt.close();
 		rs.close();
 		con.close();
