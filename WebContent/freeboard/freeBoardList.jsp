@@ -24,7 +24,6 @@
 	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 	crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="source/css/codepenNavi.css">
 
 <style>
 .container {
@@ -83,10 +82,10 @@ div {
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.loginId !=null}">
-			<%@include file="include/mainNavi_login.jsp"%>
+			<%@include file="../include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
+			<%@include file="../include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
@@ -123,7 +122,7 @@ div {
 							</c:otherwise>
 						</c:choose>
 						<tr>
-							<td colspan="5" align="center">
+							<td colspan="5">
 								<nav aria-label="Page navigation example">
 									<ul class="pagination">
 										${pageNavi}
@@ -133,7 +132,7 @@ div {
 						</tr>
 						<tr>
 							<td colspan="5" id="input_area">
-							<button type="button" class="btn btn-primary" id="writebtn">글쓰기</button>
+							<button type="button" class="btn btn-primary " id="writebtn">글쓰기</button>
 								<div class="input-group mb-3" id="search_area">
 									<input type="text" class="form-control" placeholder="제목 검색"
 										aria-label="reply" aria-describedby="basic-addon2" id="search">
@@ -142,15 +141,17 @@ div {
 											id="searchbtn" name="searchbtn">검색</button>
 									</div>
 								</div>
+							</td>
 						</tr>
-
 					</tbody>
 				</table>
 			</div>
 		</div>
-
 	</div>
-
 </body>
-
+<script>
+	document.getElementById("writebtn").onclick = function() {
+		location.href = "freewrite.bo";
+	}
+</script>
 </html>

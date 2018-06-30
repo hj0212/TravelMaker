@@ -11,8 +11,8 @@ import javax.mail.internet.MimeMessage;
 
 public class SendMail {
 	String host     = "smtp.gmail.com";
-	final String user   = "winhae@gmail.com";	// ���̹� ���̵�
-	final String password  = "";	// ���̹� ���
+	final String user   = "winhae@gmail.com";	// ���� ���̵�
+	final String password  = "eunice93";	// ���� ���
 
 
 
@@ -33,6 +33,44 @@ public class SendMail {
 	public void send(String id, String email, String pw){
 
 		String mailTo = email;  //�����ڸ����ּ�
+		String content = "<!DOCTYPE html>\r\n" + 
+				"<html>\r\n" + 
+				"<head>\r\n" + 
+				"<meta charset=\"UTF-8\">\r\n" + 
+				"<title>Insert title here</title>\r\n" + 
+				"<style>\r\n" + 
+				"        div {\r\n" + 
+				"            margin: 10% auto;\r\n" + 
+				"            height:400px;\r\n" +
+				"            width:600px;\r\n" +
+				"        }\r\n" + 
+				"        legend {\r\n" + 
+				"            font-size: 30px;\r\n" + 
+				"        }\r\n" + 
+				"        fieldset {\r\n" + 
+				"            text-align: center;\r\n" + 
+				"            height:100%;\r\n" +
+				"            width:100%;\r\n" +
+				"        }\r\n" + 
+				"        span{color:blue; font-weight:600}"+
+				"        a {text-decoration: none;}" +
+				"    </style>\r\n" + 
+				"</head>\r\n" + 
+				"<body>\r\n" + 
+				"    <div>\r\n" + 				
+				"    <fieldset>\r\n" + 
+				"        <legend>TravelMaker</legend>\r\n" + 
+				"        <h1> �ӽ� ��й�ȣ �߼� </h1>\r\n" + 
+				"        <hr>\r\n" + 
+				"        <p>"+id +" ���� �ӽ� ��й�ȣ�� </p>\r\n" + 
+				"        <p><span>  "+ pw +"  </span></p>\r\n" + 
+				"        <p>�Դϴ�. �α��� ��, ������������ ��й�ȣ�� ������ �ּ���.</p>\r\n" + 
+				"        <p>�̿����ּż� �����մϴ�.</p>\r\n" + 
+                "        <a href=\"http://localhost:8080/WEB_SOCKET_0611/newlogin.jsp\">�α������� ����</a>" +
+				"    </fieldset>\r\n" + 
+				"</div>\r\n" +  
+				"</body>\r\n" +  
+				"</html>";
 		// Get the session object
 		Properties props = new Properties();
 		props.put("mail.smtp.host", host);
@@ -53,15 +91,13 @@ public class SendMail {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(user));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
-
+			message.setContent(content,"text/html;charset=utf-8");
+			
 			// Subject
-			message.setSubject("[TravelMaker] �ӽú�й�ȣ �߼�");
+			message.setSubject("[TravelMaker] ��й�ȣ ã�� ����");
 
 			// Text
-			message.setText("----------TravelMaker-----------"
-					+ id +" ���� �ӽ� ��й�ȣ�� "
-							+ "["   + pw +   "]�Դϴ�. "
-							+ "�ش� ��й�ȣ�� �α��� ��, ��й�ȣ�� �������ּ���.");
+			/*message.setText("");*/
 
 			// send the message
 			Transport.send(message);
@@ -73,11 +109,6 @@ public class SendMail {
 	}
 
 
-
-
-
 	public static void main(String[] args) {
-
-
 	}
 }

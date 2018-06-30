@@ -24,7 +24,6 @@
 <link rel="stylesheet" type="text/css"
 	href="source/lib/slick/slick-theme.css" />
 
-<link rel="stylesheet" href="mypage.css" type="text/css">
 
 <style>
 div {
@@ -33,10 +32,6 @@ div {
 
 .container {
 	height: 100%;
-}
-
-#navi {
-	height: 70px;
 }
 
 #bestPlan {
@@ -57,6 +52,19 @@ div {
 
 .item {
 	width: 300px;
+}
+
+.hls_sol_data {
+	text-align: center;
+}
+
+.hls_sol a {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.hls_sol .btn {
+	bottom: 10px;
 }
 </style>
 
@@ -144,20 +152,19 @@ div {
 
 		<h1 class="divLine">BEST IMAGE</h1>
 		<hr />
-		<div class="row" id="bestImage">
-
-			<div class="col-md-3 hls_sol">
+		<div class="row col-md-12 mx-0" id="bestImage">
+			<div class="col-md-3 hls_sol px-1">
 				<img src="travel1.jpg" alt="">
 				<div class="hls_sol_data">
 					<h1>1</h1>
 					<div class="hls_data">
 						<a href="" target="" class="hls_title">여행자님</a> <a href=""
 							class="btn btn-pro">여행계획보기</a>
-
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 hls_sol">
+
+			<div class="hls_sol col-md-3 px-1">
 				<img src="travel1.jpg" alt="">
 				<div class="hls_sol_data">
 					<h1>2</h1>
@@ -167,7 +174,7 @@ div {
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 hls_sol">
+			<div class="col-md-3 hls_sol px-1">
 				<img src="travel1.jpg" alt="">
 				<div class="hls_sol_data">
 					<h1>3</h1>
@@ -177,7 +184,7 @@ div {
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 hls_sol">
+			<div class="col-md-3 hls_sol px-1">
 				<img src="travel1.jpg" alt="">
 				<div class="hls_sol_data">
 					<h1>4</h1>
@@ -188,17 +195,14 @@ div {
 				</div>
 			</div>
 
-
-
 		</div>
 		<!--bestImage 영역 끝 -->
-		<h1 class="divLine">푸터올 곳</h1>
+		<h1 class="divLine">푸터</h1>
 		<hr />
-		<div class="row">
-			<div class="col-md-12" id="foot">
-				
-			</div>
-		</div>
+		<!-- <div class="row">
+			<div class="col-md-12" id="foot"></div>
+		</div> -->
+		<%@include file="footer1.jsp" %>
 
 	</div>
 	<script src='source/lib/slick/slick.js'></script>
