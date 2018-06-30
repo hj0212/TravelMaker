@@ -42,6 +42,7 @@ public class FrontController extends HttpServlet {
 			String dst = null;
 
 			if(command.equals("/freeboard.bo")) {
+				System.out.println("찍힘?");
 				int currentPage = 0;
 				String currentPageString = request.getParameter("currentPage");
 				
@@ -63,7 +64,6 @@ public class FrontController extends HttpServlet {
 				
 				isForward = true;
 				dst="freeboard/freeBoardList.jsp";
-
 			} else if(command.equals("/freewrite.bo")) {
 				isForward = true;
 				dst = "freeboard/freeArticleWrite.jsp";
