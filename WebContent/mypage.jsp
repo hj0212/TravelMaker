@@ -84,10 +84,26 @@ color: #777777 !important;
 #box-container li{
 list-style: none !important;
 }
+#wrapper{
+width:970px;
+box-sizing: border-box;
+margin:0px auto;
+}
+
+.data, .data div {
+	height: 400px;
+}
+
+.item {
+	width: 300px;
+	padding:0;
+}
+
  </style>
 </head>
 
 <body>
+<div id="wrapper">
 <c:choose>
 		<c:when test="${sessionScope.loginId != null}">
 			<%@include file="include/mainNavi_login.jsp"%>
@@ -123,7 +139,7 @@ list-style: none !important;
   		<li class="clearfix"><a  href="#" id="updateEmail">이메일</a></li>
   		</c:when>
   		<c:otherwise>
-  		<li class="clearfix"><a class="dropdown-item" href="#" id="updateEmail">이메일</a></li>
+  		<li class="clearfix"><a href="#" id="updateEmail">이메일</a></li>
   		</c:otherwise>
   		</c:choose>
   		
@@ -172,6 +188,7 @@ list-style: none !important;
       </div>
     </div>
   </div>
+  
   <!--tab부분-->
   <div class="py-5 mt-10">
     <div class="container">
@@ -190,64 +207,34 @@ list-style: none !important;
           </ul>
           </div>     
             <div class="pannel-body">
+
+            <div class="row tab-content ">
             
             <!-- tabone -->
-            <div class="row tab-content">
-             <div class="col-md-12 tab-pane active" id="tabone" role="tabpanel">
-            <div class="data"
-					data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
-            <!-- <div class="row"> -->
-            <div class="item ">
-					<div class="card col-md-3 col-sm-3 w-25">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+            <div class="col tab-pane active" id="tabone" role="tabpanel">
+            <div class="row">
+            <c:forEach var="mrv" items="${MyReviewResult}">
+            <div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header">${mrv.review_title}</div>
+                <img class="card-img-top float-left rounded" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
                 <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
+                  <h6 class="text-muted">${mrv.review_contents}</h6>
+                  <p>${mrv.review_writedate}</p>
                 </div>
               </div>
 				</div>
-				<div class="item ">
-					<div class="card col-md-3 col-sm-3 w-25">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item ">
-					<div class="card col-md-3 col-sm-3 w-25">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item ">
-					<div class="card col-md-3 col-sm-3 w-25">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				</div>
+			</c:forEach>
+	
+				
 				</div>
 				</div>
 				
 <!-- tabtwo -->
             <div class="col tab-pane fade" id="tabtwo" role="tabpanel">
             <div class="row">
+            
+            
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
                 <div class="card-header"> Header </div>
@@ -288,12 +275,16 @@ list-style: none !important;
                 </div>
               </div>
 				</div>
+				
+				
 				</div>
 				</div>
 				
 				<!-- tabthree -->
                        <div class="col tab-pane fade" id="tabthree" role="tabpanel">
             <div class="row">
+            
+            
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
                 <div class="card-header"> Header </div>
@@ -338,42 +329,82 @@ list-style: none !important;
                 </div>
               </div>
 				</div>
+				
+				
 				</div>
 				</div>    
+                   
+                   
                            
             </div>
-          
+          </div> 
         </div>
         </div>
       </div>
   
 
  
-<script src='source/lib/slick/slick.js'></script>
+
 <script>
-	$('.data').slick({
-		dots : true,
-		infinite : true,
-		slidesToShow : 3,
-		slidesToScroll : 1,
-		variableWidth : true,
-		autoplay : true,
-		speed : 500,
-		autoplaySpeed : 2000
-	});
+/*슬라이드*/
 
 
+/* $('.item').slick({
+	  dots: true,
+	  infinite: true,
+	  autoplay: true,
+	  variableWidth : true,
+	  autoplaySpeed: 1000,
+	  speed: 300,
+	  slidesToShow: 3,
+	  slidesToScroll : 1,
+	  adaptiveHeight: true
+	}); */
+	
+/* 	$('.item').slick({
+		  dots: true,
+		  infinite: false,
+		  speed: 300,
+		  slidesToShow: 4,
+		  slidesToScroll: 4,
+		  responsive: [
+		    {
+		      breakpoint: 1024,
+		      settings: {
+		        slidesToShow: 3,
+		        slidesToScroll: 3,
+		        infinite: true,
+		        dots: true
+		      }
+		    },
+		    {
+		      breakpoint: 600,
+		      settings: {
+		        slidesToShow: 2,
+		        slidesToScroll: 2
+		      }
+		    },
+		    {
+		      breakpoint: 480,
+		      settings: {
+		        slidesToShow: 1,
+		        slidesToScroll: 1
+		      }
+		    }
+		    // You can unslick at a given breakpoint now by adding:
+		    // settings: "unslick"
+		    // instead of a settings object
+		  ]
+		}); */
+	
+/* 정보수정버튼 */
 $(function(){
-	$("#box-container").hide();
+		$("#box-container").hide();
 		  $("#editlink").on("click", function() {
 		    $("#box-container").toggle("fast");
 		  });
 		  
-	
 })
-
-	
-	
 	
 $("#editInfo").click(function(){
 	/* location.href="toPwCheck.do"; */

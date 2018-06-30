@@ -167,7 +167,7 @@ public class FrontController extends HttpServlet {
 	        	  request.setAttribute("review_seq", review_seq);
 	        	  isForward = true;
 	        	  dst="deleteReviewView.jsp";
-	          }else if(command.equals(""))
+	          }
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
