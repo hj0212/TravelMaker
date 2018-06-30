@@ -71,7 +71,7 @@ div {
 </head>
 <body>
 	<c:choose>
-		<c:when test="${sessionScope.loginId !=null}">
+		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
