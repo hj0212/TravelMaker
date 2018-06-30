@@ -26,6 +26,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/js/tempusdominus-bootstrap-4.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/css/tempusdominus-bootstrap-4.min.css" />
+<script
+	src="source/lib/lightswitch05-table-to-json/jquery.tabletojson.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="source/css/plan_writeNavi.css">
 <style>
@@ -110,6 +112,25 @@
 #title-board {
 	background: white;
 }
+
+#results {
+    position: relative;
+    height: 300px;
+    overflow-y: auto;
+}
+
+ /* 검색된 각 결과들 */
+ .select {
+     padding-top: 10px;
+     padding-bottom: 10px;
+     border-bottom: 1px solid #e9e9e9;
+ }
+
+ /* 카테고리 */
+ .category {
+     color: dodgerblue;
+     font-size: 12px;
+ }
 </style>
 
 </head>
@@ -201,7 +222,10 @@
 									<c:forEach var="bitem" items="${budgetList}" varStatus="index">
 										<c:if test="${not loop_flag }">
 											<c:if test="${item.schedule_seq == bitem.schedule_seq}">
-												<td name="money">${bitem.budget_amount}</td>
+												<td name="money">
+													<div class="budget_plan">${bitem.budget_plan}:</div>
+													<div class="budget_amount">${bitem.budget_amount}</div>
+												</td>
 												<c:set var="loop_flag" value="true" />
 											</c:if>
 											<c:if
@@ -262,38 +286,41 @@
 								style="background-color: #e9e9e9; text-align: center; vertical-align: middle;">시간</th>
 							<td style="width: 70%; text-align: center;">
 
-								<div class="col-10">
-									<input class="form-control" type="time" id="start-time"
-										name="starttime" />
+							<div class="col-10">
+								<input class="form-control" type="time"
+									id="start-time" name="starttime"/>
+							</div>
+							<div class="cococo">~</div>
+							<div class="col-10">
+								<input class="form-control" type="time"
+									id="end-time" name="endtime"/>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row" style="background-color: #e9e9e9; text-align: center; vertical-align: middle">장소</th>
+						<td>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search" readonly id="place" name="place">
+								<div class="input-btn">
+									<!-- 맨 아래에 모달 창 있음 -->
+									<button class="btn btn-default" type="button" style="height: 100%; border: 1px" data-toggle="modal" data-target="#searchModal">
+										<i class="fa fa-search"></i>
+									</button>
 								</div>
-								<div class="cococo">~</div>
-								<div class="col-10">
-									<input class="form-control" type="time" id="end-time"
-										name="endtime" />
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row"
-								style="background-color: #e9e9e9; text-align: center; vertical-align: middle">장소</th>
-							<td>
-								<div class="input-group">
-									<input type="text" class="form-control" placeholder="Search"
-										readonly id="place" name="place">
-									<div class="input-btn">
-										<button class="btn btn-default" type="button"
-											style="height: 100%; border: 1px">
-											<i class="fa fa-search"></i>
-										</button>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row"
-								style="background-color: #e9e9e9; text-align: center; vertical-align: middle">일정</th>
-							<td><input class="form-control" id="schedule"
-								name="schedule"></td>
+							</div>
+						</td>
+					</tr>
+					<tr style="display:none">
+						<td>
+							<input type="text" readonly id="mapx" name="mapx">
+							<input type="text" readonly id="mapy" name="mapy">
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"
+							style="background-color: #e9e9e9; text-align: center; vertical-align: middle">일정</th>
+						<td><input class="form-control" id="schedule" name="schedule"></td>
 
 						</tr>
 						<tr>
@@ -304,14 +331,16 @@
 								<i class='fa fa-plus'></i>
 							</button>
 							</th>
-							<td class="budget"><div class="input-group mb-1">
-								<input type="text" class="form-control" id="ex1"
-									placeholder="예) 입장료"> <input type="text"
-									class="form-control" id="money1" placeholder="10000">
-								<div class="input-group-prepend">
-									<span class="input-group-text" >원</span>
+							<td class="budget" id="money">
+								<div class="input-group mb-1">
+									<input type="text" class="form-control" id="ex1"
+										placeholder="예) 입장료"> <input type="text"
+										class="form-control" id="money1" placeholder="10000">
+									<div class="input-group-prepend">
+										<span class="input-group-text" >원</span>
+									</div>
 								</div>
-							</div></td>
+							</td>
 
 						</tr>
 						<tr>
@@ -336,168 +365,279 @@
 			</div>
 		</div> -->
 	</div>
-	<script>
-		$(document).ready(function() {
-							$("#endbtn").click(function() {
-								/*$("#schedule-plan tr:last").remove();
-								$("#schedule-plan thead tr th:last").remove();
-								$("#schedule-plan tbody tr td:last").remove();
-								
-								var table = $("#schedule-plan").tableToJSON();
-								var table_json = JSON.stringify(table);
-								alert(table_json);
-								
-								 $.ajax({
-									url:"saveschedules.plan",
-									dataType:"json",
-									type:"POST",
-									data:table_json,
-									contentType:"application/x-www-form-urlencoded",
-									success: function() {
-									},
-									error:function() {
-									}
-								}) */
-							});
+	
+	<!-- 장소 찾기 모달 창 -->
+    <div class="modal text-center" id="searchModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">주소 찾기</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
 
-							budgetcount = 1;
-							$("#moneyaddbtn").click(function() {
-								budgetcount++;
-							 	$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'>"
-										+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+budgetcount+"'><i class='far fa-times-circle'></i></button></div></div>");
-							});
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <!-- 검색 버튼과 검색 창 -->
+                    <div class="input-group">
+                        <input type="text" placeholder="Search.." class="form-control" id="searchlocation">
+                        <div class="input-group-append">
+                            <button type="submit" id="searchbtn" class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="results">
 
-							$("button[id^=moneyxbtn]").click(function() {
-								console.log("예산 삭제");
-								$(this).parent().parent().remove();
-							});
+                    </div>
+                </div>
 
-							$("#plan-table")
-									.on(
-											'click',
-											"button[type='button']",
-											function(event) {
-												var index = $(
-														event.currentTarget)
-														.closest("tr").index();
-												var info = $("#plan-tbody")[0];
-												info.deleteRow(index,
-														datecount--);
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnclose">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+$(document).ready(function() {
+	$("#endbtn").click(function() {
+		/*$("#schedule-plan tr:last").remove();
+		$("#schedule-plan thead tr th:last").remove();
+		$("#schedule-plan tbody tr td:last").remove();
+		
+		var table = $("#schedule-plan").tableToJSON();
+		var table_json = JSON.stringify(table);
+		alert(table_json);
+		
+		 $.ajax({
+			url:"saveschedules.plan",
+			dataType:"json",
+			type:"POST",
+			data:table_json,
+			contentType:"application/x-www-form-urlencoded",
+			success: function() {
+			},
+			error:function() {
+			}
+		}) */
+	});
 
-												$(
-														"#plan-table tr:last td:last-child")
-														.append(
-																"<button type='button' class='btn btn-outline-danger btn-sm'style='float:right'><i class='fa fa-times'></i></button>");
+	budgetcount = 1;
+	$("#moneyaddbtn").click(function() {
+		budgetcount++;
+	 	$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'>"
+				+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+budgetcount+"'><i class='far fa-times-circle'></i></button></div></div>");
+	});
 
-											});
+	$("button[id^=moneyxbtn]").click(function() {
+		console.log("예산 삭제");
+		$(this).parent().parent().remove();
+	});
 
-							$("#schedule-plan td:last-child").hide();
-							$("#schedule-plan th:last-child").hide();
+	$("#plan-table")
+			.on(
+					'click',
+					"button[type='button']",
+					function(event) {
+						var index = $(
+								event.currentTarget)
+								.closest("tr").index();
+						var info = $("#plan-tbody")[0];
+						info.deleteRow(index,
+								datecount--);
 
-							$("#delete-table").click(
-									function() {
-										if ($("#delete-table").text() == "삭제") {
-											$("#delete-table").text("완료");
-											$("#delete-table").attr("class",
-													"btn btn-outline-primary");
-											$("#schedule-plan td:last-child")
-													.show();
-											$("#schedule-plan th:last-child")
-													.show();
-										} else {
-											$("#delete-table").text("삭제");
-											$("#delete-table").attr("class",
-													"btn btn-outline-danger");
-											$("#schedule-plan td:last-child")
-													.hide();
-											$("#schedule-plan th:last-child")
-													.hide();
-										}
-									});
+						$(
+								"#plan-table tr:last td:last-child")
+								.append(
+										"<button type='button' class='btn btn-outline-danger btn-sm'style='float:right'><i class='fa fa-times'></i></button>");
 
-							$("#schedule-plan").on(
-									'click',
-									"button[type='button']",
-									function(event) {
-										var index = $(event.currentTarget)
-												.closest("tr").index();
-										var info = $("#schedule-tbody")[0];
-										info.deleteRow(index);
-									});
+					});
 
-							var schedulecount = 1;
-							timeArray = new Array();
-							$("#success-primary").click(function() {
-												console.log("active:"+ $("#schedule-plan>tbody>.active>th").html());
-												con = "";
-												if ($(
-														"#schedule-plan>tbody>.active>th")
-														.html() != "") {
-													con = "일정을 수정하시겠습니까?";
-												} else {
-													con = "일정을 추가하시겠습니까?";
-												}
+	$("#schedule-plan td:last-child").hide();
+	$("#schedule-plan th:last-child").hide();
 
-												starttime = $("#start-time").val();
-												endtime = $("#end-time").val();
-												place = "이레빌딩"; /*  $("#place").val("이레빌딩");*/
-												schedule = $("#schedule").val();
-												money = $("#money").val();
-												reference = $("#reference").val();
+	$("#delete-table").click(
+			function() {
+				if ($("#delete-table").text() == "삭제") {
+					$("#delete-table").text("완료");
+					$("#delete-table").attr("class",
+							"btn btn-outline-primary");
+					$("#schedule-plan td:last-child")
+							.show();
+					$("#schedule-plan th:last-child")
+							.show();
+				} else {
+					$("#delete-table").text("삭제");
+					$("#delete-table").attr("class",
+							"btn btn-outline-danger");
+					$("#schedule-plan td:last-child")
+							.hide();
+					$("#schedule-plan th:last-child")
+							.hide();
+				}
+			});
 
-												if (starttime == "" || endtime == "") {
-													alert("시간을정해주세요");
-												} else if (place == "") {
-													alert("장소를정해주세요");
-												} else if (schedule == "") {
-													alert("일정을적어주세요");
-												} else if (confirm(con)) {
-													$("#scheduleform").submit();
-													var contents = '';
-													contents += '<tr class="clickable-row new active"><th style="height:50px;"></th><td name="place"></td><td name="schedule"></td>';
-													contents += '<td name="money"></td>';
-													contents += '<td name="reference"></td>';
-													contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button><input type="hidden" name="schedule_seq" value="0"></td>';
-													contents += '</tr>';
+	$("#schedule-plan").on(
+			'click',
+			"button[type='button']",
+			function(event) {
+				var index = $(event.currentTarget)
+						.closest("tr").index();
+				var info = $("#schedule-tbody")[0];
+				info.deleteRow(index);
+			});
 
-													if ($("#schedule-plan>tbody>.active>th").val() == "") { // 빈칸 = 마지막줄
-														console.log("빈칸");
-														$("#schedule-plan>tbody>tr").removeClass('new');
-														$("#schedule-plan>tbody>tr").removeClass('active');
-														$("#schedule-plan>tbody:last").append(contents);
-														$("#schedule-plan td:last-child").hide();
+	var schedulecount = 1;
+	timeArray = new Array();
+	$("#success-primary").click(function() {
+						console.log("active:"+ $("#schedule-plan>tbody>.active>th").html());
+						con = "";
+						if ($(
+								"#schedule-plan>tbody>.active>th")
+								.html() != "") {
+							con = "일정을 수정하시겠습니까?";
+						} else {
+							con = "일정을 추가하시겠습니까?";
+						}
 
-													} else { // 빈칸x = 마지막줄x
-														var cursor = "#schedule-plan>tbody>.active";
-														$("#schedule-plan>tbody>tr").removeClass('active');
-														$("#schedule-plan>tbody>.new").addClass('active');
-													}
+						starttime = $("#start-time").val();
+						endtime = $("#end-time").val();
+						place = "이레빌딩"; /*  $("#place").val("이레빌딩");*/
+						schedule = $("#schedule").val();
+						money = $("#money").val();
+						reference = $("#reference").val();
 
-													$("#start-time").val("");
-													$("#end-time").val("");
-													$("#place").val("");
-													$("#schedule").val("");
-													$("#money").val("");
-													$("#reference").val("");
-												}
-											});
+						if (starttime == "" || endtime == "") {
+							alert("시간을정해주세요");
+						} else if (place == "") {
+							alert("장소를정해주세요");
+						} else if (schedule == "") {
+							alert("일정을적어주세요");
+						} else if (confirm(con)) {
+							$("#scheduleform").submit();
+							var contents = '';
+							contents += '<tr class="clickable-row new active"><th style="height:50px;"></th><td name="place"></td><td name="schedule"></td>';
+							contents += '<td name="money"></td>';
+							contents += '<td name="reference"></td>';
+							contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button><input type="hidden" name="schedule_seq" value="0"></td>';
+							contents += '</tr>';
 
-							$("#schedule-plan").on('click','.clickable-row',function(event) {
-												$(this).addClass('active').siblings().removeClass('active');
-												var seq = $(".active .schedule_seq").val();
-												console.log("선택:" + seq);
-												$("#plan-board input[name='schedule_seq']").val(seq);
-												console.log("seq셋팅: "+ $("#plan-board input[name='schedule_seq']").val());
-												var timestr = $("#schedule-plan>tbody>.active>th").html().split("~");
-												$("#start-time").val(timestr[0]);
-												$("#end-time").val(timestr[1]);
-												$("#place").val($("#schedule-plan>tbody>.active>td[name='place']").html());
-												$("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
-												$("#money").val($("#schedule-plan>tbody>.active>td[name='money']").html());
-												$("#reference").val($("#schedule-plan>tbody>.active>td[name='reference']").html());
-											});
+							if ($("#schedule-plan>tbody>.active>th").val() == "") { // 빈칸 = 마지막줄
+								console.log("빈칸");
+								$("#schedule-plan>tbody>tr").removeClass('new');
+								$("#schedule-plan>tbody>tr").removeClass('active');
+								$("#schedule-plan>tbody:last").append(contents);
+								$("#schedule-plan td:last-child").hide();
 
-						});
-	</script>
+							} else { // 빈칸x = 마지막줄x
+								var cursor = "#schedule-plan>tbody>.active";
+								$("#schedule-plan>tbody>tr").removeClass('active');
+								$("#schedule-plan>tbody>.new").addClass('active');
+							}
+
+							$("#start-time").val("");
+							$("#end-time").val("");
+							$("#place").val("");
+							$("#schedule").val("");
+							$("#money").val("");
+							$("#reference").val("");
+						}
+					});
+
+	$("#schedule-plan").on('click','.clickable-row',function(event) {
+						$(this).addClass('active').siblings().removeClass('active');
+						var seq = $(".active .schedule_seq").val();
+						console.log("선택:" + seq);
+						$("#plan-board input[name='schedule_seq']").val(seq);
+						console.log("seq셋팅: "+ $("#plan-board input[name='schedule_seq']").val());
+						var timestr = $("#schedule-plan>tbody>.active>th").html().split("~");
+						$("#start-time").val(timestr[0]);
+						$("#end-time").val(timestr[1]);
+						$("#place").val($("#schedule-plan>tbody>.active>td[name='place']").html());
+						$("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
+						/* $("#money").val($("#schedule-plan>tbody>.active>td[name='money']").html()); */
+						$("#reference").val($("#schedule-plan>tbody>.active>td[name='reference']").html());
+					});
+    
+    $("#searchbtn").click(function() {
+    	$("#results").html("");
+    	var val = $("#searchlocation").val();
+    	$("#searchlocation").val("");
+    	
+    	$.ajax({
+    		url : "searchLocal.sl",
+    		type : "post",
+    		data : {value : val},
+    		
+    		success : function(resp) {
+    			var results = $("#results")[0];
+    			
+    			if(resp == null || resp.length < 1) {
+                    $("#results").html("<span class='align-middle'  >찾는 결과가 없습니다.</span>");
+                    return;
+    			}
+
+                for (var i = 0; i < resp.length; i++) {
+                    var div = document.createElement("div");
+                    var result = resp[i].address + "<br>" + resp[i].title + "<br><span class='category'>" + resp[i].category + "</span>";
+                    result += "<span class='mapx' style='display:none'>" + resp[i].mapx + "</span><span class='mapy' style='display:none'>" + resp[i].mapy + "</span>";
+                    div.className = "select";
+                    div.innerHTML = result;
+
+                    results.appendChild(div);
+                }
+    		},
+    		
+            error: function () {
+                console.log("에러 발생!");
+            }
+    	});
+    })
+    
+    // 지역 검색창이 닫힐때 내용 모두 제거
+    $("#searchModal").on('hidden.bs.modal', function () {
+        $("#results").html("");
+    });
+    
+    // 동적 바인딩(hover) - 검색결과 
+    $(document).on('mouseenter', '.select', function (event) {
+        $(this).css('background-color', '#e9e9e9');
+        $(this).css('cursor', 'pointer');
+    }).on('mouseleave', '.select', function () {
+        $(this).css('background-color', 'white');
+    });
+    
+    // 클릭시 지역 검색창 닫힘
+    $(document).on('click', '.select', function () {
+        var search = $(this).html();
+        var pattern = /display:none">(.*?)<\/span>/gi;
+        var res = "";
+
+        // 배열에 지역의 정보를 담음
+        var locationinfo = [];
+
+        // 맵의 x, y 좌표
+        while ((res = pattern.exec(search))) {
+            locationinfo.push(res[1]);
+        }
+
+        // 선택한 장소 이름
+        pattern = /<br>(.*?)<br>/gi;
+        while ((res = pattern.exec(search))) {
+            // 태그 제거한 장소 이름
+            var localname = res[1].replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+            locationinfo.push(localname);
+        }
+        
+        $("#mapx").val(locationinfo[0]);
+        $("#mapy").val(locationinfo[1]);
+		$("#place").val(locationinfo[2]);
+        
+        $("#searchModal").modal('toggle');
+    });
+
+});
+</script>
 </body>
 </html>
