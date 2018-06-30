@@ -109,6 +109,25 @@
 #title-board {
 	background: white;
 }
+
+#results {
+    position: relative;
+    height: 300px;
+    overflow-y: auto;
+}
+
+ /* 검색된 각 결과들 */
+ .select {
+     padding-top: 10px;
+     padding-bottom: 10px;
+     border-bottom: 1px solid #e9e9e9;
+ }
+
+ /* 카테고리 */
+ .category {
+     color: dodgerblue;
+     font-size: 12px;
+ }
 </style>
 
 </head>
@@ -232,19 +251,23 @@
 						</td>
 					</tr>
 					<tr>
-						<th scope="row"
-							style="background-color: #e9e9e9; text-align: center; vertical-align: middle">장소</th>
+						<th scope="row" style="background-color: #e9e9e9; text-align: center; vertical-align: middle">장소</th>
 						<td>
 							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Search"
-									readonly id="place" name="place">
+								<input type="text" class="form-control" placeholder="Search" readonly id="place" name="place">
 								<div class="input-btn">
-									<button class="btn btn-default" type="button"
-										style="height: 100%; border: 1px">
+									<!-- 맨 아래에 모달 창 있음 -->
+									<button class="btn btn-default" type="button" style="height: 100%; border: 1px" data-toggle="modal" data-target="#searchModal">
 										<i class="fa fa-search"></i>
 									</button>
 								</div>
 							</div>
+						</td>
+					</tr>
+					<tr style="display:none">
+						<td>
+							<input type="text" readonly id="mapx" name="mapx">
+							<input type="text" readonly id="mapy" name="mapy">
 						</td>
 					</tr>
 					<tr>
@@ -285,6 +308,40 @@
 			</div>
 		</div> -->
 	</div>
+	
+	<!-- 장소 찾기 모달 창 -->
+    <div class="modal text-center" id="searchModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">주소 찾기</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <!-- 검색 버튼과 검색 창 -->
+                    <div class="input-group">
+                        <input type="text" placeholder="Search.." class="form-control" id="searchlocation">
+                        <div class="input-group-append">
+                            <button type="submit" id="searchbtn" class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="results">
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnclose">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <script>
 $(document).ready(function() {
 	$("#endbtn").click(function() {
@@ -366,7 +423,7 @@ $(document).ready(function() {
         
         starttime = $("#start-time").val();
         endtime = $("#end-time").val();
-        place = "이레빌딩"; /*  $("#place").val("이레빌딩");*/
+        place = $("#place").val();
         schedule = $("#schedule").val();
         money = $("#money").val();
         reference = $("#reference").val();
@@ -421,6 +478,83 @@ $(document).ready(function() {
           $("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
           $("#money").val($("#schedule-plan>tbody>.active>td[name='money']").html());
           $("#reference").val($("#schedule-plan>tbody>.active>td[name='reference']").html());
+    });
+    
+    $("#searchbtn").click(function() {
+    	$("#results").html("");
+    	var val = $("#searchlocation").val();
+    	$("#searchlocation").val("");
+    	
+    	$.ajax({
+    		url : "searchLocal.sl",
+    		type : "post",
+    		data : {value : val},
+    		
+    		success : function(resp) {
+    			var results = $("#results")[0];
+    			
+    			if(resp == null || resp.length < 1) {
+                    $("#results").html("<span class='align-middle'  >찾는 결과가 없습니다.</span>");
+                    return;
+    			}
+
+                for (var i = 0; i < resp.length; i++) {
+                    var div = document.createElement("div");
+                    var result = resp[i].address + "<br>" + resp[i].title + "<br><span class='category'>" + resp[i].category + "</span>";
+                    result += "<span class='mapx' style='display:none'>" + resp[i].mapx + "</span><span class='mapy' style='display:none'>" + resp[i].mapy + "</span>";
+                    div.className = "select";
+                    div.innerHTML = result;
+
+                    results.appendChild(div);
+                }
+    		},
+    		
+            error: function () {
+                console.log("에러 발생!");
+            }
+    	});
+    })
+    
+    // 지역 검색창이 닫힐때 내용 모두 제거
+    $("#searchModal").on('hidden.bs.modal', function () {
+        $("#results").html("");
+    });
+    
+    // 동적 바인딩(hover) - 검색결과 
+    $(document).on('mouseenter', '.select', function (event) {
+        $(this).css('background-color', '#e9e9e9');
+        $(this).css('cursor', 'pointer');
+    }).on('mouseleave', '.select', function () {
+        $(this).css('background-color', 'white');
+    });
+    
+    // 클릭시 지역 검색창 닫힘
+    $(document).on('click', '.select', function () {
+        var search = $(this).html();
+        var pattern = /display:none">(.*?)<\/span>/gi;
+        var res = "";
+
+        // 배열에 지역의 정보를 담음
+        var locationinfo = [];
+
+        // 맵의 x, y 좌표
+        while ((res = pattern.exec(search))) {
+            locationinfo.push(res[1]);
+        }
+
+        // 선택한 장소 이름
+        pattern = /<br>(.*?)<br>/gi;
+        while ((res = pattern.exec(search))) {
+            // 태그 제거한 장소 이름
+            var localname = res[1].replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+            locationinfo.push(localname);
+        }
+        
+        $("#mapx").val(locationinfo[0]);
+        $("#mapy").val(locationinfo[1]);
+		$("#place").val(locationinfo[2]);
+        
+        $("#searchModal").modal('toggle');
     });
 
 });

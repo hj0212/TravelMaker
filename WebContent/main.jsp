@@ -202,7 +202,6 @@ div {
 		<!-- <div class="row">
 			<div class="col-md-12" id="foot"></div>
 		</div> -->
-		<%@include file="footer1.jsp" %>
 
 	</div>
 	<script src='source/lib/slick/slick.js'></script>
