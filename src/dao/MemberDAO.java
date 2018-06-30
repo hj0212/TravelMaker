@@ -235,25 +235,26 @@ public class MemberDAO {
 		int result =0;
 		ResultSet rs = null;
 		/*if(this.check(id)==false) {
-			return result; //아이디가 없음
-		}else */if(this.check(id)) {
-			String sql = "select * from users where userid=? and email=?";
-			PreparedStatement pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setString(2, email);
-			rs = pstmt.executeQuery();			
+	      return result; //아이디가 없음
+	    }else */if(this.check(id)) {
+	    	String sql = "select * from users where userid=? and email=?";
+	    	PreparedStatement pstmt=con.prepareStatement(sql);
+	    	pstmt.setString(1, id);
+	    	pstmt.setString(2, email);
+	    	rs = pstmt.executeQuery();      
 
-			if(rs.next()) {
-				result=11;	//아이디 있고 이메일 확인도 됨		
-			}else {	
-				result=10; // 아이디 있고 이메일 불일치
-			}
-			pstmt.close();
-			rs.close();
-			con.close();		
-		}
-		return result;	
+	    	if(rs.next()) {
+	    		result=11;  //아이디 있고 이메일 확인도 됨    
+	    	}else {  
+	    		result=10; // 아이디 있고 이메일 불일치
+	    	}
+	    	pstmt.close();
+	    	rs.close();
+	    	con.close();    
+	    }
+	    return result;  
 	}
+
 
 	public String getUserNickname(int seq)throws Exception{
 		Connection con = DBConnection.getConnection();
@@ -401,5 +402,6 @@ public class MemberDAO {
 		con.close();
 		return result;
 	}
+
 }
 
