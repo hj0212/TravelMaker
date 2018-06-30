@@ -99,6 +99,9 @@ public class FreeboardDAO {
 		if(rs.next()) {
 			writer = rs.getInt(1);
 		}
+		rs.close();
+		pstmt.close();
+		conn.close();
 		
 		return writer;
 	}
