@@ -75,25 +75,7 @@
 tr {
    border-bottom: 3px dotted #e9e9e9;
 }
-#comment-write-bnt {
-   -webkit-transition: all 50ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-   -moz-transition: all 500ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-   -ms-transition: all 500ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-   -o-transition: all 500ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-   transition: all 500ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-   color: black;
-   background-color: #c1bfc1;
-   border: 1px soild #d6d6d6;
-   cursor: pointer;
-   box-shadow: 0px;
-   font-style: italic;
-   font-size: 16px;
-   font-family: fantasy;
-}
-#comment-write-bnt:hover {
-   color: white;
-   box-shadow: #827e7e 0 0px 0px 60px inset;
-}
+
 </style>
 <script>
    $(document).ready(function() {
@@ -161,8 +143,8 @@ tr {
                </div>
                <div
                   style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-                  <button style="width: 100%; height: 86px" id="comment-write-bnt"
-                     class="inputComment">댓글 작성</button>
+                  <button style="width: 100%; height: 86px;background-color: white" id="comment-write-bnt"
+                     class="inputComment"  class="btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
                </div>
             </div>
          </form>
