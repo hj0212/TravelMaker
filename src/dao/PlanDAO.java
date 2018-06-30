@@ -48,6 +48,22 @@ public class PlanDAO {
 		return result;
 	}
 	
+	public int getPlanseq() throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select max(plan_seq) from plan";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
+		
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
 	public int addBudget(BudgetDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "insert into budget VALUES (?,?,budget_seq.nextval, ?, ?, ?)";

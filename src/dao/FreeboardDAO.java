@@ -89,6 +89,21 @@ public class FreeboardDAO {
 		return tmp;
 	}
 	
+	public int writerCheck(int seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "select free_writer from freeboard where free_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, seq);
+		ResultSet rs = pstmt.executeQuery();
+		int writer = 0;
+		
+		if(rs.next()) {
+			writer = rs.getInt(1);
+		}
+		
+		return writer;
+	}
+	
 	public ArrayList<FreeboardDTO> selectBoard(int startNum, int endNum, String searchTerm) throws Exception {
 		Connection con = DBConnection.getConnection();
 		

@@ -115,15 +115,12 @@ public class PlanController extends HttpServlet {
 				String plan_title = request.getParameter("plan_title");
 				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0);
 				int result =pdao.startPlanInsertData(pdto);
-
+				int plan_seq = pdao.getPlanseq();
 				if(result>0) {
 					System.out.println("플랜생성완료");
 				}else {
 					System.out.println("플랜생성실패");
 				}
-
-				
-				int plan_seq = pdao.getPlan_seq();
 				
 				request.setAttribute("result", result);
 				isForward=true;
@@ -144,7 +141,7 @@ public class PlanController extends HttpServlet {
 				}
 				String searchTerm = request.getParameter("search");
 				List<PlanDTO>list = new ArrayList<>();
-				list = pdao.getSomePlan(currentPage*12-11, currentPage*10, searchTerm);
+				list = pdao.getSomePlan(currentPage*12-11, currentPage*12, searchTerm);
 				request.setAttribute("planList", list);
 				//------------------------------------------------------
 
