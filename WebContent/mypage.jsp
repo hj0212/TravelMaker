@@ -76,7 +76,6 @@
   display: table;
   clear: both;
 }
-
 #box-container li a{
 color: #777777 !important;
  text-decoration: none !important;
@@ -89,16 +88,13 @@ width:970px;
 box-sizing: border-box;
 margin:0px auto;
 }
-
 .data, .data div {
 	height: 400px;
 }
-
 .item {
 	width: 300px;
 	padding:0;
 }
-
  </style>
 </head>
 
@@ -213,14 +209,14 @@ margin:0px auto;
             <!-- tabone -->
             <div class="col tab-pane active" id="tabone" role="tabpanel">
             <div class="row">
-            <c:forEach var="mrv" items="${MyReviewResult}">
+            <c:forEach var="mrr" items="${MyReviewResult}">
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
-                <div class="card-header">${mrv.review_title}</div>
+                <div class="card-header">${mrr.review_title}</div>
                 <img class="card-img-top float-left rounded" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
                 <div class="card-body">
-                  <h6 class="text-muted">${mrv.review_contents}</h6>
-                  <p>${mrv.review_writedate}</p>
+                  <h6 class="text-muted">${mrr.review_contents}</h6>
+                  <p>${mrr.review_writedate}</p>
                 </div>
               </div>
 				</div>
@@ -337,7 +333,27 @@ margin:0px auto;
                    
                            
             </div>
-          </div> 
+          </div>
+          
+           <!-- 검색  -->
+          <div class="row col-md-12">
+			<div class="input-group mt-2 col-md-12" id="inputSearch">
+				<input type="text"
+					class="form-control ml-auto col-4 justify-content-center" aria-label="reply"
+					aria-describedby="basic-addon2" id="search">
+				<div class="input-group-append">
+					<button class="btn btn-outline-primery mx-1" type="button"
+						id="searchbtn" name="searchbtn">검색</button>
+				</div>				
+			</div>
+		</div>
+
+		<!-- 페이징 -->
+		<div class="col-md-12 mt-2">
+			<nav aria-label="Page navigation">
+				<ul class="pagination justify-content-center">${MyReviewPageNavi}</ul>
+			</nav>
+		</div>
         </div>
         </div>
       </div>
@@ -346,9 +362,11 @@ margin:0px auto;
  
 
 <script>
+/*검색*/
+$("#searchbtn").click(function() {
+			location.href = "mypage.do?search=" + $("#search").val();
+		})
 /*슬라이드*/
-
-
 /* $('.item').slick({
 	  dots: true,
 	  infinite: true,
@@ -410,12 +428,10 @@ $("#editInfo").click(function(){
 	/* location.href="toPwCheck.do"; */
 	window.open("toPwCheck.do","_blank","width=500, height=300, scrollbars=no");
 })
-
 $("#updateEmail").click(function(){
 	/* location.href="toUpdateEmail.do"; */
 	window.open("toUpdateEmail.do","_blank","width=500, height=300, scrollbars=no");
 })
-
 $("#editPw").click(function(){
 	window.open("toPwTrueCheck.do","_blank","width=500, height=300, scrollbars=no");
 })

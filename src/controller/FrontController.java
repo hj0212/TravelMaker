@@ -61,9 +61,11 @@ public class FrontController extends HttpServlet {
 							
 				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);
+				request.setAttribute("currentPage", currentPage);
 				
 				isForward = true;
-				dst="freeboard/freeBoardList.jsp";
+				dst="freeboard/freeBoardList.jsp?currentPage="+currentPage;
+
 			} else if(command.equals("/freewrite.bo")) {
 				isForward = true;
 				dst = "freeboard/freeArticleWrite.jsp";
@@ -83,7 +85,7 @@ public class FrontController extends HttpServlet {
 				}
 			} else if(command.equals("/viewArticle.bo")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
-				
+				String currentPage = request.getParameter("currentPage");
 				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 				
 				if(dto == null) {
@@ -94,6 +96,7 @@ public class FrontController extends HttpServlet {
 					int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
 					String nickname = mdao.getUserNickname(writerNumber);
 					
+					request.setAttribute("currentPage", currentPage);
 					request.setAttribute("article", boardDTO);
 					request.setAttribute("writer", nickname);
 					
@@ -120,13 +123,15 @@ public class FrontController extends HttpServlet {
 	         
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
 	            request.setAttribute("pageNavi", pageNavi);
+	            request.setAttribute("currentPage", currentPage);
 	            
 	            isForward = true;
-	            dst="share_review.jsp";
+	            dst="share_review.jsp?currentPage"+currentPage;
 	            
 	         }else if(command.equals("/reviewArticle.bo")) {
 	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 	             rdao.getArticleViewCount(review_seq);
+	             int currentPage =Integer.parseInt(request.getParameter("currentPage"));
 	             
 	             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
 	             request.setAttribute("review_seq", review_seq);
@@ -144,10 +149,10 @@ public class FrontController extends HttpServlet {
         
 	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
 	             request.setAttribute("commentResult", result2);
-	             
+	             request.setAttribute("currentPage", currentPage);
 	             
 	             isForward = true;            
-	             dst = "reviewArticle.jsp";
+	             dst = "reviewArticle.jsp?currentPage"+currentPage;
 	          }else if(command.equals("/addReviewComment.bo")) {
 	             String comment_text = request.getParameter("comment_text");
 	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");

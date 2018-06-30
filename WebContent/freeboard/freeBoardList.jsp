@@ -108,7 +108,7 @@ div {
 									<tr>
 										<td align="center">${item.free_seq}</td>
 										<td class="titlearea"><a
-											href="viewArticle.bo?seq=${item.free_seq}&writer=${item.free_writer}&proc=view&comseq=0">${item.free_title}</a></td>
+											href="viewArticle.bo?currentPage=${currentPage}&seq=${item.free_seq}&writer=${item.free_writer}&proc=view&comseq=0">${item.free_title}</a></td>
 										<td align="center"><a href="">${item.free_writer}</a></td>
 										<td align="center">${item.free_writedate}</td>
 										<td align="center">${item.free_viewcount}</td>
