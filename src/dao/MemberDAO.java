@@ -187,7 +187,7 @@ public class MemberDAO {
 
 		return result;
 	}
-	
+
 	public MemberDTO getProfileInfo(String part, String id)throws Exception{
 		Connection con = DBConnection.getConnection();
 		MemberDTO dto = null;
@@ -234,26 +234,27 @@ public class MemberDAO {
 		Connection con = DBConnection.getConnection();
 		int result =0;
 		ResultSet rs = null;
-		if(this.check(id)==false) {
-			return result; //아이디가 없음
-		}else if(this.check(id)==true) {
-			String sql = "select * from users where userid=? and email=?";
-			PreparedStatement pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setString(2, email);
-			rs = pstmt.executeQuery();			
+		/*if(this.check(id)==false) {
+	      return result; //아이디가 없음
+	    }else */if(this.check(id)) {
+	    	String sql = "select * from users where userid=? and email=?";
+	    	PreparedStatement pstmt=con.prepareStatement(sql);
+	    	pstmt.setString(1, id);
+	    	pstmt.setString(2, email);
+	    	rs = pstmt.executeQuery();      
 
-			if(rs.next()) {
-				result=11;	//아이디 있고 이메일 확인도 됨		
-			}else {	
-				result=10; // 아이디 있고 이메일 불일치
-			}
-			pstmt.close();
-			rs.close();
-			con.close();		
-		}
-		return result;	
+	    	if(rs.next()) {
+	    		result=11;  //아이디 있고 이메일 확인도 됨    
+	    	}else {  
+	    		result=10; // 아이디 있고 이메일 불일치
+	    	}
+	    	pstmt.close();
+	    	rs.close();
+	    	con.close();    
+	    }
+	    return result;  
 	}
+
 
 	public String getUserNickname(int seq)throws Exception{
 		Connection con = DBConnection.getConnection();
@@ -263,7 +264,7 @@ public class MemberDAO {
 		ResultSet rs = pstmt.executeQuery();
 		rs.next();
 		String part = rs.getString(1);
-	/*	System.out.println(part);*/
+		/*	System.out.println(part);*/
 		String nickname = "";
 		if(part.equals("home")) {
 			sql = "select nickname from users where seq=?";
@@ -307,7 +308,7 @@ public class MemberDAO {
 		con.close();
 		return result;
 	}
-	
+
 	public boolean isHomeMemberPW (String id, String pw) throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where userid=? and password= ?";
@@ -321,7 +322,7 @@ public class MemberDAO {
 			return false;
 		}
 	}
-	
+
 	public MemberDTO getHomeMemberInfo(String id, String part) throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where USERID=?";
@@ -341,8 +342,8 @@ public class MemberDAO {
 			return null;
 		}
 	}
-	
-	
+
+
 	public int updateHomeMemberInfo(String id, String pw, String email, String nickname) throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql = "update users set password=?, nickname=?, email=? where userid=?";
@@ -357,7 +358,7 @@ public class MemberDAO {
 		con.close();
 		return result;
 	}
-	
+
 	public int updateEmail (String id, String part, String email) throws Exception{
 		Connection con = DBConnection.getConnection();
 		PreparedStatement pstmt=null;
@@ -383,18 +384,19 @@ public class MemberDAO {
 		con.close();
 		return result;
 	}
-	
+
 	public int updatePw (String id, String pw) throws Exception{
-	Connection con = DBConnection.getConnection();
-	String sql = "update users set password =? where userid = ?";
-	PreparedStatement pstmt = con.prepareStatement(sql);
-	pstmt.setString(1, pw);
-	pstmt.setString(2, id);
-	int result = pstmt.executeUpdate();
-	con.commit();
-	pstmt.close();
-	con.close();
-	return result;
+		Connection con = DBConnection.getConnection();
+		String sql = "update users set password =? where userid = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, pw);
+		pstmt.setString(2, id);
+		int result = pstmt.executeUpdate();
+		con.commit();
+		pstmt.close();
+		con.close();
+		return result;
 	}
+
 }
 
