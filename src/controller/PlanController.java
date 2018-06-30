@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.MemberDAO;
 import dao.PlanDAO;
 import dto.BudgetDTO;
-import dto.FreeboardDTO;
+import dto.LocationDTO;
 import dto.MemberDTO;
 import dto.PlanDTO;
 import dto.ScheduleDTO;
@@ -41,9 +41,13 @@ public class PlanController extends HttpServlet {
 
 			if(command.equals("/addSchedule.plan")) {
 //				세 값 다 넘어옵니다.
-//				System.out.println(request.getParameter("place"));
-//				System.out.println(request.getParameter("mapx"));
-//				System.out.println(request.getParameter("mapy"));
+				LocationDTO ldto = new LocationDTO();
+				ldto.setLocation_name(request.getParameter("place"));
+				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
+				ldto.setLocation_y(Integer.parseInt(request.getParameter("mapy")));
+				int location_id = pdao.addLocation(ldto);
+				System.out.println("locaitonid: " + location_id);
+				
 				ScheduleDTO tmp = new ScheduleDTO();
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
@@ -51,13 +55,13 @@ public class PlanController extends HttpServlet {
 				tmp.setDay_seq(day);
 				tmp.setSchedule_starttime(request.getParameter("starttime"));
 				tmp.setSchedule_endtime(request.getParameter("endtime"));
-				tmp.setLocation_id(request.getParameter("place")); 
+				tmp.setLocation_id(location_id); 
 				tmp.setSchedule_plan(request.getParameter("schedule"));
 				tmp.setSchedule_ref(request.getParameter("reference"));
 				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
 				
 				List<BudgetDTO> list = new ArrayList<>();
-				String[] budget_plan = request.getParameter("budget_plan").split("/");
+				/*String[] budget_plan = request.getParameter("budget_plan").split("/");
 				String[] budget_amount = request.getParameter("budget_amount").split("/");
 				for(int i = 0; i < budget_plan.length; i++) {
 					BudgetDTO btmp = new BudgetDTO();
@@ -66,7 +70,7 @@ public class PlanController extends HttpServlet {
 					btmp.setBudget_plan(budget_plan[i]);
 					btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
 					list.add(btmp);
-				}
+				}*/
 				
 				
 				if(schedule_seq > 0) {	// 수정
@@ -83,13 +87,13 @@ public class PlanController extends HttpServlet {
 						System.out.println("수정실패");
 					}
 				} else {
+					schedule_seq = pdao.addSchedule(tmp);
 					for(BudgetDTO btmp : list) {
-						btmp.setSchedule_seq(pdao.getScheduleseq());
+						btmp.setSchedule_seq(schedule_seq);
 					}
-					int result = pdao.addSchedule(tmp);
 					
-					result += pdao.addBudget(list);
-					if(result > 1) {
+					int result = pdao.addBudget(list);
+					if(result > 0) {
 						System.out.println("등록성공");
 					} else {
 						System.out.println("등록실패");
@@ -128,15 +132,14 @@ public class PlanController extends HttpServlet {
 				String plan_enddate = request.getParameter("plan_enddate");
 				String plan_title = request.getParameter("plan_title");
 				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0);
-				int result =pdao.startPlanInsertData(pdto);
-				int plan_seq = pdao.getPlanseq();
-				if(result>0) {
+				int plan_seq = pdao.startPlanInsertData(pdto);
+				if(plan_seq>0) {
 					System.out.println("플랜생성완료");
 				}else {
 					System.out.println("플랜생성실패");
 				}
-				
-				request.setAttribute("result", result);
+				System.out.println(plan_seq);
+//				request.setAttribute("result", result);
 				isForward=true;
 
 				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";

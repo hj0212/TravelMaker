@@ -214,7 +214,7 @@
 						<c:forEach var="item" items="${scheduleList}">
 							<tr class="clickable-row">
 								<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
-								<td name="place">${item.schedule_place}</td>
+								<td name="place">${item.location_name}<input type="hidden" value="${item.location_id}"></td>
 								<td name="schedule">${item.schedule_plan}</td>
 
 								<c:if test="${!empty budgetList}">
@@ -444,67 +444,41 @@ $(document).ready(function() {
 
 	
 
-	$("#plan-table")
-			.on(
-					'click',
-					"button[type='button']",
-					function(event) {
-						var index = $(
-								event.currentTarget)
-								.closest("tr").index();
+	$("#plan-table").on('click',"button[type='button']",function(event) {
+						var index = $(event.currentTarget).closest("tr").index();
 						var info = $("#plan-tbody")[0];
-						info.deleteRow(index,
-								datecount--);
-
-						$(
-								"#plan-table tr:last td:last-child")
-								.append(
-										"<button type='button' class='btn btn-outline-danger btn-sm'style='float:right'><i class='fa fa-times'></i></button>");
-
-					});
+						info.deleteRow(index,datecount--);
+						$("#plan-table tr:last td:last-child").append("<button type='button' class='btn btn-outline-danger btn-sm'style='float:right'><i class='fa fa-times'></i></button>");
+	});
 
 	$("#schedule-plan td:last-child").hide();
 	$("#schedule-plan th:last-child").hide();
 
-	$("#delete-table").click(
-			function() {
+	$("#delete-table").click(function() {
 				if ($("#delete-table").text() == "삭제") {
 					$("#delete-table").text("완료");
-					$("#delete-table").attr("class",
-							"btn btn-outline-primary");
-					$("#schedule-plan td:last-child")
-							.show();
-					$("#schedule-plan th:last-child")
-							.show();
+					$("#delete-table").attr("class","btn btn-outline-primary");
+					$("#schedule-plan td:last-child").show();
+					$("#schedule-plan th:last-child").show();
 				} else {
 					$("#delete-table").text("삭제");
-					$("#delete-table").attr("class",
-							"btn btn-outline-danger");
-					$("#schedule-plan td:last-child")
-							.hide();
-					$("#schedule-plan th:last-child")
-							.hide();
+					$("#delete-table").attr("class","btn btn-outline-danger");
+					$("#schedule-plan td:last-child").hide();
+					$("#schedule-plan th:last-child").hide();
 				}
 			});
 
-	$("#schedule-plan").on(
-			'click',
-			"button[type='button']",
-			function(event) {
-				var index = $(event.currentTarget)
-						.closest("tr").index();
+	$("#schedule-plan").on('click',"button[type='button']",function(event) {
+				var index = $(event.currentTarget).closest("tr").index();
 				var info = $("#schedule-tbody")[0];
 				info.deleteRow(index);
 			});
 
 	var schedulecount = 1;
-	timeArray = new Array();
 	$("#success-primary").click(function() {
 						console.log("active:"+ $("#schedule-plan>tbody>.active>th").html());
 						con = "";
-						if ($(
-								"#schedule-plan>tbody>.active>th")
-								.html() != "") {
+						if ($("#schedule-plan>tbody>.active>th").html() != "") {
 							con = "일정을 수정하시겠습니까?";
 						} else {
 							con = "일정을 추가하시겠습니까?";
@@ -537,7 +511,7 @@ $(document).ready(function() {
 						} else if (schedule == "") {
 							alert("일정을적어주세요");
 						} else if (confirm(con)) {
-							/* $("#scheduleform").submit(); */
+							$("#scheduleform").submit();
 							var contents = '';
 							contents += '<tr class="clickable-row new active"><th style="height:50px;"></th><td name="place"></td><td name="schedule"></td>';
 							contents += '<td name="money"></td>';
@@ -565,7 +539,7 @@ $(document).ready(function() {
 							$("#money").val("");
 							$("#reference").val("");
 						}
-					});
+	});
 	
 	isFirst = true;
 	$("#schedule-plan").on('click','.clickable-row',function(event) {
@@ -575,7 +549,7 @@ $(document).ready(function() {
 						var timestr = $("#schedule-plan>tbody>.active>th").html().split("~");
 						$("#start-time").val(timestr[0]);
 						$("#end-time").val(timestr[1]);
-						$("#place").val($("#schedule-plan>tbody>.active>td[name='place']").html());
+						$("#place").val($("#schedule-plan>tbody>.active>td[name='place']").text());
 						$("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
 						var budgetnum = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").length;
 						console.log("budgetnum: " + budgetnum);

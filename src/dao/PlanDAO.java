@@ -8,7 +8,7 @@ import java.util.List;
 
 import DBUtils.DBConnection;
 import dto.BudgetDTO;
-import dto.FreeboardDTO;
+import dto.LocationDTO;
 import dto.PlanDTO;
 import dto.ScheduleDTO;
 
@@ -32,52 +32,21 @@ public class PlanDAO {
 		return result;
 	}
 	
-	public int getScheduleseq() throws Exception {
+	public int getTotalBudget(int plan, int day) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "select max(schedule_seq) from schedule";
+		String sql = "select sum(budget_amount) from budget where plan_seq = ? and day_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
-		int result = 0;
-		if(rs.next()) {
-			result = rs.getInt(1);
-		}
+		pstmt.setInt(1, plan);
+		pstmt.setInt(2, day);
 		
-		rs.close();
-		pstmt.close();
-		con.close();
-		return result;
-	}
-	
-	public int getPlanseq() throws Exception {
-		Connection con = DBConnection.getConnection();
-		String sql = "select max(plan_seq) from plan";
-		PreparedStatement pstmt = con.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
-		int result = 0;
-		if(rs.next()) {
-			result = rs.getInt(1);
-		}
+		rs.next();
+		int result = rs.getInt(1);
 		
+		con.close();
+		pstmt.close();
 		rs.close();
-		pstmt.close();
-		con.close();
-		return result;
-	}
-	
-	public int addBudget(BudgetDTO dto) throws Exception {
-		Connection con = DBConnection.getConnection();
-		String sql = "insert into budget VALUES (?,?,budget_seq.nextval, ?, ?, ?)";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, dto.getPlan_seq());
-		pstmt.setInt(2, dto.getDay_seq());
-		pstmt.setInt(3, dto.getSchedule_seq());
-		pstmt.setString(4, dto.getBudget_plan());
-		pstmt.setInt(5, dto.getBudget_amount());
-		int result = pstmt.executeUpdate();
-		con.commit();
-		pstmt.close();
-		con.close();
-
+		
 		return result;
 	}
 	
@@ -102,39 +71,262 @@ public class PlanDAO {
 		return result;
 	}
 	
-	public int getTotalBudget(int plan, int day) throws Exception {
+	
+	
+	public int addBudget(BudgetDTO dto) throws Exception {
+		if(budgetcheck(dto)) {
+			Connection con = DBConnection.getConnection();
+			String sql = "insert into budget VALUES (?,?,budget_seq.nextval, ?, ?, ?)";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getPlan_seq());
+			pstmt.setInt(2, dto.getDay_seq());
+			pstmt.setInt(3, dto.getSchedule_seq());
+			pstmt.setString(4, dto.getBudget_plan());
+			pstmt.setInt(5, dto.getBudget_amount());
+			pstmt.executeUpdate();
+			con.commit();
+			
+			int budget_seq = getBudgetseq(dto);
+			
+			pstmt.close();
+			con.close();
+
+			return budget_seq;
+		}
+		return -1;
+	}
+	
+	public int getBudgetseq(BudgetDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "select sum(budget_amount) from budget where plan_seq = ? and day_seq = ?";
+		String sql ="select budget_seq from budget where plan_seq=? and day_seq=? and schedule_seq=? and budget_plan=? and budget_amount=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, plan);
-		pstmt.setInt(2, day);
-		
+		pstmt.setInt(1, dto.getPlan_seq());
+		pstmt.setInt(2, dto.getDay_seq());
+		pstmt.setInt(3, dto.getSchedule_seq());
+		pstmt.setString(4, dto.getBudget_plan());
+		pstmt.setInt(5, dto.getBudget_amount());
 		ResultSet rs = pstmt.executeQuery();
-		rs.next();
-		int result = rs.getInt(1);
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
 		
+		rs.close();
 		con.close();
 		pstmt.close();
-		rs.close();
-		
 		return result;
 	}
-
-	public int addSchedule(ScheduleDTO dto) throws Exception {
+	
+	public boolean budgetcheck(BudgetDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "insert into schedule VALUES (?,?,schedule_seq.nextval, ?, ?, ?, ?, ?)";
+		String sql ="select budget_seq from budget where plan_seq=? and day_seq=? and schedule_seq=? and budget_plan=? and budget_amount=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, dto.getPlan_seq());
+		pstmt.setInt(2, dto.getDay_seq());
+		pstmt.setInt(3, dto.getSchedule_seq());
+		pstmt.setString(4, dto.getBudget_plan());
+		pstmt.setInt(5, dto.getBudget_amount());
+		ResultSet rs = pstmt.executeQuery();
+		boolean result = true;
+		if(rs.next()) {
+			result = false;
+		}
+		
+		rs.close();
+		con.close();
+		pstmt.close();
+		return result;
+	}
+	
+	public int addSchedule(ScheduleDTO dto) throws Exception {
+		if(schedulecheck(dto)) {
+			Connection con = DBConnection.getConnection();
+			String sql = "insert into schedule VALUES (?,?,schedule_seq.nextval, ?, ?, ?, ?, ?)";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getPlan_seq());
+			pstmt.setInt(2, dto.getDay_seq());
+			pstmt.setString(3, dto.getSchedule_starttime());
+			pstmt.setString(4, dto.getSchedule_endtime());
+			pstmt.setInt(5, dto.getLocation_id());
+			pstmt.setString(6, dto.getSchedule_plan());
+			pstmt.setString(7, dto.getSchedule_ref());
+			pstmt.executeUpdate();
+			con.commit();
+			
+			int schedule_seq = getScheduleseq(dto);
+			
+			pstmt.close();
+			con.close();
+
+			return schedule_seq;
+		}
+		return -1;
+	}
+	
+	public int getScheduleseq(ScheduleDTO dto) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql ="select schedule_seq from schedule where plan_seq=? and day_seq=? and schedule_starttime=? and schedule_endtime=? and location_id=? and schedule_plan=? and schedule_ref=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, dto.getPlan_seq());
 		pstmt.setInt(2, dto.getDay_seq());
 		pstmt.setString(3, dto.getSchedule_starttime());
 		pstmt.setString(4, dto.getSchedule_endtime());
-		pstmt.setString(5, dto.getLocation_id());
+		pstmt.setInt(5, dto.getLocation_id());
 		pstmt.setString(6, dto.getSchedule_plan());
 		pstmt.setString(7, dto.getSchedule_ref());
-		int result = pstmt.executeUpdate();
+		ResultSet rs = pstmt.executeQuery();
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
 		
+		rs.close();
+		con.close();
 		pstmt.close();
-		con.commit();
+		return result;
+	}
+	
+	public boolean schedulecheck(ScheduleDTO dto) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql ="select schedule_seq from schedule where plan_seq=? and day_seq=? and schedule_starttime=? and schedule_endtime=? and location_id=? and schedule_plan=? and schedule_ref=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, dto.getPlan_seq());
+		pstmt.setInt(2, dto.getDay_seq());
+		pstmt.setString(3, dto.getSchedule_starttime());
+		pstmt.setString(4, dto.getSchedule_endtime());
+		pstmt.setInt(5, dto.getLocation_id());
+		pstmt.setString(6, dto.getSchedule_plan());
+		pstmt.setString(7, dto.getSchedule_ref());
+		ResultSet rs = pstmt.executeQuery();
+		boolean result = true;
+		if(rs.next()) {
+			result = false;
+		}
+		
+		rs.close();
+		con.close();
+		pstmt.close();
+		return result;
+	}
+	
+	public int startPlanInsertData(PlanDTO dto)throws Exception{
+		if(plancheck(dto)) {
+			Connection con = DBConnection.getConnection();
+			String sql ="insert into plan values(plan_seq.nextval,?,?,?,?,0,0,0,0)";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getPlan_writer());
+			pstmt.setString(2,dto.getPlan_startdate());
+			pstmt.setString(3, dto.getPlan_enddate());
+			pstmt.setString(4, dto.getPlan_title());
+			pstmt.executeUpdate();
+			con.commit();
+			
+			int plan_seq = getPlanseq(dto);
+			con.close();
+			pstmt.close();
+			return plan_seq;
+		}
+		return -1;
+	}
+	
+	public int getPlanseq(PlanDTO dto) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql ="select plan_seq from plan where plan_writer=? and plan_startdate=? and plan_enddate=? and plan_title=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, dto.getPlan_writer());
+		pstmt.setString(2,dto.getPlan_startdate());
+		pstmt.setString(3, dto.getPlan_enddate());
+		pstmt.setString(4, dto.getPlan_title());
+		ResultSet rs = pstmt.executeQuery();
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
+		
+		rs.close();
+		con.close();
+		pstmt.close();
+		return result;
+	}
+	
+	private boolean plancheck(PlanDTO dto) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql ="select plan_seq from plan where plan_writer=? and plan_startdate=? and plan_enddate=? and plan_title=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, dto.getPlan_writer());
+		pstmt.setString(2,dto.getPlan_startdate());
+		pstmt.setString(3, dto.getPlan_enddate());
+		pstmt.setString(4, dto.getPlan_title());
+		ResultSet rs = pstmt.executeQuery();
+		boolean result = true;
+		if(rs.next()) {
+			result = false;
+		}
+		
+		rs.close();
+		con.close();
+		pstmt.close();
+		return result;
+	}
+	
+	public int addLocation(LocationDTO dto) throws Exception {
+		if(locationcheck(dto)) {
+			Connection con = DBConnection.getConnection();
+			String sql = "insert into location VALUES (location_seq.nextval, ?, ?, ?)";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getLocation_name());
+			pstmt.setInt(2, dto.getLocation_x());
+			pstmt.setInt(3, dto.getLocation_y());
+			pstmt.executeUpdate();
+			con.commit();
+			
+			int location_id = getLocationid(dto);
+			
+			pstmt.close();
+			con.commit();
+			con.close();
+
+			return location_id;
+		} else {
+			return getLocationid(dto);
+		}
+	}
+	
+	private int getLocationid(LocationDTO dto) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select location_id from location where location_name=? and location_x=? and location_y=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, dto.getLocation_name());
+		pstmt.setInt(2, dto.getLocation_x());
+		pstmt.setInt(3, dto.getLocation_y());
+		ResultSet rs = pstmt.executeQuery();
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
+		
+		rs.close();
+		pstmt.close();
+		con.close();
+
+		return result;
+	}
+	
+	private boolean locationcheck(LocationDTO dto) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select location_id from location where location_name=? and location_x=? and location_y=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, dto.getLocation_name());
+		pstmt.setInt(2, dto.getLocation_x());
+		pstmt.setInt(3, dto.getLocation_y());
+		ResultSet rs = pstmt.executeQuery();
+		boolean result = true;
+		if(rs.next()) {
+			result = false;
+		}
+		
+		rs.close();
+		pstmt.close();
 		con.close();
 
 		return result;
@@ -146,7 +338,7 @@ public class PlanDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setString(1, dto.getSchedule_starttime());
 		pstmt.setString(2, dto.getSchedule_endtime());
-		pstmt.setString(3, dto.getLocation_id());
+		pstmt.setInt(3, dto.getLocation_id());
 		pstmt.setString(4, dto.getSchedule_plan());
 		pstmt.setString(5, dto.getSchedule_ref());
 		pstmt.setInt(6, dto.getSchedule_seq());
@@ -161,7 +353,7 @@ public class PlanDAO {
 
 	public List<ScheduleDTO> selectSchedule(int plan, int day) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from schedule where plan_seq = ? and day_seq = ? order by 4";
+		String sql = "select plan_seq, day_seq, schedule_seq, schedule_starttime, schedule_endtime, s.location_id, l.location_name, schedule_plan, schedule_ref from schedule s, location l where l.location_id = s.location_id and plan_seq = ? and day_seq = ? order by 4";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan);
 		pstmt.setInt(2, day);
@@ -176,9 +368,10 @@ public class PlanDAO {
 			tmp.setSchedule_seq(rs.getInt(3));
 			tmp.setSchedule_starttime(rs.getString(4));
 			tmp.setSchedule_endtime(rs.getString(5));
-			tmp.setLocation_id(rs.getString(6));
-			tmp.setSchedule_plan(rs.getString(7));
-			tmp.setSchedule_ref(rs.getString(8));
+			tmp.setLocation_id(rs.getInt(6));
+			tmp.setLocation_name(rs.getString(7));
+			tmp.setSchedule_plan(rs.getString(8));
+			tmp.setSchedule_ref(rs.getString(9));
 			result.add(tmp);
 		}
 
@@ -213,54 +406,6 @@ public class PlanDAO {
 		pstmt.close();
 		con.close();
 		return result;
-	}
-	
-	public int startPlanInsertData(PlanDTO dto)throws Exception{
-		Connection con = DBConnection.getConnection();
-		String sql ="insert into plan values(plan_seq.nextval,?,?,?,?,0,0,0,0)";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, dto.getPlan_writer());
-		pstmt.setString(2,dto.getPlan_startdate());
-		pstmt.setString(3, dto.getPlan_enddate());
-		pstmt.setString(4, dto.getPlan_title());
-		int result = pstmt.executeUpdate();
-		
-		con.commit();
-		con.close();
-		pstmt.close();
-		return result;
-	}
-	
-	public int getSchedule_seq() throws Exception {
-		Connection con = DBConnection.getConnection();
-		String sql = "select max(schedule_Seq) from schedule";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
-		int seq = 0;
-		if(rs.next()) {
-			seq = rs.getInt(1);
-		}
-		
-		rs.close();
-		pstmt.close();
-		con.close();
-		return seq;
-	}
-	
-	public int getPlan_seq() throws Exception {
-		Connection con = DBConnection.getConnection();
-		String sql = "select max(plan_seq) from plan";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
-		int seq = 0;
-		if(rs.next()) {
-			seq = rs.getInt(1);
-		}
-		
-		rs.close();
-		pstmt.close();
-		con.close();
-		return seq;
 	}
 	
 	public List<PlanDTO> getSomePlan(int startNum, int endNum, String searchTerm)throws Exception{
@@ -379,7 +524,5 @@ public class PlanDAO {
 		
 		return sb.toString();
 	}	
-	
-	
 	
 }

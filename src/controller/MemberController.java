@@ -30,7 +30,6 @@ public class MemberController extends HttpServlet {
 
 			ReviewDAO rdao = new ReviewDAO();
 			MemberDAO mdao = new MemberDAO();
-			ReviewDAO rdao = new ReviewDAO();
 
 			boolean isForward = true;
 			String dst = null;
@@ -51,7 +50,7 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", dto.getUserid());
 
-				String nickname=	mdao.getUserNickname(user.getSeq());
+				String nickname = mdao.getUserNickname(user.getSeq());
 				request.getSession().setAttribute("nickname", nickname);
 
 				isForward = true;
