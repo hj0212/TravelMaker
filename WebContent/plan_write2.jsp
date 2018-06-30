@@ -26,8 +26,6 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/js/tempusdominus-bootstrap-4.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/css/tempusdominus-bootstrap-4.min.css" />
-<script
-	src="source/lib/lightswitch05-table-to-json/jquery.tabletojson.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="source/css/plan_writeNavi.css">
 <style>
@@ -339,9 +337,7 @@
 		</div> -->
 	</div>
 	<script>
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
 							$("#endbtn").click(function() {
 								/*$("#schedule-plan tr:last").remove();
 								$("#schedule-plan thead tr th:last").remove();
@@ -368,11 +364,12 @@
 							$("#moneyaddbtn").click(function() {
 								budgetcount++;
 							 	$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'>"
-										+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger'><i class='far fa-times-circle'></i></button></div></div>");
+										+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+budgetcount+"'><i class='far fa-times-circle'></i></button></div></div>");
 							});
 
-							$("#moneyxbtn").click(function() {
-								
+							$("button[id^=moneyxbtn]").click(function() {
+								console.log("예산 삭제");
+								$(this).parent().parent().remove();
 							});
 
 							$("#plan-table")
@@ -430,14 +427,8 @@
 
 							var schedulecount = 1;
 							timeArray = new Array();
-							$("#success-primary")
-									.click(
-											function() {
-												console
-														.log("active:"
-																+ $(
-																		"#schedule-plan>tbody>.active>th")
-																		.html());
+							$("#success-primary").click(function() {
+												console.log("active:"+ $("#schedule-plan>tbody>.active>th").html());
 												con = "";
 												if ($(
 														"#schedule-plan>tbody>.active>th")
@@ -447,17 +438,14 @@
 													con = "일정을 추가하시겠습니까?";
 												}
 
-												starttime = $("#start-time")
-														.val();
+												starttime = $("#start-time").val();
 												endtime = $("#end-time").val();
 												place = "이레빌딩"; /*  $("#place").val("이레빌딩");*/
 												schedule = $("#schedule").val();
 												money = $("#money").val();
-												reference = $("#reference")
-														.val();
+												reference = $("#reference").val();
 
-												if (starttime == ""
-														|| endtime == "") {
+												if (starttime == "" || endtime == "") {
 													alert("시간을정해주세요");
 												} else if (place == "") {
 													alert("장소를정해주세요");
@@ -472,36 +460,17 @@
 													contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button><input type="hidden" name="schedule_seq" value="0"></td>';
 													contents += '</tr>';
 
-													if ($(
-															"#schedule-plan>tbody>.active>th")
-															.val() == "") { // 빈칸 = 마지막줄
+													if ($("#schedule-plan>tbody>.active>th").val() == "") { // 빈칸 = 마지막줄
 														console.log("빈칸");
-														$(
-																"#schedule-plan>tbody>tr")
-																.removeClass(
-																		'new');
-														$(
-																"#schedule-plan>tbody>tr")
-																.removeClass(
-																		'active');
-														$(
-																"#schedule-plan>tbody:last")
-																.append(
-																		contents);
-														$(
-																"#schedule-plan td:last-child")
-																.hide();
+														$("#schedule-plan>tbody>tr").removeClass('new');
+														$("#schedule-plan>tbody>tr").removeClass('active');
+														$("#schedule-plan>tbody:last").append(contents);
+														$("#schedule-plan td:last-child").hide();
 
 													} else { // 빈칸x = 마지막줄x
 														var cursor = "#schedule-plan>tbody>.active";
-														$(
-																"#schedule-plan>tbody>tr")
-																.removeClass(
-																		'active');
-														$(
-																"#schedule-plan>tbody>.new")
-																.addClass(
-																		'active');
+														$("#schedule-plan>tbody>tr").removeClass('active');
+														$("#schedule-plan>tbody>.new").addClass('active');
 													}
 
 													$("#start-time").val("");
@@ -513,52 +482,19 @@
 												}
 											});
 
-							$("#schedule-plan")
-									.on(
-											'click',
-											'.clickable-row',
-											function(event) {
-												$(this).addClass('active')
-														.siblings()
-														.removeClass('active');
-												var seq = $(
-														".active .schedule_seq")
-														.val();
+							$("#schedule-plan").on('click','.clickable-row',function(event) {
+												$(this).addClass('active').siblings().removeClass('active');
+												var seq = $(".active .schedule_seq").val();
 												console.log("선택:" + seq);
-												$(
-														"#plan-board input[name='schedule_seq']")
-														.val(seq);
-												console
-														.log("seq셋팅: "
-																+ $(
-																		"#plan-board input[name='schedule_seq']")
-																		.val());
-												var timestr = $(
-														"#schedule-plan>tbody>.active>th")
-														.html().split("~");
-												$("#start-time")
-														.val(timestr[0]);
+												$("#plan-board input[name='schedule_seq']").val(seq);
+												console.log("seq셋팅: "+ $("#plan-board input[name='schedule_seq']").val());
+												var timestr = $("#schedule-plan>tbody>.active>th").html().split("~");
+												$("#start-time").val(timestr[0]);
 												$("#end-time").val(timestr[1]);
-												$("#place")
-														.val(
-																$(
-																		"#schedule-plan>tbody>.active>td[name='place']")
-																		.html());
-												$("#schedule")
-														.val(
-																$(
-																		"#schedule-plan>tbody>.active>td[name='schedule']")
-																		.html());
-												$("#money")
-														.val(
-																$(
-																		"#schedule-plan>tbody>.active>td[name='money']")
-																		.html());
-												$("#reference")
-														.val(
-																$(
-																		"#schedule-plan>tbody>.active>td[name='reference']")
-																		.html());
+												$("#place").val($("#schedule-plan>tbody>.active>td[name='place']").html());
+												$("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
+												$("#money").val($("#schedule-plan>tbody>.active>td[name='money']").html());
+												$("#reference").val($("#schedule-plan>tbody>.active>td[name='reference']").html());
 											});
 
 						});
