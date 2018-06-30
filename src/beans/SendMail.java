@@ -11,8 +11,8 @@ import javax.mail.internet.MimeMessage;
 
 public class SendMail {
 	String host     = "smtp.gmail.com";
-	final String user   = "winhae@gmail.com";	// ���� ���̵�
-	final String password  = "eunice93";	// ���� ���
+	final String user   = "winhae@gmail.com";	// ���̹� ���̵�
+	final String password  = "";	// ���̹� ���
 
 
 
