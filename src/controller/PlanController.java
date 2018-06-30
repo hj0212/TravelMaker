@@ -124,7 +124,6 @@ public class PlanController extends HttpServlet {
 				
 				request.setAttribute("result", result);
 				isForward=true;
-				dst="createPlan.jsp";
 
 				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";
 			}
