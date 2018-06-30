@@ -222,7 +222,10 @@
 									<c:forEach var="bitem" items="${budgetList}" varStatus="index">
 										<c:if test="${not loop_flag }">
 											<c:if test="${item.schedule_seq == bitem.schedule_seq}">
-												<td name="money">${bitem.budget_amount}</td>
+												<td name="money">
+													<div class="budget_plan">${bitem.budget_plan}:</div>
+													<div class="budget_amount">${bitem.budget_amount}</div>
+												</td>
 												<c:set var="loop_flag" value="true" />
 											</c:if>
 											<c:if
