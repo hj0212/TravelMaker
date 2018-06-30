@@ -83,7 +83,7 @@ public class ReviewDAO {
 		Connection con = DBConnection.getConnection();		
 		String sql;
 		PreparedStatement pstat;
-		
+
 
 		if(searchTerm == null || searchTerm.equals("")) {
 			sql = "select count(*) totalCount from reviewboard";
@@ -254,4 +254,30 @@ public class ReviewDAO {
 		con.close();
 		return result;
 	}
+
+	public List<ReviewDTO> getAllMyReview (int review_writer) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from reviewboard where review_writer=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, review_writer);
+		ResultSet rs = pstmt.executeQuery();
+		List<ReviewDTO> result = new ArrayList<>();
+		while(rs.next()) {
+			ReviewDTO rdto = new ReviewDTO();
+			rdto.setReview_seq(rs.getInt("review_seq"));
+			rdto.setReview_title(rs.getString("review_title"));
+			rdto.setReview_contents(rs.getString("review_contents"));
+			rdto.setReview_writer(rs.getInt("review_writer"));
+			rdto.setReview_writerN(mdao.getUserNickname(rs.getInt("review_writer")));
+			rdto.setReview_writedate(rs.getString("review_writedate"));
+			rdto.setReview_viewcount(rs.getInt("review_viewcount"));
+			result.add(rdto);
+		}
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+
+
 }

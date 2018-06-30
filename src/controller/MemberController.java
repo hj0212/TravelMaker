@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.SendMail;
 import dao.MemberDAO;
+import dao.ReviewDAO;
 import dto.MemberDTO;
+import dto.ReviewDTO;
 
 
 @WebServlet("*.do")
@@ -26,6 +29,7 @@ public class MemberController extends HttpServlet {
 			response.setCharacterEncoding("utf8");
 
 			MemberDAO mdao = new MemberDAO();
+			ReviewDAO rdao = new ReviewDAO();
 
 			boolean isForward = true;
 			String dst = null;
@@ -146,6 +150,12 @@ public class MemberController extends HttpServlet {
 					request.setAttribute("nickname", mdto.getKakao_nickname());
 					request.setAttribute("email", mdto.getKakao_email());
 				}
+				
+				MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        List<ReviewDTO> MyReviewResult = rdao.getAllMyReview(user.getSeq());
+		        request.setAttribute("MyReviewResult", MyReviewResult);
+		        System.out.println(mdto.getSeq());
+
 
 				isForward = true;
 				dst="mypage.jsp";
