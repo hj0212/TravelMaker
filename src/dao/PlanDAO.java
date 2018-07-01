@@ -390,6 +390,7 @@ public class PlanDAO {
 			tmp.setSchedule_plan(rs.getString(8));
 			tmp.setSchedule_ref(rs.getString(9));
 			result.add(tmp);
+			System.out.println("스케줄시퀀스" + tmp.getSchedule_seq());
 		}
 
 		rs.close();

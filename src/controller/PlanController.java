@@ -47,7 +47,6 @@ public class PlanController extends HttpServlet {
 				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
 				ldto.setLocation_y(Integer.parseInt(request.getParameter("mapy")));
 				int location_id = pdao.addLocation(ldto);
-				System.out.println("locaitonid: " + location_id);
 				
 				ScheduleDTO tmp = new ScheduleDTO();
 				int plan = Integer.parseInt(request.getParameter("plan"));
@@ -178,8 +177,29 @@ public class PlanController extends HttpServlet {
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 				request.setAttribute("user", user.getSeq());
 
+				int plan_period = pdao.getPlanperiod(plan_seq);
+				request.setAttribute("plan_period", plan_period);
+				
+				List<ScheduleDTO> list = null;
+				List<BudgetDTO> blist = null;
+				int totalBudget = 0;
+				for(int i = 0; i < plan_period; i++) {
+					list = pdao.selectSchedule(plan_seq, i+1);
+					blist = pdao.selectBudget(plan_seq, i+1);
+					totalBudget = pdao.getTotalBudget(plan_seq, i+1);
+				}
+				
+
+				request.setAttribute("totalBudget", totalBudget);
+				request.setAttribute("scheduleList", list);
+				request.setAttribute("budgetList", blist);
+				
+				String plan_title = pdao.getPlantitle(plan_seq);
+				request.setAttribute("plan_title", plan_title);
+				
 				isForward=true;
-				dst="hoogi.jsp";
+				dst="hoogi.jsp?plan_seq="+plan_seq;
+				
 			}else if(command.equals("/insertPlanComment.plan")) {
 				String comment_text = request.getParameter("comment_text");
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));

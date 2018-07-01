@@ -92,7 +92,7 @@
 			<button class="btn btn-default">후기보기</button>
 			<button class="btn btn-default">목록</button>
 
-			<div class="wrapper">
+			<div class="wrapper">			
 				<div class="left_half">
 					<div style="border: 1px solid gray; width: 450px; height: 300px;"></div>
 				</div>
@@ -100,27 +100,91 @@
 					<div style="border: 1px solid gray; width: 450px; height: 300px;"></div>
 				</div>
 			</div>
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th scope="col">시간</th>
-						<th scope="col">일정</th>
-						<th scope="col">장소</th>
-						<th scope="col">예산</th>
-						<th scope="col">참고</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td scope="row">""</td>
-						<td>""</td>
-						<td>""</td>
-						<td>""</td>
-						<td>""</td>
-					</tr>
-		
-				</tbody>
-			</table>
+			
+			<div class="schedule">
+			
+				<ul class="nav nav-tabs" role="tablist">
+					<c:forEach var="day" begin="1" end="${plan_period}" step="1">
+					<li class="nav-item">
+						<a class='nav-link' href='#Day${day}' role='tab' data-toggle='tab'>Day${day}</a>
+					</li>
+					</c:forEach>
+				</ul>
+			
+				<div class="tab-content">
+				<c:set var="isFirst" value="true" />
+				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
+				
+				 <div role="tabpanel" class="tab-pane fade in active" id="Day${day}">
+					<table class="table table-striped" id="schedule-table">
+						<c:if test="${isFirst }">
+						<thead>
+							<tr>
+								<th scope="col">시간</th>
+								<th scope="col">장소</th>
+								<th scope="col">일정</th>
+								<th scope="col">예산</th>
+								<th scope="col">참고</th>
+							</tr>
+						</thead>
+						<c:set var="isFirst" value="false" />
+						</c:if>
+						<c:if test="${not isFirst }">
+						<script>console.log("${empty scheduleList}")</script>
+						<tbody id="schedule-tbody" style="table-layout: fixed; word-break: break-all;">
+							<c:forEach var="item" items="${scheduleList}">
+							<c:if test="${item.day_seq eq day }">
+							<tr class="clickable-row">
+								<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
+								<td name="place">${item.location_name}<input type="hidden" value="${item.location_id}"></td>
+								<td name="schedule">${item.schedule_plan}</td>
+
+								<c:if test="${!empty budgetList}">
+									<c:set var="loop_flag" value="false" />
+									<c:set var="count" value="1" />
+									<c:forEach var="bitem" items="${budgetList}" varStatus="index">
+										<c:if test="${not loop_flag }">
+											<c:if test="${item.schedule_seq == bitem.schedule_seq}">
+												<c:choose>
+													<c:when test="${count == 1}">
+														<td name="money">
+														<div>
+														<div class="budget_plan">${bitem.budget_plan}:</div>
+														<div class="budget_amount">${bitem.budget_amount}</div>
+														</div><br>
+														<c:set var="count" value="2" />
+													</c:when>
+													<c:otherwise>
+														<div>
+														<div class="budget_plan">${bitem.budget_plan}:</div>
+														<div class="budget_amount">${bitem.budget_amount}</div>
+														</div><br>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+											<c:if test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
+												<td name="money"></td>
+												<c:set var="loop_flag" value="true" />
+											</c:if>
+										</c:if>
+									</c:forEach>
+								</c:if>
+								<c:if test="${empty budgetList}">
+									<td name="money"></td>
+								</c:if>
+								<td name="reference">${item.schedule_ref}</td>
+							</tr>
+							</c:if>
+							</c:forEach>
+						
+						</tbody>
+						</c:if>
+					</table>
+				</div> 
+				</c:forEach>
+				</div>
+			</div>
+			
 			<nav aria-label="Page navigation">
 			<ul class="pagination justify-content-center">
 				<li class="page-item disabled"><a class="page-link" href="#"
