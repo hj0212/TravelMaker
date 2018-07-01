@@ -105,14 +105,19 @@ public class PlanController extends HttpServlet {
 				}
 				String plan_title = pdao.getPlantitle(plan);
 				request.setAttribute("plan_title", plan_title);
+				
 
 				isForward = true;
 				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
 			} else if(command.equals("/createPlan.plan")) {
-				int plan_writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+				MemberDTO user = (MemberDTO)(request.getSession().getAttribute("user"));
+				int plan_writer = user.getSeq();
 				String plan_startdate = request.getParameter("plan_startdate");
 				String plan_enddate = request.getParameter("plan_enddate");
 				String plan_title = request.getParameter("plan_title");
+				int datepage=pdao.DateBetween(plan_startdate, plan_enddate)+1;
+				request.setAttribute("datepage", datepage);
+				
 				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0);
 				int result =pdao.startPlanInsertData(pdto);
 				int plan_seq = pdao.getPlanseq();
@@ -121,8 +126,11 @@ public class PlanController extends HttpServlet {
 				}else {
 					System.out.println("플랜생성실패");
 				}
-				
+				//인혜 : 여기다가 startdate랑 enddate좀 넣을게... 왜 날짜가 죽어도 출력이 안되나 했다 ㅋㅋㅋ아
+				request.setAttribute("plan_startdate", plan_startdate);
+				request.setAttribute("plan_enddate", plan_enddate);
 				request.setAttribute("result", result);
+				request.setAttribute("plan_seq", plan_seq);
 				isForward=true;
 				dst="createPlan.jsp";
 

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -134,24 +136,53 @@
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
 				name="plantitle" value="${plan_title}" readonly>
-
 		</div>
+		<c:set var="plans" value="${plan}" scope="request" />
+		<fmt:parseNumber value="${plans}" type="number" var="plan"/>
+		<fmt:parseDate var="dateStr" value="${plan_startdate}"
+			pattern="yyyy-MM-dd" />		
+		<fmt:parseNumber value="${datepage}" type="number" var="datepage" />
+		<%-- <fmt:formatDate type = "date"  value = "${plan_startdate}"/> --%>
+
 		<!-- 여기 몇일 여행인지 받아서 개수만큼 돌리기 -->
 		<div class="row col-md-12 days mt-0">
 			<div style="display: inline-block; width: 100%; overflow-y: auto;">
 				<ul class="timeline timeline-horizontal">
-					<c:forEach var="day" begin="1" end="5" step="1">
+					<c:forEach var="day" begin="1" end="${datepage}" step="1">
 						<li class="timeline-item">
 							<div class="timeline-badge">
-								<i class="dayCount">${day}일차</i>
+								<i class="dayCount"> ${day}</i>
 							</div>
 							<div class="timeline-panel">
 								<div class="timeline-heading">
-									<h5 class="timeline-title text-center">${plan_startdate}</h5>
-									<p>
-										<small class="text-muted"><i
-											class="glyphicon glyphicon-time"></i>입력된 일정 수: 0</small>
-									</p>
+									<c:choose>
+										<c:when test="${datepage==1}">
+											<span class="text-center text-muted sm-1">당일여행</span>
+											<span class="timeline-title text-center text-muted">(${plan_startdate})</span>
+											<p>
+												<small class="text-muted"><i
+													class="glyphicon glyphicon-time"></i>입력된 일정 수: 0</small>
+											</p>
+										</c:when>
+										<c:when test="${datepage!=1 && day==1}">
+											<span class="text-center text-muted"
+												style="font-size: 13px; color: blue">출발</span>
+											<span class="timeline-title text-center disc">(${plan_startdate})</span>
+											<p class="text-center">
+												<small class="text-muted "><i
+													class="glyphicon glyphicon-time"></i>입력된 일정 수: 0</small>
+											</p>
+										</c:when>
+										<c:when test="${day==datepage}">
+											<span class="text-center text-muted"
+												style="font-size: 13px; color: blue;">도착</span>
+											<span class="timeline-title text-center disc">(${plan_enddate})</span>
+											<p class="text-center">
+												<small class="text-muted"><i
+													class="glyphicon glyphicon-time"></i>입력된 일정 수: 0</small>
+											</p>
+										</c:when>
+									</c:choose>
 								</div>
 							</div>
 						</li>
@@ -161,21 +192,26 @@
 			</div>
 		</div>
 		<script>
-			$(".timeline-item .timeline-badge").click(function() {
-				var t = $(this);
-				var isClicked = $('.timeline-horizontal li').find('.active');
-				console.log(isClicked);
-				if (isClicked == null) {
-					t.addClass("active");
-				} else {
-					isClicked.removeClass("active");
-					t.addClass("active");
-				}
-				$(location).attr('href',"plan_write.jsp");
-			})
+			$(".timeline-item .timeline-badge").click(
+					function() {
+						var t = $(this);
+						var dayNow = t.find('i').val();
+						
+						var isClicked = $('.timeline-horizontal li').find(
+								'.active');
+						if (isClicked == null) {
+							t.addClass("active");
+						} else {
+							isClicked.removeClass("active");
+							t.addClass("active");
+						}
+						location.href = "selectSchedule.plan?plan=" + plan
+								+ "&day=" + dayNow;
+						/* $(location).attr('href',"plan_write.jsp"); */
+					})
 		</script>
-		<!-- 일차 페이징 끝 -->
 
+		<!-- 일차 페이징 끝 -->
 		<div id="schedulearea">
 			<table class="table table-bordered" id="schedule-plan">
 				<thead>

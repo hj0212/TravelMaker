@@ -3,17 +3,19 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import DBUtils.DBConnection;
 import dto.BudgetDTO;
-import dto.FreeboardDTO;
 import dto.PlanDTO;
 import dto.ScheduleDTO;
 
 public class PlanDAO {
-	
+
 	private MemberDAO mdao = new MemberDAO();
 	public String getPlantitle(int plan_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
@@ -25,13 +27,13 @@ public class PlanDAO {
 		if(rs.next()) {
 			result = rs.getString(1);
 		}
-		
+
 		rs.close();
 		pstmt.close();
 		con.close();
 		return result;
 	}
-	
+
 	public int getScheduleseq() throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select max(schedule_seq) from schedule";
@@ -41,13 +43,13 @@ public class PlanDAO {
 		if(rs.next()) {
 			result = rs.getInt(1);
 		}
-		
+
 		rs.close();
 		pstmt.close();
 		con.close();
 		return result;
 	}
-	
+
 	public int getPlanseq() throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select max(plan_seq) from plan";
@@ -57,13 +59,13 @@ public class PlanDAO {
 		if(rs.next()) {
 			result = rs.getInt(1);
 		}
-		
+
 		rs.close();
 		pstmt.close();
 		con.close();
 		return result;
 	}
-	
+
 	public int addBudget(BudgetDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "insert into budget VALUES (?,?,budget_seq.nextval, ?, ?, ?)";
@@ -80,22 +82,22 @@ public class PlanDAO {
 
 		return result;
 	}
-	
+
 	public int getTotalBudget(int plan, int day) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select sum(budget_amount) from budget where plan_seq = ? and day_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan);
 		pstmt.setInt(2, day);
-		
+
 		ResultSet rs = pstmt.executeQuery();
 		rs.next();
 		int result = rs.getInt(1);
-		
+
 		con.close();
 		pstmt.close();
 		rs.close();
-		
+
 		return result;
 	}
 
@@ -111,14 +113,14 @@ public class PlanDAO {
 		pstmt.setString(6, dto.getSchedule_plan());
 		pstmt.setString(7, dto.getSchedule_ref());
 		int result = pstmt.executeUpdate();
-		
+
 		pstmt.close();
 		con.commit();
 		con.close();
 
 		return result;
 	}
-	
+
 	public int updateSchedule(ScheduleDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "update schedule set schedule_starttime=?, schedule_endtime=?, location_id=?,schedule_plan=?,schedule_ref=? where schedule_seq=? ";
@@ -130,7 +132,7 @@ public class PlanDAO {
 		pstmt.setString(5, dto.getSchedule_ref());
 		pstmt.setInt(6, dto.getSchedule_seq());
 		int result = pstmt.executeUpdate();
-		
+
 		pstmt.close();
 		con.commit();
 		con.close();
@@ -144,7 +146,7 @@ public class PlanDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan);
 		pstmt.setInt(2, day);
-		
+
 		ResultSet rs = pstmt.executeQuery();
 
 		List<ScheduleDTO> result = new ArrayList<>();
@@ -166,7 +168,7 @@ public class PlanDAO {
 		con.close();
 		return result;
 	}
-	
+
 	public List<BudgetDTO> selectBudget(int plan, int day) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from budget where plan_seq = ? and day_seq = ? order by 2";
@@ -193,7 +195,7 @@ public class PlanDAO {
 		con.close();
 		return result;
 	}
-	
+
 	public int startPlanInsertData(PlanDTO dto)throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql ="insert into plan values(plan_seq.nextval,?,?,?,?,0,0,0,0)";
@@ -203,13 +205,13 @@ public class PlanDAO {
 		pstmt.setString(3, dto.getPlan_enddate());
 		pstmt.setString(4, dto.getPlan_title());
 		int result = pstmt.executeUpdate();
-		
+
 		con.commit();
 		con.close();
 		pstmt.close();
 		return result;
 	}
-	
+
 	public int getSchedule_seq() throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select max(schedule_Seq) from schedule";
@@ -219,13 +221,13 @@ public class PlanDAO {
 		if(rs.next()) {
 			seq = rs.getInt(1);
 		}
-		
+
 		rs.close();
 		pstmt.close();
 		con.close();
 		return seq;
 	}
-	
+
 	public int getPlan_seq() throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select max(plan_seq) from plan";
@@ -235,23 +237,23 @@ public class PlanDAO {
 		if(rs.next()) {
 			seq = rs.getInt(1);
 		}
-		
+
 		rs.close();
 		pstmt.close();
 		con.close();
 		return seq;
 	}
-	
+
 	public List<PlanDTO> getSomePlan(int startNum, int endNum, String searchTerm)throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql;
 		PreparedStatement pstat = null;
-		
+
 		if(searchTerm == null || searchTerm.equals("null")) {
-		sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan) where num between ? and ?";
-		pstat = con.prepareStatement(sql);
-		pstat.setInt(1, startNum);
-		pstat.setInt(2, endNum);
+			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan) where num between ? and ?";
+			pstat = con.prepareStatement(sql);
+			pstat.setInt(1, startNum);
+			pstat.setInt(2, endNum);
 		} else {
 			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan where plan_title like ?) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
@@ -269,22 +271,22 @@ public class PlanDAO {
 			tmp.setPlan_title(rs.getString(3));
 			tmp.setPlan_good(rs.getInt(4));
 			tmp.setPlan_viewcount(rs.getInt(5));
-			
+
 			result.add(tmp);
 		}
-		
+
 		con.close();
 		pstat.close();
 		rs.close();
 		return result;
 	}
-//--------------------------페이지 네비게이터	
+	//--------------------------페이지 네비게이터	
 	public String getPageNavi(int currentPage, String searchTerm) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql;
 		PreparedStatement pstat;
 		ResultSet rs;
-		
+
 		if(searchTerm == null || searchTerm.equals("null")) {
 			sql = "select count(*) totalCount from plan";
 			pstat = con.prepareStatement(sql);
@@ -293,53 +295,53 @@ public class PlanDAO {
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, "%"+searchTerm+"%");
 		}
-		
+
 		rs = pstat.executeQuery();
 		rs.next();
-		
+
 		int recordTotalCount = rs.getInt("totalCount"); // �쟾泥� 湲�(�젅肄붾뱶)�쓽 媛쒖닔瑜� ���옣�븯�뒗 蹂��닔
 		int recordCountPerPage = 12;  // �븳 �럹�씠吏��뿉 寃뚯떆湲��씠 紐뉕컻 蹂댁씪嫄댁�
 		int naviCountPerPage = 10;  // �븳 �럹�씠吏��뿉�꽌 �꽕鍮꾧쾶�씠�꽣媛� 紐뉕컻�뵫 蹂댁씪嫄댁�
 		int pageTotalCount = 0;  // �쟾泥닿� 紐뉙럹�씠吏�濡� 援ъ꽦�맆寃껋씤吏�
-		
+
 		if(recordTotalCount % recordCountPerPage > 0 ) { 
 			pageTotalCount = recordTotalCount / recordCountPerPage + 1;
 		} else {
 			pageTotalCount = recordTotalCount / recordCountPerPage;
 		}
-		
+
 		//------------------------------------------------------------------------------------------
-	
+
 		if(currentPage < 1) {	
 			currentPage = 1;
 		} else if(currentPage > pageTotalCount) {
 			currentPage = pageTotalCount;
 		}
-			
+
 		int startNavi = (currentPage - 1) / naviCountPerPage * naviCountPerPage + 1;  
 		int endNavi = startNavi + (naviCountPerPage - 1);  
-		
+
 		if(endNavi > pageTotalCount) {
 			endNavi = pageTotalCount;
 		}
-		
+
 		boolean needPrev = true;
 		boolean needNext = true;
 
 		if(startNavi == 1) {
 			needPrev = false;
 		} 
-		
+
 		if(endNavi == pageTotalCount) {
 			needNext = false;
 		}
-		
+
 		StringBuilder sb = new StringBuilder();
-		
+
 		if(needPrev) {
 			sb.append("<li class='page-item'><a class='page-link' href='planboard.plan?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Previous'><span aria-hidden=\"true\">&laquo;</span><span class=\"sr-only\">Previous</span></a></li>");
 		}
-		
+
 		for(int i = startNavi; i <= endNavi; i++) {
 			if(currentPage == i) {
 				sb.append("<li class='page-item'><a class='page-link' href='planboard.plan?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
@@ -347,18 +349,39 @@ public class PlanDAO {
 				sb.append("<li class='page-item'><a class='page-link' href='planboard.plan?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
 			}
 		}
-		
+
 		if(needNext) {
 			sb.append("<li class='page-item'><a class='page-link' href='planboard.plan?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span><span class='sr-only'>Next</span></a></li>");
 		}
-		
+
 		con.close();
 		pstat.close();
 		rs.close();
-		
+
 		return sb.toString();
 	}	
-	
-	
-	
+
+	//------------------------------------------날짜 차이구하기 
+	public int DateBetween(String start,String end){
+		String date1 = start;
+		String date2 = end;
+		int datepage = -1;
+
+		try{ 
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");    
+			Date FirstDate = format.parse(date1);
+			Date SecondDate = format.parse(date2);
+			long date = FirstDate.getTime() - SecondDate.getTime(); 
+
+			long calDays = date / (24*60*60*1000); 	 
+			datepage = (int)Math.abs(calDays);       
+		}	    	
+		catch(ParseException e)
+		{  }
+		return datepage;
+	}    
+
+
+
+
 }
