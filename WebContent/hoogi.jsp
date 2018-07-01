@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -102,11 +103,11 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th scope="col">1</th>
-						<th scope="col">2</th>
-						<th scope="col">3</th>
-						<th scope="col">4</th>
-						<th scope="col">5</th>
+						<th scope="col">시간</th>
+						<th scope="col">일정</th>
+						<th scope="col">장소</th>
+						<th scope="col">예산</th>
+						<th scope="col">참고</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -117,34 +118,7 @@
 						<td>""</td>
 						<td>""</td>
 					</tr>
-					<tr>
-						<td scope="row">""</td>
-						<td>""</td>
-						<td>""</td>
-						<td>""</td>
-						<td>""</td>
-					</tr>
-					<tr>
-						<td scope="row">""</td>
-						<td>""</td>
-						<td>""</td>
-						<td>""</td>
-						<td>""</td>
-					</tr>
-					<tr>
-						<td scope="row">""</td>
-						<td>""</td>
-						<td>""</td>
-						<td>""</td>
-						<td>""</td>
-					</tr>
-					<tr>
-						<td scope="row">""</td>
-						<td>""</td>
-						<td>""</td>
-						<td>""</td>
-						<td>""</td>
-					</tr>
+		
 				</tbody>
 			</table>
 			<nav aria-label="Page navigation">
@@ -167,15 +141,96 @@
 			
 			<button class="btn btn-default" style="float: right;">신고</button>
 			<br>
+			<div class="comments">
+			<form action="insertPlanComment.plan?plan_seq=${plan_seq}" method="post" id="planCommentForm" name="planCommentForm">
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" placeholder="reply"
-					aria-label="reply" aria-describedby="basic-addon2">
+					aria-label="reply" aria-describedby="basic-addon2" id="comment_text" name="comment_text">
 				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="button"
+					<button class="btn btn-outline-secondary" type="submit"
 						id="commentbtn" name="commentbtn">댓글작성</button>
 				</div>
 			</div>
+			</form>
+			<button type="button"
+            style="border: none; background-color: white; cursor: pointer;"
+            id="comment-bnt">댓글보기▼</button>
+			<div id="planCommentList">
+		<table class="table" id="comment-table">
+            <thead id="comment-thead">
+               <tr>
+                  <th scope="col" style="width: 15%;">작성자</th>
+                  <th scope="col" style="width: 70%">댓 글 내 용</th>
+                  <th scope="col" style="width: 15%;">Last</th>
+               </tr>
+            </thead>
+            <tbody>
+
+               <c:forEach var="pc" items="${result1}">
+                  <tr>
+                     <th scope="row"
+                        style="width: 15%; max-width: 15%; max-height: 51px;"
+                        class='writer'>${pc.comment_writerN}</th>
+                     <td style="width: 70%">${pc.comment_text}</td>
+                     <td style="width: 15%; font-size: 10px;">${pc.comment_time}
+                  <c:choose>
+                  <c:when test="${pc.comment_writer eq user}">
+                  <a href= "deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
+                        <button type="button" class="close" aria-label="Close" id="delete">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                        </a>
+                        </c:when>
+                        <c:otherwise>
+                        
+                        </c:otherwise>
+                    </c:choose> 
+                     </td>
+                  </tr>
+               </c:forEach>
+            </tbody>
+         </table>
+			</div>
 		</div>
 	</div>
+</div>
+
+   <script>
+   /*댓글관련 버튼들*/
+   /*댓글 작성*/
+   $('#commentbtn').click(function() {
+       $('#planCommentForm').submit();
+    })
+    /*댓글보기*/
+      var commentBntCount = 2;
+      $("#comment-bnt").click(function() {
+         var writer = $(".writer").text();
+         if (commentBntCount == 1) {
+            $("#comment-bnt").text("댓글감추기▲");
+            $("#comment-table").show();
+            commentBntCount++;
+         } else {
+            $("#comment-bnt").text("댓글보기▼");
+            $("#comment-table").hide();
+            commentBntCount--;
+         }
+      });
+      $("#commentbtn").click(
+                  function() {
+                     var con = confirm("댓글을작성하시겠습니까?");
+                     var comment = $("#comment_text").val();
+                     if (con) {
+                        if (comment != "") {
+                           alert("댓글이 성공적으로 달렸습니다");
+                           $("#comment_text").val("");
+                        } else {
+                           alert("댓글을 작성해주세요.");
+                        }
+                     } else {
+                     }
+                  });
+ 
+   </script>
+   
 </body>
 </html>
