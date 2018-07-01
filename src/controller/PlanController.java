@@ -16,6 +16,7 @@ import dao.PlanDAO;
 import dto.BudgetDTO;
 import dto.LocationDTO;
 import dto.MemberDTO;
+import dto.PlanCommentDTO;
 import dto.PlanDTO;
 import dto.ScheduleDTO;
 
@@ -169,13 +170,53 @@ public class PlanController extends HttpServlet {
 
 				isForward = true;
 				dst="share_plan.jsp";
+			}else if(command.equals("/planArticle.plan")) {
+				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
+				List<PlanCommentDTO> result1 = pdao.getAllPlanComments(plan_seq);
+				request.setAttribute("result1", result1);
+				request.setAttribute("plan_seq", plan_seq);
+				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+				request.setAttribute("user", user.getSeq());
+
+				isForward=true;
+				dst="hoogi.jsp";
+			}else if(command.equals("/insertPlanComment.plan")) {
+				String comment_text = request.getParameter("comment_text");
+				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
+				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+				int comment_writer = user.getSeq();
+				int result = pdao.insertPlanComment(plan_seq, comment_text, comment_writer);
+				request.setAttribute("result", result);
+				request.setAttribute("plan_seq", plan_seq);
+				
+				isForward= true;
+				dst="planCommentView.jsp";
+			}else if(command.equals("deletePlanComment.plan")) {
+				System.out.println("들어는 오니");
+				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
+				System.out.println("1");
+				int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
+				System.out.println("2");
+				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+				System.out.println("3");
+				int writer = user.getSeq();
+				
+				System.out.println("deletePlanComment.plan :"+plan_seq +":"+writer);
+
+				int result = pdao.deletePlanComment(comment_seq, writer);
+				request.setAttribute("result", result);
+				request.setAttribute("plan_seq", plan_seq);
+				
+				
+				isForward= true;
+				dst = "deletePlanCommentView.jsp";
 			}
 			
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
 			} else {
-				response.sendRedirect(dst);
+				response.sendRedirect("error.jsp");
 			}
 		}catch(Exception e) {e.printStackTrace();}	
 
