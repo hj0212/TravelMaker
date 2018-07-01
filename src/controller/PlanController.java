@@ -61,6 +61,8 @@ public class PlanController extends HttpServlet {
 				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
 				
 				List<BudgetDTO> list = new ArrayList<>();
+				System.out.println("budget_plan: " + request.getParameter("budget_plan"));
+				System.out.println("budget_amount: " + request.getParameter("budget_amount"));
 				/*String[] budget_plan = request.getParameter("budget_plan").split("/");
 				String[] budget_amount = request.getParameter("budget_amount").split("/");
 				for(int i = 0; i < budget_plan.length; i++) {
@@ -108,7 +110,8 @@ public class PlanController extends HttpServlet {
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
 				String create = request.getParameter("create");
-
+				int plan_period = pdao.getPlanperiod(plan);
+				request.setAttribute("plan_period", plan_period);
 				if(create.equals("f")) {
 					List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
 					List<BudgetDTO> blist = pdao.selectBudget(plan, day);
@@ -133,13 +136,13 @@ public class PlanController extends HttpServlet {
 				String plan_title = request.getParameter("plan_title");
 				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0);
 				int plan_seq = pdao.startPlanInsertData(pdto);
+				int plan_period = pdao.getPlanperiod(plan_seq);
 				if(plan_seq>0) {
 					System.out.println("플랜생성완료");
 				}else {
 					System.out.println("플랜생성실패");
 				}
-				System.out.println(plan_seq);
-//				request.setAttribute("result", result);
+				request.setAttribute("plan_period", plan_period);
 				isForward=true;
 
 				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";

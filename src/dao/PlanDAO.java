@@ -32,6 +32,23 @@ public class PlanDAO {
 		return result;
 	}
 	
+	public int getPlanperiod(int plan_seq) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select plan_enddate-plan_startdate+1 from plan where plan_seq = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, plan_seq);
+		ResultSet rs = pstmt.executeQuery();
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
+		
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
 	public int getTotalBudget(int plan, int day) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select sum(budget_amount) from budget where plan_seq = ? and day_seq = ?";
@@ -357,7 +374,6 @@ public class PlanDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan);
 		pstmt.setInt(2, day);
-		
 		ResultSet rs = pstmt.executeQuery();
 
 		List<ScheduleDTO> result = new ArrayList<>();
@@ -387,7 +403,6 @@ public class PlanDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan);
 		pstmt.setInt(2, day);
-		System.out.println(plan + ":" + day);
 		ResultSet rs = pstmt.executeQuery();
 
 		List<BudgetDTO> result = new ArrayList<>();
