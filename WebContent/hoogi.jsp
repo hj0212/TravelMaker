@@ -142,12 +142,12 @@
 			<button class="btn btn-default" style="float: right;">신고</button>
 			<br>
 			<div class="comments">
-			<form action="insertPlanComment.plan?plan_seq=${plan_seq}" method="post" id="planCommentForm" name="planCommentForm">
+			<form action="insertPlanComment.plan?plan_seq=${plan_seq}" method="post" id="planCommentForm" name="planCommentForm"> 
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" placeholder="reply"
 					aria-label="reply" aria-describedby="basic-addon2" id="comment_text" name="comment_text">
 				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="submit"
+					<button class="btn btn-outline-secondary" type="button"
 						id="commentbtn" name="commentbtn">댓글작성</button>
 				</div>
 			</div>
@@ -165,7 +165,6 @@
                </tr>
             </thead>
             <tbody>
-
                <c:forEach var="pc" items="${result1}">
                   <tr>
                      <th scope="row"
@@ -173,18 +172,15 @@
                         class='writer'>${pc.comment_writerN}</th>
                      <td style="width: 70%">${pc.comment_text}</td>
                      <td style="width: 15%; font-size: 10px;">${pc.comment_time}
-                  <c:choose>
-                  <c:when test="${pc.comment_writer eq user}">
-                  <a href= "deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
-                        <button type="button" class="close" aria-label="Close" id="delete">
+               
+                  <c:if test="${pc.comment_writer eq user}">
+                        <button type="button" class="close" aria-label="Close" id="deleteComment" >
+                  <a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
                            <span aria-hidden="true">&times;</span>
-                        </button>
                         </a>
-                        </c:when>
-                        <c:otherwise>
-                        
-                        </c:otherwise>
-                    </c:choose> 
+                        </button>
+                        </c:if>
+        
                      </td>
                   </tr>
                </c:forEach>
@@ -199,8 +195,13 @@
    /*댓글관련 버튼들*/
    /*댓글 작성*/
    $('#commentbtn').click(function() {
+	   var comment_text = $("#comment_text").val(); 
+	   if(comment_text != null){
        $('#planCommentForm').submit();
-    })
+	   }else{
+		  alert("내용을 입력해주세요");
+	   }
+    });
     /*댓글보기*/
       var commentBntCount = 2;
       $("#comment-bnt").click(function() {
@@ -215,20 +216,7 @@
             commentBntCount--;
          }
       });
-      $("#commentbtn").click(
-                  function() {
-                     var con = confirm("댓글을작성하시겠습니까?");
-                     var comment = $("#comment_text").val();
-                     if (con) {
-                        if (comment != "") {
-                           alert("댓글이 성공적으로 달렸습니다");
-                           $("#comment_text").val("");
-                        } else {
-                           alert("댓글을 작성해주세요.");
-                        }
-                     } else {
-                     }
-                  });
+
  
    </script>
    

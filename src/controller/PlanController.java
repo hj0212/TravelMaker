@@ -186,15 +186,16 @@ public class PlanController extends HttpServlet {
 				request.setAttribute("result", result);
 				request.setAttribute("plan_seq", plan_seq);
 				
-				System.out.println("user.getSeq() : "+ user.getSeq());
-				System.out.println("planComment.plan - comment_text :"+ comment_text);
-				
 				isForward= true;
 				dst="planCommentView.jsp";
 			}else if(command.equals("deletePlanComment.plan")) {
+				System.out.println("들어는 오니");
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
+				System.out.println("1");
 				int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
+				System.out.println("2");
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+				System.out.println("3");
 				int writer = user.getSeq();
 				
 				System.out.println("deletePlanComment.plan :"+plan_seq +":"+writer);
@@ -206,14 +207,13 @@ public class PlanController extends HttpServlet {
 				
 				isForward= true;
 				dst = "deletePlanCommentView.jsp";
-				
 			}
 			
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
 			} else {
-				response.sendRedirect(dst);
+				response.sendRedirect("error.jsp");
 			}
 		}catch(Exception e) {e.printStackTrace();}	
 
