@@ -272,12 +272,16 @@ tr {
       });
       
       $("#goList").click(function(){
-            location.href = "freeboard.bo?currentPage="+${currentPage};
+            location.href = "freeboard.bo";
       })
 
       <c:if test="${article.free_writer == sessionScope.user.seq}">
 	  	$("#delete").click(function(){
 	  		location.href = "deleteCheck.bo?articlenum=${article.free_seq}";
+	  	})
+	  	
+	  	$("#update").click(function() {
+	  		location.href = "modifyFreeArticle.bo?articlenum=${article.free_seq}";
 	  	})
       </c:if>
 		

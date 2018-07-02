@@ -47,11 +47,11 @@
 </body>
 <script>
 	document.getElementById("delete").onclick = function(){
-		location.href = "deleteArticle.bo?seq="+${articlenum};
+		location.href = "deleteFreeArticle.bo?seq="+"${articlenum}";
 	}
 	
 	document.getElementById("list").onclick = function() {
-		location.href = "viewArticle.bo?seq="+${articlenum};
+		location.href = "viewFreeArticle.bo?seq="+"${articlenum}";
 	}
 </script>
 </html>
