@@ -220,6 +220,8 @@ public class ReviewDAO {
 		List<ReviewCommentDTO> result = new ArrayList<>();
 		while(rs.next()) {
 			ReviewCommentDTO rdto = new ReviewCommentDTO();
+			rdto.setReview_seq(rs.getInt("review_seq"));
+			rdto.setComment_seq(rs.getInt("comment_seq"));
 			rdto.setComment_writer_seq(rs.getInt("comment_writer"));
 			rdto.setComment_writer(mdao.getUserNickname(rs.getInt("comment_writer")));
 			rdto.setComment_text(rs.getString("comment_text"));
@@ -405,5 +407,18 @@ public class ReviewDAO {
 		return sb.toString();
 	}
 
+	public int deleteReviewComment (int comment_seq, int comment_writer_seq) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "delete from review_comment where comment_seq=? and comment_writer=?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, comment_seq);
+		pstat.setInt(2, comment_writer_seq);
+		int result = pstat.executeUpdate();
+		con.commit();
+		pstat.close();
+		con.close();
+		System.out.println(result);
+		return result;
+	}
 
 }

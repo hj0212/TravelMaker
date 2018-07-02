@@ -142,8 +142,8 @@ public class FrontController extends HttpServlet {
 	             request.setAttribute("review_writerN", result1.getReview_writerN());
 	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
 
-	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-	             request.setAttribute("user", dto.getSeq());
+	            /* MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+	             request.setAttribute("user", dto.getSeq());*/
 	             
 	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
 	             request.setAttribute("commentResult", result2);
@@ -151,7 +151,7 @@ public class FrontController extends HttpServlet {
 	             
 	             isForward = true;            
 	             /*dst = "reviewArticle.jsp?currentPage"+currentPage;*/
-	             dst="reviewArticle.jsp?";
+	             dst="reviewArticle.jsp";
 	          }else if(command.equals("/addReviewComment.bo")) {
 	             String comment_text = request.getParameter("comment_text");
 	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
@@ -185,6 +185,18 @@ public class FrontController extends HttpServlet {
 	        	  
 	        	  isForward = false;
 	        	  dst = "freeboard.bo";
+	          }else if(command.equals("/deleteReviewComment.bo")) {
+	        	  int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
+	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+	        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+	        	  int comment_writer_seq = user.getSeq();
+	        	  System.out.println(comment_seq +":"+review_seq+":"+comment_writer_seq);
+	        	  int result = rdao.deleteReviewComment(comment_seq, comment_writer_seq);
+	        	  request.setAttribute("result", result);
+	        	  request.setAttribute("review_seq", review_seq);
+	        	  System.out.println(result +":"+review_seq);
+	        	  isForward=true;
+	        	  dst="deleteReviewCommentView.jsp";
 	          }
 	        	  
 			if(isForward) {
