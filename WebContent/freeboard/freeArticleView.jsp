@@ -165,18 +165,17 @@ tr {
                </tr>
             </thead>
             <tbody>
-            
-               <tr>
-                  <th scope="row"
-                     style="width: 15%; max-width: 15%; max-height: 51px;"
-                     class="writer">김형섭</th>
-                  <td style="width: 70%; max-width: 70%;"></td>
-                  <td style="width: 15%; font-size: 10px;">Ott
-                     <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true"">&times;</span>
-                     </button>
-                  </td>
-                </tr>
+	            <c:forEach var="comment" items="${commentList}">
+					<tr>
+						<th scope="row" style="width: 15%; max-width: 15%; max-height: 51px;" class="writer">${commentList.}</th>
+						<td style="width: 70%; max-width: 70%;"></td>
+						<td style="width: 15%; font-size: 10px;">Ott
+							<button type="button" class="close" aria-label="Close">
+								<span aria-hidden="true"">&times;</span>
+							</button>
+						</td>
+					</tr>
+				</c:forEach>
             </tbody>
 
          </table>
@@ -186,39 +185,41 @@ tr {
 
 
    <script>
-    
-      var commentBntCount = 2;
-      $("#comment-bnt").click(function() {
-         if (commentBntCount == 1) {
-            $("#comment-bnt").text("댓글감추기▲");
-            $("#comment-table").show();
-            commentBntCount++;
-         } else {
-            $("#comment-bnt").text("댓글보기▼");
-            $("#comment-table").hide();
-            commentBntCount--;
-      
-         }
-      });
+				var commentBntCount = 2;
+				$("#comment-bnt").click(function() {
+					if (commentBntCount == 1) {
+						$("#comment-bnt").text("댓글감추기▲");
+						$("#comment-table").show();
+						commentBntCount++;
+					} else {
+						$("#comment-bnt").text("댓글보기▼");
+						$("#comment-table").hide();
+						commentBntCount--;
 
-      $("#procComment").click(function () {
-    	  
-      });
-      
-      $("#goList").click(function(){
-            location.href = "freeboard.bo";
-      })
+					}
+				});
 
-      <c:if test="${article.free_writer == sessionScope.user.seq}">
-	  	$("#delete").click(function(){
-	  		location.href = "deleteCheck.bo?articlenum=${article.free_seq}";
-	  	})
-	  	
-	  	$("#update").click(function() {
-	  		location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
-	  	})
-      </c:if>
-		
-   </script>
+				$("#procComment").click(function() {
+
+				});
+
+				$("#goList").click(function() {
+					location.href = "freeboard.bo";
+				})
+
+				<c:if test="${article.free_writer == sessionScope.user.seq}">
+				$("#delete")
+						.click(
+								function() {
+									location.href = "deleteCheck.bo?articlenum=${article.free_seq}";
+								})
+
+				$("#update")
+						.click(
+								function() {
+									location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
+								})
+				</c:if>
+			</script>
 </body>
 </html>
