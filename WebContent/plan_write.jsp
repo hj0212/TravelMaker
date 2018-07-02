@@ -46,7 +46,8 @@
 #plan-board {
 	margin-top: 20px;
 	width: 70%;
-	float: left
+	float: left;
+	margin-bottom: 50px;
 }
 
 #plan-div {
@@ -153,7 +154,7 @@
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
 				name="plantitle" value="${plan_title}" readonly>
-
+			<button type="button" class="btn btn-primary">저장 후 나가기</button>
 		</div>
 		<!-- 여기 몇일 여행인지 받아서 개수만큼 돌리기 -->
 		<div class="row col-md-12 days mt-0">
@@ -164,15 +165,18 @@
 							<div class="timeline-badge">
 								<i class="dayCount">${day}일차</i>
 							</div>
+							<c:if test="${day eq param.day }">
 							<div class="timeline-panel">
 								<div class="timeline-heading">
 									<h5 class="timeline-title text-center">${plan_startdate}</h5>
-									<p>
-										<small class="text-muted"><i
-											class="glyphicon glyphicon-time"></i>입력된 일정 수: 0</small>
-									</p>
+										<p>
+											<small class="text-muted"><i
+												class="glyphicon glyphicon-time"></i>현재 작성중</small>
+										</p>	
+									
 								</div>
 							</div>
+							</c:if>
 						</li>
 					</c:forEach>
 
@@ -190,7 +194,9 @@
 					isClicked.removeClass("active");
 					t.addClass("active");
 				}
-				$(location).attr('href',"plan_write.jsp");
+				var day = $(this).children().html().split("일")[0];
+				console.log(day);
+				$(location).attr('href',"selectSchedule.plan?plan=${param.plan}&day="+day+"&create=f");
 			})
 		</script>
 		<!-- 일차 페이징 끝 -->
@@ -214,7 +220,11 @@
 						<c:forEach var="item" items="${scheduleList}">
 							<tr class="clickable-row">
 								<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
-								<td name="place">${item.location_name}<input type="hidden" value="${item.location_id}"></td>
+								<td name="place">${item.location_name}
+									<input type="hidden" id="planlocation_id" value="${item.location_id}">
+									<input type="hidden" id="planmapx" name="x" value="${item.location_x}">
+									<input type="hidden" id="planmapy" name="y" value="${item.location_y}">
+									</td>
 								<td name="schedule">${item.schedule_plan}</td>
 
 								<c:if test="${!empty budgetList}">
@@ -254,8 +264,10 @@
 								<td><button style="float: left; border: none;"
 										type="button" class="btn btn-outline-danger">
 										<i class="far fa-times-circle"></i>
-									</button> <input type="hidden" class="schedule_seq"
-									value="${item.schedule_seq}"></td>
+									</button> 
+									<input type="hidden" class="schedule_seq" value="${item.schedule_seq}">
+									
+								</td>
 							</tr>
 						</c:forEach>
 					</c:if>
@@ -288,6 +300,7 @@
 				<input type="hidden" name="plan" value="${param.plan}"> <input
 					type="hidden" name="day" value="${param.day}"> <input
 					type="hidden" name="schedule_seq" value="0">
+				<input type="hidden" name="delseq" value="">
 				<table class="table table-bordered" id="schedule-boarder">
 					<thead>
 					</thead>
@@ -324,8 +337,9 @@
 					</tr>
 					<tr style="display:none">
 						<td>
-							<input type="text" readonly id="mapx" name="mapx">
-							<input type="text" readonly id="mapy" name="mapy">
+							<input type="text" id="location_id" name="mapx">
+							<input type="text" id="mapx" name="mapx">
+							<input type="text" id="mapy" name="mapy">
 						</td>
 					</tr>
 					<tr>
@@ -351,7 +365,8 @@
 										<span class="input-group-text" >원</span>
 									</div>
 								</div>
-								<input type="hidden" name="budget">
+								<input type="hidden" name="budget_plan">
+								<input type="hidden" name="budget_amount">
 							</td>
 
 						</tr>
@@ -363,9 +378,9 @@
 						</tr>
 					</tbody>
 				</table>
-				<div style="text-align: right">
+				<div style="text-align:center;">
 					<button type="button" class="btn btn-outline-primary"
-						id="success-primary">등록</button>
+						id="success-primary" style="width:100px;">등록</button>
 				</div>
 			</form>
 		</div>
@@ -441,163 +456,160 @@ $(document).ready(function() {
 	 	$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'>"
 				+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+budgetcount+"'><i class='far fa-times-circle'></i></button></div></div>");
 	
-		$("button[id^=moneyxbtn]").click(function() {
-			$(this).parent().parent().remove();
-		})
+		
 	});
+	
+	$("#schedule-boarder").on('click',"button[id^=moneyxbtn]",(function() {
+		$(this).parent().parent().remove();
+	}));
 
 	
 
 	$("#plan-table").on('click',"button[type='button']",function(event) {
-						var index = $(event.currentTarget).closest("tr").index();
-						var info = $("#plan-tbody")[0];
-						info.deleteRow(index,datecount--);
-						$("#plan-table tr:last td:last-child").append("<button type='button' class='btn btn-outline-danger btn-sm'style='float:right'><i class='fa fa-times'></i></button>");
+		var index = $(event.currentTarget).closest("tr").index();
+		var info = $("#plan-tbody")[0];
+		info.deleteRow(index,datecount--);
+		$("#plan-table tr:last td:last-child").append("<button type='button' class='btn btn-outline-danger btn-sm'style='float:right'><i class='fa fa-times'></i></button>");
 	});
 
 	$("#schedule-plan td:last-child").hide();
 	$("#schedule-plan th:last-child").hide();
 
 	$("#delete-table").click(function() {
-				if ($("#delete-table").text() == "삭제") {
-					$("#delete-table").text("완료");
-					$("#delete-table").attr("class","btn btn-outline-primary");
-					$("#schedule-plan td:last-child").show();
-					$("#schedule-plan th:last-child").show();
-				} else {
-					$("#delete-table").text("삭제");
-					$("#delete-table").attr("class","btn btn-outline-danger");
-					$("#schedule-plan td:last-child").hide();
-					$("#schedule-plan th:last-child").hide();
-				}
-			});
-
+		if ($("#delete-table").text() == "삭제") {
+			$("#delete-table").text("완료");
+			$("#delete-table").attr("class","btn btn-outline-primary");
+			$("#schedule-plan td:last-child").show();
+			$("#schedule-plan th:last-child").show();
+		} else {
+			$("#delete-table").text("삭제");
+			$("#delete-table").attr("class","btn btn-outline-danger");
+			$("#schedule-plan td:last-child").hide();
+			$("#schedule-plan th:last-child").hide();
+		}
+	});		
+	
+	
 	$("#schedule-plan").on('click',"button[type='button']",function(event) {
-				var index = $(event.currentTarget).closest("tr").index();
-				var info = $("#schedule-tbody")[0];
-				info.deleteRow(index);
-			});
+		var index = $(event.currentTarget).closest("tr").index();
+		var info = $("#schedule-tbody")[0];
+		info.deleteRow(index);
+		location.href = "deleteSchedule.plan?plan=${param.plan}&day=${param.day}&delseq=" + $(this).siblings().val();
+	});		
 
 	var schedulecount = 1;
 	$("#success-primary").click(function() {
-						console.log("active:"+ $("#schedule-plan>tbody>.active>th").html());
-						con = "";
-						if ($("#schedule-plan>tbody>.active>th").html() != "") {
-							con = "일정을 수정하시겠습니까?";
-						} else {
-							con = "일정을 추가하시겠습니까?";
-						}
+		console.log("active:"+ $("#schedule-plan>tbody>.active>th").html());
+		con = "";
+		if ($("#schedule-plan>tbody>.active>th").html() != "") {
+			con = "일정을 수정하시겠습니까?";
+		} else {
+			con = "일정을 추가하시겠습니까?";
+		}
 
-						starttime = $("#start-time").val();
-						endtime = $("#end-time").val();
-						place = "이레빌딩"; /*  $("#place").val("이레빌딩");*/
-						schedule = $("#schedule").val();
-						budget = "";
-						var budgetn = $("#schedule-boarder>tbody>tr>td.budget>div.input-group").length;
-						console.log("등록 예산 갯수" + budgetn);
-						budget_plan = "";
-						budget_amount = "";
-						for(var i = 0; i < budgetn; i++) {
-							budget_plan += $("#schedule-boarder>tbody>tr>td.budget>div.input-group:nth-child("+(i+1)+")>input:first").val();
-							budget_plan += "/";
-							console.log(i+":"+budget_plan);
-							budget_amount += $("#schedule-boarder>tbody>tr>td.budget>div.input-group:nth-child("+(i+1)+")>input:last").val();
-							budget_amount += "/";
-							console.log(i+":"+budget_amount);
-						}
-						
-						reference = $("#reference").val();
+		starttime = $("#start-time").val();
+		endtime = $("#end-time").val();
+		place = $("#place").val();
+		mapx = $("#mapx").val();
+		mapy = $("#mapy").val()
+		schedule = $("#schedule").val();
+		budget = "";
+		var budgetn = $("#schedule-boarder>tbody>tr>td.budget>div.input-group").length;
+		console.log("등록 예산 갯수" + budgetn);
+		budget_plan = "";
+		budget_amount = "";
+		for(var i = 0; i < budgetn; i++) {
+			budget_plan += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input:first").val();
+			budget_plan += "/";
+			budget_amount += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input:last").val();
+			budget_amount += "/";
+		}
+		$("#schedule-boarder>tbody>tr>.budget>input:first").val(budget_plan);
+		$("#schedule-boarder>tbody>tr>.budget>input:last").val(budget_amount);
+		
+		reference = $("#reference").val();
 
-						if (starttime == "" || endtime == "") {
-							alert("시간을정해주세요");
-						} else if (place == "") {
-							alert("장소를정해주세요");
-						} else if (schedule == "") {
-							alert("일정을적어주세요");
-						} else if (confirm(con)) {
-							$("#scheduleform").submit();
-							var contents = '';
-							contents += '<tr class="clickable-row new active"><th style="height:50px;"></th><td name="place"></td><td name="schedule"></td>';
-							contents += '<td name="money"></td>';
-							contents += '<td name="reference"></td>';
-							contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button><input type="hidden" name="schedule_seq" value="0"></td>';
-							contents += '</tr>';
+		if (starttime == "" || endtime == "") {
+			alert("시간을정해주세요");
+		} else if (place == "") {
+			alert("장소를정해주세요");
+		} else if (schedule == "") {
+			alert("일정을적어주세요");
+		} else if (confirm(con)) {
+			$("#scheduleform").submit();
+			var contents = '';
+			contents += '<tr class="clickable-row new active"><th style="height:50px;"></th><td name="place"></td><td name="schedule"></td>';
+			contents += '<td name="money"></td>';
+			contents += '<td name="reference"></td>';
+			contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button><input type="hidden" name="schedule_seq" value="0"></td>';
+			contents += '</tr>';
 
-							if ($("#schedule-plan>tbody>.active>th").val() == "") { // 빈칸 = 마지막줄
-								console.log("빈칸");
-								$("#schedule-plan>tbody>tr").removeClass('new');
-								$("#schedule-plan>tbody>tr").removeClass('active');
-								$("#schedule-plan>tbody:last").append(contents);
-								$("#schedule-plan td:last-child").hide();
+			if ($("#schedule-plan>tbody>.active>th").val() == "") { // 빈칸 = 마지막줄
+				console.log("빈칸");
+				$("#schedule-plan>tbody>tr").removeClass('new');
+				$("#schedule-plan>tbody>tr").removeClass('active');
+				$("#schedule-plan>tbody:last").append(contents);
+				$("#schedule-plan td:last-child").hide();
 
-							} else { // 빈칸x = 마지막줄x
-								var cursor = "#schedule-plan>tbody>.active";
-								$("#schedule-plan>tbody>tr").removeClass('active');
-								$("#schedule-plan>tbody>.new").addClass('active');
-							}
+			} else { // 빈칸x = 마지막줄x
+				var cursor = "#schedule-plan>tbody>.active";
+				$("#schedule-plan>tbody>tr").removeClass('active');
+				$("#schedule-plan>tbody>.new").addClass('active');
+			}
 
-							$("#start-time").val("");
-							$("#end-time").val("");
-							$("#place").val("");
-							$("#schedule").val("");
-							$("#money").val("");
-							$("#reference").val("");
-						}
+			$("#start-time").val("");
+			$("#end-time").val("");
+			$("#place").val("");
+			$("#schedule").val("");
+			$("#money").val("");
+			$("#reference").val("");
+		}				
 	});
 	
 	isFirst = true;
 	$("#schedule-plan").on('click','.clickable-row',function(event) {
-						$(this).addClass('active').siblings().removeClass('active');
-						var seq = $(".active .schedule_seq").val();
-						$("#plan-board input[name='schedule_seq']").val(seq);
-						var timestr = $("#schedule-plan>tbody>.active>th").html().split("~");
-						$("#start-time").val(timestr[0]);
-						$("#end-time").val(timestr[1]);
-						$("#place").val($("#schedule-plan>tbody>.active>td[name='place']").text());
-						$("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
-						var budgetnum = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").length;
-						/* if(budgetnum == 1) {
-							var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").html().split(":")[0];
-							var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_amount").html();
-							$("#schedule-boarder>tbody>tr>.budget>div input:first").val(budget_plan);
-							$("#schedule-boarder>tbody>tr>.budget>div input:last").val(budget_amount);
-						} */
-						var formnum = $("#schedule-boarder>tbody>tr>.budget>div").length;
-						console.log("budgetnum: " + budgetnum + "formnum: " + formnum);
-						if(budgetnum<formnum) {
-							var remo = formnum - budgetnum;
-							for(var i = 0; i < remo; i++) {
-								 $("#schedule-boarder>tbody>tr>.budget>div:last").remove();
-							}
-						} else if(budgetnum > formnum) {
-							var add = budgetnum - formnum;
-							for(var i = 0; i < remo; i++) {
-								$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+(j+1)+"'><input type='text' class='form-control' placeholder='10000' id='money"+(j+1)+"'>"
-										+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+(j+1)+"'><j class='far fa-times-circle'></i></button></div></div>");
-							}
-						}
-						
-						for(var j = 0; j < budgetnum; j++) {							
-							if(j == 0) {
-								var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").html().split(":")[0];
-								var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_amount").html();
-								$("#schedule-boarder>tbody>tr>.budget>div input:first").val(budget_plan);
-								$("#schedule-boarder>tbody>tr>.budget>div input:last").val(budget_amount);
-								
-							} else {
-								var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']> div.budget_plan:nth-child("+(j+1)+")").html();
-								var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div.budget_amount:nth-child("+(j+1)+")").html();
-								
-								console.log(budget_plan +":"+ j +":"+budget_amount);
-								$("#schedule-boarder>tbody>tr>.budget div:nth-child("+(j+1)+") input:first").val(budget_plan);
-								$("#schedule-boarder>tbody>tr>.budget div:nth-child("+(j+1)+") input:last").val(budget_amount);
-							}
-						}
-						
-						
-						/* $("#money").val($("#schedule-plan>tbody>.active>td[name='money']").html()); */
-						$("#reference").val($("#schedule-plan>tbody>.active>td[name='reference']").html());
-					});
+		$(this).addClass('active').siblings().removeClass('active');
+		var seq = $(".active .schedule_seq").val();
+		$("#plan-board input[name='schedule_seq']").val(seq);
+		var timestr = $("#schedule-plan>tbody>.active>th").html().split("~");
+		$("#start-time").val(timestr[0]);
+		$("#end-time").val(timestr[1]);
+		$("#place").val($("#schedule-plan>tbody>.active>td[name='place']").text());
+		$("#location_id").val($("#schedule-plan>tbody>.active #planlocation_id").val());
+		$("#mapx").val($("#schedule-plan>tbody>.active #planmapx").val());
+		$("#mapy").val($("#schedule-plan>tbody>.active #planmapy").val());
+		$("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
+		var budgetnum = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").length;
+		/* if(budgetnum == 1) {
+			var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").html().split(":")[0];
+			var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_amount").html();
+			$("#schedule-boarder>tbody>tr>.budget>div input:first").val(budget_plan);
+			$("#schedule-boarder>tbody>tr>.budget>div input:last").val(budget_amount);
+		} */
+		var formnum = $("#schedule-boarder>tbody>tr>.budget>div").length;
+		if(budgetnum<formnum) {
+			var remo = formnum - budgetnum;
+			for(var i = 0; i < remo; i++) {
+				 $("#schedule-boarder>tbody>tr>.budget>div:last").remove();
+			}
+		} else if(budgetnum > formnum) {
+			var add = budgetnum - formnum;
+			for(var i = 0; i < add; i++) {
+				$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+(j+1)+"'><input type='text' class='form-control' placeholder='10000' id='money"+(j+1)+"'>"
+						+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+(j+1)+"'><j class='far fa-times-circle'></i></button></div></div>");
+			}
+		}
+		
+		for(var j = 0; j < budgetnum; j++) {
+			var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']>div:nth-of-type("+(j+1)+")>div.budget_plan").html().split(":")[0];
+			var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div:nth-of-type("+(j+1)+")>div.budget_amount").html();
+			
+			$("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(j+1)+") input:first").val(budget_plan);
+			$("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(j+1)+") input:last").val(budget_amount);	
+		}
+		
+		$("#reference").val($("#schedule-plan>tbody>.active>td[name='reference']").html());
+	});				
     
     $("#searchbtn").click(function() {
     	$("#results").html("");

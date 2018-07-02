@@ -46,6 +46,7 @@ public class PlanController extends HttpServlet {
 				ldto.setLocation_name(request.getParameter("place"));
 				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
 				ldto.setLocation_y(Integer.parseInt(request.getParameter("mapy")));
+				System.out.println(ldto.getLocation_name());
 				int location_id = pdao.addLocation(ldto);
 				
 				ScheduleDTO tmp = new ScheduleDTO();
@@ -63,7 +64,7 @@ public class PlanController extends HttpServlet {
 				List<BudgetDTO> list = new ArrayList<>();
 				System.out.println("budget_plan: " + request.getParameter("budget_plan"));
 				System.out.println("budget_amount: " + request.getParameter("budget_amount"));
-				/*String[] budget_plan = request.getParameter("budget_plan").split("/");
+				String[] budget_plan = request.getParameter("budget_plan").split("/");
 				String[] budget_amount = request.getParameter("budget_amount").split("/");
 				for(int i = 0; i < budget_plan.length; i++) {
 					BudgetDTO btmp = new BudgetDTO();
@@ -72,7 +73,7 @@ public class PlanController extends HttpServlet {
 					btmp.setBudget_plan(budget_plan[i]);
 					btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
 					list.add(btmp);
-				}*/
+				}
 				
 				
 				if(schedule_seq > 0) {	// 수정
@@ -82,8 +83,10 @@ public class PlanController extends HttpServlet {
 					for(BudgetDTO btmp : list) {
 						btmp.setSchedule_seq(schedule_seq);
 					}
+					
 					result += pdao.addBudget(list);
-					if(result > 1) {
+					result += pdao.deleteBudget(list);
+					if(result > 2) {
 						System.out.println("수정성공");
 					} else {
 						System.out.println("수정실패");
@@ -95,7 +98,7 @@ public class PlanController extends HttpServlet {
 					}
 					
 					int result = pdao.addBudget(list);
-					if(result > 0) {
+					if(result > 1) {
 						System.out.println("등록성공");
 					} else {
 						System.out.println("등록실패");
@@ -129,6 +132,22 @@ public class PlanController extends HttpServlet {
 
 				isForward = true;
 				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
+			} else if(command.equals("/deleteSchedule.plan")) {
+				int plan = Integer.parseInt(request.getParameter("plan"));
+				int day = Integer.parseInt(request.getParameter("day"));
+				int delseq = Integer.parseInt(request.getParameter("delseq"));
+				int result = pdao.deleteBudget(delseq);
+				result += pdao.deleteSchedule(delseq);
+				
+				if(result>0) {
+					System.out.println("삭제성공");
+				}else {
+					System.out.println("삭제실패");
+				}
+				
+				isForward=true;
+
+				dst="selectSchedule.plan?plan="+plan+"&day=1&create=f";
 			} else if(command.equals("/createPlan.plan")) {
 				int plan_writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
 				String plan_startdate = request.getParameter("plan_startdate");
