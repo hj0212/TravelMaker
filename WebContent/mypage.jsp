@@ -31,7 +31,9 @@
  #box-container {
   margin: 0px auto;
   float: right;
-  background : rgba(0, 0, 0, 0.3);
+  /* background : rgba(0, 0, 0, 0.3); */
+  background : white;
+  border:1px solid #777777 ;
   width: 70%;
   position: absolute;
   border-radius: 5px;
@@ -41,14 +43,16 @@
  }
  #box-container:after {
 	bottom: 100%;
-	left: 30%;
+	left: 50%;
 	border: solid transparent;
 	content: " ";
 	height: 0;
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-	border-bottom-color: rgba(0, 0, 0, 0.3);
+	/* border-bottom-color: rgba(0, 0, 0, 0.3); */
+	 background : white;
+	 border-bottom:1px solid #777777 ;
 	border-width: 8px;
 	margin-left: -8px;
 	z-index:300;
