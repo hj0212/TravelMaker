@@ -84,6 +84,33 @@ tr {
       });
    });
 </script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+
+$(document).ready(function(){
+	$("#goodbtn").click(function(){
+	var goodbtn = $("#goodbtn").text();
+	console.log(goodbtn);
+	
+
+	$.ajax({
+		  type:'POST',
+		  url:"goodbtn.btns",
+		  data: {good:goodbtn},
+		  dataType: 'json',
+		  success:function(good){
+			  $("#goodbtn").html(good);
+		  }
+		});
+		
+		
+	});
+});
+
+
+
+</script>
+
 </head>
 <body>
    <%

@@ -42,7 +42,7 @@ public class FrontController extends HttpServlet {
 			String dst = null;
 
 			if(command.equals("/freeboard.bo")) {
-				System.out.println("찍힘?");
+				
 				int currentPage = 0;
 				String currentPageString = request.getParameter("currentPage");
 				
@@ -145,7 +145,7 @@ public class FrontController extends HttpServlet {
 	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 	             request.setAttribute("user", dto.getSeq());
 	             
-	             System.out.println( result1.getReview_writer()+"*"+ dto.getSeq());
+	          
         
 	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
 	             request.setAttribute("commentResult", result2);
@@ -162,7 +162,7 @@ public class FrontController extends HttpServlet {
 	             request.setAttribute("result", result);
 	             request.setAttribute("review_seq", review_seq);
 
-	             System.out.println("댓글 내용:"+comment_text+"유저 시퀀스: "+dto.getSeq()+"리뷰 시퀀스 :"+ review_seq);
+	         
 	             
 	  
 	             isForward = true;
