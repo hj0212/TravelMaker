@@ -40,7 +40,7 @@ public class FrontController extends HttpServlet {
 
 			boolean isForward = true;
 			String dst = null;
-
+			
 			if(command.equals("/freeboard.bo")) {
 				try {
 					int currentPage = 0;
@@ -280,8 +280,9 @@ public class FrontController extends HttpServlet {
 	        	  String comment = request.getParameter("comment");
 	        	  MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 	        	  int writer = dto.getSeq();
- 	 
-	        	  dst = "freeboard.bo";
+	        	  
+	        	  int result = fbdao.insertComment(aritcleseq,comment,writer);
+	        	  dst = "viewFreeArticle.bo?seq="+aritcleseq;
 	          }
 	        	  
 			if(isForward) {

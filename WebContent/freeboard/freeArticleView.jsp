@@ -141,7 +141,7 @@ tr {
       <div class="comments">
          <button type="button" style="border: none; background-color: white;"
             id="comment-bnt">댓글보기▼</button>
-		 <form method="post" id="procComment" action="procFreeComment.bo">
+		 <form method="post" id="procComment" action="procFreeComment.bo" name="proc">
 	         <div style="width: 100%; margin: 0px;">
 	            <div style="width: 80%">
 	               <textarea class="form-control" rows="3" id="comment" style="resize: none; width: 100%; margin: 0px; float: left;" maxlength="65" name="comment"></textarea>

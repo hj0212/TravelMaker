@@ -10,7 +10,6 @@ import DBUtils.DBConnection;
 import dto.FreeboardDTO;
 
 public class FreeboardDAO {
-	
 	public List<FreeboardDTO> viewFreeList() throws Exception{
 		Connection conn = DBConnection.getConnection();
 		List<FreeboardDTO> tmpList = new ArrayList<>();
@@ -35,7 +34,7 @@ public class FreeboardDAO {
 		return tmpList;
 	}
 	
-	int insertComment(int articleseq, String comment, int writer) throws Exception {
+	public int insertComment(int articleseq, String comment, int writer) throws Exception {
 		Connection conn = DBConnection.getConnection();
 		String sql = "INSERT INTO free_comment values(?,free_comment_seq.nextval,?,?,sysdate)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
