@@ -382,8 +382,6 @@ public class MemberController extends HttpServlet {
 				System.out.println("fileUpload결과 : "+result);
 				
 				request.setAttribute("uploadpath", uploadPath);
-		
-				
 			}
 
 				
@@ -393,7 +391,7 @@ public class MemberController extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
 			} else {
-				response.sendRedirect(dst);
+				response.sendRedirect("error.jsp");
 			}
 		}catch(Exception e) {e.printStackTrace();}		
 	}

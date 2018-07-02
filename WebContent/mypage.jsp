@@ -31,9 +31,7 @@
  #box-container {
   margin: 0px auto;
   float: right;
-  /* background : rgba(0, 0, 0, 0.3); */
-  background : white;
-  border:1px solid #777777 ;
+  background : rgba(0, 0, 0, 0.3);
   width: 70%;
   position: absolute;
   border-radius: 5px;
@@ -43,16 +41,14 @@
  }
  #box-container:after {
 	bottom: 100%;
-	left: 50%;
+	left: 30%;
 	border: solid transparent;
 	content: " ";
 	height: 0;
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-	/* border-bottom-color: rgba(0, 0, 0, 0.3); */
-	 background : white;
-	 border-bottom:1px solid #777777 ;
+	border-bottom-color: rgba(0, 0, 0, 0.3);
 	border-width: 8px;
 	margin-left: -8px;
 	z-index:300;
@@ -80,6 +76,7 @@
   display: table;
   clear: both;
 }
+
 #box-container li a{
 color: #777777 !important;
  text-decoration: none !important;
@@ -92,13 +89,16 @@ width:970px;
 box-sizing: border-box;
 margin:0px auto;
 }
+
 .data, .data div {
 	height: 400px;
 }
+
 .item {
 	width: 300px;
 	padding:0;
 }
+
  </style>
 </head>
 
@@ -119,19 +119,7 @@ margin:0px auto;
       <div class="row">
         <div class="col-sm-8 col-md-3 col-lg-3">
           <div class="card w-100 h-100" id="profile-container">
-          
-          <div class="card-img-top float-left rounded-circle mt-5">
-          <form action = "profileImg.do" method="post" enctype="multipart/form-data">
-          <input type="file" name="file" class="row-py-5" ><img src = "${uploadPath}" alt="">
-            
-          <button tyep="submit">upload</button>          
-            </form>
-</div>
-         
-         
-         
-            
-            
+            <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
             <div class="card-body h-100 py-4 my-5">
               <h4 class="card-title my-4">${nickname}</h4>
               <c:choose>
@@ -139,16 +127,16 @@ margin:0px auto;
               <h4 class="my-4">이메일을 입력해주세요</h4>
               </c:when>
               <c:otherwise>
-               <h4 class="my-4">${email}</h4>
+               <h4 class="my-4">${email}</h4>s
               </c:otherwise>
               </c:choose>
          <a href="#"  id="editlink" >정보수정</a>
   		<ul id="box-container">
   		<c:choose>
   		<c:when test="${sessionScope.part eq 'home'}">
-  		<li class="clearfix"><a  href="#" id="editInfo">회원정보</a></li>
-  		<li class="clearfix"><a  href="#" id="editPw">비밀번호</a></li>
-  		<li class="clearfix"><a  href="#" id="updateEmail">이메일</a></li>
+  		<li class="clearfix"><a href="#" id="editInfo">회원정보</a></li>
+  		<li class="clearfix"><a href="#" id="editPw">비밀번호</a></li>
+  		<li class="clearfix"><a href="#" id="updateEmail">이메일</a></li>
   		</c:when>
   		<c:otherwise>
   		<li class="clearfix"><a href="#" id="updateEmail">이메일</a></li>
@@ -208,16 +196,13 @@ margin:0px auto;
        <div class="panel-heading">
           <ul class="nav nav-tabs nav-justified">
             <li class="nav-item">
-              <a href="#tabone" class="active nav-link" data-toggle="tab" data-target="#tabone" role="presentation">내후기글</a>
+              <a href="#tabone" class="active nav-link" data-toggle="tab" data-target="#tabone" role="presentation">Tab 1</a>
             </li>
             <li class="nav-item">
-              <a href="#tabtwo" data-toggle="tab" data-target="#tabtwo" role="presentation">내계획</a>
+              <a href="#tabtwo" data-toggle="tab" data-target="#tabtwo" role="presentation">Tab 2</a>
             </li>
             <li class="nav-item">
               <a href="#tabthree" data-toggle="tab" data-target="#tabthree" role="presentation">Tab 3</a>
-            </li>
-             <li class="nav-item">
-              <a href="#tabfour" data-toggle="tab" data-target="#tabfour" role="presentation">Tab 4</a>
             </li>
           </ul>
           </div>     
@@ -231,14 +216,9 @@ margin:0px auto;
             <c:forEach var="mrr" items="${MyReviewResult}">
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
-					<div class="card-header">
-					<a href = "reviewArticle.bo?review_seq=${mrr.review_seq}" style="text-decoration:none; text-align:center; margin:0 auto;">                
-                <h6>${mrr.review_title}</h6>
-                </a>
-                </div>
+                <div class="card-header">${mrr.review_title}</div>
                 <img class="card-img-top float-left rounded" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
                 <div class="card-body">
-                <p>${mrr.review_viewcount}</p>
                   <h6 class="text-muted">${mrr.review_contents}</h6>
                   <p>${mrr.review_writedate}</p>
                 </div>
@@ -254,21 +234,47 @@ margin:0px auto;
             <div class="col tab-pane fade" id="tabtwo" role="tabpanel">
             <div class="row">
             
-            <c:forEach var="mpr" items="${MyPlanResult}">
+            
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
-                <div class="card-header">
-                <a href = "planArticle.plan?plan_seq=${mpr.plan_seq}" style="text-decoration:none; text-align:center; margin:0 auto;">
-                <h6>${mpr.plan_title}</h6>
-                </a>
-                </div>
+                <div class="card-header"> Header </div>
                 <div class="card-body">
-                 <p>${mpr.plan_viewcount}</p>
-                  <h6 class="text-muted">${mpr.plan_startdate} ~ ${mpr.plan_enddate}</h6>
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
                 </div>
               </div>
 				</div>
-		</c:forEach>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
 				
 				
 				</div>
@@ -329,55 +335,6 @@ margin:0px auto;
 				</div>    
                    
                    
-           <!-- tabfour -->        
-            <div class="col tab-pane fade" id="tabfour" role="tabpanel">
-            <div class="row">
-            
-            
-            <div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
                            
             </div>
           </div>
@@ -413,7 +370,12 @@ margin:0px auto;
 $("#searchbtn").click(function() {
 			location.href = "mypage.do?search=" + $("#search").val();
 		})
+
+
+
 /*슬라이드*/
+
+
 /* $('.item').slick({
 	  dots: true,
 	  infinite: true,
@@ -475,10 +437,12 @@ $("#editInfo").click(function(){
 	/* location.href="toPwCheck.do"; */
 	window.open("toPwCheck.do","_blank","width=500, height=300, scrollbars=no");
 })
+
 $("#updateEmail").click(function(){
 	/* location.href="toUpdateEmail.do"; */
 	window.open("toUpdateEmail.do","_blank","width=500, height=300, scrollbars=no");
 })
+
 $("#editPw").click(function(){
 	window.open("toPwTrueCheck.do","_blank","width=500, height=300, scrollbars=no");
 })
