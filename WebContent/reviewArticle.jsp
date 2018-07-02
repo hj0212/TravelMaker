@@ -136,15 +136,15 @@ tr {
             method="post" id="inputCommentForm">
             <div style="width: 100%; margin: 0px;">
                <div style="width: 80%">
-                  <textarea class="form-control" rows="3" id="comment"
+                  <textarea class="form-control" rows="3" id="comment_text"
                      name="comment_text"
                      style="resize: none; width: 100%; margin: 0px; float: left;"
                      maxlength="70"></textarea>
                </div>
                <div
                   style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-                  <button style="width: 100%; height: 86px;background-color: white" id="comment-write-bnt"
-                     class="inputComment"  class="btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
+                  <button style="width: 100%; height: 86px;background-color: white" id="commentbnt"
+                     class="btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
                </div>
             </div>
          </form>
@@ -180,7 +180,7 @@ tr {
    </div>
    </div>
    <script>
-      $('.inputComment').click(function() {
+      $('#commentbtn').click(function() {
          $('#inputCommentForm').submit();
       })
    </script>
@@ -198,20 +198,20 @@ tr {
             commentBntCount--;
          }
       });
-      $("#comment-write-bnt").click(
+ /*      $("#commentbnt").click(
                   function() {
                      var con = confirm("댓글을작성하시겠습니까?");
-                     var comment = $("#comment").val();
+                     var comment = $("#comment_text").val();
                      if (con) {
                         if (comment != "") {
                            alert("댓글이 성공적으로 달렸습니다");
-                           $("#comment").val("");
+                           $("#comment_text").val("");
                         } else {
                            alert("댓글을 작성해주세요.");
                         }
                      } else {
                      }
-                  });
+                  }); */
    </script>
 </body>
 </html>
