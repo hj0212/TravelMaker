@@ -150,7 +150,7 @@ tr {
             </div>
             <div
                style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-               <button style="width: 100%; height: 86px;background-color: white" id="comment-write-bnt"  class=""btn btn-default"><i class="fa fa-comments"></i>댓글
+               <button style="width: 100%; height: 86px;background-color: white" id="procComment"  class=""btn btn-default"><i class="fa fa-comments"></i>댓글
                   작성</button>
             </div>
          </div>
@@ -176,33 +176,7 @@ tr {
                         <span aria-hidden="true"">&times;</span>
                      </button>
                   </td>
-
-
-               </tr>
-               <tr>
-                  <th scope="row"
-                     style="width: 15%; max-width: 15%; max-height: 51px; word-break: break-all;"
-                     class="writer"></th>
-                  <td style="width: 70%">asdasd</td>
-                  <td style="width: 15%; font-size: 10px;">Thornton
-                     <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true"">&times;</span>
-                     </button>
-                  </td>
-
-
-               </tr>
-               <tr>
-                  <th scope="row"
-                     style="width: 15%; max-width: 15%; max-height: 51px;"
-                     class='writer'>3</th>
-                  <td style="width: 70%">Larry</td>
-                  <td style="width: 15%; font-size: 10px;">2018-51-29 11:53:39
-                     <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true"">&times;</span>
-                     </button>
-                  </td>
-               </tr>
+                </tr>
             </tbody>
 
          </table>
@@ -227,50 +201,8 @@ tr {
          }
       });
 
-      $("#comment-write-bnt").click(function () {
-            var con = confirm("댓글을작성하시겠습니까?");
-
-
-            var Now = new Date();
-            var NowMonth = Now.getMonth() + 1;
-            var NowTime = Now.getFullYear();
-            NowTime += '-' + NowMonth;
-            NowTime += '-' + Now.getDate();
-            NowTime += ' ' + Now.getHours();
-            NowTime += ':' + Now.getMinutes();
-            NowTime += ':' + Now.getSeconds();
-
-            var writer = "논개";
-            var comment = $("#comment").val();
-
-            var commentinput = "";
-
-            commentinput += "<tr>";
-            commentinput += "<th scope='row' style='width:15%' class='writer'>"
-                  + writer + "</th>";
-            commentinput += "<td style='width:70%;max-width: 60%;'>"
-                  + comment + "</td>";
-            commentinput += "<td style='width:15%;font-size: 10px;'>"
-                  + NowTime
-                  + "   <button type='button' class='close' aria-label='Close' hide>"
-                  + "<span aria-hidden='true'>&times;</span>"
-                  + "</button></td>";
-            commentinput += "</tr>";
-
-            if (con) {
-
-                  if (comment != "") {
-                        $("#comment-table tbody").prepend(
-                              commentinput);
-                        $("#comment").val("");
-
-                  } else {
-                        alert("댓글을 작성해주세요.");
-                  }
-            } else {
-
-            }
-
+      $("#procComment").click(function () {
+    	  
       });
       
       $("#goList").click(function(){
