@@ -71,7 +71,7 @@ div {
 </head>
 <body>
 	<c:choose>
-		<c:when test="${sessionScope.loginId !=null}">
+		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
@@ -197,11 +197,11 @@ div {
 
 		</div>
 		<!--bestImage 영역 끝 -->
-		<h1 class="divLine">푸터올 곳</h1>
+		<h1 class="divLine">푸터</h1>
 		<hr />
-		<div class="row">s
+		<!-- <div class="row">
 			<div class="col-md-12" id="foot"></div>
-		</div>
+		</div> -->
 
 	</div>
 	<script src='source/lib/slick/slick.js'></script>

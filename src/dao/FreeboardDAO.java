@@ -52,18 +52,19 @@ public class FreeboardDAO {
 	}
 	
 	public int deleteArticle(int seq) throws Exception {
-		Connection conn = DBConnection.getConnection();
-		String sql = "delete from freeboard where free_seq = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, seq);
-		
-		int result = pstmt.executeUpdate();
-		
-		conn.commit();
-		pstmt.close();
-		conn.close();
-		return result;
-	}
+	    Connection conn = DBConnection.getConnection();
+	    String sql = "delete from freeboard where free_seq = ?";
+	    PreparedStatement pstmt = conn.prepareStatement(sql);
+	    pstmt.setInt(1, seq);
+	    
+	    int result = pstmt.executeUpdate();
+	    
+	    conn.commit();
+	    pstmt.close();
+	    conn.close();
+	    return result;
+	  }
+
 	
 	public FreeboardDTO readFreeArticle(int seq) throws Exception {
 		Connection conn = DBConnection.getConnection();
@@ -99,6 +100,9 @@ public class FreeboardDAO {
 		if(rs.next()) {
 			writer = rs.getInt(1);
 		}
+		rs.close();
+		pstmt.close();
+		conn.close();
 		
 		return writer;
 	}

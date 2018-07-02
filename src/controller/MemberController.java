@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.SendMail;
 import dao.MemberDAO;
+import dao.ReviewDAO;
 import dto.MemberDTO;
+import dto.ReviewDTO;
 
 
 @WebServlet("*.do")
@@ -26,6 +28,7 @@ public class MemberController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
 
+			ReviewDAO rdao = new ReviewDAO();
 			MemberDAO mdao = new MemberDAO();
 
 			boolean isForward = true;
@@ -46,14 +49,17 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("part", "home");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", dto.getUserid());
-				
+
+				String nickname = mdao.getUserNickname(user.getSeq());
+				request.getSession().setAttribute("nickname", nickname);
+
 				isForward = true;
 				dst="userResult.jsp";
-				
+
 
 			} else if(command.equals("/join.do")) {
 				MemberDTO dto = new MemberDTO();
-				dto.setUserid(request.getParameter("idcheck"));
+				dto.setUserid(request.getParameter("id"));
 				dto.setPassword(request.getParameter("pw"));
 				dto.setNickname(request.getParameter("nickname"));
 				dto.setEmail(request.getParameter("email"));
@@ -63,8 +69,7 @@ public class MemberController extends HttpServlet {
 				isForward = true;
 				dst="userResult.jsp";
 
-			} else if(command.equals("/navlogin.do")) {
-
+			} else if(command.equals("/navlogin.do")) {				
 				String id = request.getParameter("id");
 				String name = request.getParameter("name");
 				String email = request.getParameter("email");
@@ -72,16 +77,19 @@ public class MemberController extends HttpServlet {
 				dto.setNaver_id(id);
 				dto.setNaver_nickname(name);
 				dto.setNaver_email(email);
-				
+
 				MemberDTO user = mdao.loginMember(dto);
 				user.setPart("naver");
-				
+
+				String nickname=mdao.getUserNickname(user.getSeq());
+				request.getSession().setAttribute("nickname", nickname);
+
 				request.getSession().setAttribute("part", "naver");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
-				
+
 				isForward = false;
-				dst="index.jsp";		
+				dst="main.jsp";		
 
 			}else if(command.equals("/kakaologin.do")) {
 				String id = request.getParameter("id");
@@ -91,7 +99,7 @@ public class MemberController extends HttpServlet {
 				dto.setKakao_id(id);
 				dto.setKakao_nickname(name);
 				dto.setKakao_email(email);
-				
+
 				MemberDTO user = mdao.addKakaoMember(dto);
 				user.setPart("kakao");
 
@@ -99,8 +107,11 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
 
+				String nickname=mdao.getUserNickname(user.getSeq());
+				request.getSession().setAttribute("nickname", nickname);
+
 				isForward = false;
-				dst="index.jsp";		
+				dst="main.jsp";		
 
 			}else if(command.equals("/admin.do")) {
 				String part = (String)request.getSession().getAttribute("part");
@@ -139,6 +150,26 @@ public class MemberController extends HttpServlet {
 					request.setAttribute("email", mdto.getKakao_email());
 				}
 
+				MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+				/*List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq());
+		        request.setAttribute("MyReviewResult", MyReviewResult);*/
+
+				int currentPage = 0;
+				String currentPageString = request.getParameter("currentPage");
+
+				if(currentPageString == null) {
+					currentPage = 1;
+				} else {
+					currentPage = Integer.parseInt(currentPageString);
+				}
+
+				String searchTerm = request.getParameter("search");
+				List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq(), currentPage*12-11, currentPage*12, searchTerm);
+				request.setAttribute("MyReviewResult", MyReviewResult);
+
+				String MyReviewPageNavi = rdao.getMyReviewPageNavi(user.getSeq(), currentPage, searchTerm);
+				request.setAttribute("MyReviewPageNavi", MyReviewPageNavi);
+
 				isForward = true;
 				dst="mypage.jsp";
 			}else if(command.equals("/logout.do")) {
@@ -148,7 +179,7 @@ public class MemberController extends HttpServlet {
 				dst="main.jsp";	
 
 
-			//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
+				//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
 			}else if(command.equals("/checkEmail.do")){
 				String id=request.getParameter("id");				
 				String email = request.getParameter("email");
@@ -199,7 +230,7 @@ public class MemberController extends HttpServlet {
 				String email = request.getParameter("email");
 				int result = mdao.updateEmail(id, part, email);
 				request.setAttribute("result", result);
-				
+
 				isForward = true;
 				dst="updateEmailView.jsp";
 			}else if(command.equals("/toUpdateEmail.do")) {
@@ -208,7 +239,7 @@ public class MemberController extends HttpServlet {
 			}else if(command.equals("/toPwCheck.do")) {
 				isForward=true;
 				dst="pwCheck.jsp";
-			
+
 			}else if(command.equals("/pwCheck.do")) {
 				String id = (String)request.getSession().getAttribute("loginId");
 				String pw = request.getParameter("pw");
@@ -223,7 +254,7 @@ public class MemberController extends HttpServlet {
 				String pw = request.getParameter("pw");
 				int result = mdao.updateHomeMemberInfo(id, pw, email, nickname);
 				request.setAttribute("result", result);
-				
+
 				isForward = true;
 				dst = "editInfoView.jsp";
 			}else if(command.equals("/toPwTrueCheck.do")) {
@@ -244,16 +275,49 @@ public class MemberController extends HttpServlet {
 				String pw = request.getParameter("pw");
 				String repw = request.getParameter("repw");
 				if(pw.equals(repw)) {
-				int result = mdao.updatePw(id, repw);
-				request.setAttribute("result", result);
-				isForward = true;
-				dst="modiPwView.jsp";
+					int result = mdao.updatePw(id, repw);
+					request.setAttribute("result", result);
+					isForward = true;
+					dst="modiPwView.jsp";
 				}else {
 					isForward = false;
 				}
 			}else if(command.equals("/toLogin.do")) {
 				isForward=true;
 				dst="newlogin.jsp";
+
+
+				//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
+			}else if(command.equals("/checkEmail.do")){
+				String id=request.getParameter("id");
+				String email = request.getParameter("email");
+				int result =mdao.getEmail(id, email);
+				request.setAttribute("checkEmailResult",result);
+				if(result==10) {
+					request.setAttribute("inputId",id);
+					if(result==11) {
+						request.setAttribute("inputEmail", email);			
+					}			
+				}
+				isForward = true;
+				dst="findPwresult.jsp";
+			}
+			//////////////임시비밀번호 전송 기능	
+			else if(command.equals("/sendtmpPw.do")) {
+				String id=request.getParameter("id");
+				String email=request.getParameter("email");
+				SendMail smail = new SendMail();
+				String pw =smail.maketmpPw();
+				int changeResult = mdao.changePw(id, pw);
+				if(changeResult==1) {
+					smail.send(id, email, pw);			
+					request.setAttribute("mailResult", true);		
+				}else {
+					request.setAttribute("mailResult", false);
+				}
+
+				isForward = true;
+				dst = "sendtmpPwResult";
 			}
 
 			if(isForward) {

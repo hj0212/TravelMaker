@@ -27,7 +27,6 @@
    src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
    integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
    crossorigin="anonymous"></script>
-   <link rel="stylesheet" href="source/css/codepenNavi.css">
 <style>
 * {
    box-sizing: border-box;
@@ -35,6 +34,7 @@
 
 .container {
    width: 970px;
+   margin-top: 130px;
 }
 
 .title {
@@ -92,26 +92,6 @@ tr {
    border-bottom: 3px dotted #e9e9e9;
 }
 
-#comment-write-bnt {
-   -webkit-transition: all 50ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-   -moz-transition: all 500ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-   -ms-transition: all 500ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-   -o-transition: all 500ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-   transition: all 500ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-   color: black;
-   background-color: #c1bfc1;
-   border: 1px soild #d6d6d6;
-   cursor: pointer;
-   box-shadow: 0px;
-   font-style: italic;
-   font-size: 16px;
-   font-family: fantasy;
-}
-
-#comment-write-bnt:hover {
-   color: white;
-   box-shadow: #827e7e 0 0px 0px 60px inset;
-}
 </style>
 </head>
 <body>
@@ -168,7 +148,7 @@ tr {
             </div>
             <div
                style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-               <button style="width: 100%; height: 86px" id="comment-write-bnt">댓글
+               <button style="width: 100%; height: 86px;background-color: white" id="comment-write-bnt"  class=""btn btn-default"><i class="fa fa-comments"></i>댓글
                   작성</button>
             </div>
          </div>
@@ -230,8 +210,8 @@ tr {
 
 
    <script>
-      $("#comment-table").hide();
-      var commentBntCount = 1;
+    
+      var commentBntCount = 2;
       $("#comment-bnt").click(function() {
          if (commentBntCount == 1) {
             $("#comment-bnt").text("댓글감추기▲");
@@ -292,7 +272,7 @@ tr {
       });
       
       $("#goList").click(function(){
-            location.href = "freeboard.bo";
+            location.href = "freeboard.bo?currentPage="+${currentPage};
       })
 
       <c:if test="${article.free_writer == sessionScope.user.seq}">
