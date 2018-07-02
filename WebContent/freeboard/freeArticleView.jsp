@@ -165,6 +165,7 @@ tr {
                </tr>
             </thead>
             <tbody>
+            
                <tr>
                   <th scope="row"
                      style="width: 15%; max-width: 15%; max-height: 51px;"

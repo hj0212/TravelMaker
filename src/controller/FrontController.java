@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.FreeCommentDAO;
 import dao.FreeboardDAO;
 import dao.MemberDAO;
 import dao.ReviewDAO;
+import dto.FreeCommentDTO;
 import dto.FreeboardDTO;
 import dto.MemberDTO;
 import dto.ReviewCommentDTO;
@@ -36,6 +38,7 @@ public class FrontController extends HttpServlet {
 			MemberDAO mdao = new MemberDAO();
 			FreeboardDAO fbdao = new FreeboardDAO();
 			ReviewDAO rdao = new ReviewDAO();
+			FreeCommentDAO fcdao = new FreeCommentDAO();
 		
 
 			boolean isForward = true;
@@ -117,6 +120,17 @@ public class FrontController extends HttpServlet {
 						int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
 						String nickname = mdao.getUserNickname(writerNumber);
 						
+						List<FreeCommentDTO> cdto = fcdao.viewCommentList(seq);
+						
+//						for(FreeCommentDTO tmp : cdto) {
+//							System.out.println(tmp.getFree_seq());
+//							System.out.println(tmp.getComment_seq());
+//							System.out.println(tmp.getComment_text());
+//							System.out.println(tmp.getComment_writer());
+//							System.out.println(tmp.getComment_time());
+//						}
+						
+						request.setAttribute("commentList", cdto);
 						request.setAttribute("currentPage", currentPage);
 						request.setAttribute("article", boardDTO);
 						request.setAttribute("writer", nickname);
@@ -281,7 +295,8 @@ public class FrontController extends HttpServlet {
 	        	  MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 	        	  int writer = dto.getSeq();
 	        	  
-	        	  int result = fbdao.insertComment(aritcleseq,comment,writer);
+	        	  int result = fcdao.insertComment(aritcleseq,comment,writer);
+	        	  System.out.println(aritcleseq + " : " + comment + " : " + writer);
 	        	  dst = "viewFreeArticle.bo?seq="+aritcleseq;
 	          }
 	        	  
