@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import dao.GoodBadDAO;
 import dao.MemberDAO;
 import dao.PlanDAO;
@@ -33,8 +37,6 @@ public class PlanController extends HttpServlet {
 			String command = requestURI.substring(contextPath.length());
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
-
-			System.out.println(request.getParameter("budget_seq"));
 			
 			PlanDAO pdao = new PlanDAO();
 			MemberDAO mdao = new MemberDAO();
@@ -49,7 +51,6 @@ public class PlanController extends HttpServlet {
 				ldto.setLocation_name(request.getParameter("place"));
 				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
 				ldto.setLocation_y(Integer.parseInt(request.getParameter("mapy")));
-				System.out.println(ldto.getLocation_name());
 				int location_id = pdao.addLocation(ldto);
 				
 				ScheduleDTO tmp = new ScheduleDTO();
@@ -100,7 +101,6 @@ public class PlanController extends HttpServlet {
 				ldto.setLocation_id(Integer.parseInt(request.getParameter("location_id")));
 				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
 				ldto.setLocation_y(Integer.parseInt(request.getParameter("mapy")));
-				System.out.println(ldto.getLocation_id());
 				int location_id = pdao.addLocation(ldto);
 				
 				ScheduleDTO tmp = new ScheduleDTO();
@@ -225,18 +225,35 @@ public class PlanController extends HttpServlet {
 				isForward = true;
 				dst="share_plan.jsp";
 			}else if(command.equals("/planArticle.plan")) {
+				int currentPage = 0;
+				String currentPageString = request.getParameter("currentPage");
+				if(currentPageString == null || currentPageString == "") {
+					currentPage = 1;
+				} else {
+					currentPage = Integer.parseInt(currentPageString);
+				}
+				
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
 				List<PlanCommentDTO> result1 = pdao.getAllPlanComments(plan_seq);
 				int bad = gbdao.planBadSelectData(plan_seq);
 				int good = gbdao.planGoodSelectData(plan_seq);
-				
+				PlanDTO plan = pdao.getPlandata(plan_seq);
 				request.setAttribute("good", good);
 				request.setAttribute("bad", bad);
 				request.setAttribute("result1", result1);
 				request.setAttribute("plan_seq", plan_seq);
+				request.setAttribute("plan", plan);
 
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				request.setAttribute("plan_period", plan_period);
+				
+				/*List<LocationDTO> locationlist = pdao.selectLocation(plan_seq);
+				JsonObject obj = new JsonObject();
+				JsonArray jLocationList = new Gson().toJsonTree(locationlist).getAsJsonArray();
+				obj.add("jLocationList", jLocationList);
+				System.out.println(obj.toString());
+				request.setAttribute("jLocationListObject", obj);*/
+				
 				
 				List<ScheduleDTO> list = new ArrayList<>();
 				List<BudgetDTO> blist = new ArrayList<>();
@@ -248,15 +265,13 @@ public class PlanController extends HttpServlet {
 					request.setAttribute("scheduleList", list);
 					request.setAttribute("budgetList", blist);
 					request.setAttribute("totalBudget", totalBudget);
-					
 				}
-				
 				
 				String plan_title = pdao.getPlantitle(plan_seq);
 				request.setAttribute("plan_title", plan_title);
 				
 				isForward=true;
-				dst="hoogi.jsp?plan_seq="+plan_seq;
+				dst="planView.jsp?plan_seq="+plan_seq+"currentPage="+currentPage;
 				
 			}else if(command.equals("/insertPlanComment.plan")) {
 				String comment_text = request.getParameter("comment_text");
@@ -269,25 +284,26 @@ public class PlanController extends HttpServlet {
 				
 				isForward= true;
 				dst="planCommentView.jsp";
-			}else if(command.equals("deletePlanComment.plan")) {
-			
+			}else if(command.equals("/deletePlanComment.plan")) {
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
-			
 				int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
-				
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-				
 				int writer = user.getSeq();
-				
-			
 
 				int result = pdao.deletePlanComment(comment_seq, writer);
 				request.setAttribute("result", result);
 				request.setAttribute("plan_seq", plan_seq);
 				
-				
 				isForward= true;
 				dst = "deletePlanCommentView.jsp";
+			}else if(command.equals("/removePlan.plan")) {
+				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
+				int result = pdao.removePlan(plan_seq);
+				if(result > 0) {
+					System.out.println("삭제성공");
+				} else {
+					System.out.println("삭제실패");
+				}
 			}
 			
 			if(isForward) {
