@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeboardDAO;
+import dao.GoodBadDAO;
 import dao.MemberDAO;
 import dao.ReviewDAO;
 import dto.FreeboardDTO;
@@ -36,13 +37,13 @@ public class FrontController extends HttpServlet {
 			MemberDAO mdao = new MemberDAO();
 			FreeboardDAO fbdao = new FreeboardDAO();
 			ReviewDAO rdao = new ReviewDAO();
-		
+			GoodBadDAO gbdao = new GoodBadDAO();
 
 			boolean isForward = true;
 			String dst = null;
 
 			if(command.equals("/freeboard.bo")) {
-				System.out.println("찍힘?");
+				
 				int currentPage = 0;
 				String currentPageString = request.getParameter("currentPage");
 				
@@ -95,6 +96,12 @@ public class FrontController extends HttpServlet {
 					FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
 					int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
 					String nickname = mdao.getUserNickname(writerNumber);
+					 int good = gbdao.freeGoodSelectData(seq);
+					 int bad = gbdao.freeBadSelectData(seq);
+					
+					request.setAttribute("good", good);
+					request.setAttribute("bad", bad);
+					request.setAttribute("seq", seq);
 					
 					request.setAttribute("currentPage", currentPage);
 					request.setAttribute("article", boardDTO);
@@ -143,9 +150,13 @@ public class FrontController extends HttpServlet {
 	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
 
 	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-	             request.setAttribute("user", dto.getSeq());
+	            int bad = gbdao.reviewBadSelectData(review_seq);
+	            int good =gbdao.reviewGoodSelectData(review_seq);
+	            request.setAttribute("good", good);
+	            request.setAttribute("bad", bad);
+	            
 	             
-	             System.out.println( result1.getReview_writer()+"*"+ dto.getSeq());
+	            
         
 	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
 	             request.setAttribute("commentResult", result2);
@@ -162,12 +173,12 @@ public class FrontController extends HttpServlet {
 	             request.setAttribute("result", result);
 	             request.setAttribute("review_seq", review_seq);
 
-	             System.out.println("댓글 내용:"+comment_text+"유저 시퀀스: "+dto.getSeq()+"리뷰 시퀀스 :"+ review_seq);
+	           
 	             
 	  
 	             isForward = true;
 	             dst= "reviewCommentView.jsp";
-	          }else if(command.equals("/deleteArticle.bo")) {
+	          }else if(command.equals("/deleteReviewArticle.bo")) {
 	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 	        	  int result = rdao.deleteReview(review_seq);
 	        	  
