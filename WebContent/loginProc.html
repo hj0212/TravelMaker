@@ -16,7 +16,7 @@
 
 	<!-- (2) LoginWithNaverId Javscript 설정 정보 및 초기화 -->
 	<script>
-	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://59.10.249.73/Test/loginProc.html");
+	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://59.10.249.73/TravelMaker/loginProc.html");
   	
 	  
 	  naver_id_login.get_naver_userprofile("naverSignInCallback()");
@@ -31,8 +31,7 @@
 			naverLogin.reprompt();
 			return;
 		}
-		console.log(uniqId + ":" + nickname + ":" + email);
-		window.location.replace("http://59.10.249.73/Test/navlogin.do?id="+uniqId+"&name="+nickname+"&email=" + email);
+		window.location.replace("http://59.10.249.73/TravelMaker/navlogin.do?id="+uniqId+"&name="+nickname+"&email=" + email);
 	  }
 
 	</script>

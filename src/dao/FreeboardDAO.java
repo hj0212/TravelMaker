@@ -35,6 +35,78 @@ public class FreeboardDAO {
 		return tmpList;
 	}
 	
+	public int insertArticle(int writer, String title, String contents) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "INSERT INTO freeboard values(freeboard_seq.nextval,?,?,?,sysdate,0)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, title);
+		pstmt.setString(2, contents);
+		pstmt.setInt(3, writer);
+		
+		int result = pstmt.executeUpdate();
+		
+		conn.commit();
+		pstmt.close();
+		conn.close();
+		return result;
+	}
+	
+	public int deleteArticle(int seq) throws Exception {
+	    Connection conn = DBConnection.getConnection();
+	    String sql = "delete from freeboard where free_seq = ?";
+	    PreparedStatement pstmt = conn.prepareStatement(sql);
+	    pstmt.setInt(1, seq);
+	    
+	    int result = pstmt.executeUpdate();
+	    
+	    conn.commit();
+	    pstmt.close();
+	    conn.close();
+	    return result;
+	  }
+
+	
+	public FreeboardDTO readFreeArticle(int seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "select * from freeboard where free_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, seq);
+		ResultSet rs = pstmt.executeQuery();
+		FreeboardDTO tmp = new FreeboardDTO();
+		
+		while(rs.next()) {
+			tmp.setFree_seq(rs.getInt(1));
+			tmp.setFree_title(rs.getString(2));
+			tmp.setFree_contents(rs.getString(3));
+			tmp.setFree_writer(rs.getString(4));
+			tmp.setFree_writedate(rs.getString(5));
+			tmp.setFree_viewcount(rs.getInt(6));
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		return tmp;
+	}
+	
+	public int writerCheck(int seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "select free_writer from freeboard where free_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, seq);
+		ResultSet rs = pstmt.executeQuery();
+		int writer = 0;
+		
+		if(rs.next()) {
+			writer = rs.getInt(1);
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return writer;
+	}
+	
 	public ArrayList<FreeboardDTO> selectBoard(int startNum, int endNum, String searchTerm) throws Exception {
 		Connection con = DBConnection.getConnection();
 		

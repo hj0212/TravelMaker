@@ -1,43 +1,134 @@
-      $(document).ready(function() {
-            $(".login-link").on("click", showLogin);
-            $(".signup-link").on("click", showSignup);
-        });
 
-        var showLogin = function showLogin() {
-            $(".login-link").addClass("active");
-            $(".signup-link").removeClass("active");
-            $(".confirm-password-row").hide();
-            $(".btn-login").text("Log in");
-            $(".forgot-password-row").show();
-        };
+$(document).ready(function(){
+	
+	$("#user_idchek").keydown(function(){
+		var str = $("#user_idchek").val();
+	
+		if(blankid(str)){
+			
+			var regex = /\s/g;
+			document.getElementById("user_idchek").value =document.getElementById("user_idchek").value.replace(regex,"");
+		};
+		
+		function blankid(str){
+			var regex =/\s/g;
+			return regex.test(str);
+		};
+	});
+	
+	
+	
+	document.getElementById("user_idchek").onblur= function(){
+		var str = document.getElementById("user_idchek").value;
+		if(!idcheck(str)){
+	
+			document.getElementById("user_idchek").value ="";
+			$("#label-text").html("id 형식이  맞지않습니다");								
+		};		
+		
+		function idcheck(str){
+			var regex =/^[a-z][a-z\d]{7,44}$/g;
+			return regex.test(str);
+		};
+	};
+	
 
-        var showSignup = function showSignup() {
-            $(".signup-link").addClass("active");
-            $(".login-link").removeClass("active");
-            $(".btn-login").text("Sign up");
-            $(".forgot-password-row").hide();
-            $(".confirm-password-row").show();
-        };
+	$("#password").keypress(function(){
+		var str = document.getElementById("password").value;
+		
+		if(blankpw(str)){
+			console.log(str);
+			 var regex = /\s/g;
+			document.getElementById("password").value = document.getElementById("password").value.replace(regex,"");
+			$("#password-label").html("password");
+		};
+		
+		function blankpw(str){
+			var regex =/\s/g;
+			return regex.test(str);
+			
+		};
+	}); 
+		
+	
+	
+	
 
-        $("#password").on("input focus", checkPasswordStrength).on("blur", function() {
-            return $("#password-strength, .help-text").empty();
-        });
+	document.getElementById("nickname").onblur = function(){
+		var str =$("#nickname").val();		  
+		
+		if(!namecheck(str)){
+			document.getElementById("nickname").value="";
+			alert("이름의 형식이 맞지않습니다");
+		};
+		function namecheck(str){
+			var regex =/^[가-힣]{2,6}$|[a-zA-Z]{4,45}$/;
+			return regex.test(str);
+		};
+	};
+	
+	$("#nickname").keypress(function(){
+		var str = $("#nickname").val();
+		
+		if(blankname(str)){
+			console.log("nickname");
+			 var regex = /\s/g;
+			document.getElementById("nickname").value =document.getElementById("nickname").value.replace(regex,"");
+		};
+		
+		function blankname(str){
+			var regex = /\s/g;
+			return regex.test(str);
+		};
+	});
+	
+	
+	
+	
+	$("#email").keypress(function(){
+		var str = $("#email").val();
+		
+		if(blankemail(str)){
+			console.log("email");
+			 var regex = /\s/g;
+			document.getElementById("email").value =document.getElementById("email").value.replace(regex,"");
+		};
+		
+		function blankemail(str){
+			var regex=/\s/g;
+			return regex.test(str);
+		};
+	});
+	
+	
+	$("#confirm-password").keyup(function(){
+		var pw = $("#password").val();
+		var conpw = $("#confirm-password").val();
+	
+				
+		if(pw==conpw){
+			$("#confirm-label").html("<font color=blue>confirm password(일치)</font>");
+		}else{
+			
+			$("#confirm-label").html("<font color=red>confirm password(불일치)</font>");
+			if(pw == ""){
+				$("#confirm-label").html("confirm password");
+				$("#confirm-password").val("");
+			
+			};
+			
+		};
+		
+	});
+	
 
-        function checkPasswordStrength() {
-            if (!$("#password").val() || $(".login-link").hasClass("active")) return;
-
-            var result = zxcvbn($("#password").val());
-            var emoji = {
-                0: "\uD83D\uDE28", // Fearful 😨
-                1: "\uD83D\uDE16", // Confounded 😖
-                2: "\uD83D\uDE1E", // Disappointed 😞
-                3: "\uD83D\uDE15", // Confused 😕
-                4: "\uD83D\uDE03" // Grinning 😃
-            };
-            var warning = result.feedback.warning || "";
-            var suggestion = result.feedback.suggestions.join(", ").replace(/,/g, "") || "";
-
-            $("#password-strength").html(emoji[result.score]);
-            $(".help-text").text(suggestion + " " + warning);
-        }
-        
+	
+	
+	
+	
+	
+	
+	
+	
+	
+});
