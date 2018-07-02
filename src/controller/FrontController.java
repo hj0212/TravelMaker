@@ -200,9 +200,20 @@ public class FrontController extends HttpServlet {
 	        		  dst = "numberError.bo";
 	        		  e.printStackTrace();
 	        	  }
-	          }else if(command.equals("/modifyFreeArticle.bo")) {
+	          }else if(command.equals("/modifyFreeArticlePage.bo")) {
 	        	  try {
-	        		  dst = "freeboard/modifyFreeArticle.jsp";
+	        		  int articlenum = Integer.parseInt(request.getParameter("articlenum"));
+	        		  request.setAttribute("articlenum", articlenum);
+	        		  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+	        		  
+	        		  if(user.getSeq() == fbdao.writerCheck(articlenum)) {
+	        			  FreeboardDTO dto = fbdao.readFreeArticle(articlenum);
+	        			  request.setAttribute("contents", dto);
+	        			  dst = "freeboard/modifyFreeArticle.jsp";
+	        		  }else {
+	        			  dst = "notWriter.bo";
+	        			  isForward = false;
+	        		  }
 	        	  }catch(NumberFormatException e) {
 	        		  dst =  "numberError.bo";
 	        	  }
@@ -212,6 +223,14 @@ public class FrontController extends HttpServlet {
 	          }else if(command.equals("/notWriter.bo")) {
 	        	  dst = "notWriter.jsp";
 	        	  isForward = false;
+	          }else if(command.equals("/modifyFreeArticle.bo")) {
+	        	  String title = request.getParameter("title");
+	        	  String contents = request.getParameter("contents");
+	        	  
+	        	  System.out.println(request.getParameter("articlenum"));
+	        	  
+	        	  
+	        	  dst = "freeboard.bo";
 	          }
 	        	  
 			if(isForward) {
@@ -224,7 +243,6 @@ public class FrontController extends HttpServlet {
 			e.printStackTrace();
 		}		
 	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
