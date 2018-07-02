@@ -48,7 +48,7 @@ pageEncoding="UTF-8"%>
 			<c:when test="${sessionScope.user.seq eq null}">
 				<script>
 					alert("비회원은 이용 불가능합니다.");
-					location.href = "freeboard.bo"
+					location.href = "toLogin.do";
 				</script>
 			</c:when>
 			<c:otherwise>
@@ -61,7 +61,7 @@ pageEncoding="UTF-8"%>
             		<textarea name="contents" class="form-control" id="editor"></textarea>
         		</div>
                 <div class="text-right">
-        		    <input type="button" class="btn btn-primary" value="작성" onclick="sendContents(); this.disabled=true;"></button>
+        		    <input type="button" class="btn btn-primary" value="작성" onclick="sendContents()" id="send"></button>
             		<button type="button" class="btn btn-primary" id="cancel">취소</button>
             		<button type="button" class="btn btn-primary" id="list">목록 </button>
         		</div>

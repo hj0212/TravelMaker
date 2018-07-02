@@ -50,10 +50,12 @@
 }
 
 .contents {
+   padding-top : 10px;
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
    min-height: 100px;
+   word-wrap: break-word;
 }
 
 /* 편법임... */
