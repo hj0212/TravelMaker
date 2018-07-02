@@ -155,7 +155,7 @@ public class FrontController extends HttpServlet {
 	             
 	  
 	             isForward = true;
-<<<<<<< HEAD
+
 	             dst= "reviewCommentView.bo";
 	          }else if(command.equals("/deleteCheck.bo")) {
 //	        	  int seq = Integer.parseInt(request.getParameter("articlenum"));
@@ -171,9 +171,8 @@ public class FrontController extends HttpServlet {
 	        	  
 	        	  isForward = false;
 	        	  dst = "freeboard.bo";
-=======
-	             dst= "reviewCommentView.jsp";
->>>>>>> ho
+
+
 	          }
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);

@@ -112,14 +112,12 @@ tr {
 </style>
 <script>
 	$(document).ready(function() {
-		$(".close").hide();
+
 
 		$("#reviewboard-bt").click(function() {
 			$(location).attr("href", "reviewboard.bo");
 		});
-	if(${sessionScop.user.seq}==wirter){
-		
-	}
+
 	});
 </script>
 </head>
@@ -194,9 +192,11 @@ tr {
 								class='writer'>${comment.comment_writer}</th>
 							<td style="width: 70%">${comment.comment_text}</td>
 							<td style="width: 15%; font-size: 10px;">${comment.comment_time}
+						
 								<button type="button" class="close" aria-label="Close">
 									<span aria-hidden="true"">&times;</span>
 								</button>
+							
 							</td>
 						</tr>
 					</c:forEach>
