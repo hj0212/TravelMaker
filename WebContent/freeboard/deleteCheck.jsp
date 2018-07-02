@@ -41,17 +41,17 @@
 	</c:choose>
 	<div class="container text-center">
 		<h1>글을 삭제하시겠습니까?</h1>
-		<button type="button" class="btn btn-light" id="delete">삭제</button>
-		<button type="button" class="btn btn-light" id="list">게시글로가기</button>
+		<button type="button" class="btn btn-light" id="delete" onclick="deleteContents(); this.disabled=true;">삭제</button>
+		<button type="button" class="btn btn-light" id="list" onclick="goList(); this.disabled=true;">게시글로가기</button>
 	</div>
 </body>
 <script>
-	document.getElementById("delete").onclick = function(){
-		location.href = "deleteArticle.bo?seq="+${articlenum};
+	function deleteContents() {
+		location.href = "deleteFreeArticle.bo?seq="+"${articlenum}";
 	}
 	
-	document.getElementById("list").onclick = function() {
-		location.href = "viewArticle.bo?seq="+${articlenum};
+	function goList() {
+		location.href = "viewFreeArticle.bo?seq="+"${articlenum}";
 	}
 </script>
 </html>
