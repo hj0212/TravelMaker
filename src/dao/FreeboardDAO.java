@@ -10,7 +10,6 @@ import DBUtils.DBConnection;
 import dto.FreeboardDTO;
 
 public class FreeboardDAO {
-	
 	public List<FreeboardDTO> viewFreeList() throws Exception{
 		Connection conn = DBConnection.getConnection();
 		List<FreeboardDTO> tmpList = new ArrayList<>();
@@ -42,6 +41,22 @@ public class FreeboardDAO {
 		pstmt.setString(1, title);
 		pstmt.setString(2, contents);
 		pstmt.setInt(3, writer);
+		
+		int result = pstmt.executeUpdate();
+		
+		conn.commit();
+		pstmt.close();
+		conn.close();
+		return result;
+	}
+	
+	public int updateArticle(String title, String contents, int articlenum) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "UPDATE freeboard set free_title = ?, free_contents = ? WHERE free_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, title);
+		pstmt.setString(2, contents);
+		pstmt.setInt(3, articlenum);
 		
 		int result = pstmt.executeUpdate();
 		
@@ -235,5 +250,5 @@ public class FreeboardDAO {
 		rs.close();
 		
 		return sb.toString();
-	}	
+	}
 }

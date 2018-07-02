@@ -17,14 +17,9 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="source/css/mainPage.css">
-
-
-
 <link rel="stylesheet" type="text/css" href="source/lib/slick/slick.css" />
 <link rel="stylesheet" type="text/css"
 	href="source/lib/slick/slick-theme.css" />
-
-
 <style>
 div {
 	box-sizing: border-box;
