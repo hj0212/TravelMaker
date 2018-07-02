@@ -281,7 +281,7 @@ tr {
 	  	})
 	  	
 	  	$("#update").click(function() {
-	  		location.href = "modifyFreeArticle.bo?articlenum=${article.free_seq}";
+	  		location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
 	  	})
       </c:if>
 		

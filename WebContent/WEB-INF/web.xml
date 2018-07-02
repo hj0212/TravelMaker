@@ -30,6 +30,6 @@
   
   <error-page>
   	<error-code>403</error-code>
-  	<location>/error.jsp</location>
+  	<location>/freeboard.bo</location>
   </error-page>
 </web-app>
