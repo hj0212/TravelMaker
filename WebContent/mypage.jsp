@@ -33,7 +33,7 @@
   float: right;
   background : rgba(0, 0, 0, 0.3);
   width: 70%;
-  position: relative;
+  position: absolute;
   border-radius: 5px;
   padding: 5px;
   z-index:300;
@@ -192,7 +192,7 @@ margin:0px auto;
        <div class="panel-heading">
           <ul class="nav nav-tabs nav-justified">
             <li class="nav-item">
-              <a href="#tabone" class="active nav-link" data-toggle="tab" data-target="#tabone" role="presentation">Tab 1</a>
+              <a href="#tabone" class="active nav-link" data-toggle="tab" data-target="#tabone" role="presentation">내후기글</a>
             </li>
             <li class="nav-item">
               <a href="#tabtwo" data-toggle="tab" data-target="#tabtwo" role="presentation">Tab 2</a>
