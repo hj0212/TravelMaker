@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -52,9 +53,13 @@ public class MemberController extends HttpServlet {
 
 				String nickname = mdao.getUserNickname(user.getSeq());
 				request.getSession().setAttribute("nickname", nickname);
-
-				isForward = true;
-				dst="userResult.jsp";
+				if(user.getBlock().equals("y")) {
+					isForward = true;
+					dst="errorBlock.jsp";
+				}else {
+					isForward = true;
+					dst="userResult.jsp";
+				}
 
 
 			} else if(command.equals("/join.do")) {
@@ -87,9 +92,14 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("part", "naver");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
-
-				isForward = false;
-				dst="main.jsp";		
+				
+				if(user.getBlock().equals("y")) {
+					isForward = true;
+					dst="errorBlock.jsp";
+				}else {
+					isForward = true;
+					dst="main.jsp";
+				}	
 
 			}else if(command.equals("/kakaologin.do")) {
 				String id = request.getParameter("id");
@@ -109,9 +119,14 @@ public class MemberController extends HttpServlet {
 
 				String nickname=mdao.getUserNickname(user.getSeq());
 				request.getSession().setAttribute("nickname", nickname);
-
-				isForward = false;
-				dst="main.jsp";		
+				if(user.getBlock().equals("y")) {
+					isForward = true;
+					dst="errorBlock.jsp";
+				}else {
+					isForward = true;
+					dst="main.jsp";
+				}
+					
 
 			}else if(command.equals("/admin.do")) {
 				String part = (String)request.getSession().getAttribute("part");
@@ -319,6 +334,30 @@ public class MemberController extends HttpServlet {
 				isForward = true;
 				dst = "sendtmpPwResult";
 			}
+			
+			//-----------------------admin.jsp > 모든 회원 리스트보기
+			else if(command.equals("/showMembers.do")) {
+				List<MemberDTO> mlist = new ArrayList<>(); 
+				mlist=mdao.getAllMembers();
+				request.setAttribute("memberList", mlist);
+				
+				isForward = true;
+				dst = "admin.jsp";
+			}
+			
+			//-----------------------admin.jsp > 회원계정 차단
+			else if(command.equals("/blockMember.do")) {
+				int seq = Integer.parseInt(request.getParameter("sequence"));
+				String isBlocked = mdao.checkBlock(seq);
+				
+				int result = mdao.changeBlock(seq,isBlocked);
+				System.out.println("블럭결과"+result);
+				request.setAttribute("blockResult", result);
+				isForward = true;
+				dst = "admin.jsp";
+			}
+			
+			
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);

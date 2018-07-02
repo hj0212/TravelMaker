@@ -15,220 +15,123 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="source/css/admin.css">
 <style>
-body, html {
-	height: 100%;
-}
-.main .row {
-	padding: 0px;
-	margin: 0px;
-}
-nav.sidebar.navbar {
-	border-radius: 0px;
-}
-nav.sidebar, .main {
-	-webkit-transition: margin 200ms ease-out;
-	-moz-transition: margin 200ms ease-out;
-	-o-transition: margin 200ms ease-out;
-	transition: margin 200ms ease-out;
-}
-
-.main {
-	padding: 10px 10px 0 10px;
-}
-
-/* .....NavBar: Icon only with coloring/layout.....*/
-/*small/medium side display*/
-@media ( min-width : 768px) {
-	/*Allow main to be next to Nav*/
-	.main {
-		position: absolute;
-		width: calc(100% - 40px); /*keeps 100% minus nav size*/
-		margin-left: 40px;
-		float: right;
-	}
-	nav.sidebar:hover+.main {
-		margin-left: 200px;
-	}
-	/*Center Brand*/
-	nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand
-		{
-		margin-left: 0px;
-	}
-	nav.sidebar .navbar-brand, nav.sidebar .navbar-header {
-		text-align: center;
-		width: 100%;
-		margin-left: 0px;
-	}
-	/*Center Icons*/
-	nav.sidebar a {
-		padding-right: 13px;
-	}
-	nav.sidebar .navbar-nav>li:first-child {
-		border-top: 1px #e5e5e5 solid;
-	}
-	nav.sidebar .navbar-nav>li {
-		border-bottom: 1px #e5e5e5 solid;
-	}
-	nav.sidebar .navbar-nav .open .dropdown-menu {
-		position: static;
-		float: none;
-		width: auto;
-		margin-top: 0;
-		background-color: transparent; 
-		border: 0;
-		-webkit-box-shadow: none;
-		box-shadow: none;
-	}
-	/*allows nav box to use 100% width*/
-	nav.sidebar .navbar-collapse, nav.sidebar .container-fluid {
-		padding: 0 0px 0 0px;
-	}
-	.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
-		color: #777;
-	}
-	nav.sidebar {
-		width: 200px;
-		height: 100%;
-		margin-left: -160px;
-		float: left;
-		z-index: 8000;
-		margin-bottom: 0px;
-	}
-	nav.sidebar li {
-		width: 100%;
-	}
-	nav.sidebar:hover {
-		margin-left: 0px;
-	}
-	.forAnimate {
-		opacity: 0;
-	}
-}
-
-@media ( min-width : 1330px) {
-	/*Allow main to be next to Nav*/
-	.main {
-		width: calc(100% - 200px); /*keeps 100% minus nav size*/
-		margin-left: 200px;
-	}
-	nav.sidebar {
-		margin-left: 0px;
-		float: left;
-	}
-	nav.sidebar .forAnimate {
-		opacity: 1;
-	}
-}
-nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus
-	{
-	color: #CCC;
-	background-color: transparent;
-}
-
-nav:hover .forAnimate {
-	opacity: 1;
-}
-
-section {
-	padding-left: 15px;
-}
 </style>
 </head>
 <body>
+	<div class="container col-md-12">
+		<div id="wrapper">
+			<div class="overlay"></div>
 
-<div class="container col-md-12">
-	<nav class="navbar navbar-inverse sidebar" role="navigation">
-	<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#bs-sidebar-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">Brand</a>
-		</div>
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse"
-			id="bs-sidebar-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home<span
-						style="font-size: 16px;"
-						class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-				<li><a href="#">Profile<span style="font-size: 16px;"
-						class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
-				<li><a href="#">Messages<span style="font-size: 16px;"
-						class="pull-right hidden-xs showopacity glyphicon glyphicon-envelope"></span></a></li>
+			<!-- Sidebar -->
+			<nav class="navbar navbar-inverse navbar-fixed-top"
+				id="sidebar-wrapper" role="navigation">
+			<ul class="nav sidebar-nav">
+				<li class="sidebar-brand"><a href="#"> TravelMaker </a></li>
+				<li><a href="#">Members</a></li>
+				<li><a href="#">Pages</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Settings <span class="caret"></span><span
-						style="font-size: 16px;"
-						class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a>
-					<ul class="dropdown-menu forAnimate" role="menu">
+					data-toggle="dropdown">Works <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li class="dropdown-header">Dropdown heading</li>
 						<li><a href="#">Action</a></li>
 						<li><a href="#">Another action</a></li>
 						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
 						<li><a href="#">Separated link</a></li>
-						<li class="divider"></li>
 						<li><a href="#">One more separated link</a></li>
 					</ul></li>
-				<li><a href="#">Home<span style="font-size: 16px;"
-						class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-				<li><a href="#">Profile<span style="font-size: 16px;"
-						class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
-				<li><a href="#">Messages<span style="font-size: 16px;"
-						class="pull-right hidden-xs showopacity glyphicon glyphicon-envelope"></span></a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Settings <span class="caret"></span><span
-						style="font-size: 16px;"
-						class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a>
-					<ul class="dropdown-menu forAnimate" role="menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Separated link</a></li>
-						<li class="divider"></li>
-						<li><a href="#">One more separated link</a></li>
-					</ul></li>
+				<li><a href="#">Contact</a></li>		
 			</ul>
+			</nav>
+			<!-- /#sidebar-wrapper -->
+
+			<!-- Page Content -->
+			<div id="page-content-wrapper">
+				<button type="button" class="hamburger is-closed"
+					data-toggle="offcanvas">
+					<span class="hamb-top"></span> <span class="hamb-middle"></span> <span
+						class="hamb-bottom"></span>
+				</button>
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8 col-lg-offset-2">
+							<h1>Fancy Toggle Sidebar Navigation</h1>
+							<p>Bacon ipsum dolor sit amet tri-tip shoulder tenderloin
+								shankle. Bresaola tail pancetta ball tip doner meatloaf corned
+								beef. Kevin pastrami tri-tip prosciutto ham hock pork belly
+								bacon pork loin salami pork chop shank corned beef tenderloin
+								meatball cow. Pork bresaola meatloaf tongue, landjaeger tail
+								andouille strip steak tenderloin sausage chicken tri-tip.
+								Pastrami tri-tip kielbasa sausage porchetta pig sirloin boudin
+								rump meatball andouille chuck tenderloin biltong shank</p>
+							<p>Pig meatloaf bresaola, spare ribs venison short loin rump
+								pork loin drumstick jowl meatball brisket. Landjaeger chicken
+								fatback pork loin doner sirloin cow short ribs hamburger
+								shoulder salami pastrami. Pork swine beef ribs t-bone flank
+								filet mignon, ground round tongue. Tri-tip cow turducken shank
+								beef shoulder bresaola tongue flank leberkas ball tip.</p>
+							<p>Filet mignon brisket pancetta fatback short ribs short
+								loin prosciutto jowl turducken biltong kevin pork chop pork beef
+								ribs bresaola. Tongue beef ribs pastrami boudin. Chicken
+								bresaola kielbasa strip steak biltong. Corned beef pork loin cow
+								pig short ribs boudin bacon pork belly chicken andouille. Filet
+								mignon flank turkey tongue. Turkey ball tip kielbasa pastrami
+								flank tri-tip t-bone kevin landjaeger capicola tail fatback pork
+								loin beef jerky.</p>
+							<p>Chicken ham hock shankle, strip steak ground round
+								meatball pork belly jowl pancetta sausage spare ribs. Pork loin
+								cow salami pork belly. Tri-tip pork loin sausage jerky
+								prosciutto t-bone bresaola frankfurter sirloin pork chop ribeye
+								corned beef chuck. Short loin hamburger tenderloin, landjaeger
+								venison porchetta strip steak turducken pancetta beef cow
+								leberkas sausage beef ribs. Shoulder ham jerky kielbasa. Pig
+								doner short loin pork chop. Short ribs frankfurter rump
+								meatloaf.</p>
+							<p>Filet mignon biltong chuck pork belly, corned beef ground
+								round ribeye short loin rump swine. Hamburger drumstick turkey,
+								shank rump biltong pork loin jowl sausage chicken. Rump pork
+								belly fatback ball tip swine doner pig. Salami jerky cow, boudin
+								pork chop sausage tongue andouille turkey.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /#page-content-wrapper -->
+
 		</div>
 	</div>
-	</nav>
-	<div class="main">
-		<!-- Content Here -->
-	</div>
-</div>
 
 	<script>
-function htmlbodyHeightUpdate(){
-	var height3 = $( window ).height()
-	var height1 = $('.nav').height()+50
-	height2 = $('.main').height()
-	if(height2 > height3){
-		$('html').height(Math.max(height1,height3,height2)+10);
-		$('body').height(Math.max(height1,height3,height2)+10);
-	}
-	else
-	{
-		$('html').height(Math.max(height1,height3,height2));
-		$('body').height(Math.max(height1,height3,height2));
-	}
-	
-}
-$(document).ready(function () {
-	htmlbodyHeightUpdate()
-	$( window ).resize(function() {
-		htmlbodyHeightUpdate()
-	});
-	$( window ).scroll(function() {
-		height2 = $('.main').height()
-			htmlbodyHeightUpdate()
-	});
-});
+	$(document).ready(function () {
+		  var trigger = $('.hamburger'),
+		      overlay = $('.overlay'),
+		     isClosed = false;
 
+		    trigger.click(function () {
+		      hamburger_cross();      
+		    });
+
+		    function hamburger_cross() {
+
+		      if (isClosed == true) {          
+		        overlay.hide();
+		        trigger.removeClass('is-open');
+		        trigger.addClass('is-closed');
+		        isClosed = false;
+		      } else {   
+		        overlay.show();
+		        trigger.removeClass('is-closed');
+		        trigger.addClass('is-open');
+		        isClosed = true;
+		      }
+		  }
+		  
+		  $('[data-toggle="offcanvas"]').click(function () {
+		        $('#wrapper').toggleClass('toggled');
+		  });  
+		});
 </script>
 </body>
 </html>
