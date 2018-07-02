@@ -215,7 +215,11 @@ margin:0px auto;
             <c:forEach var="mrr" items="${MyReviewResult}">
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
-                <div class="card-header">${mrr.review_title}</div>
+					<div class="card-header">
+					<a href = "reviewArticle.bo?review_seq=${mrr.review_seq}" style="text-decoration:none; text-align:center; margin:0 auto;">                
+                <h6>${mrr.review_title}</h6>
+                </a>
+                </div>
                 <img class="card-img-top float-left rounded" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
                 <div class="card-body">
                 <p>${mrr.review_viewcount}</p>
@@ -237,7 +241,11 @@ margin:0px auto;
             <c:forEach var="mpr" items="${MyPlanResult}">
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
-                <div class="card-header"> ${mpr.plan_title} </div>
+                <div class="card-header">
+                <a href = "planArticle.plan?plan_seq=${mpr.plan_seq}" style="text-decoration:none; text-align:center; margin:0 auto;">
+                <h6>${mpr.plan_title}</h6>
+                </a>
+                </div>
                 <div class="card-body">
                  <p>${mpr.plan_viewcount}</p>
                   <h6 class="text-muted">${mpr.plan_startdate} ~ ${mpr.plan_enddate}</h6>

@@ -581,13 +581,13 @@ public class PlanDAO {
 		PreparedStatement pstat = null;
 		
 		if(searchTerm == null || searchTerm.equals("null")) {
-		sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, plan_startdate, plan_enddate, row_number() over(order by plan_seq desc) as num from plan where plan_writer=?) where num between ? and ?";
+		sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate,'YYYY/MM/DD'), to_char(plan_enddate,'YYYY/MM/DD'), row_number() over(order by plan_seq desc) as num from plan where plan_writer=?) where num between ? and ?";
 		pstat = con.prepareStatement(sql);
 		pstat.setInt(1, seq);
 		pstat.setInt(2, startNum);
 		pstat.setInt(3, endNum);
 		} else {
-			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, plan_startdate, plan_enddate, row_number() over(order by plan_seq desc) as num from plan where plan_writer=? and plan_title like ?) where num between ? and ?";
+			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate,'YYYY/MM/DD'), to_char(plan_enddate,'YYYY/MM/DD'), row_number() over(order by plan_seq desc) as num from plan where plan_writer=? and plan_title like ?) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, seq);
 			pstat.setString(2, "%"+searchTerm+"%");
@@ -599,14 +599,14 @@ public class PlanDAO {
 
 		while(rs.next()) {
 			PlanDTO pdto = new PlanDTO();
-			pdto.setPlan_seq(rs.getInt("plan_seq"));
-			pdto.setPlan_writerN(mdao.getUserNickname(rs.getInt("plan_writer")));
-			pdto.setPlan_writer(rs.getInt("plan_writer"));
-			pdto.setPlan_title(rs.getString("plan_title"));
-			pdto.setPlan_good(rs.getInt("plan_good"));
-			pdto.setPlan_viewcount(rs.getInt("plan_viewcount"));
-			pdto.setPlan_startdate(rs.getString("plan_startdate"));
-			pdto.setPlan_enddate(rs.getString("plan_enddate"));
+			pdto.setPlan_seq(rs.getInt(1));
+			pdto.setPlan_writerN(mdao.getUserNickname(rs.getInt(2)));
+			pdto.setPlan_writer(rs.getInt(2));
+			pdto.setPlan_title(rs.getString(3));
+			pdto.setPlan_good(rs.getInt(4));
+			pdto.setPlan_viewcount(rs.getInt(5));
+			pdto.setPlan_startdate(rs.getString(6));
+			pdto.setPlan_enddate(rs.getString(7));
 			result.add(pdto);
 		}
 		
