@@ -159,7 +159,7 @@
 		<div class="row col-md-12 days mt-0">
 			<div style="display: inline-block; width: 100%; overflow-y: auto;">
 				<ul class="timeline timeline-horizontal">
-					<c:forEach var="day" begin="1" end="5" step="1">
+					<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 						<li class="timeline-item">
 							<div class="timeline-badge">
 								<i class="dayCount">${day}일차</i>
@@ -440,6 +440,10 @@ $(document).ready(function() {
 		budgetcount++;
 	 	$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'>"
 				+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+budgetcount+"'><i class='far fa-times-circle'></i></button></div></div>");
+	
+		$("button[id^=moneyxbtn]").click(function() {
+			$(this).parent().parent().remove();
+		})
 	});
 
 	
@@ -552,14 +556,28 @@ $(document).ready(function() {
 						$("#place").val($("#schedule-plan>tbody>.active>td[name='place']").text());
 						$("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
 						var budgetnum = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").length;
-						console.log("budgetnum: " + budgetnum);
-						if(budgetnum == 1) {
+						/* if(budgetnum == 1) {
 							var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").html().split(":")[0];
 							var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_amount").html();
 							$("#schedule-boarder>tbody>tr>.budget>div input:first").val(budget_plan);
 							$("#schedule-boarder>tbody>tr>.budget>div input:last").val(budget_amount);
+						} */
+						var formnum = $("#schedule-boarder>tbody>tr>.budget>div").length;
+						console.log("budgetnum: " + budgetnum + "formnum: " + formnum);
+						if(budgetnum<formnum) {
+							var remo = formnum - budgetnum;
+							for(var i = 0; i < remo; i++) {
+								 $("#schedule-boarder>tbody>tr>.budget>div:last").remove();
+							}
+						} else if(budgetnum > formnum) {
+							var add = budgetnum - formnum;
+							for(var i = 0; i < remo; i++) {
+								$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+(j+1)+"'><input type='text' class='form-control' placeholder='10000' id='money"+(j+1)+"'>"
+										+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+(j+1)+"'><j class='far fa-times-circle'></i></button></div></div>");
+							}
 						}
-						for(var j = 0; j < budgetnum; j++) {
+						
+						for(var j = 0; j < budgetnum; j++) {							
 							if(j == 0) {
 								var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").html().split(":")[0];
 								var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_amount").html();
@@ -567,14 +585,8 @@ $(document).ready(function() {
 								$("#schedule-boarder>tbody>tr>.budget>div input:last").val(budget_amount);
 								
 							} else {
-								if(isFirst) {
-									$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+(j+1)+"'><input type='text' class='form-control' placeholder='10000' id='money"+(j+1)+"'>"
-										+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+(j+1)+"'><j class='far fa-times-circle'></i></button></div></div>");
-									isFirst = false;
-								}
 								var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']> div.budget_plan:nth-child("+(j+1)+")").html();
 								var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div.budget_amount:nth-child("+(j+1)+")").html();
-								
 								
 								console.log(budget_plan +":"+ j +":"+budget_amount);
 								$("#schedule-boarder>tbody>tr>.budget div:nth-child("+(j+1)+") input:first").val(budget_plan);
