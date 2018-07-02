@@ -50,4 +50,19 @@ public class FreeCommentDAO {
 		conn.close();
 		return list;
 	}
+	
+	public int deleteComment(int articleseq, int commentseq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "DELETE FROM FREE_COMMENT WHERE FREE_SEQ = ? AND COMMENT_SEQ = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, articleseq);
+		pstmt.setInt(2, commentseq);
+		
+		int result = pstmt.executeUpdate();
+		
+		conn.commit();
+		pstmt.close();
+		conn.close();
+		return result;
+	}
 }

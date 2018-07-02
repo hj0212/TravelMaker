@@ -298,6 +298,23 @@ public class FrontController extends HttpServlet {
 	        	  int result = fcdao.insertComment(aritcleseq,comment,writer);
 	        	  System.out.println(aritcleseq + " : " + comment + " : " + writer);
 	        	  dst = "viewFreeArticle.bo?seq="+aritcleseq;
+	          }else if(command.equals("/deleteFreeComment.bo")) {
+	        	  try {
+		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        	  
+		        	  int articleseq = Integer.parseInt(request.getParameter("articleseq"));
+		        	  int commentseq = Integer.parseInt(request.getParameter("commentseq"));
+		        	  
+		        	  if(user.getSeq() == Integer.parseInt(request.getParameter("commentwriter"))) {
+		        		  int result = fcdao.deleteComment(articleseq, commentseq);
+		        	  }
+		        	  
+		        	  isForward = false;
+		        	  dst = "viewFreeArticle.bo?seq="+articleseq;
+	        	  }catch(NumberFormatException e) {
+	        		  dst = "numberError.bo";
+	        		  isForward = false;
+	        	  }
 	          }
 	        	  
 			if(isForward) {

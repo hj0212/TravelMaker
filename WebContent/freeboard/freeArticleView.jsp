@@ -173,7 +173,11 @@ tr {
 						<td style="width: 70%; max-width: 70%;">${comment.comment_text}</td>
 						<td style="width: 15%; font-size: 10px;">${comment.comment_time}
 							<button type="button" class="close" aria-label="Close">
-								<span aria-hidden="true"">&times;</span>
+								<c:if test="${sessionScope.user.seq eq comment.comment_writer}">
+									<a href="deleteFreeComment.bo?articleseq=${comment.free_seq}&commentseq=${comment.comment_seq}&commentwriter=${comment.comment_writer}">
+										<span aria-hidden="true"">&times;</span>
+									</a>
+								</c:if>
 							</button>
 						</td>
 					</tr>
