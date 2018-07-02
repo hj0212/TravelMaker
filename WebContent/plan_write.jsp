@@ -299,9 +299,9 @@
 
 		<div id="plan-board">
 			<form method="post" id="scheduleform">
-				<input type="hidden" name="plan" value="${param.plan}"> <input
-					type="hidden" name="day" value="${param.day}"> <input
-					type="hidden" name="schedule_seq" value="0">
+				<input type="hidden" name="plan" value="${param.plan}"> 
+				<input type="hidden" name="day" value="${param.day}"> 
+				<input type="hidden" name="schedule_seq" value="">
 				<input type="hidden" name="delseq" value="">
 				<table class="table table-bordered" id="schedule-boarder">
 					<thead>
