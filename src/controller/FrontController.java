@@ -42,7 +42,6 @@ public class FrontController extends HttpServlet {
 			String dst = null;
 
 			if(command.equals("/freeboard.bo")) {
-<<<<<<< HEAD
 				try {
 					int currentPage = 0;
 					String currentPageString = request.getParameter("currentPage");
@@ -77,15 +76,6 @@ public class FrontController extends HttpServlet {
 					dst="freeboard/freeBoardList.jsp?currentPage="+currentPage;
 				}catch(NumberFormatException e) {
 					dst = "numberError.bo";
-=======
-				int currentPage = 0;
-				String currentPageString = request.getParameter("currentPage");
-				
-				if(currentPageString == null) {
-					currentPage = 1;
-				} else {
-					currentPage = Integer.parseInt(currentPageString);
->>>>>>> 창영
 				}
 			} else if(command.equals("/freewrite.bo")) {
 				isForward = true;
@@ -113,16 +103,10 @@ public class FrontController extends HttpServlet {
 					int result = fbdao.insertArticle(writer, title, contents);
 					dst = "freeboard.bo";
 				}
-<<<<<<< HEAD
 			} else if(command.equals("/viewFreeArticle.bo")) {
 				try {
 					int seq = Integer.parseInt(request.getParameter("seq"));
 					String currentPage = request.getParameter("currentPage");
-=======
-			} else if(command.equals("/viewArticle.bo")) {
-				try {
-					int seq = Integer.parseInt(request.getParameter("seq"));
->>>>>>> 창영
 					MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 					
 					if(dto == null) {
@@ -133,25 +117,16 @@ public class FrontController extends HttpServlet {
 						int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
 						String nickname = mdao.getUserNickname(writerNumber);
 						
-<<<<<<< HEAD
 						request.setAttribute("currentPage", currentPage);
-=======
->>>>>>> 창영
 						request.setAttribute("article", boardDTO);
 						request.setAttribute("writer", nickname);
 						
 						dst = "freeboard/freeArticleView.jsp";
 					}
-<<<<<<< HEAD
 				}catch(NumberFormatException e) {
 					dst = "numberError.bo";
 					isForward = false;
 					e.printStackTrace();
-=======
-				}catch(Exception e) {
-					isForward = false;
-					dst = "freeboard.bo";
->>>>>>> 창영
 				}
 			} else if(command.equals("/login.bo")) {
 				dst = "freeboard/needLogin.jsp";
@@ -227,25 +202,9 @@ public class FrontController extends HttpServlet {
 	        	  isForward = true;
 	        	  dst="deleteReviewView.jsp";
 	          }else if(command.equals("/deleteCheck.bo")) {
-<<<<<<< HEAD
 //	        	  int seq = Integer.parseInt(request.getParameter("articlenum"));
 	        	  request.setAttribute("articlenum", request.getParameter("articlenum"));
 	        	  dst = "freeboard/deleteCheck.jsp";
-=======
-	        	  if(request.getParameter("articlenum") == null) {
-	        		  dst = "freeboard.bo";
-	        		  isForward = false;
-	        	  }else {
-	        		  try {
-	        			  int seq = Integer.parseInt(request.getParameter("articlenum"));
-		        		  request.setAttribute("articlenum", seq);
-		        		  dst = "freeboard/deleteCheck.jsp";
-	        		  }catch(Exception e) {
-	        			  isForward = false;
-	        			  dst = "freeboard.bo";
-	        		  }
-	        	  }
->>>>>>> 창영
 	          }else if(command.equals("/deleteFreeArticle.bo")) {
 	        	  try {
 		        	  int seq = Integer.parseInt(request.getParameter("seq"));
@@ -253,7 +212,6 @@ public class FrontController extends HttpServlet {
 		        	  
 		        	  if(user.getSeq() == fbdao.writerCheck(seq)) {
 		        		  fbdao.deleteArticle(seq);
-<<<<<<< HEAD
 		        		  dst = "freeboard.bo";
 		        	  }else {
 		        		  dst = "notWriter.bo";
@@ -317,34 +275,6 @@ public class FrontController extends HttpServlet {
 	        		  dst = "numberError.bo";
 	        		  isForward = false;
 	        	  }
-=======
-		        	  }
-		        	  
-		        	  isForward = false;
-		        	  dst = "freeboard.bo";
-	        	  }catch(Exception e) {
-	        		  isForward = false;
-	        		  dst = "freeboard.bo";
-	        	  }
-	          }else if(command.equals("/modifyFreeArticle.bo")) {
-	        	  try {
-		        	  String seq = request.getParameter("articlenum");
-		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
-		        	  
-	        		  int articlenum = Integer.parseInt(seq);
-	        		  System.out.println(articlenum);
-	        		  
-	        		  if(user.getSeq() == fbdao.writerCheck(articlenum)){
-	        			  dst = "freeboard/freeArticleModify.jsp";
-	        		  }else {
-	        			  isForward = false;
-	        			  dst = "freeboard.bo";
-	        		  }
-	        	  }catch(Exception e) {
-	        		  isForward = false;
-	        		  dst = "freeboard.bo";
-	        	  }
->>>>>>> 창영
 	          }
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
