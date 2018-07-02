@@ -285,7 +285,7 @@ public class GoodBadDAO {
 		//내가 좋아요한 plan 게시물 아티클 번호들 
 		public List<PlanDTO> favoriteData(int goodId)throws Exception {
 			Connection con = DBConnection.getConnection();
-			String sql ="select * from plan, (select article_no from good_plan, users where seq=user_seq and seq = ?) where plan_seq = article_no";
+			String sql ="select * from plan, (select article_no from good_plan, users where seq=user_seq and seq = ? order by good_plan_seq desc) where plan_seq = article_no ";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1,goodId);
 			ResultSet rs = pstmt.executeQuery();
