@@ -99,7 +99,7 @@ tr {
          <div class="col-sm-3 text-right">${review_writedate}</div>
          <div class="col-sm-2 text-right">${review_viewcount}</div>
           <c:choose>
-          <c:when test="${user eq review_writer}">
+          <c:when test="${sessionScope.user.seq eq review_writer}">
           <div class="col-sm-1 text-right">
           <a href="deleteReviewArticle.bo?review_seq=${review_seq}"><i class="far fa-times-circle"></i></a>
           </div>
@@ -167,9 +167,13 @@ tr {
                      <td style="width: 70%">${comment.comment_text}</td>
                      <td style="width: 15%; font-size: 10px;">${comment.comment_time}
                   
-                        <button type="button" class="close" aria-label="Close">
-                           <span aria-hidden="true"">&times;</span>
+                             <c:if test="${comment.comment_writer_seq eq sessionScope.user.seq}">
+                        <button type="button" class="close" aria-label="Close" id="deleteComment" >
+                  <a href="deleteReviewComment.bo?comment_seq=${comment.comment_seq}&review_seq=${comment.review_seq}">
+                           <span aria-hidden="true">&times;</span>
+                        </a>
                         </button>
+                        </c:if>
                      
                      </td>
                   </tr>
