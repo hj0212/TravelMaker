@@ -125,7 +125,7 @@
 			</ul>
 
 			<div class="tab-content">
-				<!-- <div role="tabpanel" class="tab-pane fade in active" id="Day1">
+				 <div role="tabpanel" class="tab-pane fade in active" id="Day1">
 					<table class="table table-bordered" id="schedule-plan">
 						<thead>
 							<tr>
@@ -154,7 +154,7 @@
 							</tr>
 						</tbody>
 					</table>
-				</div> -->
+				</div> 
 			</div>
 
 
