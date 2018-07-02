@@ -21,7 +21,17 @@ pageEncoding="UTF-8"%>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
     	<script src="./freeboard/summernote-ko-KR.js"></script>
         <link rel="stylesheet" href="source/css/codepenNavi.css">
-        <link rel="stylesheet" href="./freeboard/freewrite.css">
+        <style>
+			/* 에디터 p태그의 높이 조절 */
+			.note-editable p {
+			     margin: 0 0 0.0001pt; 
+			}
+			
+			.container {
+				margin-top : 140px;
+			    width: 970px;
+			}
+        </style>
     </head>
 
     <body>

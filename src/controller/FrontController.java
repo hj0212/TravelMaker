@@ -42,7 +42,6 @@ public class FrontController extends HttpServlet {
 			String dst = null;
 
 			if(command.equals("/freeboard.bo")) {
-				System.out.println("찍힘?");
 				int currentPage = 0;
 				String currentPageString = request.getParameter("currentPage");
 				
@@ -83,24 +82,30 @@ public class FrontController extends HttpServlet {
 					int result = fbdao.insertArticle(writer, title, contents);
 					dst = "freeboard.bo";
 				}
-			} else if(command.equals("/viewArticle.bo")) {
-				int seq = Integer.parseInt(request.getParameter("seq"));
-				String currentPage = request.getParameter("currentPage");
-				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-				
-				if(dto == null) {
+			} else if(command.equals("/viewFreeArticle.bo")) {
+				try {
+					int seq = Integer.parseInt(request.getParameter("seq"));
+					String currentPage = request.getParameter("currentPage");
+					MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+					
+					if(dto == null) {
+						isForward = false;
+						dst = "login.bo";
+					}else {
+						FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
+						int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
+						String nickname = mdao.getUserNickname(writerNumber);
+						
+						request.setAttribute("currentPage", currentPage);
+						request.setAttribute("article", boardDTO);
+						request.setAttribute("writer", nickname);
+						
+						dst = "freeboard/freeArticleView.jsp";
+					}
+				}catch(NumberFormatException e) {
+					dst = "numberError.bo";
 					isForward = false;
-					dst = "login.bo";
-				}else {
-					FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
-					int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
-					String nickname = mdao.getUserNickname(writerNumber);
-					
-					request.setAttribute("currentPage", currentPage);
-					request.setAttribute("article", boardDTO);
-					request.setAttribute("writer", nickname);
-					
-					dst = "freeboard/freeArticleView.jsp";
+					e.printStackTrace();
 				}
 			} else if(command.equals("/login.bo")) {
 				dst = "freeboard/needLogin.jsp";
@@ -179,23 +184,44 @@ public class FrontController extends HttpServlet {
 //	        	  int seq = Integer.parseInt(request.getParameter("articlenum"));
 	        	  request.setAttribute("articlenum", request.getParameter("articlenum"));
 	        	  dst = "freeboard/deleteCheck.jsp";
-	          }else if(command.equals("/deleteArticle.bo")) {
-	        	  int seq = Integer.parseInt(request.getParameter("seq"));
-	        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
-	        	  
-	        	  if(user.getSeq() == fbdao.writerCheck(seq)) {
-	        		  fbdao.deleteArticle(seq);
+	          }else if(command.equals("/deleteFreeArticle.bo")) {
+	        	  try {
+		        	  int seq = Integer.parseInt(request.getParameter("seq"));
+		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        	  
+		        	  if(user.getSeq() == fbdao.writerCheck(seq)) {
+		        		  fbdao.deleteArticle(seq);
+		        	  }else {
+		        		  dst = "notWriter.bo";
+		        		  isForward = false;
+		        	  }
+		        	  
+	        	  }catch(NumberFormatException e) {
+	        		  dst = "numberError.bo";
+	        		  e.printStackTrace();
+	        	  }finally {
+	        		  isForward = false;
 	        	  }
-	        	  
+	          }else if(command.equals("/modifyFreeArticle.bo")) {
+	        	  try {
+	        		  dst = "freeboard/modifyFreeArticle.jsp";
+	        	  }catch(NumberFormatException e) {
+	        		  dst =  "numberError.bo";
+	        	  }
+	          }else if(command.equals("/numberError.bo")) {
 	        	  isForward = false;
-	        	  dst = "freeboard.bo";
+	        	  System.out.println("왜 안됨./.");
+	        	  dst = "numberError.jsp";
+	          }else if(command.equals("/notWriter.bo")) {
+	        	  dst = "notWriter.jsp";
+	        	  isForward = false;
 	          }
 	        	  
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
 			} else {
-				response.sendRedirect("error.jsp");
+				response.sendRedirect(dst);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
