@@ -393,7 +393,7 @@ $(document).ready(function(){
 		type:"post",
 		data:{"plan_seq":plan_seq},
 		success:function(data){		
-			makeMarkerArray(data);
+			console.log(data);
 		}
 	});
  
