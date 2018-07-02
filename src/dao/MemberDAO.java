@@ -265,7 +265,6 @@ public class MemberDAO {
 		String nickname = "";
 		if(rs.next()) {
 			String part = rs.getString(1);
-		
 			
 			if(part.equals("home")) {
 				sql = "select nickname from users where seq=?";
@@ -292,7 +291,6 @@ public class MemberDAO {
 			}
 		}
 		
-	
 		pstmt.close();
 		rs.close();
 		con.close();
