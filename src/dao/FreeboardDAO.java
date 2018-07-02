@@ -35,6 +35,22 @@ public class FreeboardDAO {
 		return tmpList;
 	}
 	
+	int insertComment(int articleseq, String comment, int writer) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "INSERT INTO free_comment values(?,free_comment_seq.nextval,?,?,sysdate)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, articleseq);
+		pstmt.setString(2, comment);
+		pstmt.setInt(3, writer);
+		
+		int result = pstmt.executeUpdate();
+		
+		conn.commit();
+		pstmt.close();
+		conn.close();
+		return articleseq;
+	}
+	
 	public int insertArticle(int writer, String title, String contents) throws Exception {
 		Connection conn = DBConnection.getConnection();
 		String sql = "INSERT INTO freeboard values(freeboard_seq.nextval,?,?,?,sysdate,0)";
@@ -251,5 +267,5 @@ public class FreeboardDAO {
 		rs.close();
 		
 		return sb.toString();
-	}	
+	}
 }

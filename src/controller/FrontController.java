@@ -275,7 +275,15 @@ public class FrontController extends HttpServlet {
 	        		  dst = "numberError.bo";
 	        		  isForward = false;
 	        	  }
+	          }else if(command.equals("/procFreeComment.bo")) {
+	        	  int aritcleseq = Integer.parseInt(request.getParameter("articlenum"));
+	        	  String comment = request.getParameter("comment");
+	        	  MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+	        	  int writer = dto.getSeq();
+ 	 
+	        	  dst = "freeboard.bo";
 	          }
+	        	  
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);

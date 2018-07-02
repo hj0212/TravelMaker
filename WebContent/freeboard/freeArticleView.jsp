@@ -141,19 +141,18 @@ tr {
       <div class="comments">
          <button type="button" style="border: none; background-color: white;"
             id="comment-bnt">댓글보기▼</button>
-
-         <div style="width: 100%; margin: 0px;">
-            <div style="width: 80%">
-               <textarea class="form-control" rows="3" id="comment"
-                  " style="resize: none; width: 100%; margin: 0px; float: left;"
-                  maxlength="70"></textarea>
-            </div>
-            <div
-               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-               <button style="width: 100%; height: 86px;background-color: white" id="procComment"  class=""btn btn-default"><i class="fa fa-comments"></i>댓글
-                  작성</button>
-            </div>
-         </div>
+		 <form method="post" id="procComment" action="procFreeComment.bo">
+	         <div style="width: 100%; margin: 0px;">
+	            <div style="width: 80%">
+	               <textarea class="form-control" rows="3" id="comment" style="resize: none; width: 100%; margin: 0px; float: left;" maxlength="65" name="comment"></textarea>
+	               <input type="text" readonly value="${article.free_seq}" name="articlenum" style="display:none">
+	            </div>
+	            <div
+	               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
+	               <button style="width: 100%; height: 86px;background-color: white" id="writeComment"  class=""btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
+	            </div>
+	         </div>
+		 </form>
 
 
          <table class="table" id="comment-table">
