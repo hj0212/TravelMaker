@@ -85,6 +85,58 @@
 	margin-bottom: 20px;
 }
 </style>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+
+
+
+$(document).ready(function(){
+
+	$("#goodbtn").click(function(){
+
+	var article ="${plan_seq}";
+	
+	console.log(goodbtn);
+
+	$.ajax({
+		  type:'POST',
+		  url:"plangood.btns",
+		  data: {article:article},
+		  success:function(good){
+			  console.log("asdasd");
+			
+				 $("#goodbtn").html(""); 
+				 $("#goodbtn").html('<i class="fas fa-heart"></i>'+good);
+				  
+		  }
+		});
+			
+	});
+	$("#badbtn").click(function(){	
+	var article ="${plan_seq}";	
+
+	$.ajax({
+		  type:'POST',
+		  url:"planbad.btns",
+		  data: {article:article},
+		  success:function(bad){
+			  console.log("asdasd");
+			 
+				 $("#badbtn").html(""); 
+				 $("#badbtn").html('<i class="far fa-frown"></i>'+bad);
+			
+			
+			  
+		  }
+		});
+			
+	});
+	
+	
+});
+
+</script>
 
 </head>
 
@@ -202,11 +254,11 @@
 			</div>
 			
 			<div id="btnarea">
-				<button type="button" class="btn btn-outline-danger" >
-					<i class="fas fa-heart"></i> 30
+				<button type="button" class="btn btn-outline-danger" id="goodbtn">
+					<i class="fas fa-heart"></i>${good}
 				</button>
-				<button type="button" class="btn btn-outline-primary" >
-					<i class="far fa-frown"></i> 30
+				<button type="button" class="btn btn-outline-primary" id="badbtn" >
+					<i class="far fa-frown"></i>${bad}
 				</button>
 				<button class="btn btn-outline-success">스크랩</button>
 				
