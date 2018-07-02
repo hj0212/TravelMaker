@@ -36,32 +36,32 @@ public class AdminController extends HttpServlet {
 			boolean isForward = true;
 			String dst = null;
 
-			//-----------------------admin.jsp > ¸ðµç È¸¿ø ¸®½ºÆ®º¸±â
+			//-----------------------admin.jsp > ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½
 			if(command.equals("/showMembers.ad")) {
 				List<MemberDTO> mlist = new ArrayList<>(); 
-				mlist=mdao.getAllMembers();
+				mlist=adao.getAllMembers();
 				request.setAttribute("memberList", mlist);			
 				isForward = true;
 				dst = "admin/admin.jsp";
 			}
 			
-			//-----------------------admin.jsp > È¸¿ø°èÁ¤ Â÷´Ü
+			//-----------------------admin.jsp > È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			else if(command.equals("/blockMember.ad")) {
 				int seq = Integer.parseInt(request.getParameter("sequence"));
-				String isBlocked = mdao.checkBlock(seq);
+				String isBlocked = adao.checkBlock(seq);
 				
-				int result = mdao.changeBlock(seq,isBlocked);
-				System.out.println("ºí·°°á°ú"+result);
+				int result = adao.changeBlock(seq,isBlocked);
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½"+result);
 				request.setAttribute("blockResult", result);
 				isForward = true;
 				dst = "admin/admin.jsp";
 			}
 			
-			//--------------------------admin_free > ½Å°í ¸®½ºÆ® ºÒ·¯¿À±â
+			//--------------------------admin_free > ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
 			else if(command.equals("/admin_free.ad")) {
+				System.out.println("ë“¤ì–´ì˜´");
 				List<ReportFreeDTO> flist = new ArrayList<>();
 				flist = adao.getAllReport_f();
-				System.out.println(flist.size());
 				request.setAttribute("freereport", flist);
 	
 				isForward = true;
