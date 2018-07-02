@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.SendMail;
 import dao.MemberDAO;
+import dao.PlanDAO;
 import dao.ReviewDAO;
 import dto.MemberDTO;
+import dto.PlanDTO;
 import dto.ReviewDTO;
 
 
@@ -28,6 +30,7 @@ public class MemberController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
 
+			PlanDAO pdao = new PlanDAO();
 			ReviewDAO rdao = new ReviewDAO();
 			MemberDAO mdao = new MemberDAO();
 
@@ -164,12 +167,19 @@ public class MemberController extends HttpServlet {
 				}
 
 				String searchTerm = request.getParameter("search");
+				
 				List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq(), currentPage*12-11, currentPage*12, searchTerm);
 				request.setAttribute("MyReviewResult", MyReviewResult);
 
 				String MyReviewPageNavi = rdao.getMyReviewPageNavi(user.getSeq(), currentPage, searchTerm);
 				request.setAttribute("MyReviewPageNavi", MyReviewPageNavi);
 
+				List<PlanDTO> MyPlanResult = pdao.getMyPlans(user.getSeq(), currentPage*12-11, currentPage*12, searchTerm);
+				request.setAttribute("MyPlanResult", MyPlanResult);
+				
+				String MyPlanPageNavi = pdao.getMyPlanPageNavi(user.getSeq(), currentPage, searchTerm);
+				request.setAttribute("MyPlanPageNavi", MyPlanPageNavi);
+				
 				isForward = true;
 				dst="mypage.jsp";
 			}else if(command.equals("/logout.do")) {

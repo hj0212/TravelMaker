@@ -195,10 +195,13 @@ margin:0px auto;
               <a href="#tabone" class="active nav-link" data-toggle="tab" data-target="#tabone" role="presentation">내후기글</a>
             </li>
             <li class="nav-item">
-              <a href="#tabtwo" data-toggle="tab" data-target="#tabtwo" role="presentation">Tab 2</a>
+              <a href="#tabtwo" data-toggle="tab" data-target="#tabtwo" role="presentation">내계획</a>
             </li>
             <li class="nav-item">
               <a href="#tabthree" data-toggle="tab" data-target="#tabthree" role="presentation">Tab 3</a>
+            </li>
+             <li class="nav-item">
+              <a href="#tabfour" data-toggle="tab" data-target="#tabfour" role="presentation">Tab 4</a>
             </li>
           </ul>
           </div>     
@@ -215,6 +218,7 @@ margin:0px auto;
                 <div class="card-header">${mrr.review_title}</div>
                 <img class="card-img-top float-left rounded" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
                 <div class="card-body">
+                <p>${mrr.review_viewcount}</p>
                   <h6 class="text-muted">${mrr.review_contents}</h6>
                   <p>${mrr.review_writedate}</p>
                 </div>
@@ -230,47 +234,17 @@ margin:0px auto;
             <div class="col tab-pane fade" id="tabtwo" role="tabpanel">
             <div class="row">
             
-            
+            <c:forEach var="mpr" items="${MyPlanResult}">
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
-                <div class="card-header"> Header </div>
+                <div class="card-header"> ${mpr.plan_title} </div>
                 <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
+                 <p>${mpr.plan_viewcount}</p>
+                  <h6 class="text-muted">${mpr.plan_startdate} ~ ${mpr.plan_enddate}</h6>
                 </div>
               </div>
 				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
+		</c:forEach>
 				
 				
 				</div>
@@ -331,6 +305,55 @@ margin:0px auto;
 				</div>    
                    
                    
+           <!-- tabfour -->        
+            <div class="col tab-pane fade" id="tabfour" role="tabpanel">
+            <div class="row">
+            
+            
+            <div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
+				<div class="item col-md-3 col-sm-3 w-25">
+					<div class="card">
+                <div class="card-header"> Header </div>
+                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 >Card title</h4>
+                  <h6 class="text-muted">Subtitle</h6>
+                  <p>Some quick example text to build on the card title .</p>
+                </div>
+              </div>
+				</div>
                            
             </div>
           </div>
