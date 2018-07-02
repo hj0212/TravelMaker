@@ -233,44 +233,29 @@ margin:0px auto;
             
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
+              <div class="card text-center">
+						<div class="card-header planTitle">${item.plan_title}</div>
+						
+		<a href="planArticle.plan?plan_seq=${item.plan_seq}" style="text-decoration:none;">
+						<div class="card-body mt-1 text-center">
+							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
+							<div class="btn-list d-inline">
+
+								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
+									class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
+							</div>
+							<hr>
+							<p class="text-center">여기다 뭐넣을까여</p>
+						</div>
+						</a>
+					</div>			
               </div>
 				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
+				
+				
+				
+	
+			
 				
 				
 				</div>

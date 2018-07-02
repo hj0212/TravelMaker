@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.SendMail;
+import dao.GoodBadDAO;
 import dao.MemberDAO;
 import dao.ReviewDAO;
 import dto.MemberDTO;
@@ -30,7 +31,7 @@ public class MemberController extends HttpServlet {
 
 			ReviewDAO rdao = new ReviewDAO();
 			MemberDAO mdao = new MemberDAO();
-
+			GoodBadDAO gbdao = new GoodBadDAO();
 			boolean isForward = true;
 			String dst = null;
 
@@ -170,6 +171,17 @@ public class MemberController extends HttpServlet {
 				String MyReviewPageNavi = rdao.getMyReviewPageNavi(user.getSeq(), currentPage, searchTerm);
 				request.setAttribute("MyReviewPageNavi", MyReviewPageNavi);
 
+				
+				//내가 좋아요누른 페이지 보여주기 
+				int goodId = ((MemberDTO) request.getSession().getAttribute("user")).getSeq();//시퀀스값 가져오고
+				gbdao.favoriteData(goodId);
+				
+				
+				
+				
+				
+				
+				
 				isForward = true;
 				dst="mypage.jsp";
 			}else if(command.equals("/logout.do")) {

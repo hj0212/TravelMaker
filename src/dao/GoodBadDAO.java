@@ -277,4 +277,15 @@ public class GoodBadDAO {
 			
 			return check;		
 		}
+		//내가 좋아요한 plan 게시물 아티클 번호들 
+		public int favoriteData(int goodId)throws Exception {
+			Connection con = DBConnection.getConnection();
+			String sql ="select * from good_plan where user_seq=?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1,goodId);
+			
+			
+			
+		}
+		
 }
