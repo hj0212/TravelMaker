@@ -27,6 +27,8 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
 	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 	crossorigin="anonymous"></script>
+	<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
  <style>
  #box-container {
   margin: 0px auto;
@@ -227,10 +229,11 @@ margin:0px auto;
 				</div>
 				
 <!-- tabtwo -->
+
+		
             <div class="col tab-pane fade" id="tabtwo" role="tabpanel">
             <div class="row">
-            
-            
+            <c:forEach var="item" items="${flist}">           
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
               <div class="card text-center">
@@ -251,13 +254,8 @@ margin:0px auto;
 					</div>			
               </div>
 				</div>
-				
-				
-				
-	
-			
-				
-				
+				</c:forEach>
+						
 				</div>
 				</div>
 				

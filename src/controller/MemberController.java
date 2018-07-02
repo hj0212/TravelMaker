@@ -15,6 +15,7 @@ import dao.GoodBadDAO;
 import dao.MemberDAO;
 import dao.ReviewDAO;
 import dto.MemberDTO;
+import dto.PlanDTO;
 import dto.ReviewDTO;
 
 
@@ -174,8 +175,8 @@ public class MemberController extends HttpServlet {
 				
 				//내가 좋아요누른 페이지 보여주기 
 				int goodId = ((MemberDTO) request.getSession().getAttribute("user")).getSeq();//시퀀스값 가져오고
-				gbdao.favoriteData(goodId);
-				
+				List<PlanDTO> flist = gbdao.favoriteData(goodId);
+				request.setAttribute("flist", flist);
 				
 				
 				
