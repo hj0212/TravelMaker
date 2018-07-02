@@ -283,7 +283,11 @@ tr {
 	  	})
 	  	
 	  	$("#update").click(function() {
+<<<<<<< HEAD
 	  		location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
+=======
+	  		location.href = "modifyFreeArticle.bo?articlenum=${article.free_seq}";
+>>>>>>> 창영
 	  	})
       </c:if>
 		
