@@ -53,7 +53,7 @@ pageEncoding="UTF-8"%>
 			</c:when>
 			<c:otherwise>
 			<div class="container">
-            <form action="writeArticlefree.bo" method="post" onsubmit="return sendContents()" name="writeContents">
+            <form action="writeArticlefree.bo" method="post" name="writeContents">
             	<div class="form-group">
             		<input type="text" class="form-control" name="title" placeholder="제목을 입력해주세요" maxlength="50">
         		</div>
@@ -61,7 +61,7 @@ pageEncoding="UTF-8"%>
             		<textarea name="contents" class="form-control" id="editor"></textarea>
         		</div>
                 <div class="text-right">
-        		    <input type="submit" class="btn btn-primary" value="작성"></button>
+        		    <input type="button" class="btn btn-primary" value="작성" onclick="sendContents(); this.disabled=true;"></button>
             		<button type="button" class="btn btn-primary" id="cancel">취소</button>
             		<button type="button" class="btn btn-primary" id="list">목록 </button>
         		</div>

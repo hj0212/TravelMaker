@@ -203,12 +203,13 @@ public class FrontController extends HttpServlet {
 	          }else if(command.equals("/modifyFreeArticlePage.bo")) {
 	        	  try {
 	        		  int articlenum = Integer.parseInt(request.getParameter("articlenum"));
-	        		  request.setAttribute("articlenum", articlenum);
 	        		  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+	        		  request.setAttribute("articlenum", articlenum);
 	        		  
 	        		  if(user.getSeq() == fbdao.writerCheck(articlenum)) {
 	        			  FreeboardDTO dto = fbdao.readFreeArticle(articlenum);
 	        			  request.setAttribute("contents", dto);
+	        			  request.setAttribute("articlenum", articlenum);
 	        			  dst = "freeboard/modifyFreeArticle.jsp";
 	        		  }else {
 	        			  dst = "notWriter.bo";
@@ -224,15 +225,26 @@ public class FrontController extends HttpServlet {
 	        	  dst = "notWriter.jsp";
 	        	  isForward = false;
 	          }else if(command.equals("/modifyFreeArticle.bo")) {
-	        	  String title = request.getParameter("title");
-	        	  String contents = request.getParameter("contents");
-	        	  
-	        	  System.out.println(request.getParameter("articlenum"));
-	        	  
-	        	  
-	        	  dst = "freeboard.bo";
+	        	  try {
+		        	  String title = request.getParameter("title");
+		        	  String contents = request.getParameter("contents");
+		        	  int articlenum = Integer.parseInt(request.getParameter("articlenum"));
+		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        	  
+		        	  if(user.getSeq() == fbdao.writerCheck(articlenum)) {
+		        		  int result = fbdao.updateArticle(title, contents,articlenum);
+		        		  dst = "freeboard.bo";
+		        	  }else {
+		        		  dst = "notWriter.bo";
+		        	  }
+		        	  
+		        	  isForward = false;
+	        	  }catch(NumberFormatException e) {
+	        		  e.printStackTrace();
+	        		  dst = "numberError.bo";
+	        		  isForward = false;
+	        	  }
 	          }
-	        	  
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);

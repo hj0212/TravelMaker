@@ -45,15 +45,16 @@ pageEncoding="UTF-8"%>
 		</c:choose>
 
 			<div class="container">
-            <form action="modifyFreeArticle.bo" method="post" onsubmit="return sendContents()" name="writeContents">
+            <form action="modifyFreeArticle.bo" method="post" name="writeContents">
             	<div class="form-group">
             		<input type="text" class="form-control" name="title" placeholder="제목을 입력해주세요" maxlength="50" value="${contents.free_title}">
+            		<input type="text" name="articlenum" value="${articlenum}" style="display:none">
         		</div>
         		<div class="form-group">
             		<textarea name="contents" class="form-control" id="editor">${contents.free_contents}</textarea>
         		</div>
                 <div class="text-right">
-        		    <input type="submit" class="btn btn-primary" value="수정"></button>
+        		    <input type="submit" class="btn btn-primary" value="수정" onclick = "sendContents(); this.disabled=true;"></button>
             		<button type="button" class="btn btn-primary" id="cancel">취소</button>
             		<button type="button" class="btn btn-primary" id="list">목록 </button>
         		</div>

@@ -51,12 +51,13 @@ public class FreeboardDAO {
 		return result;
 	}
 	
-	public int updateArticle(String title, String contents) throws Exception {
+	public int updateArticle(String title, String contents, int articlenum) throws Exception {
 		Connection conn = DBConnection.getConnection();
-		String sql = "UPDATE freeboard set free_title = ?, free_contents = ?";
+		String sql = "UPDATE freeboard set free_title = ?, free_contents = ? WHERE free_seq = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, title);
 		pstmt.setString(2, contents);
+		pstmt.setInt(3, articlenum);
 		
 		int result = pstmt.executeUpdate();
 		
