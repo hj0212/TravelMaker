@@ -10,7 +10,6 @@ import DBUtils.DBConnection;
 import dto.FreeboardDTO;
 
 public class FreeboardDAO {
-	
 	public List<FreeboardDTO> viewFreeList() throws Exception{
 		Connection conn = DBConnection.getConnection();
 		List<FreeboardDTO> tmpList = new ArrayList<>();
@@ -251,5 +250,5 @@ public class FreeboardDAO {
 		rs.close();
 		
 		return sb.toString();
-	}	
+	}
 }

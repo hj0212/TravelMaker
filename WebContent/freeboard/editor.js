@@ -11,7 +11,7 @@
 	            onKeydown: function(e) {
 	                if (e.keyCode == 8 || e.keyCode == 16 || e.keyCode == 17 || e.keyCode == 37) 
 	                    return;
-	                if ($("#editor").summernote('code').length > 666){
+	                if ($("#editor").summernote('code').length > 1000){
 //	                	$(".note-editable").text().length >= 1500
 	                    e.preventDefault();
 	                    return;
@@ -43,7 +43,7 @@
 	function sendContents() {
 	    $("#editor").html($("#editor").summernote('code'));
 	    
-	    if($("#editor").summernote('code').length > 666) {
+	    if($("#editor").summernote('code').length > 1000) {
 	    	alert("글자수 제한 범위 초과");
 	    	$('#send').attr('disabled', false);
 	    }else {
