@@ -12,6 +12,7 @@ import java.util.List;
 import DBUtils.DBConnection;
 import dto.BudgetDTO;
 import dto.LocationDTO;
+import dto.PlanCommentDTO;
 import dto.PlanDTO;
 import dto.ScheduleDTO;
 
@@ -27,6 +28,23 @@ public class PlanDAO {
 		String result = "";
 		if(rs.next()) {
 			result = rs.getString(1);
+		}
+
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	public int getPlanperiod(int plan_seq) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select plan_enddate-plan_startdate+1 from plan where plan_seq = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, plan_seq);
+		ResultSet rs = pstmt.executeQuery();
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);
 		}
 
 		rs.close();
@@ -360,7 +378,6 @@ public class PlanDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan);
 		pstmt.setInt(2, day);
-
 		ResultSet rs = pstmt.executeQuery();
 
 		List<ScheduleDTO> result = new ArrayList<>();
@@ -376,6 +393,7 @@ public class PlanDAO {
 			tmp.setSchedule_plan(rs.getString(8));
 			tmp.setSchedule_ref(rs.getString(9));
 			result.add(tmp);
+			System.out.println("스케줄시퀀스" + tmp.getSchedule_seq());
 		}
 
 		rs.close();
@@ -390,7 +408,6 @@ public class PlanDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan);
 		pstmt.setInt(2, day);
-		System.out.println(plan + ":" + day);
 		ResultSet rs = pstmt.executeQuery();
 
 		List<BudgetDTO> result = new ArrayList<>();
@@ -528,4 +545,52 @@ public class PlanDAO {
 		return sb.toString();
 	}	
 	
+	public List<PlanCommentDTO> getAllPlanComments (int plan_seq) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from plan_comment where plan_seq =?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, plan_seq);
+		ResultSet rs = pstat.executeQuery();
+		List<PlanCommentDTO> result = new ArrayList<>();
+		while(rs.next()) {
+			PlanCommentDTO pcdto = new PlanCommentDTO();
+			pcdto.setPlan_seq(plan_seq);
+			pcdto.setComment_seq(rs.getInt("comment_seq"));
+			pcdto.setComment_text(rs.getString("comment_text"));
+			pcdto.setComment_writer(rs.getInt("comment_writer"));
+			pcdto.setComment_writerN(mdao.getUserNickname(rs.getInt("comment_writer")));
+		result.add(pcdto);
+		}
+		rs.close();
+		pstat.close();
+		con.close();
+		return result;
+	}
+	
+	public int insertPlanComment (int plan_seq, String comment_text, int comment_writer) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "insert into plan_comment (plan_seq, comment_seq, comment_text, comment_writer, comment_time) values (?,plan_comment_seq.nextval,?,?,sysdate)";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, plan_seq);
+		pstat.setString(2, comment_text);
+		pstat.setInt(3, comment_writer);
+		int result = pstat.executeUpdate();
+		con.commit();
+		pstat.close();
+		con.close();
+		return result;
+	}
+	
+	public int deletePlanComment (int comment_seq, int writer) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "delete plan_comment where comment_seq=? and writer=?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, comment_seq);
+		pstat.setInt(2, writer);
+		int result = pstat.executeUpdate();
+		con.commit();
+		pstat.close();
+		con.close();
+		return result;
+	}
 }

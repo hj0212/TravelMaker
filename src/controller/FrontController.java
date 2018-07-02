@@ -42,7 +42,7 @@ public class FrontController extends HttpServlet {
 			String dst = null;
 
 			if(command.equals("/freeboard.bo")) {
-				System.out.println("찍힘?");
+				System.out.println("李랁옒?");
 				int currentPage = 0;
 				String currentPageString = request.getParameter("currentPage");
 				
@@ -105,7 +105,7 @@ public class FrontController extends HttpServlet {
 			} else if(command.equals("/login.bo")) {
 				dst = "freeboard/needLogin.jsp";
 				
-				//---------후기 공유 게시판 보기
+				//---------�썑湲� 怨듭쑀 寃뚯떆�뙋 蹂닿린
 			} else if(command.equals("/reviewboard.bo")) {
 	            int currentPage = 0;
 	            String currentPageString = request.getParameter("currentPage");
@@ -162,12 +162,12 @@ public class FrontController extends HttpServlet {
 	             request.setAttribute("result", result);
 	             request.setAttribute("review_seq", review_seq);
 
-	             System.out.println("댓글 내용:"+comment_text+"유저 시퀀스: "+dto.getSeq()+"리뷰 시퀀스 :"+ review_seq);
+	             System.out.println("�뙎湲� �궡�슜:"+comment_text+"�쑀�� �떆���뒪: "+dto.getSeq()+"由щ럭 �떆���뒪 :"+ review_seq);
 	             
 	  
 	             isForward = true;
 	             dst= "reviewCommentView.jsp";
-	          }else if(command.equals("/deleteArticle.bo")) {
+	          }else if(command.equals("/deleteReviewArticle.bo")) {
 	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 	        	  int result = rdao.deleteReview(review_seq);
 	        	  
@@ -190,6 +190,10 @@ public class FrontController extends HttpServlet {
 	        	  isForward = false;
 	        	  dst = "freeboard.bo";
 	          }
+			
+			
+			
+			
 	        	  
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);

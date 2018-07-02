@@ -237,6 +237,7 @@ div {
 					<div class="card text-center">
 						<div class="card-header planTitle">${item.plan_title}</div>
 						
+		<a href="planArticle.plan?plan_seq=${item.plan_seq}" style="text-decoration:none;">
 						<div class="card-body mt-1 text-center">
 							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
 							<div class="btn-list d-inline">
@@ -247,6 +248,7 @@ div {
 							<hr>
 							<p class="text-center">여기다 뭐넣을까여</p>
 						</div>
+		</a>
 					</div>
 				</div>
 			</c:forEach>
