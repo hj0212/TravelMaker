@@ -33,6 +33,8 @@ public class PlanController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
 
+			System.out.println(request.getParameter("budget_seq"));
+			
 			PlanDAO pdao = new PlanDAO();
 			MemberDAO mdao = new MemberDAO();
 		
@@ -75,36 +77,69 @@ public class PlanController extends HttpServlet {
 					list.add(btmp);
 				}
 				
-				
-				if(schedule_seq > 0) {	// 수정
-					tmp.setSchedule_seq(schedule_seq);
-					int result = pdao.updateSchedule(tmp);
-
-					for(BudgetDTO btmp : list) {
-						btmp.setSchedule_seq(schedule_seq);
-					}
-					
-					result += pdao.addBudget(list);
-					result += pdao.deleteBudget(list);
-					if(result > 2) {
-						System.out.println("수정성공");
-					} else {
-						System.out.println("수정실패");
-					}
-				} else {
-					schedule_seq = pdao.addSchedule(tmp);
-					for(BudgetDTO btmp : list) {
-						btmp.setSchedule_seq(schedule_seq);
-					}
-					
-					int result = pdao.addBudget(list);
-					if(result > 1) {
-						System.out.println("등록성공");
-					} else {
-						System.out.println("등록실패");
-					}
+				schedule_seq = pdao.addSchedule(tmp);
+				for(BudgetDTO btmp : list) {
+					btmp.setSchedule_seq(schedule_seq);
 				}
+				
+				int result = pdao.addBudget(list);
+				if(result > 1) {
+					System.out.println("등록성공");
+				} else {
+					System.out.println("등록실패");
+				}	
 
+
+				isForward = true;
+				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
+			} else if(command.equals("/modiSchedule.plan")) {
+//				세 값 다 넘어옵니다.
+				LocationDTO ldto = new LocationDTO();
+				ldto.setLocation_name(request.getParameter("place"));
+				ldto.setLocation_id(Integer.parseInt(request.getParameter("location_id")));
+				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
+				ldto.setLocation_y(Integer.parseInt(request.getParameter("mapy")));
+				System.out.println(ldto.getLocation_id());
+				int location_id = pdao.addLocation(ldto);
+				
+				ScheduleDTO tmp = new ScheduleDTO();
+				int plan = Integer.parseInt(request.getParameter("plan"));
+				int day = Integer.parseInt(request.getParameter("day"));
+				tmp.setPlan_seq(plan);
+				tmp.setDay_seq(day);
+				tmp.setSchedule_starttime(request.getParameter("starttime"));
+				tmp.setSchedule_endtime(request.getParameter("endtime"));
+				tmp.setLocation_id(location_id); 
+				tmp.setSchedule_plan(request.getParameter("schedule"));
+				tmp.setSchedule_ref(request.getParameter("reference"));
+				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
+				
+				List<BudgetDTO> list = new ArrayList<>();
+				System.out.println("budget_seq: " + request.getParameter("budget_seq"));
+				System.out.println("budget_plan: " + request.getParameter("budget_plan"));
+				System.out.println("budget_amount: " + request.getParameter("budget_amount"));
+				String[] budget_seq = request.getParameter("budget_seq").split("/");
+				String[] budget_plan = request.getParameter("budget_plan").split("/");
+				String[] budget_amount = request.getParameter("budget_amount").split("/");
+				for(int i = 0; i < budget_plan.length; i++) {
+					BudgetDTO btmp = new BudgetDTO();
+					btmp.setBudget_seq(Integer.parseInt(budget_seq[i]));
+					btmp.setPlan_seq(plan);
+					btmp.setDay_seq(day);
+					btmp.setBudget_plan(budget_plan[i]);
+					btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
+					list.add(btmp);
+				}
+				
+				tmp.setSchedule_seq(schedule_seq);
+				int result = pdao.updateSchedule(tmp);
+				
+				result += pdao.modiBudget(list);
+				if(result > 2) {
+					System.out.println("수정성공");
+				} else {
+					System.out.println("수정실패");
+				}
 
 				isForward = true;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";

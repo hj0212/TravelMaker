@@ -237,6 +237,7 @@
 													<c:when test="${count == 1}">
 														<td name="money">
 														<div>
+														<input type="hidden" class="budget_seq" value="${bitem.budget_seq }">
 														<div class="budget_plan">${bitem.budget_plan}:</div>
 														<div class="budget_amount">${bitem.budget_amount}</div>
 														</div><br>
@@ -244,6 +245,7 @@
 													</c:when>
 													<c:otherwise>
 														<div>
+														<input type="hidden" class="budget_seq" value="${bitem.budget_seq }">
 														<div class="budget_plan">${bitem.budget_plan}:</div>
 														<div class="budget_amount">${bitem.budget_amount}</div>
 														</div><br>
@@ -251,7 +253,7 @@
 												</c:choose>
 											</c:if>
 											<c:if test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
-												<td name="money"></td>
+												<td name="money"><input type="hidden" class="budget_seq" value="0"></td>
 												<c:set var="loop_flag" value="true" />
 											</c:if>
 										</c:if>
@@ -296,7 +298,7 @@
 		</div>
 
 		<div id="plan-board">
-			<form action="addSchedule.plan" method="post" id="scheduleform">
+			<form method="post" id="scheduleform">
 				<input type="hidden" name="plan" value="${param.plan}"> <input
 					type="hidden" name="day" value="${param.day}"> <input
 					type="hidden" name="schedule_seq" value="0">
@@ -337,7 +339,7 @@
 					</tr>
 					<tr style="display:none">
 						<td>
-							<input type="text" id="location_id" name="mapx">
+							<input type="text" id="location_id" name="location_id">
 							<input type="text" id="mapx" name="mapx">
 							<input type="text" id="mapy" name="mapy">
 						</td>
@@ -357,16 +359,18 @@
 							</button>
 							</th>
 							<td class="budget">
+								<input type="hidden" name="budget_seq">
+								<input type="hidden" name="budget_plan">
+								<input type="hidden" name="budget_amount">
 								<div class="input-group mb-1">
 									<input type="text" class="form-control" id="ex1"
 										placeholder="예) 입장료"> <input type="text"
 										class="form-control" id="money1" placeholder="10000">
+										<input type="hidden" class="budget_seq">
 									<div class="input-group-prepend">
 										<span class="input-group-text" >원</span>
 									</div>
 								</div>
-								<input type="hidden" name="budget_plan">
-								<input type="hidden" name="budget_amount">
 							</td>
 
 						</tr>
@@ -453,7 +457,7 @@ $(document).ready(function() {
 	budgetcount = 1;
 	$("#moneyaddbtn").click(function() {
 		budgetcount++;
-	 	$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'>"
+	 	$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'><input type='hidden' class='budget_seq'>"
 				+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+budgetcount+"'><i class='far fa-times-circle'></i></button></div></div>");
 	
 		
@@ -503,8 +507,11 @@ $(document).ready(function() {
 		con = "";
 		if ($("#schedule-plan>tbody>.active>th").html() != "") {
 			con = "일정을 수정하시겠습니까?";
+			$("#scheduleform").attr("action","modiSchedule.plan");
+			
 		} else {
 			con = "일정을 추가하시겠습니까?";
+			$("#scheduleform").attr("action","addSchedule.plan");
 		}
 
 		starttime = $("#start-time").val();
@@ -513,19 +520,24 @@ $(document).ready(function() {
 		mapx = $("#mapx").val();
 		mapy = $("#mapy").val()
 		schedule = $("#schedule").val();
-		budget = "";
+		
 		var budgetn = $("#schedule-boarder>tbody>tr>td.budget>div.input-group").length;
 		console.log("등록 예산 갯수" + budgetn);
+		budget_seq = "";
 		budget_plan = "";
 		budget_amount = "";
 		for(var i = 0; i < budgetn; i++) {
-			budget_plan += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input:first").val();
+			budget_seq += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input.budget_seq").val()
+			budget_seq += "/";
+			budget_plan += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input[id^='ex']").val();
 			budget_plan += "/";
-			budget_amount += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input:last").val();
+			budget_amount += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input[id^='money']").val();
 			budget_amount += "/";
 		}
-		$("#schedule-boarder>tbody>tr>.budget>input:first").val(budget_plan);
-		$("#schedule-boarder>tbody>tr>.budget>input:last").val(budget_amount);
+		console.log("seq:"+budget_seq+",plan:"+budget_plan+",amount:"+budget_amount);
+		$("#schedule-boarder>tbody>tr>.budget>input[name='budget_seq']").val(budget_seq);
+		$("#schedule-boarder>tbody>tr>.budget>input[name='budget_plan']").val(budget_plan);
+		$("#schedule-boarder>tbody>tr>.budget>input[name='budget_amount']").val(budget_amount);
 		
 		reference = $("#reference").val();
 
@@ -543,9 +555,8 @@ $(document).ready(function() {
 			contents += '<td name="reference"></td>';
 			contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button><input type="hidden" name="schedule_seq" value="0"></td>';
 			contents += '</tr>';
-
-			if ($("#schedule-plan>tbody>.active>th").val() == "") { // 빈칸 = 마지막줄
-				console.log("빈칸");
+			
+			if ($("#schedule-plan>tbody>.active>th").length == 0) { // 빈칸 = 마지막줄
 				$("#schedule-plan>tbody>tr").removeClass('new');
 				$("#schedule-plan>tbody>tr").removeClass('active');
 				$("#schedule-plan>tbody:last").append(contents);
@@ -579,14 +590,10 @@ $(document).ready(function() {
 		$("#mapx").val($("#schedule-plan>tbody>.active #planmapx").val());
 		$("#mapy").val($("#schedule-plan>tbody>.active #planmapy").val());
 		$("#schedule").val($("#schedule-plan>tbody>.active>td[name='schedule']").html());
+		
 		var budgetnum = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").length;
-		/* if(budgetnum == 1) {
-			var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_plan").html().split(":")[0];
-			var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div>.budget_amount").html();
-			$("#schedule-boarder>tbody>tr>.budget>div input:first").val(budget_plan);
-			$("#schedule-boarder>tbody>tr>.budget>div input:last").val(budget_amount);
-		} */
 		var formnum = $("#schedule-boarder>tbody>tr>.budget>div").length;
+		
 		if(budgetnum<formnum) {
 			var remo = formnum - budgetnum;
 			for(var i = 0; i < remo; i++) {
@@ -595,17 +602,20 @@ $(document).ready(function() {
 		} else if(budgetnum > formnum) {
 			var add = budgetnum - formnum;
 			for(var i = 0; i < add; i++) {
-				$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+(j+1)+"'><input type='text' class='form-control' placeholder='10000' id='money"+(j+1)+"'>"
-						+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+(j+1)+"'><j class='far fa-times-circle'></i></button></div></div>");
+				$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+(j+1)+"'><input type='text' class='form-control' placeholder='10000' id='money"+(j+1)+"'><input type='hidden' class='budget_seq'>"
+						+"<div class='input-group-prepend'><span class='input-group-text'>원</span><input type='hidden' class='budget_seq'><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+(j+1)+"'><j class='far fa-times-circle'></i></button></div></div>");
 			}
 		}
 		
 		for(var j = 0; j < budgetnum; j++) {
+			var budget_seq = $("#schedule-plan>tbody>.active>td[name='money'] input.budget_seq").val();
 			var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']>div:nth-of-type("+(j+1)+")>div.budget_plan").html().split(":")[0];
 			var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div:nth-of-type("+(j+1)+")>div.budget_amount").html();
 			
-			$("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(j+1)+") input:first").val(budget_plan);
-			$("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(j+1)+") input:last").val(budget_amount);	
+			console.log(budget_seq);
+			$("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(j+1)+") input[type='hidden']").val(budget_seq);
+			$("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(j+1)+") input[id^='ex']").val(budget_plan);
+			$("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(j+1)+") input[id^='money']").val(budget_amount);	
 		}
 		
 		$("#reference").val($("#schedule-plan>tbody>.active>td[name='reference']").html());

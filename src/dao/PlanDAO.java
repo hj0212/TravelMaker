@@ -105,6 +105,27 @@ public class PlanDAO {
 		}
 		return result;
 	}
+	
+	public int modiBudget(List<BudgetDTO> list) throws Exception {
+		int result = 0;
+		for(BudgetDTO dto:list) {
+			if(!budgetcheck(dto)) {
+				Connection con = DBConnection.getConnection();
+				String sql = "update budget set budget_plan=?, budget_amount=? where budget_seq = ?";
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, dto.getBudget_plan());
+				pstmt.setInt(2, dto.getBudget_amount());
+				pstmt.setInt(3, dto.getBudget_seq());
+				result = pstmt.executeUpdate();
+
+				con.commit();
+
+				pstmt.close();
+				con.close();
+			}
+		}
+		return result;
+	}
 
 	public int deleteBudget(List<BudgetDTO> list) throws Exception {
 		int result = 0;
