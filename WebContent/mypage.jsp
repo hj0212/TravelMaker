@@ -274,8 +274,8 @@ margin:0px auto;
          	<c:forEach var="item" items="${flist}">
 				<div class="item col-md-3 mb-3">
 					<div class="card text-center" >
-						<div class="card-header">
-			<a href="planArticle.plan?plan_seq=${item.plan_seq}" style="text-decoration:none;margin: 0px auto;text-align: center;">					
+						<div class="card-header" style="max-height: 64px; overflow: hidden;">
+			<a href="planArticle.plan?plan_seq=${item.plan_seq}" style="text-decoration:none;margin: 0px auto;text-align: center;max-height: 64px; overflow: hidden;">					
 						${item.plan_title}
 					</a>
 						</div>
