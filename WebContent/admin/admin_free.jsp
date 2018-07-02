@@ -17,7 +17,7 @@
 	href="source/lib/bootstrap-3.3.2-dist/css/bootstrap-theme.css">
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="source/css/admin.css">
+<link rel="stylesheet" type="text/css" href="../source/css/admin.css">
 
 <style>
 </style>
@@ -26,14 +26,7 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.userid eq 'admin'}">
-			<c:choose>
-			<c:when test="${memberList[0] == null}">
-			<script>
-			location.href="showMembers.do";
-			</script>
-			</c:when>
-			</c:choose>
-
+			
 			<div class="container center-align col-md-11">
 				<div class="row" id="wrapper">
 					<div class="overlay"></div>
@@ -43,16 +36,13 @@
 					<ul class="nav sidebar-nav">
 						<li class="sidebar-brand"><a href="#"> TravelMaker </a></li>
 						<li><a href="#">Members</a></li>
-						<li><a href="#">Pages</a></li>
+						<li><a href="#">Log</a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown">Works <span class="caret"></span></a>
+							data-toggle="dropdown">Pages<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li class="dropdown-header">Dropdown heading</li>
-								<li><a href="#">Action</a></li>
-								<li><a href="#">Another action</a></li>
-								<li><a href="#">Something else here</a></li>
-								<li><a href="#">Separated link</a></li>
-								<li><a href="#">One more separated link</a></li>
+								<li class="dropdown-header">신고 확인</li>
+								<li><a href="../admin_free.ad">FreeBoard</a></li>
+								<li><a href="../admin_plan.ad">Share_Plan</a></li>
 							</ul></li>
 						<li><a href="#">Contact</a></li>
 					</ul>
@@ -67,59 +57,30 @@
 						<div class="container">
 							<div class="row">
 								<div class="col-md-8 col-md-offset-2">
-									<!-- 검색  -->
-									<div class="row col-md-12">
-										<div class="input-group mt-2 col-md-12" id="inputSearch">
-											<input type="text"
-												class="form-control md-auto col-4 justify-content-center"
-												aria-label="reply" aria-describedby="basic-addon2"
-												id="search">
-											<div class="input-group-append">
-												<button class="btn btn-outline-primery mx-1 col-1"
-													type="button" id="searchbtn" name="searchbtn">검색</button>
-											</div>
-										</div>
-									</div>
+									
 									<table class="table col-md-12">
 										<thead>
 											<tr>
-												<th colspan=6 class="text-center">회원 관리</th>
+												<th colspan=6 class="text-center">자유게시판 신고 관리</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody class="text-center">
 											<tr>
 												<th>번호</th>
-												<th>아이디</th>
-												<th>닉네임</th>
-												<th>이메일</th>
-												<th>가입경로</th>
-												<th>차단여부</th>
+												<th>글 번호</th>
+												<th>작성자</th>
+												<th>신고자</th>
+												<th>확인</th>
 											</tr>
 
-											<c:forEach var="m" items="${memberList}" varStatus="status">
+											<c:forEach var="f" items="${freereport}" varStatus="status">
 												<tr>
-													<th name="here">${m.seq}</th>
-													<td>${m.userid}</td>
-													<td>${m.nickname}</td>
-													<td>${m.email}</td>
-													<td>${m.part}</td>
-													<td class="vertical-align-middle">
-													<c:choose>
-													<c:when test="${m.block =='n'}">
-														<div class="TriSea-technologies-Switch">
-															<input id="TriSeaDanger${status.index}" name="TriSea1" type="checkbox" />
-															<label for="TriSeaDanger${status.index}" class="label-danger" name="TriSea2"></label>
-														</div>
-													</c:when>
-													<c:when test="${m.block =='y'}">
-														<div class="TriSea-technologies-Switch">
-															<input id="TriSeaDanger${status.index}" name="TriSea1" type="checkbox" checked/>
-															<label for="TriSeaDanger${status.index}" class="label-danger" name="TriSea2" checked></label>
-														</div>
-													</c:when>
-													</c:choose>
-														
-													</td>
+													<th>${f.reporfree_seq}</th>
+													<td>${f.free_seq}</td>
+													<td>${f.free_writer}</td>
+													<td>${report_user}</td>
+													<td>확인링크</td>
+													
 												</tr>
 											</c:forEach>
 
@@ -171,20 +132,6 @@
 												$('#wrapper').toggleClass(
 														'toggled');
 											});
-									
-									$('.TriSea-technologies-Switch>input[name="TriSea1"]').click(function(){
-										
-										var willBlock = $(this).parent().parent().parent().find('th[name="here"]').html();
-										
-										$.ajax({
-												url:"blockMember.do",
-												type:"get",
-												data:{sequence:willBlock},    	
-												success:function(){alert("저장되었습니다.");},							
-												error:function(){alert("다시 시도해주세요.");}
-											})	
-												
-									});
 
 								})
 		

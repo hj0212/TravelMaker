@@ -56,7 +56,8 @@ public class MemberController extends HttpServlet {
 				if(user.getBlock().equals("y")) {
 					isForward = true;
 					dst="errorBlock.jsp";
-				}else {
+				}
+				else if(user.getBlock().equals("n") || user.getBlock().equals("x")){
 					isForward = true;
 					dst="userResult.jsp";
 				}
@@ -342,7 +343,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("memberList", mlist);
 				
 				isForward = true;
-				dst = "admin.jsp";
+				dst = "admin/admin.jsp";
 			}
 			
 			//-----------------------admin.jsp > 회원계정 차단
@@ -354,7 +355,7 @@ public class MemberController extends HttpServlet {
 				System.out.println("블럭결과"+result);
 				request.setAttribute("blockResult", result);
 				isForward = true;
-				dst = "admin.jsp";
+				dst = "admin/admin.jsp";
 			}
 			
 			
