@@ -119,7 +119,19 @@ margin:0px auto;
       <div class="row">
         <div class="col-sm-8 col-md-3 col-lg-3">
           <div class="card w-100 h-100" id="profile-container">
-            <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
+          
+          <div class="card-img-top float-left rounded-circle mt-5">
+          <form action = "profileImg.do" method="post" enctype="multipart/form-data">
+          <input type="file" name="file" class="row-py-5" ><img src = "${uploadPath}" alt="">
+            
+          <button tyep="submit">upload</button>          
+            </form>
+</div>
+         
+         
+         
+            
+            
             <div class="card-body h-100 py-4 my-5">
               <h4 class="card-title my-4">${nickname}</h4>
               <c:choose>

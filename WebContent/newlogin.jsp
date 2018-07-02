@@ -179,7 +179,7 @@ $("#user_idchek").keyup(function(){
 </head>
 <body>
 
-	<div id="container">
+	<div id="container" class="mt-5">
 		<div class="row">
 			<h1 id="title" class="center col s12">
 				<a href="main.jsp">TRAVEL MAKER</a>

@@ -190,11 +190,9 @@ public class FrontController extends HttpServlet {
 	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 	        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
 	        	  int comment_writer_seq = user.getSeq();
-	        	  System.out.println(comment_seq +":"+review_seq+":"+comment_writer_seq);
 	        	  int result = rdao.deleteReviewComment(comment_seq, comment_writer_seq);
 	        	  request.setAttribute("result", result);
 	        	  request.setAttribute("review_seq", review_seq);
-	        	  System.out.println(result +":"+review_seq);
 	        	  isForward=true;
 	        	  dst="deleteReviewCommentView.jsp";
 	          }
