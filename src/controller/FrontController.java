@@ -191,16 +191,14 @@ public class FrontController extends HttpServlet {
 		        	  
 		        	  if(user.getSeq() == fbdao.writerCheck(seq)) {
 		        		  fbdao.deleteArticle(seq);
+		        		  dst = "freeboard.bo";
 		        	  }else {
 		        		  dst = "notWriter.bo";
 		        		  isForward = false;
 		        	  }
-		        	  
 	        	  }catch(NumberFormatException e) {
 	        		  dst = "numberError.bo";
 	        		  e.printStackTrace();
-	        	  }finally {
-	        		  isForward = false;
 	        	  }
 	          }else if(command.equals("/modifyFreeArticle.bo")) {
 	        	  try {
@@ -209,9 +207,8 @@ public class FrontController extends HttpServlet {
 	        		  dst =  "numberError.bo";
 	        	  }
 	          }else if(command.equals("/numberError.bo")) {
+	        	  dst = "notNumber.jsp";
 	        	  isForward = false;
-	        	  System.out.println("왜 안됨./.");
-	        	  dst = "numberError.jsp";
 	          }else if(command.equals("/notWriter.bo")) {
 	        	  dst = "notWriter.jsp";
 	        	  isForward = false;
