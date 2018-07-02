@@ -101,7 +101,7 @@ tr {
           <c:choose>
           <c:when test="${user eq review_writer}">
           <div class="col-sm-1 text-right">
-          <a href="deleteArticle.bo?review_seq=${review_seq}"><i class="far fa-times-circle"></i></a>
+          <a href="deleteReviewArticle.bo?review_seq=${review_seq}"><i class="far fa-times-circle"></i></a>
           </div>
           </c:when>
           <c:otherwise>
