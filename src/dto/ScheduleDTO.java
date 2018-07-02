@@ -8,11 +8,26 @@ public class ScheduleDTO {
 	private String schedule_endtime;
 	private int location_id;
 	private String location_name;
+	private int location_x;
+	private int location_y;
 	private String schedule_place;
 	private String schedule_plan;
 	private String schedule_budget;
 	private String schedule_ref;
 	
+	
+	public int getLocation_x() {
+		return location_x;
+	}
+	public void setLocation_x(int location_x) {
+		this.location_x = location_x;
+	}
+	public int getLocation_y() {
+		return location_y;
+	}
+	public void setLocation_y(int location_y) {
+		this.location_y = location_y;
+	}
 	public String getLocation_name() {
 		return location_name;
 	}

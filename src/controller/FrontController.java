@@ -207,7 +207,7 @@ public class FrontController extends HttpServlet {
 	  
 	             isForward = true;
 	             dst= "reviewCommentView.jsp";
-	          }else if(command.equals("/deleteArticle.bo")) {
+	          }else if(command.equals("/deleteReviewArticle.bo")) {
 	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 	        	  int result = rdao.deleteReview(review_seq);
 	        	  
