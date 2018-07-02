@@ -6,37 +6,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<head>
+<title>일정 확인</title>
+
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
 <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
 	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
 	crossorigin="anonymous">
-
-
-
-<style>
-</style>
-</head>
-<body>
-<head>
-
 <meta charset="utf-8">
 
-<title>일정 확인</title>
-
 <style type="text/css">
+
+
 * {
 	padding: 0;
 	margin: 0;
 	text-align: center;
 }
-
 
 .container {
 	width: 960px;
@@ -44,27 +36,20 @@
 }
 
 .wrapper {
-	position: relative;
-	margin: 10px 0 10px;
+	margin: 13px 0 10px;
 	height: 300px;
 }
 
-.left_half {
-	position: absolute;
-	top: 0;
-	right: 50%;
-	left: 0%;
-	bottom: 0;
-	overflow: visible;
+.col-md-12, .col-lg-6 {
+	padding-right: 0;
+	padding-left: 0;
 }
 
-.right_half {
-	position: absolute;
-	top: 0;
-	right: 0%;
-	left: 50%;
-	bottom: 0;
-	overflow: visible;
+.left_half { padding-right:5px;}
+.right_half { padding-left:5px;}
+
+.wrapper div {
+	height: 100%;
 }
 
 .form-control {
@@ -84,9 +69,32 @@
 #btnarea {
 	margin-bottom: 20px;
 }
+
+#plantitle {
+	margin-bottom: 10px;
+}
+
+#plan_title {
+	background-color: white;
+}
+
+#planinfoarea {
+	text-align: left;
+	height: 36px;
+	line-height: 36px;
+}
+
+#planinfoarea p {
+	display: inline;
+	margin-right: 15px;
+}
+
+#planbtnarea {
+	display: inline;
+	float: right;
+}
 </style>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
 <script>
 
 
@@ -152,27 +160,40 @@ $(document).ready(function(){
 	</c:choose>
 	<div class="container text-center">
 		<div class="form-group">
-			<center>
-				<input type="text" class="form-control" id="title" readonly
-					style="width: 600px;" value="${plan_title }">
-			</center>
-			<button class="btn btn-default" id="modibtn">수정</button>
-			<button class="btn btn-default">목록</button>
-
-			<div class="wrapper">			
-				<div class="left_half">
-					<div style="border: 1px solid gray; width: 450px; height: 300px;"></div>
+			<div class="input-group input-group-lg" id="plantitle">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="inputGroup-sizing-lg">여행</span>
 				</div>
-				<div class="right_half">
-					<div style="border: 1px solid gray; width: 450px; height: 300px;"></div>
+				<input type="text" class="form-control" aria-label="Large"
+					aria-describedby="inputGroup-sizing-sm" id="plan_title"
+					name="plantitle" value="${plan_title}" readonly>
+			</div>
+		
+			<div id="planinfoarea">
+				<p>작성자 | ${plan.plan_writerN }</p><p>여행 기간 | ${plan.plan_startdate } ~ ${plan.plan_enddate }</p>
+				<p>조회수 | ${plan.plan_viewcount }<p>
+				<div id="planbtnarea">
+					<c:if test="${plan.plan_writer eq sessionScope.user.seq}">
+						<button class="btn btn-outline-secondary" id="modibtn">수정</button>
+						<button class="btn btn-outline-secondary" id="remobtn">삭제</button>
+					</c:if>
+					<button class="btn btn-outline-secondary" id="listbtn">목록</button>
+				</div>
+			</div>
+			
+			<div class="wrapper row">			
+				<div class="left_half col-md-12 col-lg-6">
+					<div id="timeline" style="border: 1px solid gray;"></div>
+				</div>
+				<div class="right_half col-md-12 col-lg-6">
+					<div id="map" style="border: 1px solid gray;"></div>
 				</div>
 			</div>
 			
 			<div class="schedule">
-			
 				<ul class="nav nav-tabs" role="tablist">
 					<c:forEach var="day" begin="1" end="${plan_period}" step="1">
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class='nav-link' href='#Day${day}' role='tab' data-toggle='tab'>Day${day}</a>
 					</li>
 					</c:forEach>
@@ -341,6 +362,21 @@ $(document).ready(function(){
       });
 	$("#modibtn").click(function() {
 		location.href = "selectSchedule.plan?plan=${plan_seq}&day=1&create=f";
+	})
+	
+	$("#remobtn").click(function() {
+		if(confirm("여행 계획을 삭제하시겠습니까?")) {
+			location.href = "removePlan.plan?plan=${plan_seq}";
+		}
+	})
+	
+	$("#listbtn").click(function() {
+		if(${param.currentPage} != "") {
+			location.href = "planboard.plan?currentPage=${param.currentPage}";
+		} else {
+			location.href = "planboard.plan";
+		}
+		
 	})
  
    </script>
