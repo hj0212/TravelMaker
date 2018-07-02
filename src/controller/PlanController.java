@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.GoodBadDAO;
 import dao.MemberDAO;
 import dao.PlanDAO;
 import dto.BudgetDTO;
@@ -35,7 +36,7 @@ public class PlanController extends HttpServlet {
 
 			PlanDAO pdao = new PlanDAO();
 			MemberDAO mdao = new MemberDAO();
-		
+			GoodBadDAO gbdao = new GoodBadDAO();
 
 			boolean isForward = true;
 			String dst = null;
@@ -61,8 +62,7 @@ public class PlanController extends HttpServlet {
 				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
 				
 				List<BudgetDTO> list = new ArrayList<>();
-				System.out.println("budget_plan: " + request.getParameter("budget_plan"));
-				System.out.println("budget_amount: " + request.getParameter("budget_amount"));
+			
 				/*String[] budget_plan = request.getParameter("budget_plan").split("/");
 				String[] budget_amount = request.getParameter("budget_amount").split("/");
 				for(int i = 0; i < budget_plan.length; i++) {
@@ -172,6 +172,11 @@ public class PlanController extends HttpServlet {
 			}else if(command.equals("/planArticle.plan")) {
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
 				List<PlanCommentDTO> result1 = pdao.getAllPlanComments(plan_seq);
+				int bad = gbdao.planBadSelectData(plan_seq);
+				int good = gbdao.planGoodSelectData(plan_seq);
+				
+				request.setAttribute("good", good);
+				request.setAttribute("bad", bad);
 				request.setAttribute("result1", result1);
 				request.setAttribute("plan_seq", plan_seq);
 
@@ -210,16 +215,16 @@ public class PlanController extends HttpServlet {
 				isForward= true;
 				dst="planCommentView.jsp";
 			}else if(command.equals("deletePlanComment.plan")) {
-				System.out.println("들어는 오니");
+			
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
-				System.out.println("1");
+			
 				int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
-				System.out.println("2");
+				
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-				System.out.println("3");
+				
 				int writer = user.getSeq();
 				
-				System.out.println("deletePlanComment.plan :"+plan_seq +":"+writer);
+			
 
 				int result = pdao.deletePlanComment(comment_seq, writer);
 				request.setAttribute("result", result);

@@ -84,32 +84,64 @@ tr {
       });
    });
 </script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
 
+
+
 $(document).ready(function(){
+
 	$("#goodbtn").click(function(){
-	var goodbtn = $("#goodbtn").text();
-	console.log(goodbtn);
+
+	var article =$("#review_seq").text();
 	
+	console.log(goodbtn);
 
 	$.ajax({
 		  type:'POST',
-		  url:"goodbtn.btns",
-		  data: {good:goodbtn},
-		  dataType: 'json',
+		  url:"reGoodbtn.btns",
+		  data: {article:article},
 		  success:function(good){
-			  $("#goodbtn").html(good);
+			  console.log("asdasd");
+			 
+				 $("#goodbtn").html(""); 
+				 $("#goodbtn").html('<i class="fas fa-heart"></i>'+good);
+			 
+			
+			  
 		  }
 		});
-		
-		
+			
 	});
+	$("#badbtn").click(function(){	
+	var article =$("#review_seq").text();	
+
+	$.ajax({
+		  type:'POST',
+		  url:"reBadbtn.btns",
+		  data: {article:article},
+		  success:function(bad){
+			  console.log("asdasd");
+			 
+				 $("#badbtn").html(""); 
+				 $("#badbtn").html('<i class="far fa-frown"></i>'+bad);
+			
+			
+			  
+		  }
+		});
+			
+	});
+	
+	
 });
 
-
-
 </script>
+
+
+
+
 
 </head>
 <body>
@@ -121,12 +153,12 @@ $(document).ready(function(){
          <div class="col-sm-12">${review_title}</div>
       </div>
       <div class="row writer">
-         <div class="col-sm-1 text-left">${review_seq}</div>
+         <div class="col-sm-1 text-left" id="review_seq">${review_seq}</div>
          <div class="col-sm-5 text-left">${review_writerN}</div>
          <div class="col-sm-3 text-right">${review_writedate}</div>
          <div class="col-sm-2 text-right">${review_viewcount}</div>
           <c:choose>
-          <c:when test="${user eq review_writer}">
+          <c:when test="${sessionScope.user.seq eq review_writer}">
           <div class="col-sm-1 text-right">
           <a href="deleteReviewArticle.bo?review_seq=${review_seq}"><i class="far fa-times-circle"></i></a>
           </div>
@@ -142,10 +174,10 @@ $(document).ready(function(){
       <div class="row function">
          <div class="col-sm-4 offset-sm-4 text-center vote">
             <button type="button" class="btn btn-outline-danger" id="goodbtn">
-               <i class="fas fa-heart"></i>30
+               <i class="fas fa-heart"></i>${good}
             </button>
             <button type="button" class="btn btn-outline-primary" id="badbtn">
-               <i class="far fa-frown"></i>30
+               <i class="far fa-frown"></i>${bad}
             </button>
          </div>
          <div class="col-sm-4 text-right move">
