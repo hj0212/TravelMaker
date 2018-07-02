@@ -50,10 +50,12 @@
 }
 
 .contents {
+   padding-top : 10px;
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
    min-height: 100px;
+   word-wrap: break-word;
 }
 
 /* 편법임... */
@@ -324,12 +326,16 @@ $(document).ready(function(){
       });
       
       $("#goList").click(function(){
-            location.href = "freeboard.bo?currentPage="+${currentPage};
+            location.href = "freeboard.bo";
       })
 
       <c:if test="${article.free_writer == sessionScope.user.seq}">
 	  	$("#delete").click(function(){
 	  		location.href = "deleteCheck.bo?articlenum=${article.free_seq}";
+	  	})
+	  	
+	  	$("#update").click(function() {
+	  		location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
 	  	})
       </c:if>
 		
