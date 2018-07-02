@@ -818,4 +818,25 @@ public class PlanDAO {
 		con.close();
 		return result;
 	}
+	
+	public List<LocationDTO> selectLocation(int plan_seq) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from location l, (select location_id from schedule where plan_seq = ? and location_id != -1) s where l.location_id = s.location_id";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, plan_seq);
+		ResultSet rs = pstat.executeQuery();
+		List<LocationDTO> result = new ArrayList<>();
+		while(rs.next()) {
+			LocationDTO dto = new LocationDTO();
+			dto.setLocation_id(rs.getInt(1));
+			dto.setLocation_name(rs.getString(2));
+			dto.setLocation_x(rs.getInt(3));
+			dto.setLocation_y(rs.getInt(4));
+			result.add(dto);
+		}
+		rs.close();
+		pstat.close();
+		con.close();
+		return result;
+	}
 }

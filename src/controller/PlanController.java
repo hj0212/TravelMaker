@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import dao.GoodBadDAO;
 import dao.MemberDAO;
 import dao.PlanDAO;
@@ -242,6 +246,14 @@ public class PlanController extends HttpServlet {
 
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				request.setAttribute("plan_period", plan_period);
+				
+				/*List<LocationDTO> locationlist = pdao.selectLocation(plan_seq);
+				JsonObject obj = new JsonObject();
+				JsonArray jLocationList = new Gson().toJsonTree(locationlist).getAsJsonArray();
+				obj.add("jLocationList", jLocationList);
+				System.out.println(obj.toString());
+				request.setAttribute("jLocationListObject", obj);*/
+				
 				
 				List<ScheduleDTO> list = new ArrayList<>();
 				List<BudgetDTO> blist = new ArrayList<>();
