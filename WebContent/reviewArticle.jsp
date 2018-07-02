@@ -133,10 +133,10 @@ tr {
             style="border: none; background-color: white; cursor: pointer;"
             id="comment-bnt">댓글보기▼</button>
          <form action="addReviewComment.bo?review_seq=${review_seq}"
-            method="post" id="inputCommentForm">
+            method="post" id="reviewCommentForm">
             <div style="width: 100%; margin: 0px;">
                <div style="width: 80%">
-                  <textarea class="form-control" rows="3" id="comment"
+                  <textarea class="form-control" rows="3" id="comment_text"
                      name="comment_text"
                      style="resize: none; width: 100%; margin: 0px; float: left;"
                      maxlength="70"></textarea>
@@ -179,11 +179,7 @@ tr {
       </div>
    </div>
    </div>
-   <script>
-      $('.inputComment').click(function() {
-         $('#inputCommentForm').submit();
-      })
-   </script>
+ 
    <script>
       var commentBntCount = 2;
       $("#comment-bnt").click(function() {
@@ -198,7 +194,16 @@ tr {
             commentBntCount--;
          }
       });
-      $("#comment-write-bnt").click(
+      
+      $('#commentbtn').click(function() {
+   	   var comment_text = $("#comment_text").val(); 
+   	   if(comment_text != null){
+          $('#reveiwCommentForm').submit();
+   	   }else{
+   		  alert("내용을 입력해주세요");
+   	   }
+       });
+/*       $("#comment-write-bnt").click(
                   function() {
                      var con = confirm("댓글을작성하시겠습니까?");
                      var comment = $("#comment").val();
@@ -211,7 +216,7 @@ tr {
                         }
                      } else {
                      }
-                  });
+                  }); */
    </script>
 </body>
 </html>
