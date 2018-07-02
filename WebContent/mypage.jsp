@@ -29,6 +29,7 @@
 	crossorigin="anonymous"></script>
 	<link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+	
  <style>
  #box-container {
   margin: 0px auto;
@@ -268,53 +269,30 @@ margin:0px auto;
 				
 				<!-- tabthree -->
                        <div class="col tab-pane fade" id="tabthree" role="tabpanel">
-            <div class="row">
-            
-            
-            <div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
+            <div class="row mt-2 mx-0">
+                      
+         	<c:forEach var="item" items="${flist}">
+				<div class="item col-md-3 mb-3">
+					<div class="card text-center" >
+						<div class="card-header">
+			<a href="planArticle.plan?plan_seq=${item.plan_seq}" style="text-decoration:none;margin: 0px auto;text-align: center;">					
+						${item.plan_title}
+					</a>
+						</div>
+						<div class="card-body mt-1 text-center">
+							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
+							<div class="btn-list d-inline">
+
+								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
+									class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
+							</div>
+							<hr>
+							<p class="text-center">여기다 뭐넣을까여</p>
+						</div>
+					</div>
 				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <img class="card-img-top float-left rounded" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
+			</c:forEach>
+           
 				
 				
 				</div>
