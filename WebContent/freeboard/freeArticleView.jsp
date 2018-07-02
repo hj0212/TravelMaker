@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="util" uri="/WEB-INF/tlds/writerToString.tld" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,10 +51,12 @@
 }
 
 .contents {
+   padding-top : 10px;
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
    min-height: 100px;
+   word-wrap: break-word;
 }
 
 /* 편법임... */
@@ -191,19 +194,18 @@ $(document).ready(function(){
       <div class="comments">
          <button type="button" style="border: none; background-color: white;"
             id="comment-bnt">댓글보기▼</button>
-
-         <div style="width: 100%; margin: 0px;">
-            <div style="width: 80%">
-               <textarea class="form-control" rows="3" id="comment"
-                  " style="resize: none; width: 100%; margin: 0px; float: left;"
-                  maxlength="70"></textarea>
-            </div>
-            <div
-               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-               <button style="width: 100%; height: 86px;background-color: white" id="comment-write-bnt"  class=""btn btn-default"><i class="fa fa-comments"></i>댓글
-                  작성</button>
-            </div>
-         </div>
+		 <form method="post" id="procComment" action="procFreeComment.bo" name="proc">
+	         <div style="width: 100%; margin: 0px;">
+	            <div style="width: 80%">
+	               <textarea class="form-control" rows="3" id="comment" style="resize: none; width: 100%; margin: 0px; float: left;" maxlength="65" name="comment"></textarea>
+	               <input type="text" readonly value="${article.free_seq}" name="articlenum" style="display:none">
+	            </div>
+	            <div
+	               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
+	               <button style="width: 100%; height: 86px;background-color: white" id="writeComment"  class=""btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
+	            </div>
+	         </div>
+		 </form>
 
 
          <table class="table" id="comment-table">
@@ -211,128 +213,69 @@ $(document).ready(function(){
                <tr>
                   <th scope="col" style="width: 15%;">작성자</th>
                   <th scope="col" style="width: 70%">댓 글 내 용</th>
-                  <th scope="col" style="width: 15%;">Last</th>
+                  <th scope="col" style="width: 15%;">작성날짜</th>
 
                </tr>
             </thead>
             <tbody>
-               <tr>
-                  <th scope="row"
-                     style="width: 15%; max-width: 15%; max-height: 51px;"
-                     class="writer">김형섭</th>
-                  <td style="width: 70%; max-width: 70%;"></td>
-                  <td style="width: 15%; font-size: 10px;">Ott
-                     <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true"">&times;</span>
-                     </button>
-                  </td>
-
-
-               </tr>
-               <tr>
-                  <th scope="row"
-                     style="width: 15%; max-width: 15%; max-height: 51px; word-break: break-all;"
-                     class="writer"></th>
-                  <td style="width: 70%">asdasd</td>
-                  <td style="width: 15%; font-size: 10px;">Thornton
-                     <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true"">&times;</span>
-                     </button>
-                  </td>
-
-
-               </tr>
-               <tr>
-                  <th scope="row"
-                     style="width: 15%; max-width: 15%; max-height: 51px;"
-                     class='writer'>3</th>
-                  <td style="width: 70%">Larry</td>
-                  <td style="width: 15%; font-size: 10px;">2018-51-29 11:53:39
-                     <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true"">&times;</span>
-                     </button>
-                  </td>
-               </tr>
+	            <c:forEach var="comment" items="${commentList}">
+					<tr>
+						<c:set var='writer' value="${comment.comment_writer}" scope="page"/>  
+						<th scope="row" style="width: 15%; max-width: 15%; max-height: 51px;" class="writer">${util:getUserNickname(writer)}</th>
+						<td style="width: 70%; max-width: 70%;">${comment.comment_text}</td>
+						<td style="width: 15%; font-size: 10px;">${comment.comment_time}
+							<button type="button" class="close" aria-label="Close">
+								<c:if test="${sessionScope.user.seq eq comment.comment_writer}">
+									<a href="deleteFreeComment.bo?articleseq=${comment.free_seq}&commentseq=${comment.comment_seq}&commentwriter=${comment.comment_writer}">
+										<span aria-hidden="true"">&times;</span>
+									</a>
+								</c:if>
+							</button>
+						</td>
+					</tr>
+				</c:forEach>
             </tbody>
 
          </table>
 
       </div>
    </div>
-
-
    <script>
-    
-      var commentBntCount = 2;
-      $("#comment-bnt").click(function() {
-         if (commentBntCount == 1) {
-            $("#comment-bnt").text("댓글감추기▲");
-            $("#comment-table").show();
-            commentBntCount++;
-         } else {
-            $("#comment-bnt").text("댓글보기▼");
-            $("#comment-table").hide();
-            commentBntCount--;
-      
-         }
-      });
+				var commentBntCount = 2;
+				$("#comment-bnt").click(function() {
+					if (commentBntCount == 1) {
+						$("#comment-bnt").text("댓글감추기▲");
+						$("#comment-table").show();
+						commentBntCount++;
+					} else {
+						$("#comment-bnt").text("댓글보기▼");
+						$("#comment-table").hide();
+						commentBntCount--;
 
-      $("#comment-write-bnt").click(function () {
-            var con = confirm("댓글을작성하시겠습니까?");
+					}
+				});
 
+				$("#procComment").click(function() {
 
-            var Now = new Date();
-            var NowMonth = Now.getMonth() + 1;
-            var NowTime = Now.getFullYear();
-            NowTime += '-' + NowMonth;
-            NowTime += '-' + Now.getDate();
-            NowTime += ' ' + Now.getHours();
-            NowTime += ':' + Now.getMinutes();
-            NowTime += ':' + Now.getSeconds();
+				});
 
-            var writer = "논개";
-            var comment = $("#comment").val();
+				$("#goList").click(function() {
+					location.href = "freeboard.bo";
+				})
 
-            var commentinput = "";
+				<c:if test="${article.free_writer == sessionScope.user.seq}">
+				$("#delete")
+						.click(
+								function() {
+									location.href = "deleteCheck.bo?articlenum=${article.free_seq}";
+								})
 
-            commentinput += "<tr>";
-            commentinput += "<th scope='row' style='width:15%' class='writer'>"
-                  + writer + "</th>";
-            commentinput += "<td style='width:70%;max-width: 60%;'>"
-                  + comment + "</td>";
-            commentinput += "<td style='width:15%;font-size: 10px;'>"
-                  + NowTime
-                  + "   <button type='button' class='close' aria-label='Close' hide>"
-                  + "<span aria-hidden='true'>&times;</span>"
-                  + "</button></td>";
-            commentinput += "</tr>";
-
-            if (con) {
-
-                  if (comment != "") {
-                        $("#comment-table tbody").prepend(
-                              commentinput);
-                        $("#comment").val("");
-
-                  } else {
-                        alert("댓글을 작성해주세요.");
-                  }
-            } else {
-
-            }
-
-      });
-      
-      $("#goList").click(function(){
-            location.href = "freeboard.bo?currentPage="+${currentPage};
-      })
-
-      <c:if test="${article.free_writer == sessionScope.user.seq}">
-	  	$("#delete").click(function(){
-	  		location.href = "deleteCheck.bo?articlenum=${article.free_seq}";
-	  	})
-      </c:if>
-		
-   </script>
+				$("#update")
+						.click(
+								function() {
+									location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
+								})
+				</c:if>
+			</script>
 </body>
 </html>

@@ -156,8 +156,7 @@ $(document).ready(function(){
 				<input type="text" class="form-control" id="title" readonly
 					style="width: 600px;" value="${plan_title }">
 			</center>
-			<button class="btn btn-default">수정</button>
-			<button class="btn btn-default">후기보기</button>
+			<button class="btn btn-default" id="modibtn">수정</button>
 			<button class="btn btn-default">목록</button>
 
 			<div class="wrapper">			
@@ -340,7 +339,9 @@ $(document).ready(function(){
             commentBntCount--;
          }
       });
-
+	$("#modibtn").click(function() {
+		location.href = "selectSchedule.plan?plan=${plan_seq}&day=1&create=f";
+	})
  
    </script>
    
