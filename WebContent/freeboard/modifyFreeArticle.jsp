@@ -54,7 +54,7 @@ pageEncoding="UTF-8"%>
             		<textarea name="contents" class="form-control" id="editor">${contents.free_contents}</textarea>
         		</div>
                 <div class="text-right">
-        		    <input type="submit" class="btn btn-primary" value="수정" onclick = "sendContents(); this.disabled=true;"></button>
+        		    <input type="button" class="btn btn-primary" value="수정" onclick = "sendContents()" id="send"></button>
             		<button type="button" class="btn btn-primary" id="cancel">취소</button>
             		<button type="button" class="btn btn-primary" id="list">목록 </button>
         		</div>

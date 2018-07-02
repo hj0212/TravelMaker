@@ -42,29 +42,41 @@ public class FrontController extends HttpServlet {
 			String dst = null;
 
 			if(command.equals("/freeboard.bo")) {
-				int currentPage = 0;
-				String currentPageString = request.getParameter("currentPage");
-				
-				if(currentPageString == null) {
-					currentPage = 1;
-				} else {
-					currentPage = Integer.parseInt(currentPageString);
+				try {
+					int currentPage = 0;
+					String currentPageString = request.getParameter("currentPage");
+					
+					if(currentPageString == null) {
+						currentPage = 1;
+					} else {
+						currentPage = Integer.parseInt(currentPageString);
+					}
+					
+					String searchTerm = request.getParameter("search");
+					
+					ArrayList<FreeboardDTO> list = fbdao.selectBoard(currentPage*10-9, currentPage*10, searchTerm);
+					
+//					String[] nickname = new String[list.size()];
+//					for(int i = 0; i < list.size(); i++) {
+//						int writerNumber = Integer.parseInt(list.get(i).getFree_writer());
+//						String writer = mdao.getUserNickname(writerNumber);
+//						nickname[i] = writer;
+//					}
+//					
+//					request.setAttribute("writer", nickname);
+					request.setAttribute("freeboardlist", list);
+					
+					//------------------------------------------------------
+								
+					String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
+					request.setAttribute("pageNavi", pageNavi);
+					request.setAttribute("currentPage", currentPage);
+					
+					isForward = true;
+					dst="freeboard/freeBoardList.jsp?currentPage="+currentPage;
+				}catch(NumberFormatException e) {
+					dst = "numberError.bo";
 				}
-				
-				String searchTerm = request.getParameter("search");
-				
-				ArrayList<FreeboardDTO> list = fbdao.selectBoard(currentPage*10-9, currentPage*10, searchTerm);
-				request.setAttribute("freeboardlist", list);
-				
-				//------------------------------------------------------
-							
-				String pageNavi = fbdao.getPageNavi(currentPage, searchTerm);
-				request.setAttribute("pageNavi", pageNavi);
-				request.setAttribute("currentPage", currentPage);
-				
-				isForward = true;
-				dst="freeboard/freeBoardList.jsp?currentPage="+currentPage;
-
 			} else if(command.equals("/freewrite.bo")) {
 				isForward = true;
 				dst = "freeboard/freeArticleWrite.jsp";
@@ -79,6 +91,15 @@ public class FrontController extends HttpServlet {
 					String title = request.getParameter("title");
 					String contents = request.getParameter("contents");
 			
+					if((title == null || title == "") && (contents == null || contents == "")) {
+						title = "제목없음";
+					}else if(contents == null || contents == "" ) {
+						contents = "내용없음";
+					}else if(title == null || title == "") {
+						title = "제목없음";
+						contents = "내용없음";
+					}
+					
 					int result = fbdao.insertArticle(writer, title, contents);
 					dst = "freeboard.bo";
 				}
@@ -228,6 +249,16 @@ public class FrontController extends HttpServlet {
 	        	  try {
 		        	  String title = request.getParameter("title");
 		        	  String contents = request.getParameter("contents");
+		        	  
+		        	  if((title == null || title == "") && (contents == null || contents == "")) {
+		        		  title = "제목없음";
+		        	  }else if(contents == null || contents == "" ) {
+		        		  contents = "내용없음";
+		        	  }else if(title == null || title == "") {
+		        		  title = "제목없음";
+		        		  contents = "내용없음";
+		        	  }
+		        	  
 		        	  int articlenum = Integer.parseInt(request.getParameter("articlenum"));
 		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
 		        	  
