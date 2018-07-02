@@ -46,13 +46,8 @@
 	</div>
 </body>
 <script>
-<<<<<<< HEAD
 	function deleteContents() {
 		location.href = "deleteFreeArticle.bo?seq="+"${articlenum}";
-=======
-	document.getElementById("delete").onclick = function(){
-		location.href = "deleteFreeArticle.bo?seq="+${articlenum};
->>>>>>> 창영
 	}
 	
 	function goList() {
