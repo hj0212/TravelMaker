@@ -40,6 +40,7 @@
 
 .container {
 	width: 960px;
+	margin-top: 120px;
 }
 
 .wrapper {
@@ -75,18 +76,33 @@
 	position: absoulte;
 	float: left;
 }
+
+#schedule-table .budget_plan, .budget_amount {
+	display: inline;
+}
+
+#btnarea {
+	margin-bottom: 20px;
+}
 </style>
 
 </head>
 
 
 <body>
-
+	<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="include/mainNavi_login.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="include/mainNavi.jsp"%>
+		</c:otherwise>
+	</c:choose>
 	<div class="container text-center">
 		<div class="form-group">
 			<center>
 				<input type="text" class="form-control" id="title" readonly
-					style="width: 600px;">
+					style="width: 600px;" value="${plan_title }">
 			</center>
 			<button class="btn btn-default">수정</button>
 			<button class="btn btn-default">후기보기</button>
@@ -115,13 +131,13 @@
 				<c:set var="isFirst" value="true" />
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 				
-				 <div role="tabpanel" class="tab-pane fade in active" id="Day${day}">
+				 <div role="tabpanel" class="tab-pane fade show active" id="Day${day}">
 					<table class="table table-striped" id="schedule-table">
 						<c:if test="${isFirst }">
 						<thead>
 							<tr>
-								<th scope="col">시간</th>
-								<th scope="col">장소</th>
+								<th scope="col" style="width:160px;">시간</th>
+								<th scope="col" style="width:170px;">장소</th>
 								<th scope="col">일정</th>
 								<th scope="col">예산</th>
 								<th scope="col">참고</th>
@@ -129,7 +145,7 @@
 						</thead>
 						<c:set var="isFirst" value="false" />
 						</c:if>
-						<c:if test="${not isFirst }">
+						<c:if test="${not isFirst}">
 						<script>console.log("${empty scheduleList}")</script>
 						<tbody id="schedule-tbody" style="table-layout: fixed; word-break: break-all;">
 							<c:forEach var="item" items="${scheduleList}">
@@ -185,26 +201,18 @@
 				</div>
 			</div>
 			
-			<nav aria-label="Page navigation">
-			<ul class="pagination justify-content-center">
-				<li class="page-item disabled"><a class="page-link" href="#"
-					tabindex="-1">Previous</a></li>
-				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">Next</a></li>
-			</ul>
-			</nav>
-			<button type="button" class="btn btn-outline-danger" >
-				<i class="fas fa-heart"></i> 30
-			</button>
-			<button type="button" class="btn btn-outline-primary" >
-				<i class="far fa-frown"></i> 30
-			</button>
-			<button class="btn btn-outline-success">스크랩</button>
+			<div id="btnarea">
+				<button type="button" class="btn btn-outline-danger" >
+					<i class="fas fa-heart"></i> 30
+				</button>
+				<button type="button" class="btn btn-outline-primary" >
+					<i class="far fa-frown"></i> 30
+				</button>
+				<button class="btn btn-outline-success">스크랩</button>
+				
+				<button class="btn btn-default" style="float: right;">신고</button>
+			</div>
 			
-			<button class="btn btn-default" style="float: right;">신고</button>
-			<br>
 			<div class="comments">
 			<form action="insertPlanComment.plan?plan_seq=${plan_seq}" method="post" id="planCommentForm" name="planCommentForm"> 
 			<div class="input-group mb-3">
@@ -237,7 +245,7 @@
                      <td style="width: 70%">${pc.comment_text}</td>
                      <td style="width: 15%; font-size: 10px;">${pc.comment_time}
                
-                  <c:if test="${pc.comment_writer eq user}">
+                  <c:if test="${pc.comment_writer eq sessionScope.user.seq}">
                         <button type="button" class="close" aria-label="Close" id="deleteComment" >
                   <a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
                            <span aria-hidden="true">&times;</span>

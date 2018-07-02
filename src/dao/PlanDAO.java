@@ -390,7 +390,34 @@ public class PlanDAO {
 			tmp.setSchedule_plan(rs.getString(8));
 			tmp.setSchedule_ref(rs.getString(9));
 			result.add(tmp);
-			System.out.println("스케줄시퀀스" + tmp.getSchedule_seq());
+		}
+
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	public List<ScheduleDTO> selectSchedule(int plan, int day, List<ScheduleDTO> result) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select plan_seq, day_seq, schedule_seq, schedule_starttime, schedule_endtime, s.location_id, l.location_name, schedule_plan, schedule_ref from schedule s, location l where l.location_id = s.location_id and plan_seq = ? and day_seq = ? order by 4";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, plan);
+		pstmt.setInt(2, day);
+		ResultSet rs = pstmt.executeQuery();
+
+		while(rs.next()) {
+			ScheduleDTO tmp = new ScheduleDTO();
+			tmp.setPlan_seq(rs.getInt(1));
+			tmp.setDay_seq(rs.getInt(2));
+			tmp.setSchedule_seq(rs.getInt(3));
+			tmp.setSchedule_starttime(rs.getString(4));
+			tmp.setSchedule_endtime(rs.getString(5));
+			tmp.setLocation_id(rs.getInt(6));
+			tmp.setLocation_name(rs.getString(7));
+			tmp.setSchedule_plan(rs.getString(8));
+			tmp.setSchedule_ref(rs.getString(9));
+			result.add(tmp);
 		}
 
 		rs.close();
@@ -408,6 +435,31 @@ public class PlanDAO {
 		ResultSet rs = pstmt.executeQuery();
 
 		List<BudgetDTO> result = new ArrayList<>();
+		while(rs.next()) {
+			BudgetDTO tmp = new BudgetDTO();
+			tmp.setPlan_seq(plan);
+			tmp.setDay_seq(day);
+			tmp.setBudget_seq(rs.getInt(3));
+			tmp.setSchedule_seq(rs.getInt(4));
+			tmp.setBudget_plan(rs.getString(5));
+			tmp.setBudget_amount(rs.getInt(6));
+			result.add(tmp);
+		}
+
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	public List<BudgetDTO> selectBudget(int plan, int day, List<BudgetDTO> result) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from budget where plan_seq = ? and day_seq = ? order by 2";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, plan);
+		pstmt.setInt(2, day);
+		ResultSet rs = pstmt.executeQuery();
+
 		while(rs.next()) {
 			BudgetDTO tmp = new BudgetDTO();
 			tmp.setPlan_seq(plan);

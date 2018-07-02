@@ -174,25 +174,23 @@ public class PlanController extends HttpServlet {
 				List<PlanCommentDTO> result1 = pdao.getAllPlanComments(plan_seq);
 				request.setAttribute("result1", result1);
 				request.setAttribute("plan_seq", plan_seq);
-				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-				request.setAttribute("user", user.getSeq());
 
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				request.setAttribute("plan_period", plan_period);
 				
-				List<ScheduleDTO> list = null;
-				List<BudgetDTO> blist = null;
-				int totalBudget = 0;
+				List<ScheduleDTO> list = new ArrayList<>();
+				List<BudgetDTO> blist = new ArrayList<>();
 				for(int i = 0; i < plan_period; i++) {
-					list = pdao.selectSchedule(plan_seq, i+1);
-					blist = pdao.selectBudget(plan_seq, i+1);
-					totalBudget = pdao.getTotalBudget(plan_seq, i+1);
+					list = pdao.selectSchedule(plan_seq, i+1, list);
+					blist = pdao.selectBudget(plan_seq, i+1, blist);
+					int totalBudget = pdao.getTotalBudget(plan_seq, i+1);
+
+					request.setAttribute("scheduleList", list);
+					request.setAttribute("budgetList", blist);
+					request.setAttribute("totalBudget", totalBudget);
+					
 				}
 				
-
-				request.setAttribute("totalBudget", totalBudget);
-				request.setAttribute("scheduleList", list);
-				request.setAttribute("budgetList", blist);
 				
 				String plan_title = pdao.getPlantitle(plan_seq);
 				request.setAttribute("plan_title", plan_title);
