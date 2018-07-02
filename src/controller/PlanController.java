@@ -188,22 +188,14 @@ public class PlanController extends HttpServlet {
 				
 				isForward= true;
 				dst="planCommentView.jsp";
-			}else if(command.equals("deletePlanComment.plan")) {
-				System.out.println("들어는 오니");
+			}else if(command.equals("/deletePlanComment.plan")) {
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
-				System.out.println("1");
 				int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
-				System.out.println("2");
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-				System.out.println("3");
 				int writer = user.getSeq();
-				
-				System.out.println("deletePlanComment.plan :"+plan_seq +":"+writer);
-
 				int result = pdao.deletePlanComment(comment_seq, writer);
 				request.setAttribute("result", result);
 				request.setAttribute("plan_seq", plan_seq);
-				
 				
 				isForward= true;
 				dst = "deletePlanCommentView.jsp";

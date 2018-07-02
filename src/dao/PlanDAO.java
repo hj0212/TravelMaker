@@ -564,7 +564,7 @@ public class PlanDAO {
 	
 	public int deletePlanComment (int comment_seq, int writer) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "delete plan_comment where comment_seq=? and writer=?";
+		String sql = "delete plan_comment where comment_seq=? and comment_writer=?";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, comment_seq);
 		pstat.setInt(2, writer);
