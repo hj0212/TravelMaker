@@ -30,50 +30,39 @@
 body {
 	margin: 0 auto;
 }
-
 #searchwrap {
 	padding: 0;
 }
-
 .container {
 	padding-top: 140px;
 }
-
 div {
 	box-sizing: border-box;
 }
-
 #cardArea .card .card-img-top {
 	height: 250px;
 	padding: 0px;
 }
-
 .card-body .card-title, .card-text {
 	text-align: center;
 }
-
 .card-body {
 	text-align: justify;
 	padding: 0px;
 }
-
 #search_area[type="button"] {
 	align: right;
 }
-
 .item {
 	display: inline-block;
 }
-
 .planTitle {
 	font-size: 20px;
 	font-weight: 650;
 }
-
 .card-header span[name="subTitle"] {
 	float: right;
 }
-
 .mobile-wrap {
 	text-align: center;
 	margin: auto;
@@ -86,7 +75,6 @@ div {
 		rgba(0, 0, 0, .19);
 	box-sizing: border-box;
 }
-
 .mobile-header {
 	width: 100%;
 	height: 15%;
@@ -95,7 +83,6 @@ div {
 	display: block;
 	text-align: center;
 }
-
 .mobile-title {
 	width: 100%;
 	height: 30px;
@@ -104,7 +91,6 @@ div {
 	box-sizing: border-box;
 	margin-top: 30px;
 }
-
 .mobile-title>input {
 	text-align: center;
 	width: 70%;
@@ -119,7 +105,6 @@ div {
 	font-style: italic;
 	color: gray;
 }
-
 #picker-div {
 	width: 100%;
 	height: 80px;
@@ -128,7 +113,6 @@ div {
 	box-sizing: border-box;
 	margin-top: 25px;
 }
-
 .picker-pic {
 	width: 175px;
 	height: 100%;
@@ -141,14 +125,12 @@ div {
 	box-sizing: border-box;
 	color: gray;
 }
-
 #picker_wrap {
 	width: 390px;
 	height: 100%;
 	margin: 0 auto;
 	height: 100%;
 }
-
 #start-plan {
 	width: 100%;
 	height: 10%;
@@ -274,7 +256,6 @@ div {
 		$("#searchbtn").click(function() {
 			location.href = "planboard.plan?search=" + $("#search").val();
 		})
-
 		$("#writebtn").click(function() {
 		})
 	</script>
@@ -283,12 +264,10 @@ div {
 				function() {
 					var minDate = new Date();
 					var maxDate = new Date();
-
 					var mm = minDate.getDate() - 1;
 					var dd = maxDate.getDate() + 62;
 					minDate.setDate(mm);
 					maxDate.setDate(dd);
-
 					$("#datepicker").datepicker({
 						uiLibrary : 'bootstrap4',
 						format : 'yyyy-mm-dd',
@@ -296,7 +275,6 @@ div {
 						minDate : minDate,
 						maxDate : maxDate,
 					});
-
 					$("#datepicker-end").datepicker({
 						uiLibrary : 'bootstrap4',
 						format : 'yyyy-mm-dd',
@@ -305,19 +283,15 @@ div {
 						minDate : minDate,
 						maxDate : maxDate,
 					});
-
 					var todate = "";
 					var enddate = "";
-
 					var formdt = null;
 					var todt = null;
 					var datepage = "";
-
 					$("#datepicker").change(
 							function() {
 								todate = $(this).val();
 								$("#datepicker-end").val("");
-
 								if (enddate != "") {
 									var arrtodate = todate.split("/");
 									var arrenddate = enddate.split("/");
@@ -341,13 +315,11 @@ div {
 									}
 								}
 							});
-
 					$("#datepicker-end").change(
 							function() {
 								if (todate != "") {
 									enddate = $(this).val();
 									console.log(todate + ":" + enddate);
-
 									var arrtodate = todate.split("-");
 									var arrenddate = enddate.split("-");
 									formdt = new Date(arrtodate[0],
@@ -373,7 +345,6 @@ div {
 									$(this).val("");
 								}
 							});
-
 					$("#start-btn").click(
 							function() {
 								if (datepage < 0) {
@@ -385,11 +356,9 @@ div {
 											"createPlan.plan").submit();
 								}
 							});
-
 					$('#myModal').on('shown.bs.modal', function() {
 						$('#myInput').trigger('focus')
 					});
-
 				});
 	</script>
 </body>
