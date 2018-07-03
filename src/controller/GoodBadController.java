@@ -110,7 +110,9 @@ public class GoodBadController extends HttpServlet {
 					pw.println(count);
 				}else {
 					int result = gbdao.planGoodInsertData(article, user_seq);//인설트
+					
 					if(result>0) {	
+						int planup = gbdao.plangoodUpdate(article);
 						 count =gbdao.planGoodSelectData(article);
 						pw.println(count);
 

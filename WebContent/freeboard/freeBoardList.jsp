@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="util" uri="/WEB-INF/tlds/writerToString.tld" %>
+<%@ taglib prefix="util" uri="/WEB-INF/tlds/writerToString.tld"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +36,7 @@ div {
 }
 
 .container {
-	height: 100%;
+	weight:970px;
 }
 
 #navi {
@@ -44,7 +44,7 @@ div {
 }
 
 #bestPlan {
-	height: 400px;
+	
 }
 
 #bests {
@@ -95,11 +95,11 @@ div {
 				<table class="table table-light">
 					<thead>
 						<tr>
-							<th scope="col" style="width: 10%; text-align:center;">글번호</th>
-							<th scope="col" style="width: 55%; text-align:center;">제목</th>
-							<th scope="col" style="width: 15%; text-align:center;">작성자</th>
-							<th scope="col" style="width: 10%; text-align:center;">작성일</th>
-							<th scope="col" style="width: 10%; text-align:center;">조회수</th>
+							<th scope="col" style="width: 10%; text-align: center;">글번호</th>
+							<th scope="col" style="width: 55%; text-align: center;">제목</th>
+							<th scope="col" style="width: 15%; text-align: center;">작성자</th>
+							<th scope="col" style="width: 10%; text-align: center;">작성일</th>
+							<th scope="col" style="width: 10%; text-align: center;">조회수</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -110,7 +110,7 @@ div {
 										<td align="center">${item.free_seq}</td>
 										<td class="titlearea"><a
 											href="viewFreeArticle.bo?currentPage=${currentPage}&seq=${item.free_seq}&writer=${item.free_writer}&proc=view&comseq=0">${item.free_title}</a></td>
-										<c:set var='writer' value="${item.free_writer}" scope="page"/>  
+										<c:set var='writer' value="${item.free_writer}" scope="page" />
 										<td align="center"><a href="">${util:getUserNickname(writer)}</a></td>
 										<td align="center">${item.free_writedate}</td>
 										<td align="center">${item.free_viewcount}</td>
@@ -126,15 +126,14 @@ div {
 						<tr>
 							<td colspan="5">
 								<nav aria-label="Page navigation example">
-									<ul class="pagination">
-										${pageNavi}
+									<ul class="pagination">${pageNavi}
 									</ul>
 								</nav>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="5" id="input_area">
-							<button type="button" class="btn btn-primary " id="writebtn">글쓰기</button>
+								<button type="button" class="btn btn-primary " id="writebtn">글쓰기</button>
 								<div class="input-group mb-3" id="search_area">
 									<input type="text" class="form-control" placeholder="제목 검색"
 										aria-label="reply" aria-describedby="basic-addon2" id="search">
@@ -149,6 +148,9 @@ div {
 				</table>
 			</div>
 		</div>
+	</div>
+	<div id="footer">
+		<%@include file="../footer1.jsp"%>
 	</div>
 </body>
 <script>
