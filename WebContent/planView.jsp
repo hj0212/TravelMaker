@@ -11,14 +11,19 @@
 
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
-<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js"
+	type="text/javascript"></script>
+<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
+	rel="stylesheet" type="text/css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>       
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script src="source/js/jquery.roadmap.min.js"></script>
-   <link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
+<link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
+<script src="source/js/createplan.js"></script>
+<link rel="stylesheet" href="source/css/createplan.css"/>
 <%@ page session="true"%>
 <meta charset="utf-8">
 
@@ -169,6 +174,49 @@ $(document).ready(function(){
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+			role="dialog" aria-labelledby="exampleModalCenterTitle"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<form method="post" id="plan-form">
+						<div class="modal-header">
+							<div class="h1" style="margin: 0 auto;">나의 여행계획 세우기</div>
+						</div>
+						<div class="modal-body">
+							<div class="mobile-title">
+								<input type="text" id="plan_title" name="plan_title"
+									class="from-contol" maxlength=400 placeholder="여행 제목을 입력해주세요">
+							</div>
+							<div id="picker-div">
+								<div id="picker_wrap">
+									<div class="picker-pic">
+										여행 시작 날짜<input id="datepicker" name="plan_startdate" readonly
+											width="170" style="background-color: white;" />
+									</div>
+									<div class="picker-pic" id="datepicker_endarea">
+										여행 종료 날짜<input id="datepicker-end" name="plan_enddate"
+											readonly width="170" style="background-color: white;" />
+									</div>
+								</div>
+							</div>
+							<div id="start-plan">
+								<p id="dayday" style="font-size: 13px; font-style: italic;">여행
+									일수</p>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button id="start-btn" type="button" class="btn btn-primary">여행
+								계획 시작하기</button>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
 	<div class="container text-center">
 		<div class="input-group input-group-lg" id="plantitle">
 			<div class="input-group-prepend">
@@ -181,7 +229,9 @@ $(document).ready(function(){
 
 		<div id="planinfoarea">
 			<p>작성자 | ${plan.plan_writerN }</p>
-			<p>여행 기간 | ${plan.plan_startdate } ~ ${plan.plan_enddate }</p>
+			<c:if test="${plan.plan_writer eq sessionScope.user.seq}">
+				<p>여행 기간 | ${plan.plan_startdate } ~ ${plan.plan_enddate }</p>
+			</c:if>
 			<p>조회수 | ${plan.plan_viewcount }
 			<p>
 			<div id="planbtnarea">
@@ -205,16 +255,16 @@ $(document).ready(function(){
 		<div class="schedule">
 			<ul class="nav nav-tabs" role="tablist">
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
-					<li class="nav-item active"><a class='nav-link'
+					<li class="nav-item"><a class='nav-link'
 						href='#Day${day}' role='tab' data-toggle='tab'>Day${day}</a></li>
 				</c:forEach>
 			</ul>
-
+			
 			<div class="tab-content">
-				<c:set var="isFirst" value="true" />
+			<c:set var="isFirst" value="true" />
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 					<input type="hidden" id="plan_seq" value="${plan_seq }">
-					<div role="tabpanel" class="tab-pane fade show active"
+					<div role="tabpanel" class="tab-pane fade show"
 						id="Day${day}">
 						<table class="table table-hover" id="schedule-table">
 							<c:if test="${isFirst }">
@@ -265,8 +315,7 @@ $(document).ready(function(){
 																	</c:otherwise>
 																</c:choose>
 															</c:if>
-															<c:if
-																test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
+															<c:if test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
 																<td name="money"></td>
 																<c:set var="loop_flag" value="true" />
 															</c:if>
@@ -285,6 +334,7 @@ $(document).ready(function(){
 							</c:if>
 						</table>
 					</div>
+					<c:set var="isFirst" value="true" />
 				</c:forEach>
 			</div>
 		</div>
@@ -296,8 +346,8 @@ $(document).ready(function(){
 			<button type="button" class="btn btn-outline-primary" id="badbtn">
 				<i class="far fa-frown"></i>${bad}
 			</button>
-			<button class="btn btn-outline-success" id="getmyplanbtn">내 일정으로 가져가기</button>
-
+			<button type="button" class="btn btn-outline-success"
+					data-toggle="modal" data-target="#exampleModalCenter" id="getmyplanbtn">내 일정으로 가져가기</button>
 			<button class="btn btn-default" style="float: right;">신고</button>
 		</div>
 
@@ -353,6 +403,8 @@ $(document).ready(function(){
 		</div>
 	</div>
 	<script>
+	$(".schedule ul li:first").addClass('active');
+	$("div[id='Day1']").addClass('active');
    /*댓글관련 버튼들*/
    /*댓글 작성*/
    $('#commentbtn').click(function() {
@@ -389,9 +441,6 @@ $(document).ready(function(){
 	
 	$("#listbtn").click(function() {	
 			location.href = "planboard.plan?currentPage=${currentPage}";
-	
-		
-		
 	});
 	plan_seq = $("input[id='plan_seq']").val();
 	$.ajax({
@@ -411,11 +460,10 @@ $(document).ready(function(){
 
 		// 받아온 jsonArry 정보를 이용해 배열에 넣음 
 		var makeMarkerArray = function () {
-		    /* if (obj.jLocationList[0] == null && obj.jTimeLine[0] == null) {
-		        alert("정보나 넣고 오시지.. 서울시청으로 가드림^^");
+		    if (obj.jLocationList[0] == null && obj.jTimeLine[0] == null) {
+		    	$(".wrapper").hide();
 		        return;
-		    } */
-			
+		    }
 		    
 		    var jsonArray = obj.jLocationList;
 		    timelineArray = obj.jTimeLine;
@@ -429,7 +477,7 @@ $(document).ready(function(){
 		        markerlocation.push(markerObj);
 		    }
 
-		    for (var i = 0; i < timelineArray.length; i++) {
+		    for (var i = timelineArray.length-1; i >= 0; i--) {
 		        let timelineObj = {
 		            date: timelineArray[i].day_seq+"일차",
 		            content: timelineArray[i].location_name,
