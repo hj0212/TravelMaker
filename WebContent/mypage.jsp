@@ -112,71 +112,71 @@ ul {li { display:inline;
 </head>
 
 <body>
-	<div id="wrapper">
-		<c:choose>
-			<c:when test="${sessionScope.loginId != null}">
-				<%@include file="include/mainNavi_login.jsp"%>
-			</c:when>
-			<c:otherwise>
-				<%@include file="include/mainNavi.jsp"%>
-			</c:otherwise>
-		</c:choose>
-
-		<!--profile부분-->
-		<div class="py-5 text-center w-100 h-75 text-lowercase text-primary">
-			<div class="container w-100 h-100 py-0">
-				<div class="row">
-					<div class="col-sm-8 col-md-3 col-lg-3">
-						<div class="card w-100 h-100" id="profile-container">
-							<img class="card-img-top float-left rounded-circle mt-5"
-								src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
-							<div class="card-body h-100 py-4 my-5">
-								<h4 class="card-title my-4">${nickname}</h4>
-								<c:choose>
-									<c:when test="${email eq null}">
-										<h4 class="my-4">이메일을 입력해주세요</h4>
-									</c:when>
-									<c:otherwise>
-										<h4 class="my-4">${email}</h4>
-									</c:otherwise>
-								</c:choose>
-								<a href="#" id="editlink">정보수정</a>
-								<ul id="box-container">
-									<c:choose>
-										<c:when test="${sessionScope.part eq 'home'}">
-											<li class="clearfix"><a href="#" id="editInfo">회원정보</a></li>
-											<li class="clearfix"><a href="#" id="editPw">비밀번호</a></li>
-											<li class="clearfix"><a href="#" id="updateEmail">이메일</a></li>
-										</c:when>
-										<c:otherwise>
-											<li class="clearfix"><a href="#" id="updateEmail">이메일</a></li>
-										</c:otherwise>
-									</c:choose>
-
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div
-						class="col-sm-12 col-md-6 col-lg-9 col-12 col-xl-9 w-100 h-100 align-items-center mt-5">
-						<div id="tb" class="py-5 my-5">
-							<table class="table col-mt-5 col-md-5 col-sm-12 text-center">
-								<thead>
-									<tr>
-										<th scope="col" class="text-center">게시글</th>
-										<th scope="col" class="text-center">스크랩</th>
-										<th scope="col" class="text-center">좋아요</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<div class="basicBox">
-												num1
-												<svg width="130" height="65" viewBox="0 0 130 65"
-													xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="0" fill="none" width="130"
-														height="65"></rect>
+<div id="wrapper">
+<c:choose>
+		<c:when test="${sessionScope.loginId != null}">
+			<%@include file="include/mainNavi_login.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="include/mainNavi.jsp"%>
+		</c:otherwise>
+	</c:choose>
+	
+	<!--profile부분-->
+  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary">
+    <div class="container w-100 h-100 py-0">
+      <div class="row">
+        <div class="col-sm-8 col-md-3 col-lg-3">
+          <div class="card w-100 h-100" id="profile-container">
+            <!-- <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap"> -->
+            
+            <input type="file" id="change-profile-img"><br><button type="submit">업로드</button>
+            <img id="profile-img" src="" alt="Charlie-Chaplin-PNG-Image-17681.png">
+             
+            
+            <div class="card-body h-100 py-4 my-5">
+              <h4 class="card-title my-4">${nickname}</h4>
+              <c:choose>
+              <c:when test="${email eq null}">
+              <h4 class="my-4">이메일을 입력해주세요</h4>
+              </c:when>
+              <c:otherwise>
+               <h4 class="my-4">${email}</h4>
+              </c:otherwise>
+              </c:choose>
+         <a href="#"  id="editlink" >정보수정</a>
+  		<ul id="box-container">
+  		<c:choose>
+  		<c:when test="${sessionScope.part eq 'home'}">
+  		<li class="clearfix"><a  href="#" id="editInfo">회원정보</a></li>
+  		<li class="clearfix"><a  href="#" id="editPw">비밀번호</a></li>
+  		<li class="clearfix"><a  href="#" id="updateEmail">이메일</a></li>
+  		</c:when>
+  		<c:otherwise>
+  		<li class="clearfix"><a href="#" id="updateEmail">이메일</a></li>
+  		</c:otherwise>
+  		</c:choose>
+  		
+  		</ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-9 col-12 col-xl-9 w-100 h-100 align-items-center mt-5">
+          <div id="tb" class="py-5 my-5">
+            <table class="table col-mt-5 col-md-5 col-sm-12 text-center">
+              <thead>
+                <tr>
+                  <th scope="col" class="text-center">게시글</th>
+                  <th scope="col" class="text-center">스크랩</th>
+                  <th scope="col" class="text-center">좋아요</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="basicBox"> num1
+                      <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" fill="none" width="130" height="65"></rect>
                       </svg>
 											</div>
 										</td>
