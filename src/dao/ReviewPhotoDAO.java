@@ -33,7 +33,7 @@ public class ReviewPhotoDAO {
 		ResultSet rs = pstmt.executeQuery();
 		
 		if(rs.next()) {
-			name = rs.getString(1);
+			name = "/files/"+rs.getString(1);
 		}else {
 			name = "Charlie-Chaplin-PNG-Image-17681.png";
 		}

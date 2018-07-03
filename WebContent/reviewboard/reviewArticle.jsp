@@ -115,6 +115,7 @@ $(document).ready(function(){
 		});
 			
 	});
+	
 	$("#badbtn").click(function(){	
 	var article =$("#review_seq").text();	
 
@@ -159,17 +160,17 @@ $(document).ready(function(){
 	</c:choose>
    <div class="container">
       <div class="row title  text-center">
-         <div class="col-sm-12">${review_title}</div>
+         <div class="col-sm-12">${dto.review_title}</div>
       </div>
       <div class="row writer">
-         <div class="col-sm-1 text-left" id="review_seq">${review_seq}</div>
-         <div class="col-sm-5 text-left">${review_writerN}</div>
-         <div class="col-sm-3 text-right">${review_writedate}</div>
-         <div class="col-sm-2 text-right">${review_viewcount}</div>
+         <div class="col-sm-1 text-left" id="review_seq">${dto.review_seq}</div>
+         <div class="col-sm-5 text-left">${dto.review_writerN}</div>
+         <div class="col-sm-3 text-right">${dto.review_writedate}</div>
+         <div class="col-sm-2 text-right">${dto.review_viewcount}</div>
           <c:choose>
-          <c:when test="${sessionScope.user.seq eq review_writer}">
+          <c:when test="${sessionScope.user.seq eq dto.review_writer}">
           <div class="col-sm-1 text-right">
-          <a href="deleteReviewArticle.bo?review_seq=${review_seq}"><i class="far fa-times-circle"></i></a>
+          <a href="deleteReviewArticle.bo?review_seq=${dto.review_seq}"><i class="far fa-times-circle"></i></a>
           </div>
           </c:when>
           <c:otherwise>
@@ -178,7 +179,7 @@ $(document).ready(function(){
           </c:choose>
       </div>
       <div class="row contents">
-         <div class="col-sm-12">${review_contents}</div>
+         <div class="col-sm-12">${dto.review_contents}</div>
       </div>
       <div class="row function">
          <div class="col-sm-4 offset-sm-4 text-center vote">
@@ -227,25 +228,7 @@ $(document).ready(function(){
             </thead>
             <tbody>
 
-               <c:forEach var="comment" items="${commentResult}">
-                  <tr>
-                     <th scope="row"
-                        style="width: 15%; max-width: 15%; max-height: 51px;"
-                        class='writer'>${comment.comment_writer}</th>
-                     <td style="width: 70%">${comment.comment_text}</td>
-                     <td style="width: 15%; font-size: 10px;">${comment.comment_time}
-                  
-                             <c:if test="${comment.comment_writer_seq eq sessionScope.user.seq}">
-                        <button type="button" class="close" aria-label="Close" id="deleteComment" >
-                  <a href="deleteReviewComment.bo?comment_seq=${comment.comment_seq}&review_seq=${comment.review_seq}">
-                           <span aria-hidden="true">&times;</span>
-                        </a>
-                        </button>
-                        </c:if>
-                     
-                     </td>
-                  </tr>
-               </c:forEach>
+
             </tbody>
          </table>
       </div>

@@ -177,32 +177,28 @@ public class FrontController extends HttpServlet {
 	            dst="reviewboard/share_review.jsp?currentPage"+currentPage;
 	            
 	         }else if(command.equals("/reviewArticle.bo")) {
-//	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-//	             rdao.getArticleViewCount(review_seq);
-//	             int listcurrentPage =Integer.parseInt(request.getParameter("listcurrentPage"));
-//	             
-//	             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
-//	             request.setAttribute("review_seq", review_seq);
-//	             request.setAttribute("review_title", result1.getReview_title());
-//	             request.setAttribute("review_contents", result1.getReview_contents());
-//	             request.setAttribute("review_writedate", result1.getReview_writedate());
-//	             request.setAttribute("review_writer", result1.getReview_writer());
-//	             request.setAttribute("review_writerN", result1.getReview_writerN());
-//	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
-//
-//	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-//		            int bad = gbdao.reviewBadSelectData(review_seq);
-//		            int good =gbdao.reviewGoodSelectData(review_seq);
-//		            request.setAttribute("good", good);
-//		            request.setAttribute("bad", bad);	            
-//        
-//	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
-//	             request.setAttribute("commentResult", result2);
-//	             request.setAttribute("currentPage", currentPage);
-//	             
-//	             isForward = true;            
-//	             dst = "reviewArticle.jsp?currentPage"+currentPage;
-//	             dst="reviewArticle.jsp";
+	        	 try {
+		             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+		             System.out.println(review_seq);
+		             rdao.getArticleViewCount(review_seq);
+		             
+		             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
+		             request.setAttribute("dto", result1);
+	
+		             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+			         int bad = gbdao.reviewBadSelectData(review_seq);
+			         int good =gbdao.reviewGoodSelectData(review_seq);
+			         request.setAttribute("good", good);
+			         request.setAttribute("bad", bad);	            
+	        
+		             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
+		             request.setAttribute("commentResult", result2);
+		             
+		             isForward = true;            
+		             dst="reviewboard/reviewArticle.jsp";
+	        	 }catch(NumberFormatException e) {
+	        		 dst = "numberError.bo";
+	        	 }
 	          }else if(command.equals("/addReviewComment.bo")) {
 	             String comment_text = request.getParameter("comment_text");
 	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");

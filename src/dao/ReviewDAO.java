@@ -112,8 +112,6 @@ public class ReviewDAO {
 			tmp.setReview_writerN(mdao.getUserNickname(rs.getInt(4)));
 			tmp.setReview_writedate(rs.getString(5));
 			tmp.setReview_viewcount(rs.getInt(6));
-			// 썸네일 얻기
-			tmp.setReview_thumbnail(rdao.getthumbnail(tmp.getReview_seq()));
 			reviewResult.add(tmp);
 		}
 
@@ -223,14 +221,14 @@ public class ReviewDAO {
 
 	public ReviewDTO getReviewArticle(int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select review_title, review_contents, review_writer, review_writedate, review_viewcount from reviewboard where review_seq = ?";
+		String sql = "select review_title, review_contents, review_writer, review_writedate, review_viewcount from reviewboard_c where review_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
 		ResultSet rs = pstmt.executeQuery();
 		ReviewDTO rdto = new ReviewDTO();
 		if(rs.next()) {
 			rdto.setReview_title(rs.getString("review_title"));
-			rdto.setReview_contents(rs.getString("review_contents"));
+			rdto.setReview_contents(clobToString(rs.getClob("review_contents")));
 			rdto.setReview_writer(rs.getInt("review_writer"));
 			rdto.setReview_writerN(mdao.getUserNickname(rs.getInt("review_writer")));
 			rdto.setReview_writedate(rs.getString("review_writedate"));
@@ -238,7 +236,6 @@ public class ReviewDAO {
 		}
 
 		return rdto;
-
 	}
 
 	public int insertReviewComment(String comment_text, int user, int review_seq) throws Exception{
