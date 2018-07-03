@@ -221,7 +221,7 @@ public class PlanController extends HttpServlet {
 
 				String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);
-
+					
 				isForward = true;
 				dst="share_plan.jsp";
 			}else if(command.equals("/planArticle.plan")) {

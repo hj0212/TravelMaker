@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -102,31 +102,81 @@ margin:0px auto;
 	width: 300px;
 	padding:0;
 }
+/*input file*/
+
+#profileImgForm input {             /*input tag 공통 스타일*/
+  width: 200px;
+  height: 30px;
+  border-radius: 3px;
+  font-weight: 300;
+  border-color: transparent;
+  font-size: 10px;
+  background: #777777;
+  color: #fff;
+ cursor: pointer;
+}
+
+#img_file {  
+  opacity: 0.1;       /*input type="file" tag 투명하게 처리*/
+  position: relative;
+}
+#img_button{
+	cursor: pointer;
+}
+
  </style>
+ <script>
+ $(document).ready(function(){
+	/*  $("#profile_img").attr('src',${file_name}); */
+	 $("#img_button").click(function(){
+		 var img_file = $("#img_file").trigger("click");	 
+		 if(img_file){ 
+			 
+		 var selected = $("#profile").text("완료");
+	 
+		 if(selected ){
+			 $("#profile").click(function(){
+			 $("#profileImgForm").submit();
+		 })
+		 }else{
+			 alert("파일을 선택해주세요");
+		 }
+		 }else{
+		 $("#profile").text(""); 
+		 }
+	 });	 
+ });
+ 
+ </script>
 </head>
+
 
 <body>
 <div id="wrapper">
-<c:choose>
+<%-- <c:choose>
 		<c:when test="${sessionScope.loginId != null}">
 			<%@include file="include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
-	</c:choose>
+	</c:choose> --%>
 	
 	<!--profile부분-->
   <div class="py-5 text-center w-100 h-75 text-lowercase text-primary">
     <div class="container w-100 h-100 py-0">
       <div class="row">
-        <div class="col-sm-8 col-md-3 col-lg-3">
+        <!-- <div class="col-sm-8 col-md-3 col-lg-3"> -->
+        <div class= "w-30 d-inline">
           <div class="card w-100 h-100" id="profile-container">
             <!-- <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap"> -->
             
-            <input type="file" id="change-profile-img"><br><button type="submit">업로드</button>
-            <img id="profile-img" src="" alt="Charlie-Chaplin-PNG-Image-17681.png">
-             
+            <form action="profileImg.do" method="post" enctype="multipart/form-data" id="profileImgForm">
+            <button id="img_button" type="button" class="circle" title="여기를 누르시면 이미지를 변경하실수있습니다."><img for="img_file" id="profile_img" src="/Git_Practice_Message/file/${file_name }" alt="Charlie-Chaplin-PNG-Image-17681.png"></button>
+            <div class="w-100 h-30 align-items-center" style="box-sizing: border-box;">
+            <input type="file" class="w-30" id="img_file" name="file" accept=".gif, .jpg, .png, .jpeg" value="이미지변경" hidden="true">
+            <button class="btn btn-primary w-100" type="button" id="profile">프로필이미지</button></div>
+            </form>
             
             <div class="card-body h-100 py-4 my-5">
               <h4 class="card-title my-4">${nickname}</h4>
@@ -155,7 +205,8 @@ margin:0px auto;
             </div>
           </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-9 col-12 col-xl-9 w-100 h-100 align-items-center mt-5">
+        <!-- <div class="col-sm-12 col-md-6 col-lg-9 col-12 col-xl-9 w-100 h-100 align-items-center mt-5"> -->
+        <div class="w-70 d-inline mx-5">
           <div id="tb" class="py-5 my-5">
             <table class="table col-mt-5 col-md-5 col-sm-12 text-center">
               <thead>
@@ -457,6 +508,56 @@ $("#updateEmail").click(function(){
 $("#editPw").click(function(){
 	window.open("toPwTrueCheck.do","_blank","width=500, height=300, scrollbars=no");
 })
+
+
+/*프로필이미지*/
+ 
+/*  $("#profile_img").click(function(){ 
+	 var file = $("#file").val();
+        $("#profile_img").attr("src",file); 
+ });
+		
+		   function validateFileType(){
+		        var fileName = document.getElementById("file").value;
+		        var idxDot = fileName.lastIndexOf(".") + 1;
+		        var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+		        if (extFile=="jpg" || extFile=="jpeg" || extFile=="png"){
+		            //TO DO
+		        }else{
+		            alert("프로필 사진은 이미지만 입력 가능합니다");
+		        }   
+		    }	 */
+		    
+		    
+
+		      $(function() {
+		            $("#img_file").on('change', function(){
+		            	var fileName =$("#img_file").val();
+				        var idxDot = fileName.lastIndexOf(".") + 1;
+				        var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+				        if (extFile=="jpg" || extFile=="jpeg" || extFile=="png"){
+				            //TO DO
+		            	readURL(this);
+				        }else{
+				            alert("프로필 사진은 이미지만 입력 가능합니다");
+				        } 
+		            	
+		            });
+		        });
+
+		        function readURL(input) {
+		            if (input.files && input.files[0]) {
+		            var reader = new FileReader();
+
+		            
+		            reader.onload = function (e) {
+		                    $('#profile_img').attr('src', e.target.result);
+		                }
+
+		              reader.readAsDataURL(input.files[0]);
+		            }
+		        }
+
 </script>
 
 

@@ -449,5 +449,72 @@ public class MemberDAO {
 		return result;
 	}
 
+	public int updateProfileImg (int user_seq, String file_name) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "update users set photo_system_file_name =? where seq=?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setString(1, file_name);
+		pstat.setInt(2, user_seq);
+		int result = pstat.executeUpdate();
+		con.commit();
+		pstat.close();
+		con.close();
+		return result;
+	}
+	
+	public MemberDTO newMemberInfo (int seq , String part) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from users where part =?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setString(1, part);
+		ResultSet rs = pstat.executeQuery();
+		MemberDTO dto = new MemberDTO();
+		if(rs.next()) {
+			
+			if(part.equals("home")) {
+				String sql1 = "select userid, nickname, email, part, photo_system_file_name from users where seq=?";
+				pstat = con.prepareStatement(sql1);
+				pstat.setInt(1, seq);		
+				rs = pstat.executeQuery();
+				if(rs.next()) {
+					dto = new MemberDTO();
+					dto.setUserid(rs.getString("userid"));
+					dto.setNickname(rs.getString("nickname"));
+					dto.setEmail(rs.getString("email"));
+					dto.setPart(rs.getString("part"));
+					dto.setPhoto_system_file_name(rs.getString("photo_system_file_name"));
+				}
+			}else if (part.equals("naver")) {
+				String sql1 = "select naver_id, naver_nickname, naver_email, photo_system_file_name from users where seq =?";
+				pstat = con.prepareStatement(sql1);
+				pstat.setInt(1, seq);
+				rs = pstat.executeQuery();
+				if(rs.next()) {
+					dto.setNaver_id(rs.getString("naver_id"));
+					dto.setNaver_nickname(rs.getString("naver_nickname"));
+					dto.setNaver_email(rs.getString("naver_email"));
+					dto.setPhoto_system_file_name(rs.getString("photo_system_file_name"));
+				}
+			}
+			else if (part.equals("kakao")) {
+				String sql1 = "select kakao_nickname, kakao_email, photo_system_file_name form users where seq = ?";
+				pstat = con.prepareStatement(sql1);
+				pstat.setInt(1, seq);
+				rs = pstat.executeQuery();
+				if(rs.next()) {
+					dto.setKakao_id(rs.getString("kakao_id"));
+					dto.setKakao_nickname(rs.getString("kakao_nickname"));
+					dto.setKakao_email(rs.getString("kakao_email"));
+					dto.setPhoto_system_file_name(rs.getString("photo_system_file_name"));
+				}
+			}
+		}
+		pstat.close();
+		rs.close();
+		con.close();
+		return dto;	
+		
+	}
+	
 }
 
