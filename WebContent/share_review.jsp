@@ -99,14 +99,11 @@ div {
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">${pageNavi}</ul>
 			</nav>
-		</div>
-
-
-		<h1 class="divLine">푸터올 곳</h1>
-		<hr />
-		<div class="row">
-			<div class="col-md-12" id="foot"></div>
-		</div>
+		</div>		
+		
+	</div>
+	<div id="footer">
+		<%@include file="footer1.jsp"%>
 	</div>
 	<script>
 		$("#searchbtn").click(function() {

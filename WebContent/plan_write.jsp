@@ -73,7 +73,7 @@
 	box-sizing: border-box;
 	width: 10px;
 	margin-left: 24px;
-	float: left;
+
 	text-align: center;
 	vertical-align: middle;
 }
@@ -388,6 +388,7 @@
 				</div>
 			</form>
 		</div>
+		
 		<!-- <div style="width: 40%; float: right" id="plan-div">
 			<div style="text-align: right">
 				<button class="btn btn-inline-primary btn-lg" id="endbtn">여행계획
@@ -396,6 +397,7 @@
 			</div>
 		</div> -->
 	</div>
+	
 	
 	<!-- 장소 찾기 모달 창 -->
     <div class="modal text-center" id="searchModal">
@@ -429,6 +431,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="footer">
+    <%@include file="footer1.jsp"%>
     </div>
 <script>
 $(document).ready(function() {
