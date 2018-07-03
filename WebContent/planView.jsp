@@ -400,7 +400,7 @@ $(document).ready(function(){
 		success:function(data){		
 			var obj = JSON.parse(data);
 			
-			
+			var markerlocation = [];
 		   timeline = [];
 
 		// 다중 마커에 정보창 띄우기
@@ -544,14 +544,6 @@ $(document).ready(function(){
 		// 마커에 입력할 배열과 타임라인 정보를 입력할 배열
 		
 	}) */
-	
-	$("#schedule-table").on('click','.clickable-row',function(event) {
-		$(this).addClass('select').siblings().removeClass('active');
-		$(".select").on("click", function(e) {
-		    e.preventDefault();
-		    map.panTo(new naver.maps.LatLng(markerlocation[i].location_x, markerlocation[i].location_y));
-		});
-	});
 	
  
    </script>
