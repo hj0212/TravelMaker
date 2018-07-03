@@ -16,6 +16,30 @@ import dto.ScheduleDTO;
 public class PlanDAO {
 
 	private MemberDAO mdao = new MemberDAO();
+	public PlanDTO getPlandata(int plan_seq) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select plan_seq, plan_writer,to_char(plan_startdate, 'YYYY/MM/DD') plan_startdate,to_char(plan_enddate, 'YYYY/MM/DD') plan_enddate,plan_title,plan_viewcount,plan_reportcount  from plan where plan_seq = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, plan_seq);
+		ResultSet rs = pstmt.executeQuery();
+		PlanDTO dto = null;
+		if(rs.next()) {
+			dto = new PlanDTO();
+			dto.setPlan_seq(plan_seq);
+			dto.setPlan_writer(rs.getInt(2));
+			dto.setPlan_writerN(mdao.getUserNickname(dto.getPlan_writer()));
+			dto.setPlan_startdate(rs.getString(3));
+			dto.setPlan_enddate(rs.getString(4));
+			dto.setPlan_title(rs.getString(5));
+			dto.setPlan_viewcount(rs.getInt(6));
+			dto.setPlan_reportcount(rs.getInt(7));
+		}
+
+		rs.close();
+		pstmt.close();
+		con.close();
+		return dto;
+	}
 	public String getPlantitle(int plan_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select plan_title from plan where plan_seq = ?";
@@ -778,6 +802,39 @@ public class PlanDAO {
 		pstat.setInt(2, writer);
 		int result = pstat.executeUpdate();
 		con.commit();
+		pstat.close();
+		con.close();
+		return result;
+	}
+	
+	public int removePlan(int plan_seq) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "delete plan where plan_seq=?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, plan_seq);
+		int result = pstat.executeUpdate();
+		con.commit();
+		pstat.close();
+		con.close();
+		return result;
+	}
+	
+	public List<LocationDTO> selectLocation(int plan_seq) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from location l, (select location_id from schedule where plan_seq = ? and location_id != -1) s where l.location_id = s.location_id";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, plan_seq);
+		ResultSet rs = pstat.executeQuery();
+		List<LocationDTO> result = new ArrayList<>();
+		while(rs.next()) {
+			LocationDTO dto = new LocationDTO();
+			dto.setLocation_id(rs.getInt(1));
+			dto.setLocation_name(rs.getString(2));
+			dto.setLocation_x(rs.getInt(3));
+			dto.setLocation_y(rs.getInt(4));
+			result.add(dto);
+		}
+		rs.close();
 		pstat.close();
 		con.close();
 		return result;

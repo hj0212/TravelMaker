@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.FreeCommentDAO;
 import dao.FreeboardDAO;
+import dao.GoodBadDAO;
 import dao.MemberDAO;
 import dao.ReviewDAO;
 import dto.FreeCommentDTO;
@@ -39,7 +40,7 @@ public class FrontController extends HttpServlet {
 			FreeboardDAO fbdao = new FreeboardDAO();
 			ReviewDAO rdao = new ReviewDAO();
 			FreeCommentDAO fcdao = new FreeCommentDAO();
-		
+			GoodBadDAO gbdao = new GoodBadDAO();
 
 			boolean isForward = true;
 			String dst = null;
@@ -184,9 +185,13 @@ public class FrontController extends HttpServlet {
 	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
 
 	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-	             request.setAttribute("user", dto.getSeq());
+	            int bad = gbdao.reviewBadSelectData(review_seq);
+	            int good =gbdao.reviewGoodSelectData(review_seq);
+	            request.setAttribute("good", good);
+	            request.setAttribute("bad", bad);
+	            
 	             
-	             System.out.println( result1.getReview_writer()+"*"+ dto.getSeq());
+	            
         
 	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
 	             request.setAttribute("commentResult", result2);
@@ -203,7 +208,7 @@ public class FrontController extends HttpServlet {
 	             request.setAttribute("result", result);
 	             request.setAttribute("review_seq", review_seq);
 
-	             System.out.println("댓글 내용:"+comment_text+"유저 시퀀스: "+dto.getSeq()+"리뷰 시퀀스 :"+ review_seq);
+	           
 	             
 	  
 	             isForward = true;

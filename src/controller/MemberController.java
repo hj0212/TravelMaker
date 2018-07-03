@@ -200,7 +200,7 @@ public class MemberController extends HttpServlet {
 				String email=request.getParameter("email");
 				SendMail smail = new SendMail();
 				String pw =smail.maketmpPw();
-				System.out.println(pw);
+			
 				int changeResult = mdao.changePw(id, pw);
 				if(changeResult==1) {
 					smail.send(id, email, pw);			
