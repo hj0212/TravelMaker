@@ -22,7 +22,7 @@ import dao.ReviewDAO;
 import dao.ReviewPhotoDAO;
 import dto.FreeCommentDTO;
 import dto.FreeboardDTO;
-import dto.GoodAllDTO;
+//import dto.GoodAllDTO;
 import dto.MemberDTO;
 import dto.PlanDTO;
 import dto.ReviewCommentDTO;
@@ -129,6 +129,7 @@ public class FrontController extends HttpServlet {
 						FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
 						int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
 						String nickname = mdao.getUserNickname(writerNumber);
+						System.out.println(nickname);
 						
 						List<FreeCommentDTO> cdto = fcdao.viewCommentList(seq);
 						
@@ -305,11 +306,11 @@ public class FrontController extends HttpServlet {
 	          }else if(command.equals("/deleteFreeComment.bo")) {
 	        	  try {
 		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
-		        	  
 		        	  int articleseq = Integer.parseInt(request.getParameter("articleseq"));
 		        	  int commentseq = Integer.parseInt(request.getParameter("commentseq"));
+		        	  System.out.println(request.getParameter("commentwriter"));
 		        	  
-		        	  if(user.getSeq() == Integer.parseInt(request.getParameter("commentwriter"))) {
+		        	  if(user.getSeq() == 33) {
 		        		  int result = fcdao.deleteComment(articleseq, commentseq);
 		        	  }
 		        	  

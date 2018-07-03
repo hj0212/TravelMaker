@@ -166,11 +166,6 @@ div {
 		<%@include file="footer1.jsp"%>
 	</div>
 
-	<c:if test="${main==null}">
-		<script>
-			location.href = "main.bo";
-		</script>
-	</c:if>
 	<script src='source/lib/slick/slick.js'></script>
 	<script>
 		$('.data').slick({
@@ -186,7 +181,7 @@ div {
 	</script>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/multiChat.jsp"%>
+
 		</c:when>
 	</c:choose>
 </body>
