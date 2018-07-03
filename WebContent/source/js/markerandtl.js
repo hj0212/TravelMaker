@@ -138,5 +138,5 @@ var makeMarkerArray = function () {
 
 	for (var i = 0, ii = markers.length; i < ii; i++) {
 	    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
-	}
+	}}
 })
