@@ -30,6 +30,7 @@
     <error-code>403</error-code>
     <location>/main.jsp</location>
   </error-page>
+  
   <jsp-config>
     <taglib>
       <taglib-uri>/WEB-INF/tlds/writerToString.tld</taglib-uri>
@@ -38,4 +39,5 @@
         </taglib-location>
     </taglib>
   </jsp-config>
+
 </web-app>
