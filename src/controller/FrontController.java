@@ -162,7 +162,7 @@ public class FrontController extends HttpServlet {
 	            
 	            String searchTerm = request.getParameter("search");
 	            List<ReviewDTO> reviewList = new ArrayList<>();
-	            reviewList = rdao.getSomeReview(currentPage*12-11, currentPage*12, searchTerm);
+	            reviewList = rdao.getSomeReview(currentPage*10-9, currentPage*10, searchTerm);
 	            request.setAttribute("reviewList", reviewList);
 	         
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);

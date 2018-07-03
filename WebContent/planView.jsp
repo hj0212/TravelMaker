@@ -410,12 +410,10 @@ $(document).ready(function(){
 
 		// 받아온 jsonArry 정보를 이용해 배열에 넣음 
 		var makeMarkerArray = function () {
-		    if (obj.jLocationList[0] == null && obj.jTimeLine[0] == null) {
+		    /* if (obj.jLocationList[0] == null && obj.jTimeLine[0] == null) {
 		        alert("정보나 넣고 오시지.. 서울시청으로 가드림^^");
-		        markerlocation.push({ location_name: "서울시청", location_x: 309852, location_y: 552189 });
-		        timeline.push({date : '0000-00-00', content : "서울시청"});
 		        return;
-		    }
+		    } */
 			
 		    
 		    var jsonArray = obj.jLocationList;
