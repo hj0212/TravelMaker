@@ -22,7 +22,9 @@ import dao.ReviewDAO;
 import dao.ReviewPhotoDAO;
 import dto.FreeCommentDTO;
 import dto.FreeboardDTO;
+import dto.GoodAllDTO;
 import dto.MemberDTO;
+import dto.PlanDTO;
 import dto.ReviewCommentDTO;
 import dto.ReviewDTO;
 

@@ -463,5 +463,18 @@ public class ReviewDAO {
 		System.out.println(result);
 		return result;
 	}
+	public int reViewCount(int review_seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "UPDATE reviewboard set review_viewcount = review_viewcount + 1 where review_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, review_seq);
+		
+		int result = pstmt.executeUpdate();
+		
+		conn.commit();
+		pstmt.close();
+		conn.close();
+		return result;
+	}
 
 }

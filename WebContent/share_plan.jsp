@@ -52,8 +52,8 @@ div {
 	text-align: center;
 }
 
-.card-body{
-	text-align:justify;
+.card-body {
+	text-align: justify;
 	padding: 0px;
 }
 
@@ -73,7 +73,6 @@ div {
 .card-header span[name="subTitle"] {
 	float: right;
 }
-
 
 .mobile-wrap {
 	text-align: center;
@@ -144,7 +143,8 @@ div {
 }
 
 #picker_wrap {
-	width: 390px; height : 100%;
+	width: 390px;
+	height: 100%;
 	margin: 0 auto;
 	height: 100%;
 }
@@ -212,7 +212,7 @@ div {
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- 검색/ 글쓰기 버튼  -->
 		<div class="row col-md-12">
 			<div class="input-group mt-2 col-md-12" id="search_area">
@@ -224,8 +224,9 @@ div {
 					<button class="btn btn-outline-secondary mx-1" type="button"
 						id="searchbtn" name="searchbtn">검색</button>
 				</div>
-				<button type="button" class="btn btn-primary ml-auto" data-toggle="modal"
-			data-target="#exampleModalCenter">나의 여행 계획 세우기</button>
+				<button type="button" class="btn btn-primary ml-auto"
+					data-toggle="modal" data-target="#exampleModalCenter">나의
+					여행 계획 세우기</button>
 			</div>
 		</div>
 
@@ -237,7 +238,7 @@ div {
 			<c:forEach var="item" items="${planList}">
 				<div class="item col-md-3 mb-3">
 					<div class="card text-center">
-		<a href="planArticle.plan?plan_seq=${item.plan_seq}" style="text-decoration:none;">
+		<a href="planArticle.plan?currentPage=${currentPage}&plan_seq=${item.plan_seq}" style="text-decoration:none;">
 						<div class="card-header planTitle">${item.plan_title}</div>
 		</a>
 						<div class="card-body mt-1 text-center">
@@ -266,14 +267,9 @@ div {
 		</div>
 
 
-		<h1 class="divLine">푸터올 곳</h1>
-		<hr />
-		<div class="row">
-			<div class="col-md-12" id="foot"></div>
-		</div>
-
 	</div>
-		
+	<%@include file="footer1.jsp"%>
+
 	<script>
 		$("#searchbtn").click(function() {
 			location.href = "planboard.plan?search=" + $("#search").val();
@@ -321,7 +317,7 @@ div {
 							function() {
 								todate = $(this).val();
 								$("#datepicker-end").val("");
-								
+
 								if (enddate != "") {
 									var arrtodate = todate.split("/");
 									var arrenddate = enddate.split("/");
@@ -351,23 +347,26 @@ div {
 								if (todate != "") {
 									enddate = $(this).val();
 									console.log(todate + ":" + enddate);
-									
+
 									var arrtodate = todate.split("-");
 									var arrenddate = enddate.split("-");
-									formdt = new Date(arrtodate[0], arrtodate[1],
-											arrtodate[2]);
-									todt = new Date(arrenddate[0], arrenddate[1],
-											arrenddate[2]);
-									console.log((todt.getTime() - formdt.getTime())
+									formdt = new Date(arrtodate[0],
+											arrtodate[1], arrtodate[2]);
+									todt = new Date(arrenddate[0],
+											arrenddate[1], arrenddate[2]);
+									console.log((todt.getTime() - formdt
+											.getTime())
 											/ (24 * 60 * 60 * 1000));
-									datepage = (todt.getTime() - formdt.getTime())
+									datepage = (todt.getTime() - formdt
+											.getTime())
 											/ (24 * 60 * 60 * 1000);
 									if (datepage == 0) {
 										$("#dayday").html("당일 여행");
 									} else if (datepage < 0) {
 										$("#dayday").html("출발일이 더늦을수없습니다");
-									}else {									
-										$("#dayday").html(datepage+1 + "일 여행");
+									} else {
+										$("#dayday")
+												.html(datepage + 1 + "일 여행");
 									}
 								} else {
 									alert("시작 날짜를 먼저 입력하세요.");
@@ -385,7 +384,7 @@ div {
 									$("#plan-form").attr("action",
 											"createPlan.plan").submit();
 								}
-					});
+							});
 
 					$('#myModal').on('shown.bs.modal', function() {
 						$('#myInput').trigger('focus')
@@ -394,4 +393,9 @@ div {
 				});
 	</script>
 </body>
+	<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>
 </html>

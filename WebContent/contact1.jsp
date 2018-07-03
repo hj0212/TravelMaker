@@ -295,11 +295,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 		<!-- ==============================================
 		CONTACT
 		=============================================== -->
-		<section id="contact" class="add-padding border-top-color2">
+		<section id="contact">
 
-		<div class="container text-center">
+		<div class="container text-center" >
 
-			<div class="row" style="margin-top : -150px;">
+			<div class="row" style="margin-top : -120px;">
 
 				<div class="col-sm-6 col-md-5 text-right scrollimation fade-up d1">
 
