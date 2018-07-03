@@ -33,6 +33,7 @@
 }
 .container {
    width: 970px;
+   margin: 120px;
 }
 .title {
    font-size: 35px;
@@ -148,6 +149,14 @@ $(document).ready(function(){
    <%
       request.setCharacterEncoding("UTF-8");
    %>
+   <c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="include/mainNavi_login.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="include/mainNavi.jsp"%>
+		</c:otherwise>
+	</c:choose>
    <div class="container">
       <div class="row title  text-center">
          <div class="col-sm-12">${review_title}</div>
