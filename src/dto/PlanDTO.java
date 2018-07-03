@@ -3,6 +3,7 @@ package dto;
 public class PlanDTO {
 	private int plan_seq;
 	private int plan_writer;
+	private String plan_writerN;
 	private String plan_startdate;
 	private String plan_enddate;
 	private String plan_title;
@@ -10,11 +11,14 @@ public class PlanDTO {
 	private int plan_bad;
 	private int plan_viewcount;
 	private int plan_reportcount;
-	public PlanDTO(int plan_seq, int plan_writer, String plan_startdate, String plan_enddate, String plan_title,
-			int plan_good, int plan_bad, int plan_viewcount, int plan_reportcount) {
+
+	public PlanDTO() {	}
+	public PlanDTO(int plan_seq, int plan_writer, String plan_writerN, String plan_startdate, String plan_enddate,
+			String plan_title, int plan_good, int plan_bad, int plan_viewcount, int plan_reportcount) {
 		super();
 		this.plan_seq = plan_seq;
 		this.plan_writer = plan_writer;
+		this.plan_writerN = plan_writerN;
 		this.plan_startdate = plan_startdate;
 		this.plan_enddate = plan_enddate;
 		this.plan_title = plan_title;
@@ -23,23 +27,32 @@ public class PlanDTO {
 		this.plan_viewcount = plan_viewcount;
 		this.plan_reportcount = plan_reportcount;
 	}
-	
-	public PlanDTO() {
-		
-	}
-	
+
+
+
 	public int getPlan_seq() {
 		return plan_seq;
 	}
 	public void setPlan_seq(int plan_seq) {
 		this.plan_seq = plan_seq;
 	}
+
 	public int getPlan_writer() {
 		return plan_writer;
 	}
+
 	public void setPlan_writer(int plan_writer) {
 		this.plan_writer = plan_writer;
 	}
+
+	public String getPlan_writerN() {
+		return plan_writerN;
+	}
+
+	public void setPlan_writerN(String plan_writerN) {
+		this.plan_writerN = plan_writerN;
+	}
+
 	public String getPlan_startdate() {
 		return plan_startdate;
 	}
@@ -82,6 +95,6 @@ public class PlanDTO {
 	public void setPlan_reportcount(int plan_reportcount) {
 		this.plan_reportcount = plan_reportcount;
 	}
-	
-	
+
+
 }

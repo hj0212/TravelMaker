@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="util" uri="/WEB-INF/tlds/writerToString.tld" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +25,6 @@
 	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 	crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="source/css/codepenNavi.css">
 
 <style>
 .container {
@@ -109,8 +109,9 @@ div {
 									<tr>
 										<td align="center">${item.free_seq}</td>
 										<td class="titlearea"><a
-											href="viewArticle.bo?seq=${item.free_seq}&writer=${item.free_writer}&proc=view&comseq=0">${item.free_title}</a></td>
-										<td align="center"><a href="">${item.free_writer}</a></td>
+											href="viewFreeArticle.bo?currentPage=${currentPage}&seq=${item.free_seq}&writer=${item.free_writer}&proc=view&comseq=0">${item.free_title}</a></td>
+										<c:set var='writer' value="${item.free_writer}" scope="page"/>  
+										<td align="center"><a href="">${util:getUserNickname(writer)}</a></td>
 										<td align="center">${item.free_writedate}</td>
 										<td align="center">${item.free_viewcount}</td>
 									</tr>

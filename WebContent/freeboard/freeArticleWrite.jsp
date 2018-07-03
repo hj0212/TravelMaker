@@ -21,7 +21,17 @@ pageEncoding="UTF-8"%>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
     	<script src="./freeboard/summernote-ko-KR.js"></script>
         <link rel="stylesheet" href="source/css/codepenNavi.css">
-        <link rel="stylesheet" href="./freeboard/freewrite.css">
+        <style>
+			/* 에디터 p태그의 높이 조절 */
+			.note-editable p {
+			     margin: 0 0 0.0001pt; 
+			}
+			
+			.container {
+				margin-top : 140px;
+			    width: 970px;
+			}
+        </style>
     </head>
 
     <body>
@@ -38,12 +48,12 @@ pageEncoding="UTF-8"%>
 			<c:when test="${sessionScope.user.seq eq null}">
 				<script>
 					alert("비회원은 이용 불가능합니다.");
-					location.href = "freeboard.bo"
+					location.href = "toLogin.do";
 				</script>
 			</c:when>
 			<c:otherwise>
 			<div class="container">
-            <form action="writeArticlefree.bo" method="post" onsubmit="return sendContents()" name="writeContents">
+            <form action="writeArticlefree.bo" method="post" name="writeContents">
             	<div class="form-group">
             		<input type="text" class="form-control" name="title" placeholder="제목을 입력해주세요" maxlength="50">
         		</div>
@@ -51,7 +61,7 @@ pageEncoding="UTF-8"%>
             		<textarea name="contents" class="form-control" id="editor"></textarea>
         		</div>
                 <div class="text-right">
-        		    <input type="submit" class="btn btn-primary" value="작성"></button>
+        		    <input type="button" class="btn btn-primary" value="작성" onclick="sendContents()" id="send"></button>
             		<button type="button" class="btn btn-primary" id="cancel">취소</button>
             		<button type="button" class="btn btn-primary" id="list">목록 </button>
         		</div>
