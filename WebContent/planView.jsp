@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script src="source/js/jquery.roadmap.min.js"></script>
    <link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
+<%@ page session="true"%>
 <meta charset="utf-8">
 
 <style type="text/css">

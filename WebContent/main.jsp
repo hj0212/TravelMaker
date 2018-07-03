@@ -22,6 +22,7 @@
 	href="source/lib/slick/slick-theme.css" />
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+	<%@ page session="true"%>
 <style>
 div {
 	box-sizing: border-box;
