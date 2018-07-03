@@ -796,7 +796,7 @@ public class PlanDAO {
 
 	public int deletePlanComment (int comment_seq, int writer) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "delete plan_comment where comment_seq=? and writer=?";
+		String sql = "delete plan_comment where comment_seq=? and comment_writer=?";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, comment_seq);
 		pstat.setInt(2, writer);
@@ -839,4 +839,127 @@ public class PlanDAO {
 		con.close();
 		return result;
 	}
+	
+	public List<PlanDTO> getMyPlans (int seq, int startNum, int endNum, String searchTerm) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql;
+		PreparedStatement pstat = null;
+		
+		if(searchTerm == null || searchTerm.equals("null")) {
+		sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate,'YYYY/MM/DD'), to_char(plan_enddate,'YYYY/MM/DD'), row_number() over(order by plan_seq desc) as num from plan where plan_writer=?) where num between ? and ?";
+		pstat = con.prepareStatement(sql);
+		pstat.setInt(1, seq);
+		pstat.setInt(2, startNum);
+		pstat.setInt(3, endNum);
+		} else {
+			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate,'YYYY/MM/DD'), to_char(plan_enddate,'YYYY/MM/DD'), row_number() over(order by plan_seq desc) as num from plan where plan_writer=? and plan_title like ?) where num between ? and ?";
+			pstat = con.prepareStatement(sql);
+			pstat.setInt(1, seq);
+			pstat.setString(2, "%"+searchTerm+"%");
+			pstat.setInt(3, startNum);
+			pstat.setInt(4, endNum);
+		}
+		ResultSet rs = pstat.executeQuery();
+		List<PlanDTO> result = new ArrayList<>();
+
+		while(rs.next()) {
+			PlanDTO pdto = new PlanDTO();
+			pdto.setPlan_seq(rs.getInt(1));
+			pdto.setPlan_writerN(mdao.getUserNickname(rs.getInt(2)));
+			pdto.setPlan_writer(rs.getInt(2));
+			pdto.setPlan_title(rs.getString(3));
+			pdto.setPlan_good(rs.getInt(4));
+			pdto.setPlan_viewcount(rs.getInt(5));
+			pdto.setPlan_startdate(rs.getString(6));
+			pdto.setPlan_enddate(rs.getString(7));
+			result.add(pdto);
+		}
+		
+		con.close();
+		pstat.close();
+		rs.close();
+		return result;
+	}
+//--------------------------페이지 네비게이터	
+	public String getMyPlanPageNavi(int seq, int currentPage, String searchTerm) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql;
+		PreparedStatement pstat;
+		ResultSet rs;
+		
+		if(searchTerm == null || searchTerm.equals("")) {
+			sql = "select count(*) totalCount from plan where plan_writer=?";
+			pstat = con.prepareStatement(sql);
+			pstat.setInt(1, seq);
+		} else {
+			sql = "select count(*) totalCount from plan where plan_writer=? and plan_title like ?";
+			pstat = con.prepareStatement(sql);
+			pstat.setInt(1, seq);
+			pstat.setString(2, "%"+searchTerm+"%");
+		}
+		
+		rs = pstat.executeQuery();
+		rs.next();
+		
+		int recordTotalCount = rs.getInt("totalCount"); // �쟾泥� 湲�(�젅肄붾뱶)�쓽 媛쒖닔瑜� ���옣�븯�뒗 蹂��닔
+		int recordCountPerPage = 12;  // �븳 �럹�씠吏��뿉 寃뚯떆湲��씠 紐뉕컻 蹂댁씪嫄댁�
+		int naviCountPerPage = 10;  // �븳 �럹�씠吏��뿉�꽌 �꽕鍮꾧쾶�씠�꽣媛� 紐뉕컻�뵫 蹂댁씪嫄댁�
+		int pageTotalCount = 0;  // �쟾泥닿� 紐뉙럹�씠吏�濡� 援ъ꽦�맆寃껋씤吏�
+		
+		if(recordTotalCount % recordCountPerPage > 0 ) { 
+			pageTotalCount = recordTotalCount / recordCountPerPage + 1;
+		} else {
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+		
+		//------------------------------------------------------------------------------------------
+	
+		if(currentPage < 1) {	
+			currentPage = 1;
+		} else if(currentPage > pageTotalCount) {
+			currentPage = pageTotalCount;
+		}
+			
+		int startNavi = (currentPage - 1) / naviCountPerPage * naviCountPerPage + 1;  
+		int endNavi = startNavi + (naviCountPerPage - 1);  
+		
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		
+		boolean needPrev = true;
+		boolean needNext = true;
+
+		if(startNavi == 1) {
+			needPrev = false;
+		} 
+		
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		
+		if(needPrev) {
+			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Previous'><span aria-hidden=\"true\">&laquo;</span><span class=\"sr-only\">Previous</span></a></li>");
+		}
+		
+		for(int i = startNavi; i <= endNavi; i++) {
+			if(currentPage == i) {
+				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
+			} else {
+				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
+			}
+		}
+		
+		if(needNext) {
+			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span><span class='sr-only'>Next</span></a></li>");
+		}
+		
+		con.close();
+		pstat.close();
+		rs.close();
+		
+		return sb.toString();
+	}	
 }

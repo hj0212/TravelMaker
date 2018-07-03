@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.SendMail;
+import dao.GoodBadDAO;
 import dao.MemberDAO;
+import dao.PlanDAO;
 import dao.ReviewDAO;
 import dto.MemberDTO;
+import dto.PlanDTO;
 import dto.ReviewDTO;
 
 
@@ -28,9 +31,10 @@ public class MemberController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
 
+			PlanDAO pdao = new PlanDAO();
 			ReviewDAO rdao = new ReviewDAO();
 			MemberDAO mdao = new MemberDAO();
-
+			GoodBadDAO gbdao = new GoodBadDAO();
 			boolean isForward = true;
 			String dst = null;
 
@@ -164,12 +168,30 @@ public class MemberController extends HttpServlet {
 				}
 
 				String searchTerm = request.getParameter("search");
+				
 				List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq(), currentPage*12-11, currentPage*12, searchTerm);
 				request.setAttribute("MyReviewResult", MyReviewResult);
 
 				String MyReviewPageNavi = rdao.getMyReviewPageNavi(user.getSeq(), currentPage, searchTerm);
 				request.setAttribute("MyReviewPageNavi", MyReviewPageNavi);
 
+				List<PlanDTO> MyPlanResult = pdao.getMyPlans(user.getSeq(), currentPage*12-11, currentPage*12, searchTerm);
+				request.setAttribute("MyPlanResult", MyPlanResult);
+				
+				String MyPlanPageNavi = pdao.getMyPlanPageNavi(user.getSeq(), currentPage, searchTerm);
+				request.setAttribute("MyPlanPageNavi", MyPlanPageNavi);
+				
+				
+				//내가 좋아요누른 페이지 보여주기 
+				int goodId = ((MemberDTO) request.getSession().getAttribute("user")).getSeq();//시퀀스값 가져오고
+				List<PlanDTO> flist = gbdao.favoriteData(goodId);
+				request.setAttribute("flist", flist);
+				
+				
+				
+				
+				
+				
 				isForward = true;
 				dst="mypage.jsp";
 			}else if(command.equals("/logout.do")) {
