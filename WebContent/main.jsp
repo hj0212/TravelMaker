@@ -22,14 +22,13 @@
 	href="source/lib/slick/slick-theme.css" />
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-	<%@ page session="true"%>
 <style>
 div {
 	box-sizing: border-box;
 }
 
 .container {
-	height: 100%;	
+	height: 100%;
 }
 
 #bestPlan {
@@ -109,6 +108,8 @@ div {
 						</div>
 					</c:forEach>
 
+
+
 				</div>
 			</div>
 		</div>
@@ -165,6 +166,11 @@ div {
 		<%@include file="footer1.jsp"%>
 	</div>
 
+	<c:if test="${main==null}">
+		<script>
+			location.href = "main.bo";
+		</script>
+	</c:if>
 	<script src='source/lib/slick/slick.js'></script>
 	<script>
 		$('.data').slick({
@@ -180,7 +186,7 @@ div {
 	</script>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-
+			<%@include file="include/multiChat.jsp"%>
 		</c:when>
 	</c:choose>
 </body>
