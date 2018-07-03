@@ -23,15 +23,6 @@ public class MemberDTO {
 	public int getSeq() {
 		return seq;
 	}
-	
-	public String getPhoto_system_file_name() {
-		return photo_system_file_name;
-	}
-
-	public void setPhoto_system_file_name(String photo_system_file_name) {
-		this.photo_system_file_name = photo_system_file_name;
-	}
-
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
@@ -127,9 +118,5 @@ public class MemberDTO {
 	public void setPhoto_system_file_name(String photo_system_file_name) {
 		this.photo_system_file_name = photo_system_file_name;
 	}
-	
-	
-	
-	
 }
 	
