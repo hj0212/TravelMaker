@@ -33,6 +33,7 @@
 }
 .container {
    width: 970px;
+   margin: 120px;
 }
 .title {
    font-size: 35px;
@@ -84,22 +85,89 @@ tr {
       });
    });
 </script>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+
+
+
+$(document).ready(function(){
+
+	$("#goodbtn").click(function(){
+
+	var article =$("#review_seq").text();
+	
+	console.log(goodbtn);
+
+	$.ajax({
+		  type:'POST',
+		  url:"reGoodbtn.btns",
+		  data: {article:article},
+		  success:function(good){
+			  console.log("asdasd");
+			 
+				 $("#goodbtn").html(""); 
+				 $("#goodbtn").html('<i class="fas fa-heart"></i>'+good);
+			 
+			
+			  
+		  }
+		});
+			
+	});
+	$("#badbtn").click(function(){	
+	var article =$("#review_seq").text();	
+
+	$.ajax({
+		  type:'POST',
+		  url:"reBadbtn.btns",
+		  data: {article:article},
+		  success:function(bad){
+			  console.log("asdasd");
+			 
+				 $("#badbtn").html(""); 
+				 $("#badbtn").html('<i class="far fa-frown"></i>'+bad);
+			
+			
+			  
+		  }
+		});
+			
+	});
+	
+	
+});
+
+</script>
+
+
+
+
+
 </head>
 <body>
    <%
       request.setCharacterEncoding("UTF-8");
    %>
+   <c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="include/mainNavi_login.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="include/mainNavi.jsp"%>
+		</c:otherwise>
+	</c:choose>
    <div class="container">
       <div class="row title  text-center">
          <div class="col-sm-12">${review_title}</div>
       </div>
       <div class="row writer">
-         <div class="col-sm-1 text-left">${review_seq}</div>
+         <div class="col-sm-1 text-left" id="review_seq">${review_seq}</div>
          <div class="col-sm-5 text-left">${review_writerN}</div>
          <div class="col-sm-3 text-right">${review_writedate}</div>
          <div class="col-sm-2 text-right">${review_viewcount}</div>
           <c:choose>
-          <c:when test="${user eq review_writer}">
+          <c:when test="${sessionScope.user.seq eq review_writer}">
           <div class="col-sm-1 text-right">
           <a href="deleteReviewArticle.bo?review_seq=${review_seq}"><i class="far fa-times-circle"></i></a>
           </div>
@@ -115,10 +183,10 @@ tr {
       <div class="row function">
          <div class="col-sm-4 offset-sm-4 text-center vote">
             <button type="button" class="btn btn-outline-danger" id="goodbtn">
-               <i class="fas fa-heart"></i>30
+               <i class="fas fa-heart"></i>${good}
             </button>
             <button type="button" class="btn btn-outline-primary" id="badbtn">
-               <i class="far fa-frown"></i>30
+               <i class="far fa-frown"></i>${bad}
             </button>
          </div>
          <div class="col-sm-4 text-right move">
@@ -133,18 +201,18 @@ tr {
             style="border: none; background-color: white; cursor: pointer;"
             id="comment-bnt">댓글보기▼</button>
          <form action="addReviewComment.bo?review_seq=${review_seq}"
-            method="post" id="inputCommentForm">
+            method="post" id="reviewCommentForm">
             <div style="width: 100%; margin: 0px;">
                <div style="width: 80%">
-                  <textarea class="form-control" rows="3" id="comment"
+                  <textarea class="form-control" rows="3" id="comment_text"
                      name="comment_text"
                      style="resize: none; width: 100%; margin: 0px; float: left;"
                      maxlength="70"></textarea>
                </div>
                <div
                   style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-                  <button style="width: 100%; height: 86px;background-color: white" id="comment-write-bnt"
-                     class="inputComment"  class="btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
+                  <button style="width: 100%; height: 86px;background-color: white" id="commentbnt"
+                     class="btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
                </div>
             </div>
          </form>
@@ -167,9 +235,13 @@ tr {
                      <td style="width: 70%">${comment.comment_text}</td>
                      <td style="width: 15%; font-size: 10px;">${comment.comment_time}
                   
-                        <button type="button" class="close" aria-label="Close">
-                           <span aria-hidden="true"">&times;</span>
+                             <c:if test="${comment.comment_writer_seq eq sessionScope.user.seq}">
+                        <button type="button" class="close" aria-label="Close" id="deleteComment" >
+                  <a href="deleteReviewComment.bo?comment_seq=${comment.comment_seq}&review_seq=${comment.review_seq}">
+                           <span aria-hidden="true">&times;</span>
+                        </a>
                         </button>
+                        </c:if>
                      
                      </td>
                   </tr>
@@ -179,11 +251,7 @@ tr {
       </div>
    </div>
    </div>
-   <script>
-      $('.inputComment').click(function() {
-         $('#inputCommentForm').submit();
-      })
-   </script>
+ 
    <script>
       var commentBntCount = 2;
       $("#comment-bnt").click(function() {
@@ -198,20 +266,29 @@ tr {
             commentBntCount--;
          }
       });
-      $("#comment-write-bnt").click(
+      
+      $('#commentbtn').click(function() {
+   	   var comment_text = $("#comment_text").val(); 
+   	   if(comment_text != null){
+          $('#reveiwCommentForm').submit();
+   	   }else{
+   		  alert("내용을 입력해주세요");
+   	   }
+       });
+/*       $("#comment-write-bnt").click(
                   function() {
                      var con = confirm("댓글을작성하시겠습니까?");
-                     var comment = $("#comment").val();
+                     var comment = $("#comment_text").val();
                      if (con) {
                         if (comment != "") {
                            alert("댓글이 성공적으로 달렸습니다");
-                           $("#comment").val("");
+                           $("#comment_text").val("");
                         } else {
                            alert("댓글을 작성해주세요.");
                         }
                      } else {
                      }
-                  });
+                  }); */
    </script>
 </body>
 </html>

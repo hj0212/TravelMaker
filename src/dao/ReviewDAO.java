@@ -220,6 +220,8 @@ public class ReviewDAO {
 		List<ReviewCommentDTO> result = new ArrayList<>();
 		while(rs.next()) {
 			ReviewCommentDTO rdto = new ReviewCommentDTO();
+			rdto.setReview_seq(rs.getInt("review_seq"));
+			rdto.setComment_seq(rs.getInt("comment_seq"));
 			rdto.setComment_writer_seq(rs.getInt("comment_writer"));
 			rdto.setComment_writer(mdao.getUserNickname(rs.getInt("comment_writer")));
 			rdto.setComment_text(rs.getString("comment_text"));
@@ -336,7 +338,7 @@ public class ReviewDAO {
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, seq);
 			pstat.setString(2, "%"+searchTerm+"%");
-			pstat.setString(3, "%"+searchTerm+"%");
+		
 		}
 
 		rs = pstat.executeQuery();
@@ -383,19 +385,19 @@ public class ReviewDAO {
 		StringBuilder sb = new StringBuilder();
 
 		if(needPrev) {
-			sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Previous'><span aria-hidden=\"true\">&laquo;</span><span class=\"sr-only\">Previous</span></a></li>");
+			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Previous'><span aria-hidden=\"true\">&laquo;</span><span class=\"sr-only\">Previous</span></a></li>");
 		}
 
 		for(int i = startNavi; i <= endNavi; i++) {
 			if(currentPage == i) {
-				sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
 			} else {
-				sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
 			}
 		}
 
 		if(needNext) {
-			sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span><span class='sr-only'>Next</span></a></li>");
+			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span><span class='sr-only'>Next</span></a></li>");
 		}
 
 		con.close();
@@ -405,5 +407,31 @@ public class ReviewDAO {
 		return sb.toString();
 	}
 
+	public int deleteReviewComment (int comment_seq, int comment_writer_seq) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "delete from review_comment where comment_seq=? and comment_writer=?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, comment_seq);
+		pstat.setInt(2, comment_writer_seq);
+		int result = pstat.executeUpdate();
+		con.commit();
+		pstat.close();
+		con.close();
+		System.out.println(result);
+		return result;
+	}
+	public int reViewCount(int review_seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "UPDATE reviewboard set review_viewcount = review_viewcount + 1 where review_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, review_seq);
+		
+		int result = pstmt.executeUpdate();
+		
+		conn.commit();
+		pstmt.close();
+		conn.close();
+		return result;
+	}
 
 }

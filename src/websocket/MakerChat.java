@@ -34,11 +34,11 @@ public class MakerChat {
 		System.out.println(message);
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(message);
-		String id = element.getAsJsonObject().get("id").getAsString();
+		String nickname = element.getAsJsonObject().get("nickname").getAsString();
 		String msg = element.getAsJsonObject().get("msg").getAsString();
 
 	
-		System.out.println(id + " : " + msg);
+		System.out.println(nickname + " : " + msg);
 		for(Session tmp : clients) {
 			tmp.getBasicRemote().sendText(message);
 		}

@@ -43,25 +43,18 @@ pageEncoding="UTF-8"%>
 			<%@include file="../include/mainNavi.jsp"%>
 		</c:otherwise>
 		</c:choose>
-		
-		<c:choose>
-			<c:when test="${sessionScope.user.seq eq null}">
-				<script>
-					alert("비회원은 이용 불가능합니다.");
-					location.href = "toLogin.do";
-				</script>
-			</c:when>
-			<c:otherwise>
+
 			<div class="container">
-            <form action="writeArticlefree.bo" method="post" name="writeContents">
+            <form action="modifyFreeArticle.bo" method="post" name="writeContents">
             	<div class="form-group">
-            		<input type="text" class="form-control" name="title" placeholder="제목을 입력해주세요" maxlength="50">
+            		<input type="text" class="form-control" name="title" placeholder="제목을 입력해주세요" maxlength="50" value="${contents.free_title}">
+            		<input type="text" name="articlenum" value="${articlenum}" style="display:none">
         		</div>
         		<div class="form-group">
-            		<textarea name="contents" class="form-control" id="editor"></textarea>
+            		<textarea name="contents" class="form-control" id="editor">${contents.free_contents}</textarea>
         		</div>
                 <div class="text-right">
-        		    <input type="button" class="btn btn-primary" value="작성" onclick="sendContents()" id="send"></button>
+        		    <input type="button" class="btn btn-primary" value="수정" onclick = "sendContents()" id="send"></button>
             		<button type="button" class="btn btn-primary" id="cancel">취소</button>
             		<button type="button" class="btn btn-primary" id="list">목록 </button>
         		</div>
@@ -69,6 +62,4 @@ pageEncoding="UTF-8"%>
         </div>
     </body>
     <script src="./freeboard/editor.js"></script>
-	</c:otherwise>
-	</c:choose>
     </html>

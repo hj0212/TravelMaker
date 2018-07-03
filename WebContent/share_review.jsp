@@ -60,7 +60,7 @@ div {
 							<div class="card-body">
 								<h5 class="card-title">${item.review_title}</h5>
 								<p class="card-text">${item.review_writerN}</p>
-								<a href="reviewArticle.bo?currentPage=${currentPage }&review_seq=${item.review_seq}"
+								<a href="reviewArticle.bo?review_seq=${item.review_seq}"
 									class="btn btn-primary">Read</a>
 								<div class="card-footer bg-transparent">
 									<small class="text-muted">"${item.review_writedate}"</small>
@@ -99,14 +99,11 @@ div {
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">${pageNavi}</ul>
 			</nav>
-		</div>
-
-
-		<h1 class="divLine">푸터올 곳</h1>
-		<hr />
-		<div class="row">
-			<div class="col-md-12" id="foot"></div>
-		</div>
+		</div>		
+		
+	</div>
+	<div id="footer">
+		<%@include file="footer1.jsp"%>
 	</div>
 	<script>
 		$("#searchbtn").click(function() {

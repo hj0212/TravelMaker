@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="source/js/jquery.roadmap.min.js"></script>
+    <link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        #timeline {
+            border: 1px solid black;
+            overflow: hidden;
+        }
+
+        .event__content {
+            margin: 0 auto;
+            width : 50%;
+            max-height: 63px;
+            overflow: hidden;
+        }
+        
+        #map {
+        	margin : 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid text-center">
+        <div id="timeline" style="width:400px; height: 400px;"></div>
+        <div id="map" style="width:400px; height: 400px;"></div>
+    </div>
+    <script src="source/js/markerandtl.js"></script>
+</body>
+</html>
