@@ -172,7 +172,7 @@ margin:0px auto;
             <!-- <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap"> -->
             
             <form action="profileImg.do" method="post" enctype="multipart/form-data" id="profileImgForm">
-            <button id="img_button" type="button" class="circle" title="여기를 누르시면 이미지를 변경하실수있습니다."><img for="img_file" id="profile_img" src="/Git_Practice_Message/file/${file_name }" alt="Charlie-Chaplin-PNG-Image-17681.png"></button>
+            <button id="img_button" type="button" class="circle" title="여기를 누르시면 이미지를 변경하실수있습니다." style="max-height: 238px;height: 238px;width: 344.59px;max-width: 344.59px"><img for="img_file" id="profile_img" src="/Git_Practice_Message/file/${file_name }" alt="Charlie-Chaplin-PNG-Image-17681.png" style="width: 100%;height: 100%"></button>
             <div class="w-100 h-30 align-items-center" style="box-sizing: border-box;">
             <input type="file" class="w-30" id="img_file" name="file" accept=".gif, .jpg, .png, .jpeg" value="이미지변경" hidden="true">
             <button class="btn btn-primary w-100" type="button" id="profile">프로필이미지</button></div>

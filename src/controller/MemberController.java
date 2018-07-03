@@ -413,6 +413,7 @@ public class MemberController extends HttpServlet {
 				System.out.println("fileUpload결과 : "+result);
 				System.out.println(uploadPath);
 			
+				request.setAttribute("uploadPath", uploadPath);
 		
 				
 			isForward=true;

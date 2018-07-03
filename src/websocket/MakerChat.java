@@ -37,9 +37,9 @@ public class MakerChat {
 		JsonElement element = parser.parse(message);
 		String nickname = element.getAsJsonObject().get("nickname").getAsString();
 		String msg = element.getAsJsonObject().get("msg").getAsString();
-
+		String file = element.getAsJsonObject().get("file").getAsString();
 	
-		System.out.println(nickname + " : " + msg);
+		System.out.println(nickname + " : " + msg+ " : " +file);
 		for(Session tmp : clients) {
 			
 		tmp.getBasicRemote().sendText(message);

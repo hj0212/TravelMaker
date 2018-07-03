@@ -58,17 +58,19 @@
 	<script>
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					"ws://192.168.20.15:8080/WEB_06_18/websocket");
+					"ws://192.168.20.8:8081/Git_Practice_Message/websocket");
 			var str;
 
 			$("input").keydown(function(event) {
 				if (event.which === 13) {
 					var nickname = '${sessionScope.nickname}';
 					var msg = $("#livemsg").val();
-
+					var file ="${file_name}";
 					ws.send(JSON.stringify({
 						nickname : nickname,
-						msg : msg
+						msg : msg,
+						file : file
+						
 					}));
 					$("#livemsg").val("");
 
@@ -82,8 +84,8 @@
 
 			ws.onmessage = function(msg) {
 				var obj = JSON.parse(msg.data);
-				console.log(obj.nickname + ":" + obj.msg);
-				var chat = "<hr class=livehr><div class=chat-message clearfix><img src=https://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32 alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>"
+				console.log(obj.nickname + ":" + obj.msg  + ":" +obj.file);
+				var chat = "<hr class=livehr><div class=chat-message clearfix><img src='/Git_Practice_Message/file/"+obj.file+"' alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>"
 						+ obj.nickname
 						+ "</h5><p class=livep>"
 						+ obj.msg
