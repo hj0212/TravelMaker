@@ -1,5 +1,8 @@
 package dao;
 
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,10 +39,11 @@ public class FreeboardDAO {
 	
 	public int insertArticle(int writer, String title, String contents) throws Exception {
 		Connection conn = DBConnection.getConnection();
-		String sql = "INSERT INTO freeboard values(freeboard_seq.nextval,?,?,?,sysdate,0)";
+		String sql = "INSERT INTO freeboard_c values(freeboard_seq.nextval,?,?,?,sysdate,0)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, title);
-		pstmt.setString(2, contents);
+		StringReader sr = new StringReader(contents);
+		pstmt.setCharacterStream(2, sr, contents.length());
 		pstmt.setInt(3, writer);
 		
 		int result = pstmt.executeUpdate();
@@ -52,10 +56,11 @@ public class FreeboardDAO {
 	
 	public int updateArticle(String title, String contents, int articlenum) throws Exception {
 		Connection conn = DBConnection.getConnection();
-		String sql = "UPDATE freeboard set free_title = ?, free_contents = ? WHERE free_seq = ?";
+		String sql = "UPDATE freeboard_c set free_title = ?, free_contents = ? WHERE free_seq = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, title);
-		pstmt.setString(2, contents);
+		StringReader sr = new StringReader(contents);
+		pstmt.setCharacterStream(2, sr, contents.length());
 		pstmt.setInt(3, articlenum);
 		
 		int result = pstmt.executeUpdate();
@@ -68,7 +73,7 @@ public class FreeboardDAO {
 	
 	public int deleteArticle(int seq) throws Exception {
 	    Connection conn = DBConnection.getConnection();
-	    String sql = "delete from freeboard where free_seq = ?";
+	    String sql = "delete from freeboard_c where free_seq = ?";
 	    PreparedStatement pstmt = conn.prepareStatement(sql);
 	    pstmt.setInt(1, seq);
 	    
@@ -81,9 +86,21 @@ public class FreeboardDAO {
 	  }
 
 	
+	private String clobToString(Clob clob) throws Exception{
+		StringBuffer sb = new StringBuffer();
+		BufferedReader br = new BufferedReader(clob.getCharacterStream());
+		String ts = "";
+		while((ts=br.readLine()) != null) {
+			sb.append(ts);
+		}
+
+		br.close();
+		return sb.toString();
+	}
+	
 	public FreeboardDTO readFreeArticle(int seq) throws Exception {
 		Connection conn = DBConnection.getConnection();
-		String sql = "select * from freeboard where free_seq = ?";
+		String sql = "select * from freeboard_c where free_seq = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, seq);
 		ResultSet rs = pstmt.executeQuery();
@@ -92,7 +109,7 @@ public class FreeboardDAO {
 		while(rs.next()) {
 			tmp.setFree_seq(rs.getInt(1));
 			tmp.setFree_title(rs.getString(2));
-			tmp.setFree_contents(rs.getString(3));
+			tmp.setFree_contents(clobToString(rs.getClob(3)));
 			tmp.setFree_writer(rs.getString(4));
 			tmp.setFree_writedate(rs.getString(5));
 			tmp.setFree_viewcount(rs.getInt(6));
@@ -106,7 +123,7 @@ public class FreeboardDAO {
 	
 	public int writerCheck(int seq) throws Exception {
 		Connection conn = DBConnection.getConnection();
-		String sql = "select free_writer from freeboard where free_seq = ?";
+		String sql = "select free_writer from freeboard_c where free_seq = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, seq);
 		ResultSet rs = pstmt.executeQuery();
@@ -129,12 +146,12 @@ public class FreeboardDAO {
 		PreparedStatement pstat = null;
 		
 		if(searchTerm == null || searchTerm.equals("null")) {
-		sql = "select * from (select free_seq, free_title, free_contents, free_writer, to_char(free_writedate, 'YYYY/MM/DD') free_writedate, free_viewcount, row_number() over(order by free_seq desc) as num from freeboard) where num between ? and ?";
+		sql = "select * from (select free_seq, free_title, free_contents, free_writer, to_char(free_writedate, 'YYYY/MM/DD') free_writedate, free_viewcount, row_number() over(order by free_seq desc) as num from freeboard_c) where num between ? and ?";
 		pstat = con.prepareStatement(sql);
 		pstat.setInt(1, startNum);
 		pstat.setInt(2, endNum);
 		} else {
-			sql = "select * from (select free_seq, free_title, free_contents, free_writer, to_char(free_writedate, 'YYYY/MM/DD') free_writedate, free_viewcount, row_number() over(order by free_seq desc) as num from freeboard where free_title like ?) where num between ? and ?";
+			sql = "select * from (select free_seq, free_title, free_contents, free_writer, to_char(free_writedate, 'YYYY/MM/DD') free_writedate, free_viewcount, row_number() over(order by free_seq desc) as num from freeboard_c where free_title like ?) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, "%"+searchTerm+"%");
 			pstat.setInt(2, startNum);
@@ -171,10 +188,10 @@ public class FreeboardDAO {
 		ResultSet rs;
 		
 		if(searchTerm == null || searchTerm.equals("null")) {
-			sql = "select count(*) totalCount from freeboard";
+			sql = "select count(*) totalCount from freeboard_c";
 			pstat = con.prepareStatement(sql);
 		} else {
-			sql = "select count(*) totalCount from freeboard where free_title = ?";
+			sql = "select count(*) totalCount from freeboard_c where free_title = ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, searchTerm);
 		}
