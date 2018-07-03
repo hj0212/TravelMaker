@@ -71,6 +71,7 @@ div {
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
+			
 		</c:when>
 		<c:otherwise>
 			<%@include file="include/mainNavi.jsp"%>
@@ -161,7 +162,9 @@ div {
 		<!-- <div class="row">
 			<div class="col-md-12" id="foot"></div>
 		</div> -->
+		
 	</div>
+	
 	<c:if test="${main==null}">
 	<script>
 	location.href="main.bo";
@@ -181,6 +184,12 @@ div {
 			autoplaySpeed : 2000
 		});
 	</script>
+	<c:choose>
+	<c:when test="${sessionScope.user.seq !=null}">
+	<%@include file="include/multiChat.jsp" %>
+	</c:when>
+	</c:choose>
 </body>
+
 
 </html>
