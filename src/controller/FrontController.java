@@ -172,7 +172,7 @@ public class FrontController extends HttpServlet {
 	         }else if(command.equals("/reviewArticle.bo")) {
 	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 	             rdao.getArticleViewCount(review_seq);
-	            /* int currentPage =Integer.parseInt(request.getParameter("currentPage"));*/
+//	             int listcurrentPage =Integer.parseInt(request.getParameter("listcurrentPage"));
 	             
 	             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
 	             request.setAttribute("review_seq", review_seq);
@@ -184,13 +184,10 @@ public class FrontController extends HttpServlet {
 	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
 
 	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-	            int bad = gbdao.reviewBadSelectData(review_seq);
-	            int good =gbdao.reviewGoodSelectData(review_seq);
-	            request.setAttribute("good", good);
-	            request.setAttribute("bad", bad);
-	            
-	             
-	            
+		            int bad = gbdao.reviewBadSelectData(review_seq);
+		            int good =gbdao.reviewGoodSelectData(review_seq);
+		            request.setAttribute("good", good);
+		            request.setAttribute("bad", bad);	            
         
 	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
 	             request.setAttribute("commentResult", result2);
