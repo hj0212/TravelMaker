@@ -122,7 +122,12 @@ margin:0px auto;
       <div class="row">
         <div class="col-sm-8 col-md-3 col-lg-3">
           <div class="card w-100 h-100" id="profile-container">
-            <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
+            <!-- <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap"> -->
+            
+            <input type="file" id="change-profile-img"><br><button type="submit">업로드</button>
+            <img id="profile-img" src="" alt="Charlie-Chaplin-PNG-Image-17681.png">
+             
+            
             <div class="card-body h-100 py-4 my-5">
               <h4 class="card-title my-4">${nickname}</h4>
               <c:choose>
