@@ -133,6 +133,10 @@ div {
 	box-sizing: border-box;
 	margin-top: 30px;
 }
+
+.footer {
+	height: 300px;
+}
 </style>
 </head>
 <body>
