@@ -237,7 +237,7 @@ div {
 			<c:forEach var="item" items="${planList}">
 				<div class="item col-md-3 mb-3">
 					<div class="card text-center">
-		<a href="planArticle.plan?plan_seq=${item.plan_seq}" style="text-decoration:none;">
+		<a href="planArticle.plan?currentPage=${currentPage}&plan_seq=${item.plan_seq}" style="text-decoration:none;">
 						<div class="card-header planTitle">${item.plan_title}</div>
 		</a>
 						<div class="card-body mt-1 text-center">

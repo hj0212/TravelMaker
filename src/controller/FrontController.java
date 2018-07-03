@@ -18,7 +18,9 @@ import dao.MemberDAO;
 import dao.ReviewDAO;
 import dto.FreeCommentDTO;
 import dto.FreeboardDTO;
+import dto.GoodAllDTO;
 import dto.MemberDTO;
+import dto.PlanDTO;
 import dto.ReviewCommentDTO;
 import dto.ReviewDTO;
 
@@ -41,7 +43,7 @@ public class FrontController extends HttpServlet {
 			ReviewDAO rdao = new ReviewDAO();
 			FreeCommentDAO fcdao = new FreeCommentDAO();
 			GoodBadDAO gbdao = new GoodBadDAO();
-
+			
 			boolean isForward = true;
 			String dst = null;
 			
@@ -331,6 +333,15 @@ public class FrontController extends HttpServlet {
 	        	  System.out.println(result +":"+review_seq);
 	        	  isForward=true;
 	        	  dst="deleteReviewCommentView.jsp";
+	          }else if(command.equals("/main.bo")) {
+	        	List<PlanDTO> main = gbdao.bestPlanData();
+	        
+	        	request.setAttribute("main", main);
+	        	
+	        	isForward=true;
+	        	dst="main.jsp";
+	        	
+	        	
 	          }
 	        	  
 			if(isForward) {

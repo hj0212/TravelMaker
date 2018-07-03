@@ -149,6 +149,7 @@ $(document).ready(function(){
 
 </script>
 
+
 </head>
 
 
@@ -379,14 +380,12 @@ $(document).ready(function(){
 		}
 	})
 	
-	$("#listbtn").click(function() {
-		if(empty ${param.currentPage}) {
-			location.href = "planboard.plan?currentPage=${param.currentPage}";
-		} else {
-			location.href = "planboard.plan";
-		}
+	$("#listbtn").click(function() {	
+			location.href = "planboard.plan?currentPage=${currentPage}";
+	
 		
-	})
+		
+	});
 	plan_seq = $("input[id='plan_seq']").val();
 	$.ajax({
 		url:"maplist.Ajax",
