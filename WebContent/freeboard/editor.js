@@ -1,6 +1,6 @@
 	$(document).ready(function () {
 	    $("#editor").summernote({
-	        height: 200,
+	        height: 500,
 	        lang: 'ko-KR',
 	        disableResizeEditor: true,
 	        callbacks: {
@@ -11,7 +11,7 @@
 	            onKeydown: function(e) {
 	                if (e.keyCode == 8 || e.keyCode == 16 || e.keyCode == 17 || e.keyCode == 37) 
 	                    return;
-	                if ($("#editor").summernote('code').length > 1000){
+	                if ($("#editor").summernote('code').length > 65535){
 	                    e.preventDefault();
 	                    return;
 	                }
@@ -42,7 +42,7 @@
 	function sendContents() { 
 		$("#editor").html($("#editor").summernote('code')); 
 
-		if($("#editor").summernote('code').length > 1000) { 
+		if($("#editor").summernote('code').length > 65535) { 
 			alert("글자수 제한 범위 초과"); 
 			$('#send').attr('disabled', false); 
 		}else { 

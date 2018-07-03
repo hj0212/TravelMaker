@@ -184,7 +184,6 @@ public class FrontController extends HttpServlet {
 		             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
 		             request.setAttribute("dto", result1);
 		             request.setAttribute("review_seq", review_seq);
-		             System.out.println(review_seq);
 	
 		             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 			         int bad = gbdao.reviewBadSelectData(review_seq);
@@ -204,8 +203,8 @@ public class FrontController extends HttpServlet {
 	             String comment_text = request.getParameter("comment_text");
 	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-	             System.out.println(review_seq);
 	             int user = dto.getSeq();
+	             
 	             int result = rdao.insertReviewComment(comment_text,user,review_seq);
 	             request.setAttribute("result", result);
 	             request.setAttribute("review_seq", review_seq);
@@ -300,7 +299,6 @@ public class FrontController extends HttpServlet {
 	        	  int writer = dto.getSeq();
 	        	  
 	        	  int result = fcdao.insertComment(aritcleseq,comment,writer);
-	        	  System.out.println(aritcleseq + " : " + comment + " : " + writer);
 	        	  dst = "viewFreeArticle.bo?seq="+aritcleseq;
 	          }else if(command.equals("/deleteFreeComment.bo")) {
 	        	  try {
