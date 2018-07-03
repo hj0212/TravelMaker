@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import dao.MemberDAO;
 import dao.PlanDAO;
 import dto.LocationDTO;
+import dto.ScheduleDTO;
 
 /**
  * Servlet implementation class IdcheckAjax
@@ -60,16 +61,20 @@ public class AjaxController extends HttpServlet {
 			}else{
 				pw.println("<font color=blue>id(사용가능한아이디입니다)</font>");
 			}
-		} else if(command.equals("/maplist.Ajax")) {
-			System.out.println("여기");
+		} else if(command.equals("/planviewlist.Ajax")) {
 			int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
 			List<LocationDTO> locationlist = pdao.selectLocation(plan_seq);
+			List<ScheduleDTO> timelinelist = pdao.selectTimeline(plan_seq);
 			JsonObject obj = new JsonObject();
 			JsonArray jLocationList = new Gson().toJsonTree(locationlist).getAsJsonArray();
+			JsonArray jTimeLine = new Gson().toJsonTree(timelinelist).getAsJsonArray();
 			obj.add("jLocationList", jLocationList);
+			obj.add("jTimeLine", jTimeLine);
 			System.out.println(obj.toString());
 			PrintWriter pw = response.getWriter();
 			pw.print(obj.toString());
+			pw.flush();
+			pw.close();
 			return;
 		}
 	}catch(Exception e) {

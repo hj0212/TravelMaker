@@ -13,14 +13,12 @@
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
 <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>       
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<script src="source/js/jquery.roadmap.min.js"></script>
+   <link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
 <meta charset="utf-8">
 
 <style type="text/css">
@@ -186,10 +184,10 @@ $(document).ready(function(){
 		</div>
 
 		<div class="wrapper row">
-			<div class="left_half col-md-12 col-lg-6">
+			<div class="left_half col-sm-12 col-lg-6">
 				<div id="timeline" style="border: 1px solid gray;"></div>
 			</div>
-			<div class="right_half col-md-12 col-lg-6">
+			<div class="right_half col-sm-12 col-lg-6">
 				<div id="map" style="border: 1px solid gray;"></div>
 			</div>
 		</div>
@@ -380,24 +378,162 @@ $(document).ready(function(){
 	})
 	
 	$("#listbtn").click(function() {
-		if(empty ${param.currentPage}) {
-			location.href = "planboard.plan?currentPage=${param.currentPage}";
-		} else {
-			location.href = "planboard.plan";
-		}
-		
+		location.href = "planboard.plan";
 	})
-	plan_seq = $("input[id='plan_seq']").val();
+	
 	$.ajax({
-		url:"maplist.Ajax",
+		url:"planviewlist.Ajax",
 		type:"post",
-		data:{"plan_seq":plan_seq},
+		data:{"plan_seq":$("input[id='plan_seq']").val()},
 		success:function(data){		
-			console.log(data);
+			var obj = JSON.parse(data);
+			
+			var markerlocation = [],
+		   	 timeline = [];
+
+		// 다중 마커에 정보창 띄우기
+			var markers = [],
+		    infoWindows = [];
+
+
+		// 받아온 jsonArry 정보를 이용해 배열에 넣음 
+			var makeMarkerArray = function () {
+		    if (obj.jLocationList[0] == null && obj.jTimeLine[0] == null) {
+		        alert("정보나 넣고 오시지.. 서울시청으로 가드림^^");
+		        markerlocation.push({ location_name: "서울시청", location_x: 309852, location_y: 552189 });
+		        timeline.push({date : '0000-00-00', content : "서울시청"});
+		        return;
+		    }
+			
+		    
+		    var jsonArray = obj.jLocationList;
+		    var timejsonArray = obj.jTimeLine;
+
+		    for (var i = 0; i < jsonArray.length; i++) {
+		        let markerObj = {
+		            location_name: jsonArray[i].location_name,
+		            location_x: jsonArray[i].location_x,
+		            location_y: jsonArray[i].location_y
+		        }
+		        markerlocation.push(markerObj);
+		    }
+		    
+		    for (var i = 0; i < timeline.length; i++) {
+		        let timelineObj = {
+		            date: timejsonArray[i].day_seq,
+		            content: timejsonArray[i].location_name,
+		        }
+		        timeline.push(timelineObj);
+		    }
+		};
+		makeMarkerArray();
+
+		// 네이버 지도 생성
+		var map = new naver.maps.Map('map', {
+		    center: new naver.maps.Point(markerlocation[0].location_x, markerlocation[0].location_y),
+		    zoom: 5,
+		    mapTypeId: 'normal',
+		    mapTypes: new naver.maps.MapTypeRegistry({
+		        'normal': naver.maps.NaverMapTypeOption.getNormalMap({
+		            projection: naver.maps.TM128Coord
+		        }),
+		    })
+		});
+
+		// 정보창의 위치를 위한 변수
+		var bounds = map.getBounds();
+
+		// 타임라인을 생성함
+		$("#timeline").roadmap(timeline, {
+		    eventsPerSlide: 4,
+		    slide : 1,
+		    prevArrow : '<i class="fas fa-angle-left"></i>',
+		    nextArrow : '<i class="fas fa-angle-right"></i>'
+		});
+
+		// 좌표에 마커를 찍고 정보를 보여줌
+		var makeMarkerAndInfoWindow = function (markerArray) {
+		    for (var i = 0; i < markerArray.length; i++) {
+		        var marker = new naver.maps.Marker({
+		            map: map,
+		            position: new naver.maps.Point(markerArray[i].location_x, markerArray[i].location_y),
+		            zIndex: 100
+		        });
+
+		        var infoWindow = new naver.maps.InfoWindow({
+		            content: '<div id="mapsinfo" style="width:150px; height:50px;text-align:center;padding:10px;">' + markerArray[i].location_name + '</div>'
+		        });
+		        
+		        markers.push(marker);
+		        infoWindows.push(infoWindow);
+		    };
+
+		};
+		makeMarkerAndInfoWindow(markerlocation);
+
+		// 지도가 멈췄을때 발생하는 이벤트
+		naver.maps.Event.addListener(map, 'idle', function () {
+		    updateMarkers(map, markers);
+		})
+		
+		// 마커눌러서 정보표시
+		
+
+		// 지도가 멈췄을때 마커가 경계 밖에 있으면 보이지 않음
+		function updateMarkers(map, markers) {
+		    var mapBounds = map.getBounds();
+		    var marker, position;
+
+		    for (var i = 0; i < markers.length; i++) {
+		        marker = markers[i]
+		        position = marker.getPosition();
+
+		        if (mapBounds.hasPoint(position)) {
+		            showMarker(map, marker);
+		        } else {
+		            hideMarker(map, marker);
+		        }
+		    }
+		}
+
+		// 마커 보이기
+		function showMarker(map, marker) {
+		    if (marker.setMap()) return;
+		    marker.setMap(map);
+		}
+
+		// 마커 숨기기
+		function hideMarker(map, marker) {
+		    if (!marker.setMap()) return;
+		    marker.setMap(null);
+		}
+
+		// 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환
+		function getClickHandler(seq) {
+		    return function (e) {
+		        var marker = markers[seq],
+		            infoWindow = infoWindows[seq];
+
+		        if (infoWindow.getMap()) {
+		            infoWindow.close();
+		        } else {
+		            infoWindow.open(map, marker);
+		        }
+		    }
+		}
+
+		for (var i = 0, ii = markers.length; i < ii; i++) {
+		    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+		}
 		}
 	});
+	
+	/* $.getJSON("planviewlist.Ajax", function(data) {
+		// 마커에 입력할 배열과 타임라인 정보를 입력할 배열
+		
+	}) */
+
  
    </script>
 </body>
-<script src="source/js/markerandtl.js"></script>
 </html>

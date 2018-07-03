@@ -840,6 +840,26 @@ public class PlanDAO {
 		return result;
 	}
 	
+	public List<ScheduleDTO> selectTimeline(int plan_seq) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select s.day_seq, s.location_id, l.location_name from schedule s, location l where s.location_id = l.location_id and s.plan_seq = ? and s.location_id != -1 order by schedule_seq desc";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, plan_seq);
+		ResultSet rs = pstat.executeQuery();
+		List<ScheduleDTO> result = new ArrayList<>();
+		while(rs.next()) {
+			ScheduleDTO dto = new ScheduleDTO();
+			dto.setDay_seq(rs.getInt(1));
+			dto.setLocation_id(rs.getInt(2));
+			dto.setLocation_name(rs.getString(3));
+			result.add(dto);
+		}
+		rs.close();
+		pstat.close();
+		con.close();
+		return result;
+	}
+	
 	public List<PlanDTO> getMyPlans (int seq, int startNum, int endNum, String searchTerm) throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql;
@@ -962,4 +982,6 @@ public class PlanDAO {
 		
 		return sb.toString();
 	}	
+	
+	
 }
