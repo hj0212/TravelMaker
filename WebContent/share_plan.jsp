@@ -162,7 +162,7 @@ div {
 <body>
 	<!-- 네비  -->
 	<c:choose>
-		<c:when test="${sessionScope.userid != null}">
+		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
@@ -202,7 +202,7 @@ div {
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button id="start-bt" type="button" class="btn btn-primary">여행
+							<button id="start-btn" type="button" class="btn btn-primary">여행
 								계획 시작하기</button>
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">Close</button>
@@ -233,12 +233,12 @@ div {
 		<h1 class="divLine">Plan</h1>
 		<hr />
 
-		<div class="row mt-5 mx-0">
+		<div class="row mt-2 mx-0">
 			<c:forEach var="item" items="${planList}">
-				<div class="item col-md-3">
+				<div class="item col-md-3 mb-3">
 					<div class="card text-center">
 						<div class="card-header planTitle">${item.plan_title}</div>
-						
+		<a href="planArticle.plan?plan_seq=${item.plan_seq}&currentPage=${param.currentPage}" style="text-decoration:none;">
 						<div class="card-body mt-1 text-center">
 							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
 							<div class="btn-list d-inline">
@@ -249,6 +249,7 @@ div {
 							<hr>
 							<p class="text-center">여기다 뭐넣을까여</p>
 						</div>
+		</a>
 					</div>
 				</div>
 			</c:forEach>
@@ -374,7 +375,7 @@ div {
 								}
 							});
 
-					$("#start-bt").click(
+					$("#start-btn").click(
 							function() {
 								if (datepage < 0) {
 									alert("여행일을 제대로 설정해주세요.");

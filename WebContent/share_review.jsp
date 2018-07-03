@@ -51,20 +51,30 @@ div {
 		<hr />
 
 		<div class="row mx-0" id="cardArea">
-			<c:forEach var="item" items="${reviewList}">			
-					<div class="card col-md-3 ">
-						<img class="card-img-top"
-							src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
-						<div class="card-body">
-							<h5 class="card-title">${item.review_title}</h5>
-							<p class="card-text">${item.review_writerN}</p>
-							<a href="reviewArticle.bo?review_seq=${item.review_seq}" class="btn btn-primary">Read</a>						
-							<div class="card-footer bg-transparent">
-								<small class="text-muted">"${item.review_writedate}"</small>
+			<c:choose>
+				<c:when test="${reviewList[0]!= null}">
+					<c:forEach var="item" items="${reviewList}">
+						<div class="card col-md-3 ">
+							<img class="card-img-top"
+								src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
+							<div class="card-body">
+								<h5 class="card-title">${item.review_title}</h5>
+								<p class="card-text">${item.review_writerN}</p>
+								<a href="reviewArticle.bo?currentPage=${currentPage }&review_seq=${item.review_seq}"
+									class="btn btn-primary">Read</a>
+								<div class="card-footer bg-transparent">
+									<small class="text-muted">"${item.review_writedate}"</small>
+								</div>
 							</div>
 						</div>
-					</div>	
-			</c:forEach>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					
+						<div class="text-center mt-4 mb-4"><h4>검색 결과가 존재하지 않습니다.</h4></div>
+					
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<!-- review 카드 모음영역 끝 -->
 
@@ -78,7 +88,7 @@ div {
 				<div class="input-group-append">
 					<button class="btn btn-outline-secondary mx-1" type="button"
 						id="searchbtn" name="searchbtn">검색</button>
-						<
+
 				</div>
 				<button type="button" class="btn btn-primary ml-auto" id="writebtn">글쓰기</button>
 			</div>
@@ -90,8 +100,8 @@ div {
 				<ul class="pagination justify-content-center">${pageNavi}</ul>
 			</nav>
 		</div>
-		
-		
+
+
 		<h1 class="divLine">푸터올 곳</h1>
 		<hr />
 		<div class="row">
@@ -99,9 +109,9 @@ div {
 		</div>
 	</div>
 	<script>
-	$("#searchbtn").click(function() {
+		$("#searchbtn").click(function() {
 			location.href = "reviewboard.bo?search=" + $("#search").val();
 		})
-</script>
+	</script>
 </body>
 </html>

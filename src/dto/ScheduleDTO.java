@@ -6,12 +6,34 @@ public class ScheduleDTO {
 	private int schedule_seq;
 	private String schedule_starttime;
 	private String schedule_endtime;
-	private String location_id;
+	private int location_id;
+	private String location_name;
+	private int location_x;
+	private int location_y;
 	private String schedule_place;
 	private String schedule_plan;
 	private String schedule_budget;
 	private String schedule_ref;
 	
+	
+	public int getLocation_x() {
+		return location_x;
+	}
+	public void setLocation_x(int location_x) {
+		this.location_x = location_x;
+	}
+	public int getLocation_y() {
+		return location_y;
+	}
+	public void setLocation_y(int location_y) {
+		this.location_y = location_y;
+	}
+	public String getLocation_name() {
+		return location_name;
+	}
+	public void setLocation_name(String location_name) {
+		this.location_name = location_name;
+	}
 	public int getSchedule_seq() {
 		return schedule_seq;
 	}
@@ -30,10 +52,10 @@ public class ScheduleDTO {
 	public void setSchedule_endtime(String schedule_endtime) {
 		this.schedule_endtime = schedule_endtime;
 	}
-	public String getLocation_id() {
+	public int getLocation_id() {
 		return location_id;
 	}
-	public void setLocation_id(String location_id) {
+	public void setLocation_id(int location_id) {
 		this.location_id = location_id;
 	}
 	public String getSchedule_plan() {

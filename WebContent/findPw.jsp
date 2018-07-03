@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
 <script src="source/lib/materialize/js/materialize.js"></script>
-<link rel="stylesheet" href="source/css/codepenNavi.css">
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>

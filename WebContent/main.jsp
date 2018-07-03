@@ -17,14 +17,9 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="source/css/mainPage.css">
-
-
-
 <link rel="stylesheet" type="text/css" href="source/lib/slick/slick.css" />
 <link rel="stylesheet" type="text/css"
 	href="source/lib/slick/slick-theme.css" />
-
-
 <style>
 div {
 	box-sizing: border-box;
@@ -71,7 +66,7 @@ div {
 </head>
 <body>
 	<c:choose>
-		<c:when test="${sessionScope.loginId !=null}">
+		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
@@ -202,7 +197,6 @@ div {
 		<!-- <div class="row">
 			<div class="col-md-12" id="foot"></div>
 		</div> -->
-		<%@include file="footer1.jsp" %>
 
 	</div>
 	<script src='source/lib/slick/slick.js'></script>
