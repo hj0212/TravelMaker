@@ -48,8 +48,8 @@
 							data-toggle="dropdown">Reports<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li class="dropdown-header">Pages</li>
-								<li><a href="../admin_free.ad">FreeBoard</a></li>
-								<li><a href="../admin_plan.ad">Share_Plan</a></li>
+								<li><a href="admin_free.ad">FreeBoard</a></li>
+								<li><a href="admin_plan.ad">Share_Plan</a></li>
 							</ul></li>
 						<li><a href="#">Contact</a></li>
 					</ul>
@@ -89,10 +89,10 @@
 										<th style="width: 5%" class="text-center">번호</th>
 										<th style="width: 20%" class="text-center">아이디</th>
 										<th style="width: 20%" class="text-center">닉네임</th>
-										<th style="width: 30%" class="text-center">이메일</th>
+										<th style="width: 27%" class="text-center">이메일</th>
 										<th style="width: 10%" class="text-center">가입경로</th>
 										<th style="width: 10%" class="text-center">가입날짜</th>
-										<th style="width: 5%">차단여부</th>
+										<th style="width: 8%" class="text-center">차단여부</th>
 									</tr>
 
 									<c:forEach var="m" items="${memberList}" varStatus="status">
@@ -126,7 +126,7 @@
 											<td>${m.part}</td>
 											<td>${m.create_date}</td>
 											<td class="vertical-align-middle"><c:choose>
-													<c:when test="${m.block =='n'}">
+													<c:when test="${m.block =='n' || m.block == 'x'}">
 														<div class="TriSea-technologies-Switch">
 															<input id="TriSeaDanger${status.index}" name="TriSea1" type="checkbox" /> 
 															<label for="TriSeaDanger${status.index}" class="label-danger"name="TriSea2"></label>
@@ -134,8 +134,7 @@
 													</c:when>
 													<c:when test="${m.block =='y'}">
 														<div class="TriSea-technologies-Switch">
-															<input id="TriSeaDanger${status.index}" name="TriSea1"
-																type="checkbox" checked /> <label
+															<input id="TriSeaDanger${status.index}" name="TriSea1" type="checkbox" checked /> <label
 																for="TriSeaDanger${status.index}" class="label-danger"
 																name="TriSea2" checked></label>
 														</div>

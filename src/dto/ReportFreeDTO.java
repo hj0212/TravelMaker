@@ -4,18 +4,23 @@ public class ReportFreeDTO {
 	
 	private int reportfree_seq;
 	private int free_seq;
+	private String free_title;
 	private String free_writer;
 	private String report_user;
 	
 	public ReportFreeDTO(){}
 	
-	public ReportFreeDTO(int reportfree_seq, int free_seq, String free_writer, String report_user) {
+
+	public ReportFreeDTO(int reportfree_seq, int free_seq, String free_title, String free_writer, String report_user) {
 		super();
 		this.reportfree_seq = reportfree_seq;
 		this.free_seq = free_seq;
+		this.free_title = free_title;
 		this.free_writer = free_writer;
 		this.report_user = report_user;
 	}
+
+
 	public int getReportfree_seq() {
 		return reportfree_seq;
 	}
@@ -39,6 +44,14 @@ public class ReportFreeDTO {
 	}
 	public void setReport_user(String report_user) {
 		this.report_user = report_user;
+	}
+
+
+	public String getFree_title() {
+		return free_title;
+	}
+	public void setFree_title(String free_title) {
+		this.free_title = free_title;
 	}
 
 	

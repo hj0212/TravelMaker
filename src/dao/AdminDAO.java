@@ -18,7 +18,7 @@ public class AdminDAO {
 	public List<ReportFreeDTO> getAllReport_f() throws Exception{
 		Connection conn = DBConnection.getConnection();
 		List<ReportFreeDTO> list = new ArrayList<>();
-		String sql = "select r.reportfree_seq, r.free_seq, f.free_writer, r.report_user from freeboard f, report_free r where r.free_seq = f.free_seq";
+		String sql = "select r.reportfree_seq, r.free_seq, f.free_title, f.free_writer, r.report_user from freeboard f, report_free r where r.free_seq = f.free_seq order by reportfree_seq desc";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -26,18 +26,18 @@ public class AdminDAO {
 			ReportFreeDTO tmp = new ReportFreeDTO();
 			tmp.setReportfree_seq(rs.getInt("reportfree_seq"));
 			tmp.setFree_seq(rs.getInt("free_seq"));
+			tmp.setFree_title(rs.getString("free_title"));
 			MemberDAO mdao = new MemberDAO();		
 			tmp.setFree_writer(mdao.getUserNickname(rs.getInt("free_writer")));
 			tmp.setReport_user(mdao.getUserNickname(rs.getInt("report_user")));
 			list.add(tmp);
 		}
-		System.out.println(list.size());
+	/*	System.out.println(list.size());*/
 		rs.close();
 		pstmt.close();
 		conn.close();
 		return list;
 	}
-	
 	
 	//--------------------------------------------------회원관리	
 	//-----------------------------모든 회원정보 가져오기
@@ -110,11 +110,7 @@ public class AdminDAO {
 		return isBlocked;
 	}
 	
-
-	
-	
-
-	
+	//-----------------------------------------페이지 네비	
 	public String getPageNavi(int currentPage, String searchTerm) throws Exception {
 		Connection con = DBConnection.getConnection();
 		
