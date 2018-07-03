@@ -35,7 +35,7 @@ public class GoodBadController extends HttpServlet {
 				boolean check = gbdao.reviewGoodBtnCheck(article, user_seq);
 				int count =0;
 				if(check) {
-					count =gbdao.planGoodSelectData(article);
+					count =gbdao.reviewGoodSelectData(article);
 					pw.println(count);
 
 				}else {
@@ -53,9 +53,8 @@ public class GoodBadController extends HttpServlet {
 				PrintWriter pw = response.getWriter();
 				boolean check = gbdao.reviewBadCheck(article, user_seq);
 				int count =0;
-				if(check) {
-					
-					count =gbdao.planGoodSelectData(article);
+				if(check) {					
+					count =gbdao.reviewBadSelectData(article);
 					pw.println(count);
 
 				}else {
@@ -72,9 +71,8 @@ public class GoodBadController extends HttpServlet {
 				PrintWriter pw = response.getWriter();
 				boolean check = gbdao.freeGoodBtnCheck(article, user_seq);
 				int count =0;
-				if(check) {
-				
-					count =gbdao.planGoodSelectData(article);
+				if(check) {				
+					count =gbdao.freeGoodSelectData(article);
 					pw.println(count);
 
 				}else {
@@ -92,7 +90,7 @@ public class GoodBadController extends HttpServlet {
 				boolean check = gbdao.freeBadCheck(article, user_seq);
 				int count =0;
 				if(check) {
-					count =gbdao.planGoodSelectData(article);
+					count =gbdao.freeBadSelectData(article);
 					pw.println(count);
 				}else {
 					int result = gbdao.freeBadInsertData(article, user_seq);
@@ -110,7 +108,6 @@ public class GoodBadController extends HttpServlet {
 				if(check) {
 					count =gbdao.planGoodSelectData(article);
 					pw.println(count);
-
 				}else {
 					int result = gbdao.planGoodInsertData(article, user_seq);//인설트
 					if(result>0) {	
@@ -127,7 +124,7 @@ public class GoodBadController extends HttpServlet {
 				boolean check = gbdao.planBadCheck(article, user_seq);
 				int count =0;
 				if(check) {
-					pw.println();
+					
 					count = gbdao.planBadSelectData(article);
 					pw.println(count);
 				}else {
