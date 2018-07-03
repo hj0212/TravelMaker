@@ -27,13 +27,18 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
 	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 	crossorigin="anonymous"></script>
+	<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+	
  <style>
  #box-container {
   margin: 0px auto;
   float: right;
-  background : rgba(0, 0, 0, 0.3);
+  /* background : rgba(0, 0, 0, 0.3); */
+  background : white;
+  border:1px solid #777777 ;
   width: 70%;
-  position: relative;
+  position: absolute;
   border-radius: 5px;
   padding: 5px;
   z-index:300;
@@ -41,14 +46,16 @@
  }
  #box-container:after {
 	bottom: 100%;
-	left: 30%;
+	left: 50%;
 	border: solid transparent;
 	content: " ";
 	height: 0;
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-	border-bottom-color: rgba(0, 0, 0, 0.3);
+	/* border-bottom-color: rgba(0, 0, 0, 0.3); */
+	 background : white;
+	 border-bottom:1px solid #777777 ;
 	border-width: 8px;
 	margin-left: -8px;
 	z-index:300;
@@ -192,13 +199,16 @@ margin:0px auto;
        <div class="panel-heading">
           <ul class="nav nav-tabs nav-justified">
             <li class="nav-item">
-              <a href="#tabone" class="active nav-link" data-toggle="tab" data-target="#tabone" role="presentation">Tab 1</a>
+              <a href="#tabone" class="active nav-link" data-toggle="tab" data-target="#tabone" role="presentation">내후기글</a>
             </li>
             <li class="nav-item">
-              <a href="#tabtwo" data-toggle="tab" data-target="#tabtwo" role="presentation">Tab 2</a>
+              <a href="#tabtwo" data-toggle="tab" data-target="#tabtwo" role="presentation">내계획</a>
             </li>
             <li class="nav-item">
               <a href="#tabthree" data-toggle="tab" data-target="#tabthree" role="presentation">Tab 3</a>
+            </li>
+             <li class="nav-item">
+              <a href="#tabfour" data-toggle="tab" data-target="#tabfour" role="presentation">Tab 4</a>
             </li>
           </ul>
           </div>     
@@ -212,9 +222,14 @@ margin:0px auto;
             <c:forEach var="mrr" items="${MyReviewResult}">
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
-                <div class="card-header">${mrr.review_title}</div>
+					<div class="card-header">
+					<a href = "reviewArticle.bo?review_seq=${mrr.review_seq}" style="text-decoration:none; text-align:center; margin:0 auto;">                
+                <h6>${mrr.review_title}</h6>
+                </a>
+                </div>
                 <img class="card-img-top float-left rounded" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
                 <div class="card-body">
+                <p>${mrr.review_viewcount}</p>
                   <h6 class="text-muted">${mrr.review_contents}</h6>
                   <p>${mrr.review_writedate}</p>
                 </div>
@@ -227,50 +242,26 @@ margin:0px auto;
 				</div>
 				
 <!-- tabtwo -->
+
+		
             <div class="col tab-pane fade" id="tabtwo" role="tabpanel">
             <div class="row">
             
-            
+            <c:forEach var="mpr" items="${MyPlanResult}">
             <div class="item col-md-3 col-sm-3 w-25">
 					<div class="card">
-                <div class="card-header"> Header </div>
+                <div class="card-header">
+                <a href = "planArticle.plan?plan_seq=${mpr.plan_seq}" style="text-decoration:none; text-align:center; margin:0 auto;">
+                <h6>${mpr.plan_title}</h6>
+                </a>
+                </div>
                 <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
+                 <p>${mpr.plan_viewcount}</p>
+                  <h6 class="text-muted">${mpr.plan_startdate} ~ ${mpr.plan_enddate}</h6>
                 </div>
               </div>
 				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
-				<div class="item col-md-3 col-sm-3 w-25">
-					<div class="card">
-                <div class="card-header"> Header </div>
-                <div class="card-body">
-                  <h4 >Card title</h4>
-                  <h6 class="text-muted">Subtitle</h6>
-                  <p>Some quick example text to build on the card title .</p>
-                </div>
-              </div>
-				</div>
+		</c:forEach>
 				
 				
 				</div>
@@ -278,6 +269,38 @@ margin:0px auto;
 				
 				<!-- tabthree -->
                        <div class="col tab-pane fade" id="tabthree" role="tabpanel">
+            <div class="row mt-2 mx-0">
+                      
+         	<c:forEach var="item" items="${flist}">
+				<div class="item col-md-3 mb-3">
+					<div class="card text-center" >
+						<div class="card-header" style="max-height: 64px; overflow: hidden;">
+			<a href="planArticle.plan?plan_seq=${item.plan_seq}" style="text-decoration:none;margin: 0px auto;text-align: center;max-height: 64px; overflow: hidden;">					
+						${item.plan_title}
+					</a>
+						</div>
+						<div class="card-body mt-1 text-center">
+							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
+							<div class="btn-list d-inline">
+
+								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
+									class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
+							</div>
+							<hr>
+							<p class="text-center">여기다 뭐넣을까여</p>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+           
+				
+				
+				</div>
+				</div>    
+                   
+                   
+           <!-- tabfour -->        
+            <div class="col tab-pane fade" id="tabfour" role="tabpanel">
             <div class="row">
             
             
@@ -325,12 +348,6 @@ margin:0px auto;
                 </div>
               </div>
 				</div>
-				
-				
-				</div>
-				</div>    
-                   
-                   
                            
             </div>
           </div>

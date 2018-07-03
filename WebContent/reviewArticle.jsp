@@ -201,18 +201,18 @@ $(document).ready(function(){
             style="border: none; background-color: white; cursor: pointer;"
             id="comment-bnt">댓글보기▼</button>
          <form action="addReviewComment.bo?review_seq=${review_seq}"
-            method="post" id="inputCommentForm">
+            method="post" id="reviewCommentForm">
             <div style="width: 100%; margin: 0px;">
                <div style="width: 80%">
-                  <textarea class="form-control" rows="3" id="comment"
+                  <textarea class="form-control" rows="3" id="comment_text"
                      name="comment_text"
                      style="resize: none; width: 100%; margin: 0px; float: left;"
                      maxlength="70"></textarea>
                </div>
                <div
                   style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-                  <button style="width: 100%; height: 86px;background-color: white" id="comment-write-bnt"
-                     class="inputComment"  class="btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
+                  <button style="width: 100%; height: 86px;background-color: white" id="commentbnt"
+                     class="btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
                </div>
             </div>
          </form>
@@ -235,9 +235,13 @@ $(document).ready(function(){
                      <td style="width: 70%">${comment.comment_text}</td>
                      <td style="width: 15%; font-size: 10px;">${comment.comment_time}
                   
-                        <button type="button" class="close" aria-label="Close">
-                           <span aria-hidden="true"">&times;</span>
+                             <c:if test="${comment.comment_writer_seq eq sessionScope.user.seq}">
+                        <button type="button" class="close" aria-label="Close" id="deleteComment" >
+                  <a href="deleteReviewComment.bo?comment_seq=${comment.comment_seq}&review_seq=${comment.review_seq}">
+                           <span aria-hidden="true">&times;</span>
+                        </a>
                         </button>
+                        </c:if>
                      
                      </td>
                   </tr>
@@ -247,11 +251,7 @@ $(document).ready(function(){
       </div>
    </div>
    </div>
-   <script>
-      $('.inputComment').click(function() {
-         $('#inputCommentForm').submit();
-      })
-   </script>
+ 
    <script>
       var commentBntCount = 2;
       $("#comment-bnt").click(function() {
@@ -266,20 +266,29 @@ $(document).ready(function(){
             commentBntCount--;
          }
       });
-      $("#comment-write-bnt").click(
+      
+      $('#commentbtn').click(function() {
+   	   var comment_text = $("#comment_text").val(); 
+   	   if(comment_text != null){
+          $('#reveiwCommentForm').submit();
+   	   }else{
+   		  alert("내용을 입력해주세요");
+   	   }
+       });
+/*       $("#comment-write-bnt").click(
                   function() {
                      var con = confirm("댓글을작성하시겠습니까?");
-                     var comment = $("#comment").val();
+                     var comment = $("#comment_text").val();
                      if (con) {
                         if (comment != "") {
                            alert("댓글이 성공적으로 달렸습니다");
-                           $("#comment").val("");
+                           $("#comment_text").val("");
                         } else {
                            alert("댓글을 작성해주세요.");
                         }
                      } else {
                      }
-                  });
+                  }); */
    </script>
 </body>
 </html>
