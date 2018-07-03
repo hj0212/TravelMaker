@@ -29,6 +29,7 @@ public class MakerChat {
 		clients.add(session); //연결되어온 세션값을 저장하겠다 
 	}
 	
+	
 	@OnMessage
 	public void handleMessage(String message)throws Exception{
 		System.out.println(message);
@@ -40,7 +41,8 @@ public class MakerChat {
 	
 		System.out.println(nickname + " : " + msg);
 		for(Session tmp : clients) {
-			tmp.getBasicRemote().sendText(message);
+			
+		tmp.getBasicRemote().sendText(message);
 		}
 		
 	}
