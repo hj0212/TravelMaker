@@ -35,7 +35,7 @@
 
 .wrapper {
 	margin: 13px 0 10px;
-	height: 300px;
+	height: 400px;
 }
 
 .col-md-12, .col-lg-6 {
@@ -45,13 +45,16 @@
 
 .left_half {
 	padding-right: 5px;
+	height: 100%;
 }
 
 .right_half {
 	padding-left: 5px;
 }
-
-.wrapper div {
+.event__date, .event__content{
+	height: 30px;
+}
+.wrapper .right_half div {
 	height: 100%;
 }
 
@@ -96,6 +99,21 @@
 	display: inline;
 	float: right;
 }
+
+#getmyplanbtn {
+	float: left;
+}
+
+.mapsinfo {
+	position: absolute;
+	font-weight: bold;
+	background-color:white;
+	line-height: 30px;
+	top:-50px;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-top: 1px solid black;
+}
 </style>
 
 <script>
@@ -114,12 +132,10 @@ $(document).ready(function(){
 		  data: {article:article},
 		  success:function(good){
 			  console.log("asdasd");
-			
 				 $("#goodbtn").html(""); 
 				 $("#goodbtn").html('<i class="fas fa-heart"></i>'+good);
-				  
 		  }
-		});
+	});
 			
 	});
 	$("#badbtn").click(function(){	
@@ -131,12 +147,8 @@ $(document).ready(function(){
 		  data: {article:article},
 		  success:function(bad){
 			  console.log("asdasd");
-			 
 				 $("#badbtn").html(""); 
 				 $("#badbtn").html('<i class="far fa-frown"></i>'+bad);
-			
-			
-			  
 		  }
 		});
 			
@@ -146,10 +158,7 @@ $(document).ready(function(){
 });
 
 </script>
-
 </head>
-
-
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
@@ -206,7 +215,7 @@ $(document).ready(function(){
 					<input type="hidden" id="plan_seq" value="${plan_seq }">
 					<div role="tabpanel" class="tab-pane fade show active"
 						id="Day${day}">
-						<table class="table table-striped" id="schedule-table">
+						<table class="table table-hover" id="schedule-table">
 							<c:if test="${isFirst }">
 								<thead>
 									<tr>
@@ -286,7 +295,7 @@ $(document).ready(function(){
 			<button type="button" class="btn btn-outline-primary" id="badbtn">
 				<i class="far fa-frown"></i>${bad}
 			</button>
-			<button class="btn btn-outline-success">스크랩</button>
+			<button class="btn btn-outline-success" id="getmyplanbtn">내 일정으로 가져가기</button>
 
 			<button class="btn btn-default" style="float: right;">신고</button>
 		</div>
@@ -381,6 +390,7 @@ $(document).ready(function(){
 		location.href = "planboard.plan";
 	})
 	
+	markerlocation = [];
 	$.ajax({
 		url:"planviewlist.Ajax",
 		type:"post",
@@ -388,8 +398,8 @@ $(document).ready(function(){
 		success:function(data){		
 			var obj = JSON.parse(data);
 			
-			var markerlocation = [],
-		   	 timeline = [];
+			
+		   timeline = [];
 
 		// 다중 마커에 정보창 띄우기
 			var markers = [],
@@ -397,7 +407,7 @@ $(document).ready(function(){
 
 
 		// 받아온 jsonArry 정보를 이용해 배열에 넣음 
-			var makeMarkerArray = function () {
+		var makeMarkerArray = function () {
 		    if (obj.jLocationList[0] == null && obj.jTimeLine[0] == null) {
 		        alert("정보나 넣고 오시지.. 서울시청으로 가드림^^");
 		        markerlocation.push({ location_name: "서울시청", location_x: 309852, location_y: 552189 });
@@ -407,7 +417,7 @@ $(document).ready(function(){
 			
 		    
 		    var jsonArray = obj.jLocationList;
-		    var timejsonArray = obj.jTimeLine;
+		    timelineArray = obj.jTimeLine;
 
 		    for (var i = 0; i < jsonArray.length; i++) {
 		        let markerObj = {
@@ -417,11 +427,11 @@ $(document).ready(function(){
 		        }
 		        markerlocation.push(markerObj);
 		    }
-		    
-		    for (var i = 0; i < timeline.length; i++) {
+
+		    for (var i = 0; i < timelineArray.length; i++) {
 		        let timelineObj = {
-		            date: timejsonArray[i].day_seq,
-		            content: timejsonArray[i].location_name,
+		            date: timelineArray[i].day_seq+"일차",
+		            content: timelineArray[i].location_name,
 		        }
 		        timeline.push(timelineObj);
 		    }
@@ -431,7 +441,7 @@ $(document).ready(function(){
 		// 네이버 지도 생성
 		var map = new naver.maps.Map('map', {
 		    center: new naver.maps.Point(markerlocation[0].location_x, markerlocation[0].location_y),
-		    zoom: 5,
+		    zoom: 9,
 		    mapTypeId: 'normal',
 		    mapTypes: new naver.maps.MapTypeRegistry({
 		        'normal': naver.maps.NaverMapTypeOption.getNormalMap({
@@ -448,7 +458,7 @@ $(document).ready(function(){
 		    eventsPerSlide: 4,
 		    slide : 1,
 		    prevArrow : '<i class="fas fa-angle-left"></i>',
-		    nextArrow : '<i class="fas fa-angle-right"></i>'
+		    nextArrow : '<i class="fas fa-angle-right"></i>',
 		});
 
 		// 좌표에 마커를 찍고 정보를 보여줌
@@ -461,8 +471,9 @@ $(document).ready(function(){
 		        });
 
 		        var infoWindow = new naver.maps.InfoWindow({
-		            content: '<div id="mapsinfo" style="width:150px; height:50px;text-align:center;padding:10px;">' + markerArray[i].location_name + '</div>'
+		            content: '<div class="mapsinfo" style="position:absolute;width:180px; height:50px;text-align:center;padding:10px;"><p>' + markerArray[i].location_name + '</p></div>'
 		        });
+		        
 		        
 		        markers.push(marker);
 		        infoWindows.push(infoWindow);
@@ -475,10 +486,7 @@ $(document).ready(function(){
 		naver.maps.Event.addListener(map, 'idle', function () {
 		    updateMarkers(map, markers);
 		})
-		
-		// 마커눌러서 정보표시
-		
-
+	
 		// 지도가 멈췄을때 마커가 경계 밖에 있으면 보이지 않음
 		function updateMarkers(map, markers) {
 		    var mapBounds = map.getBounds();
@@ -526,13 +534,23 @@ $(document).ready(function(){
 		    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
 		}
 		}
+		
+		
 	});
 	
 	/* $.getJSON("planviewlist.Ajax", function(data) {
 		// 마커에 입력할 배열과 타임라인 정보를 입력할 배열
 		
 	}) */
-
+	
+	$("#schedule-table").on('click','.clickable-row',function(event) {
+		$(this).addClass('select').siblings().removeClass('active');
+		$(".select").on("click", function(e) {
+		    e.preventDefault();
+		    map.panTo(new naver.maps.LatLng(markerlocation[i].location_x, markerlocation[i].location_y));
+		});
+	});
+	
  
    </script>
 </body>

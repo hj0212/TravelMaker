@@ -70,7 +70,6 @@ public class AjaxController extends HttpServlet {
 			JsonArray jTimeLine = new Gson().toJsonTree(timelinelist).getAsJsonArray();
 			obj.add("jLocationList", jLocationList);
 			obj.add("jTimeLine", jTimeLine);
-			System.out.println(obj.toString());
 			PrintWriter pw = response.getWriter();
 			pw.print(obj.toString());
 			pw.flush();
