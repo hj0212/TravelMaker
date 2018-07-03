@@ -131,7 +131,7 @@ public class PlanDAO {
 		if(rs.next()) {
 			result = rs.getInt(1);
 		}
-		
+
 		rs.close();
 		con.close();
 		pstmt.close();

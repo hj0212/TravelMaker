@@ -8,6 +8,7 @@ import java.util.List;
 
 import DBUtils.DBConnection;
 import dto.FreeboardDTO;
+import dto.MemberDTO;
 import dto.ReportFreeDTO;
 
 public class AdminDAO {
@@ -37,21 +38,74 @@ public class AdminDAO {
 		return list;
 	}
 	
-	public int insertArticle(int writer, String title, String contents) throws Exception {
-		Connection conn = DBConnection.getConnection();
-		String sql = "INSERT INTO freeboard values(freeboard_seq.nextval,?,?,?,sysdate,0)";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, title);
-		pstmt.setString(2, contents);
-		pstmt.setInt(3, writer);
+	
+	//--------------------------------------------------회원관리	
+	//-----------------------------모든 회원정보 가져오기
+	
+	public List<MemberDTO> getAllMembers() throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from users order by seq desc";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		List<MemberDTO> result = new ArrayList<>();
+		while(rs.next()) {
+			MemberDTO mdto = new MemberDTO();
+			mdto.setSeq(rs.getInt("seq"));
+			mdto.setUserid(rs.getString("userId"));
+			mdto.setNickname(rs.getString("nickname"));
+			mdto.setEmail(rs.getString("email"));
+			mdto.setPart(rs.getString("part"));
+			mdto.setCreate_date(rs.getString("create_date"));
+			mdto.setBlock(rs.getString("block"));
+			result.add(mdto);		
+		}
 		
-		int result = pstmt.executeUpdate();
-		
-		conn.commit();
+		rs.close();
 		pstmt.close();
-		conn.close();
+		con.close();	
+		return result;		
+	}
+ //------------------------------------회원 block 걸기/해제
+	public int changeBlock(int seq, String isBlocked)throws Exception{
+		Connection con = DBConnection.getConnection();
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		if(isBlocked.equals("n")) {
+				String sql2 = "update users set block =? where seq=?";
+				pstmt=con.prepareStatement(sql2);
+				pstmt.setString(1, "y");
+				pstmt.setInt(2, seq);
+				result = pstmt.executeUpdate();
+		}else if(isBlocked.equals("y")) {
+				String sql2 = "update users set block =? where seq=?";
+				pstmt=con.prepareStatement(sql2);
+				pstmt.setString(1, "n");
+				pstmt.setInt(2, seq);
+				result = pstmt.executeUpdate();
+		}		
+		con.close();
+		pstmt.close();
 		return result;
 	}
+//-----------------------------------------회원 block여부확인	
+	public String checkBlock(int seq)throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql1 = "select block from users where seq=?";
+		String isBlocked="";
+		PreparedStatement pstmt=con.prepareStatement(sql1);	
+		pstmt.setInt(1, seq);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()) {
+			isBlocked = rs.getString("block");
+		}	
+		con.close();
+		rs.close();
+		pstmt.close();
+		return isBlocked;
+	}
+	
+
 	
 	
 

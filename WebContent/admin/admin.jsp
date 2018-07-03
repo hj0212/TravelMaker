@@ -42,14 +42,14 @@
 						id="sidebar-wrapper" role="navigation">
 					<ul class="nav sidebar-nav">
 						<li class="sidebar-brand"><a href="#"> TravelMaker </a></li>
-						<li><a href="#">Members</a></li>
+						<li><a href="../showMembers.ad">Members</a></li>
 						<li><a href="#">Log</a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown">Pages<span class="caret"></span></a>
+							data-toggle="dropdown">Reports<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li class="dropdown-header">신고 확인</li>
-								<li><a href="../admin_free.ad">FreeBoard</a></li>
-								<li><a href="../admin_plan.ad">Share_Plan</a></li>
+								<li class="dropdown-header">Pages</li>
+								<li><a href="admin_free.ad">FreeBoard</a></li>
+								<li><a href="admin_plan.ad">Share_Plan</a></li>
 							</ul></li>
 						<li><a href="#">Contact</a></li>
 					</ul>
@@ -80,7 +80,7 @@
 									<table class="table col-md-12">
 										<thead>
 											<tr>
-												<th colspan=6 class="text-center">회원 관리</th>
+												<th colspan=7 class="text-center">회원 관리</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -90,6 +90,7 @@
 												<th>닉네임</th>
 												<th>이메일</th>
 												<th>가입경로</th>
+												<th>가입날짜</th>
 												<th>차단여부</th>
 											</tr>
 
@@ -100,6 +101,7 @@
 													<td>${m.nickname}</td>
 													<td>${m.email}</td>
 													<td>${m.part}</td>
+													<td>${m.create_date}</td>
 													<td class="vertical-align-middle">
 													<c:choose>
 													<c:when test="${m.block =='n'}">

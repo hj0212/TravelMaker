@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.SendMail;
+import dao.AdminDAO;
 import dao.MemberDAO;
 import dao.ReviewDAO;
 import dto.MemberDTO;
@@ -31,6 +32,7 @@ public class MemberController extends HttpServlet {
 
 			ReviewDAO rdao = new ReviewDAO();
 			MemberDAO mdao = new MemberDAO();
+			AdminDAO adao = new AdminDAO();
 
 			boolean isForward = true;
 			String dst = null;
@@ -339,7 +341,7 @@ public class MemberController extends HttpServlet {
 			//-----------------------admin.jsp > 모든 회원 리스트보기
 			else if(command.equals("/showMembers.do")) {
 				List<MemberDTO> mlist = new ArrayList<>(); 
-				mlist=mdao.getAllMembers();
+				mlist=adao.getAllMembers();
 				request.setAttribute("memberList", mlist);
 				
 				isForward = true;
@@ -349,9 +351,9 @@ public class MemberController extends HttpServlet {
 			//-----------------------admin.jsp > 회원계정 차단
 			else if(command.equals("/blockMember.do")) {
 				int seq = Integer.parseInt(request.getParameter("sequence"));
-				String isBlocked = mdao.checkBlock(seq);
+				String isBlocked = adao.checkBlock(seq);
 				
-				int result = mdao.changeBlock(seq,isBlocked);
+				int result = adao.changeBlock(seq,isBlocked);
 				System.out.println("블럭결과"+result);
 				request.setAttribute("blockResult", result);
 				isForward = true;
