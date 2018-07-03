@@ -28,7 +28,7 @@ public class FreeCommentDAO {
 	
 	public List<FreeCommentDTO> viewCommentList(int seq) throws Exception{
 		Connection conn = DBConnection.getConnection();
-		String sql = "SELECT * FROM FREE_COMMENT WHERE FREE_SEQ = ?";
+		String sql = "SELECT * FROM FREE_COMMENT WHERE FREE_SEQ = ? ORDER BY COMMENT_SEQ ASC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, seq);
 		ResultSet rs = pstmt.executeQuery();
@@ -37,11 +37,11 @@ public class FreeCommentDAO {
 		
 		while(rs.next()) {
 			FreeCommentDTO dto = new FreeCommentDTO();
-			dto.setFree_seq(rs.getInt(1));
+			dto.setComment_seq(rs.getInt(1));
 			dto.setComment_text(rs.getString(2));
 			dto.setComment_writer(rs.getInt(3));
 			dto.setComment_time(rs.getString(4));
-			dto.setComment_seq(rs.getInt(5));
+			dto.setFree_seq(rs.getInt(5));
 			list.add(dto);
 		}
 		
@@ -68,7 +68,7 @@ public class FreeCommentDAO {
 	
 	public int addViewCount(int articleseq) throws Exception {
 		Connection conn = DBConnection.getConnection();
-		String sql = "UPDATE freeboard set free_viewcount = free_viewcount + 1 where free_seq = ?";
+		String sql = "UPDATE freeboard_c set free_viewcount = free_viewcount + 1 where free_seq = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, articleseq);
 		

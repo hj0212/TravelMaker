@@ -103,7 +103,6 @@ div {
 		
 	</div>
 	<div id="footer">
-		<%@include file="footer1.jsp"%>
 	</div>
 	<script>
 		$("#searchbtn").click(function() {
