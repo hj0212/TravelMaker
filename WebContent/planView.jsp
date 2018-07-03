@@ -386,11 +386,13 @@ $(document).ready(function(){
 		}
 	})
 	
-	$("#listbtn").click(function() {
-		location.href = "planboard.plan";
-	})
+	$("#listbtn").click(function() {	
+			location.href = "planboard.plan?currentPage=${currentPage}";
 	
-	markerlocation = [];
+		
+		
+	});
+	plan_seq = $("input[id='plan_seq']").val();
 	$.ajax({
 		url:"planviewlist.Ajax",
 		type:"post",

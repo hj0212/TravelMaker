@@ -981,7 +981,18 @@ public class PlanDAO {
 		rs.close();
 		
 		return sb.toString();
-	}	
-	
-	
+	}
+	public int planViewCount(int plan_seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "UPDATE plan set plan_viewcount = plan_viewcount + 1 where plan_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, plan_seq);
+		
+		int result = pstmt.executeUpdate();
+		
+		conn.commit();
+		pstmt.close();
+		conn.close();
+		return result;
+	}
 }
