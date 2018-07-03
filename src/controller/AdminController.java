@@ -36,7 +36,7 @@ public class AdminController extends HttpServlet {
 			boolean isForward = true;
 			String dst = null;
 
-			//-----------------------admin.jsp > ��� ȸ�� ����Ʈ����
+			//-----------------------admin.jsp > 占쏙옙占� 회占쏙옙 占쏙옙占쏙옙트占쏙옙占쏙옙
 			if(command.equals("/showMembers.ad")) {
 				List<MemberDTO> mlist = new ArrayList<>(); 
 				mlist=adao.getAllMembers();
@@ -45,19 +45,19 @@ public class AdminController extends HttpServlet {
 				dst = "admin/admin.jsp";
 			}
 			
-			//-----------------------admin.jsp > ȸ������ ����
+			//-----------------------admin.jsp > 회占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 			else if(command.equals("/blockMember.ad")) {
 				int seq = Integer.parseInt(request.getParameter("sequence"));
 				String isBlocked = adao.checkBlock(seq);
 				
 				int result = adao.changeBlock(seq,isBlocked);
-				System.out.println("�����"+result);
+				System.out.println("占쏙옙占쏙옙占�"+result);
 				request.setAttribute("blockResult", result);
 				isForward = true;
 				dst = "admin/admin.jsp";
 			}
 			
-			//--------------------------admin_free > �Ű� ����Ʈ �ҷ�����
+			//--------------------------admin_free > 占신곤옙 占쏙옙占쏙옙트 占쌀뤄옙占쏙옙占쏙옙
 			else if(command.equals("/admin_free.ad")) {
 				System.out.println("들어옴");
 				List<ReportFreeDTO> flist = new ArrayList<>();
