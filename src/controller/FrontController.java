@@ -341,10 +341,30 @@ public class FrontController extends HttpServlet {
 	        		  dst = "reviewboard/writeReviewArticle.jsp";
 	        	  }
 	          }else if(command.equals("/writeReviewArticle.bo")) {
+	        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+	        	  String title = request.getParameter("title");
 	        	  String contents = request.getParameter("contents");
-	        	  System.out.println(contents.length());
 	        	  
-	        	  dst= "reviewboard.bo";
+	        	  if(user == null) {
+	        		  isForward = false;
+	        	  }else {
+	        		  if(contents.length() > 65535) {
+	        			  isForward = false;
+	        		  }else {
+		  				if((title == null || title == "") && (contents == null || contents == "")) {
+							title = "제목없음";
+						}else if(contents == null || contents == "" ) {
+							contents = "내용없음";
+						}else if(title == null || title == "") {
+							title = "제목없음";
+							contents = "내용없음";
+						}
+		  				
+//		  				int result = rdao.insertReview(title, contents, user.getSeq());
+	        		  }
+	        	  }
+	        	  
+	        	  dst = "reviewboard.bo";
 	          }
 	        	  
 			if(isForward) {

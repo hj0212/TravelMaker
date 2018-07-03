@@ -1,5 +1,8 @@
 package dao;
 
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,6 +39,36 @@ public class ReviewDAO {
 		rs.close();
 		pstmt.close();
 		con.close();
+		return result;
+	}
+	
+	private String clobToString(Clob clob) throws Exception{
+		StringBuffer sb = new StringBuffer();
+		BufferedReader br = new BufferedReader(clob.getCharacterStream());
+		String ts = "";
+		while((ts=br.readLine()) != null) {
+			sb.append(ts);
+		}
+		
+		br.close();
+		return sb.toString();
+	}
+	
+	public int insertReview(String title, String contents, int writer) throws Exception{
+		Connection conn = DBConnection.getConnection();
+		String sql = "INSERT INTO reviewboard_c values(reviewboard_seq.nextval,?,?,?,sysdate,0)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, title);
+		StringReader sr = new StringReader(contents);
+		pstmt.setCharacterStream(2, sr, contents.length());
+		pstmt.setInt(3, writer);
+		
+		int result = pstmt.executeUpdate();
+		
+		conn.commit();
+		pstmt.close();
+		conn.close();
+		
 		return result;
 	}
 
