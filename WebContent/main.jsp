@@ -18,15 +18,11 @@
 
 <link rel="stylesheet" href="source/css/mainPage.css">
 <link rel="stylesheet" type="text/css" href="source/lib/slick/slick.css" />
-<link rel="stylesheet" type="text/css"
-	href="source/lib/slick/slick-theme.css" />
+  <link rel="stylesheet" type="text/css"
+	href="source/lib/slick/slick-theme.css" /> 
 <style>
 div {
 	box-sizing: border-box;
-}
-
-.container {
-	height: 100%;
 }
 
 #bestPlan {

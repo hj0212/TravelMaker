@@ -26,8 +26,7 @@
 <style type="text/css">
 * {
 	padding: 0;
-	margin: 0;
-	text-align: center;
+	margin: 0;	
 }
 
 .container {
@@ -86,7 +85,7 @@
 #planinfoarea {
 	text-align: left;
 	height: 36px;
-	line-height: 36px;
+	
 }
 
 #planinfoarea p {
