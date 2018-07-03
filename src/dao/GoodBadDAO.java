@@ -3,10 +3,15 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import DBUtils.DBConnection;
+import dto.MemberDTO;
+import dto.PlanDTO;
 
 public class GoodBadDAO {
+	private MemberDAO mdao = new MemberDAO();
 	//review좋아요 등록
 	public int reviewGoodInsertData(int article,int user_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
@@ -277,4 +282,28 @@ public class GoodBadDAO {
 			
 			return check;		
 		}
+		//내가 좋아요한 plan 게시물 아티클 번호들 
+		public List<PlanDTO> favoriteData(int goodId)throws Exception {
+			Connection con = DBConnection.getConnection();
+			String sql ="select * from plan, (select article_no from good_plan, users where seq=user_seq and seq = ? order by good_plan_seq desc) where plan_seq = article_no ";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1,goodId);
+			ResultSet rs = pstmt.executeQuery();
+			List<PlanDTO> result = new ArrayList<>(); 
+			while(rs.next()) {
+				PlanDTO pdto = new PlanDTO();
+				pdto.setPlan_title(rs.getString("PLAN_TITLE"));
+				pdto.setPlan_seq(rs.getInt("PLAN_SEQ"));
+				pdto.setPlan_writerN(mdao.getUserNickname(rs.getInt("PLAN_WRITER")));
+				pdto.setPlan_viewcount(rs.getInt("plan_viewcount"));
+				pdto.setPlan_good(rs.getInt("plan_good"));
+				result.add(pdto);
+			}
+			con.close();
+			rs.close();
+			pstmt.close();
+			return result;
+			
+		}
+		
 }

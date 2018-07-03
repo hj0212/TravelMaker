@@ -214,22 +214,14 @@ public class PlanController extends HttpServlet {
 				
 				isForward= true;
 				dst="planCommentView.jsp";
-			}else if(command.equals("deletePlanComment.plan")) {
-			
+			}else if(command.equals("/deletePlanComment.plan")) {
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
-			
 				int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
-				
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-				
 				int writer = user.getSeq();
-				
-			
-
 				int result = pdao.deletePlanComment(comment_seq, writer);
 				request.setAttribute("result", result);
 				request.setAttribute("plan_seq", plan_seq);
-				
 				
 				isForward= true;
 				dst = "deletePlanCommentView.jsp";
