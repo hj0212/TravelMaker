@@ -296,7 +296,7 @@
 			</div>
 			<script></script>
 		</div>
-
+		<div class="row" style="padding-left:15px;">
 		<div id="plan-board">
 			<form method="post" id="scheduleform">
 				<input type="hidden" name="plan" value="${param.plan}"> 
@@ -388,7 +388,7 @@
 				</div>
 			</form>
 		</div>
-		
+		</div>
 		<!-- <div style="width: 40%; float: right" id="plan-div">
 			<div style="text-align: right">
 				<button class="btn btn-inline-primary btn-lg" id="endbtn">여행계획
@@ -432,7 +432,7 @@
             </div>
         </div>
     </div>
-    <div class="footer">
+    <div class="footer" style="height: 300px;">
     <%@include file="footer1.jsp"%>
     </div>
 <script>

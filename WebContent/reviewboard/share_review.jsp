@@ -45,7 +45,7 @@ div {
 </style>
 </head>
 <body>
-	<%@include file="include/mainNavi.jsp"%>
+	<%@include file="../include/mainNavi.jsp"%>
 	<div class="container">
 		<h1 class="divLine">계획, 그리고</h1>
 		<hr />
@@ -103,11 +103,14 @@ div {
 		
 	</div>
 	<div id="footer">
-		<%@include file="footer1.jsp"%>
 	</div>
 	<script>
 		$("#searchbtn").click(function() {
 			location.href = "reviewboard.bo?search=" + $("#search").val();
+		})
+		
+		$("#writebtn").click(function() {
+			location.href = "writeReview.bo";
 		})
 	</script>
 </body>
