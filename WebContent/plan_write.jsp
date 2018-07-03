@@ -154,7 +154,7 @@
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
 				name="plantitle" value="${plan_title}" readonly>
-			<button type="button" class="btn btn-primary">저장 후 나가기</button>
+			<button type="button" class="btn btn-primary" id="endbtn">저장 후 나가기</button>
 		</div>
 		<!-- 여기 몇일 여행인지 받아서 개수만큼 돌리기 -->
 		<div class="row col-md-12 days mt-0">
@@ -299,9 +299,9 @@
 
 		<div id="plan-board">
 			<form method="post" id="scheduleform">
-				<input type="hidden" name="plan" value="${param.plan}"> <input
-					type="hidden" name="day" value="${param.day}"> <input
-					type="hidden" name="schedule_seq" value="0">
+				<input type="hidden" name="plan" value="${param.plan}"> 
+				<input type="hidden" name="day" value="${param.day}"> 
+				<input type="hidden" name="schedule_seq" value="">
 				<input type="hidden" name="delseq" value="">
 				<table class="table table-bordered" id="schedule-boarder">
 					<thead>
@@ -433,25 +433,7 @@
 <script>
 $(document).ready(function() {
 	$("#endbtn").click(function() {
-		/*$("#schedule-plan tr:last").remove();
-		$("#schedule-plan thead tr th:last").remove();
-		$("#schedule-plan tbody tr td:last").remove();
-		
-		var table = $("#schedule-plan").tableToJSON();
-		var table_json = JSON.stringify(table);
-		alert(table_json);
-		
-		 $.ajax({
-			url:"saveschedules.plan",
-			dataType:"json",
-			type:"POST",
-			data:table_json,
-			contentType:"application/x-www-form-urlencoded",
-			success: function() {
-			},
-			error:function() {
-			}
-		}) */
+		location.href = "planboard.plan";
 	});
 
 	budgetcount = 1;

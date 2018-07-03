@@ -90,6 +90,24 @@
 	  $(".confirm-password-row").hide();
 	  $(".btn-login").text("Log in");
 	  
+
+	     $(document).keydown(function(key) {   
+	         if (key.keyCode == 13) {
+	            var userid = $("#userid").val();
+	            var password = $("#password").val();
+	            if($(".btn-login").text()=="Log in") {
+	               $("#userform").attr('action','login.do').submit();
+	            }else if(userid==""){
+	               alert("ID를 입력해주세요");
+	            }else if(password==""){
+	               alert("Password를 입력해주세요")
+	            }
+	         }
+
+	         });
+	      
+	  
+	  
 	  $(".btn-login").click(function() {
 		  if($(".btn-login").text()=="Log in") {
 			  console.log("로그인");
