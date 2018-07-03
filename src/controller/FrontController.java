@@ -207,9 +207,6 @@ public class FrontController extends HttpServlet {
 	             int result = rdao.insertReviewComment(comment_text,user,review_seq);
 	             request.setAttribute("result", result);
 	             request.setAttribute("review_seq", review_seq);
-
-	           
-	             
 	  
 	             isForward = true;
 	             dst= "reviewCommentView.jsp";
@@ -340,8 +337,6 @@ public class FrontController extends HttpServlet {
 	        	
 	        	isForward=true;
 	        	dst="main.jsp";
-	        	
-	        	
 	          }
 	        	  
 			if(isForward) {
