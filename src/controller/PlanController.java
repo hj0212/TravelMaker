@@ -236,6 +236,7 @@ public class PlanController extends HttpServlet {
 				
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
 				List<PlanCommentDTO> result1 = pdao.getAllPlanComments(plan_seq);
+				int viewcount = pdao.planViewCount(plan_seq);
 				int bad = gbdao.planBadSelectData(plan_seq);
 				int good = gbdao.planGoodSelectData(plan_seq);
 				PlanDTO plan = pdao.getPlandata(plan_seq);

@@ -176,7 +176,7 @@ public class FrontController extends HttpServlet {
 	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 	             rdao.getArticleViewCount(review_seq);
 //	             int listcurrentPage =Integer.parseInt(request.getParameter("listcurrentPage"));
-	             
+	             int review = rdao.reViewCount(review_seq);
 	             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
 	             request.setAttribute("review_seq", review_seq);
 	             request.setAttribute("review_title", result1.getReview_title());
