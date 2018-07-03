@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="util" uri="/WEB-INF/tlds/writerToString.tld" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -201,14 +202,14 @@ $(document).ready(function(){
          <button type="button"
             style="border: none; background-color: white; cursor: pointer;"
             id="comment-bnt">댓글보기▼</button>
-         <form action="addReviewComment.bo?review_seq=${review_seq}"
-            method="post" id="reviewCommentForm">
+         <form action="addReviewComment.bo" method="post" id="reviewCommentForm">
             <div style="width: 100%; margin: 0px;">
                <div style="width: 80%">
                   <textarea class="form-control" rows="3" id="comment_text"
                      name="comment_text"
                      style="resize: none; width: 100%; margin: 0px; float: left;"
                      maxlength="70"></textarea>
+                   <input type="text" style="display:none" name="review_seq" readonly value="${review_seq}">
                </div>
                <div
                   style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
@@ -227,8 +228,22 @@ $(document).ready(function(){
                </tr>
             </thead>
             <tbody>
-
-
+	            <c:forEach var="comment" items="${commentResult}">
+					<tr>
+						<c:set var='writer' value="${comment.comment_writer}" scope="page"/>  
+						<th scope="row" style="width: 15%; max-width: 15%; max-height: 51px;" class="writer">${util:getUserNickname(writer)}</th>
+						<td style="width: 70%; max-width: 70%;">${comment.comment_text}</td>
+						<td style="width: 15%; font-size: 10px;">${comment.comment_time}
+							<button type="button" class="close" aria-label="Close">
+								<c:if test="${sessionScope.user.seq eq comment.comment_writer}">
+									<a href="deleteFreeComment.bo?articleseq=${comment.free_seq}&commentseq=${comment.comment_seq}&commentwriter=${comment.comment_writer}">
+										<span aria-hidden="true"">&times;</span>
+									</a>
+								</c:if>
+							</button>
+						</td>
+					</tr>
+				</c:forEach>
             </tbody>
          </table>
       </div>
