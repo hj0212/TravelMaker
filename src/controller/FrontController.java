@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.FreeCommentDAO;
 import dao.FreeboardDAO;
 import dao.MemberDAO;
 import dao.ReviewDAO;
+import dto.FreeCommentDTO;
 import dto.FreeboardDTO;
 import dto.MemberDTO;
 import dto.ReviewCommentDTO;
@@ -36,11 +38,12 @@ public class FrontController extends HttpServlet {
 			MemberDAO mdao = new MemberDAO();
 			FreeboardDAO fbdao = new FreeboardDAO();
 			ReviewDAO rdao = new ReviewDAO();
+			FreeCommentDAO fcdao = new FreeCommentDAO();
 		
 
 			boolean isForward = true;
 			String dst = null;
-
+			
 			if(command.equals("/freeboard.bo")) {
 				try {
 					int currentPage = 0;
@@ -113,10 +116,22 @@ public class FrontController extends HttpServlet {
 						isForward = false;
 						dst = "login.bo";
 					}else {
+						int result = fcdao.addViewCount(seq);
 						FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
 						int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
 						String nickname = mdao.getUserNickname(writerNumber);
 						
+						List<FreeCommentDTO> cdto = fcdao.viewCommentList(seq);
+						
+//						for(FreeCommentDTO tmp : cdto) {
+//							System.out.println(tmp.getFree_seq());
+//							System.out.println(tmp.getComment_seq());
+//							System.out.println(tmp.getComment_text());
+//							System.out.println(tmp.getComment_writer());
+//							System.out.println(tmp.getComment_time());
+//						}
+						
+						request.setAttribute("commentList", cdto);
 						request.setAttribute("currentPage", currentPage);
 						request.setAttribute("article", boardDTO);
 						request.setAttribute("writer", nickname);
@@ -193,7 +208,7 @@ public class FrontController extends HttpServlet {
 	  
 	             isForward = true;
 	             dst= "reviewCommentView.jsp";
-	          }else if(command.equals("/deleteArticle.bo")) {
+	          }else if(command.equals("/deleteReviewArticle.bo")) {
 	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 	        	  int result = rdao.deleteReview(review_seq);
 	        	  
@@ -275,7 +290,34 @@ public class FrontController extends HttpServlet {
 	        		  dst = "numberError.bo";
 	        		  isForward = false;
 	        	  }
+	          }else if(command.equals("/procFreeComment.bo")) {
+	        	  int aritcleseq = Integer.parseInt(request.getParameter("articlenum"));
+	        	  String comment = request.getParameter("comment");
+	        	  MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+	        	  int writer = dto.getSeq();
+	        	  
+	        	  int result = fcdao.insertComment(aritcleseq,comment,writer);
+	        	  System.out.println(aritcleseq + " : " + comment + " : " + writer);
+	        	  dst = "viewFreeArticle.bo?seq="+aritcleseq;
+	          }else if(command.equals("/deleteFreeComment.bo")) {
+	        	  try {
+		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        	  
+		        	  int articleseq = Integer.parseInt(request.getParameter("articleseq"));
+		        	  int commentseq = Integer.parseInt(request.getParameter("commentseq"));
+		        	  
+		        	  if(user.getSeq() == Integer.parseInt(request.getParameter("commentwriter"))) {
+		        		  int result = fcdao.deleteComment(articleseq, commentseq);
+		        	  }
+		        	  
+		        	  isForward = false;
+		        	  dst = "viewFreeArticle.bo?seq="+articleseq;
+	        	  }catch(NumberFormatException e) {
+	        		  dst = "numberError.bo";
+	        		  isForward = false;
+	        	  }
 	          }
+	        	  
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
