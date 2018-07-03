@@ -48,8 +48,8 @@
 							data-toggle="dropdown">Reports<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li class="dropdown-header">Pages</li>
-								<li><a href="admin_free.ad">FreeBoard</a></li>
-								<li><a href="admin_plan.ad">Share_Plan</a></li>
+								<li><a href="../admin_free.ad">FreeBoard</a></li>
+								<li><a href="../admin_plan.ad">Share_Plan</a></li>
 							</ul></li>
 						<li><a href="#">Contact</a></li>
 					</ul>
@@ -63,7 +63,6 @@
 						</button>
 
 						<div class="container">
-
 							<div class="row">
 								<div class="input-group mt-2 col-md-6 col-md-offset-3 "
 									id="search_area">
@@ -129,10 +128,8 @@
 											<td class="vertical-align-middle"><c:choose>
 													<c:when test="${m.block =='n'}">
 														<div class="TriSea-technologies-Switch">
-															<input id="TriSeaDanger${status.index}" name="TriSea1"
-																type="checkbox" /> <label
-																for="TriSeaDanger${status.index}" class="label-danger"
-																name="TriSea2"></label>
+															<input id="TriSeaDanger${status.index}" name="TriSea1" type="checkbox" /> 
+															<label for="TriSeaDanger${status.index}" class="label-danger"name="TriSea2"></label>
 														</div>
 													</c:when>
 													<c:when test="${m.block =='y'}">
@@ -197,21 +194,10 @@
 														'toggled');
 											});
 
-									$(
-											'.TriSea-technologies-Switch>input[name="TriSea1"]')
-											.click(
-													function() {
-
-														var willBlock = $(this)
-																.parent()
-																.parent()
-																.parent()
-																.find(
-																		'th[name="here"]')
-																.html();
-
-														$
-																.ajax({
+									$('.TriSea-technologies-Switch>input[name="TriSea1"]').click(
+											function() {
+											var willBlock = $(this).parent().parent().parent().find('th[name="here"]').html();
+														$.ajax({
 																	url : "blockMember.do",
 																	type : "get",
 																	data : {
@@ -231,8 +217,7 @@
 
 				$("#searchbtn").click(
 						function() {
-							location.href = "showMembers.ad?search="
-									+ $("#search").val();
+							location.href = "showMembers.ad?search="+ $("#search").val();
 						})
 			</script>
 

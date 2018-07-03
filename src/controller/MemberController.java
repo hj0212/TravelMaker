@@ -354,7 +354,6 @@ public class MemberController extends HttpServlet {
 				String isBlocked = adao.checkBlock(seq);
 				
 				int result = adao.changeBlock(seq,isBlocked);
-				System.out.println("블럭결과"+result);
 				request.setAttribute("blockResult", result);
 				isForward = true;
 				dst = "admin/admin.jsp";

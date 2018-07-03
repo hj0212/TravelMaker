@@ -51,7 +51,7 @@ public class AdminController extends HttpServlet {
 				String isBlocked = adao.checkBlock(seq);
 				
 				int result = adao.changeBlock(seq,isBlocked);
-				System.out.println("占쏙옙占쏙옙占�"+result);
+				System.out.println("블락성공");
 				request.setAttribute("blockResult", result);
 				isForward = true;
 				dst = "admin/admin.jsp";

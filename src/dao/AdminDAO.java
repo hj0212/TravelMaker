@@ -44,7 +44,7 @@ public class AdminDAO {
 	
 	public List<MemberDTO> getAllMembers() throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from users order by seq desc";
+		String sql = "select seq, userid,password,email,nickname,naver_nickname,naver_email,kakao_nickname,kakao_email,to_char(create_date,'YY/MM/DD')create_date,part,block from users order by seq desc";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		List<MemberDTO> result = new ArrayList<>();
@@ -52,19 +52,23 @@ public class AdminDAO {
 			MemberDTO mdto = new MemberDTO();
 			mdto.setSeq(rs.getInt("seq"));
 			mdto.setUserid(rs.getString("userId"));
-			mdto.setNickname(rs.getString("nickname"));
 			mdto.setEmail(rs.getString("email"));
+			mdto.setNickname(rs.getString("nickname"));
+			mdto.setNaver_nickname(rs.getString("naver_nickname"));
+			mdto.setNaver_email(rs.getString("naver_email"));
+			mdto.setKakao_nickname(rs.getString("kakao_nickname"));
+			mdto.setKakao_email(rs.getString("kakao_email"));
 			mdto.setPart(rs.getString("part"));
 			mdto.setCreate_date(rs.getString("create_date"));
 			mdto.setBlock(rs.getString("block"));
 			result.add(mdto);		
-		}
-		
+		}	
 		rs.close();
 		pstmt.close();
 		con.close();	
 		return result;		
 	}
+	
  //------------------------------------회원 block 걸기/해제
 	public int changeBlock(int seq, String isBlocked)throws Exception{
 		Connection con = DBConnection.getConnection();
@@ -84,7 +88,8 @@ public class AdminDAO {
 				pstmt.setInt(2, seq);
 				result = pstmt.executeUpdate();
 		}		
-		con.close();
+		con.commit();
+		con.close();		
 		pstmt.close();
 		return result;
 	}
@@ -109,64 +114,6 @@ public class AdminDAO {
 	
 	
 
-	
-	public int writerCheck(int seq) throws Exception {
-		Connection conn = DBConnection.getConnection();
-		String sql = "select free_writer from freeboard where free_seq = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, seq);
-		ResultSet rs = pstmt.executeQuery();
-		int writer = 0;
-		
-		if(rs.next()) {
-			writer = rs.getInt(1);
-		}
-		rs.close();
-		pstmt.close();
-		conn.close();
-		
-		return writer;
-	}
-	
-	public ArrayList<FreeboardDTO> selectBoard(int startNum, int endNum, String searchTerm) throws Exception {
-		Connection con = DBConnection.getConnection();
-		
-		String sql;
-		PreparedStatement pstat = null;
-		
-		if(searchTerm == null || searchTerm.equals("null")) {
-		sql = "select * from (select free_seq, free_title, free_contents, free_writer, to_char(free_writedate, 'YYYY/MM/DD') free_writedate, free_viewcount, row_number() over(order by free_seq desc) as num from freeboard) where num between ? and ?";
-		pstat = con.prepareStatement(sql);
-		pstat.setInt(1, startNum);
-		pstat.setInt(2, endNum);
-		} else {
-			sql = "select * from (select free_seq, free_title, free_contents, free_writer, to_char(free_writedate, 'YYYY/MM/DD') free_writedate, free_viewcount, row_number() over(order by free_seq desc) as num from freeboard where free_title like ?) where num between ? and ?";
-			pstat = con.prepareStatement(sql);
-			pstat.setString(1, "%"+searchTerm+"%");
-			pstat.setInt(2, startNum);
-			pstat.setInt(3, endNum);
-		}
-		ResultSet rs = pstat.executeQuery();
-
-		ArrayList<FreeboardDTO> result = new ArrayList<>();
-
-		while(rs.next()) {
-			FreeboardDTO tmp = new FreeboardDTO();
-			tmp.setFree_seq(rs.getInt(1));
-			tmp.setFree_title(rs.getString(2));
-			tmp.setFree_contents(rs.getString(3));
-			tmp.setFree_writer(rs.getString(4));
-			tmp.setFree_writedate(rs.getString(5));
-			tmp.setFree_viewcount(rs.getInt(6));
-			result.add(tmp);
-		}
-		
-		con.close();
-		pstat.close();
-		rs.close();
-		
-		return result;
-	}
 	
 	public String getPageNavi(int currentPage, String searchTerm) throws Exception {
 		Connection con = DBConnection.getConnection();
