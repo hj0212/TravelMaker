@@ -217,6 +217,7 @@ public class PlanController extends HttpServlet {
 				List<PlanDTO>list = new ArrayList<>();
 				list = pdao.getSomePlan(currentPage*12-11, currentPage*12, searchTerm);
 				request.setAttribute("planList", list);
+				request.setAttribute("currentPage", currentPage);
 				//------------------------------------------------------
 
 				String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
@@ -235,6 +236,7 @@ public class PlanController extends HttpServlet {
 				
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
 				List<PlanCommentDTO> result1 = pdao.getAllPlanComments(plan_seq);
+				int viewcount = pdao.planViewCount(plan_seq);
 				int bad = gbdao.planBadSelectData(plan_seq);
 				int good = gbdao.planGoodSelectData(plan_seq);
 				PlanDTO plan = pdao.getPlandata(plan_seq);
@@ -243,6 +245,7 @@ public class PlanController extends HttpServlet {
 				request.setAttribute("result1", result1);
 				request.setAttribute("plan_seq", plan_seq);
 				request.setAttribute("plan", plan);
+				request.setAttribute("currentPage", currentPage);
 
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				request.setAttribute("plan_period", plan_period);
@@ -263,7 +266,7 @@ public class PlanController extends HttpServlet {
 				request.setAttribute("plan_title", plan_title);
 				
 				isForward=true;
-				dst="planView.jsp?plan_seq="+plan_seq+"currentPage="+currentPage;
+				dst="planView.jsp?plan_seq="+plan_seq+"&currentPage="+currentPage;
 				
 			}else if(command.equals("/insertPlanComment.plan")) {
 				String comment_text = request.getParameter("comment_text");
