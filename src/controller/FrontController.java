@@ -105,6 +105,7 @@ public class FrontController extends HttpServlet {
 					}
 					
 					int result = fbdao.insertArticle(writer, title, contents);
+					
 					dst = "freeboard.bo";
 				}
 			} else if(command.equals("/viewFreeArticle.bo")) {
@@ -259,10 +260,8 @@ public class FrontController extends HttpServlet {
 	        	  }
 	          }else if(command.equals("/numberError.bo")) {
 	        	  dst = "notNumber.jsp";
-	        	  isForward = false;
 	          }else if(command.equals("/notWriter.bo")) {
 	        	  dst = "notWriter.jsp";
-	        	  isForward = false;
 	          }else if(command.equals("/modifyFreeArticle.bo")) {
 	        	  try {
 		        	  String title = request.getParameter("title");
@@ -279,6 +278,7 @@ public class FrontController extends HttpServlet {
 		        	  
 		        	  int articlenum = Integer.parseInt(request.getParameter("articlenum"));
 		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        	  
 		        	  
 		        	  if(user.getSeq() == fbdao.writerCheck(articlenum)) {
 		        		  int result = fbdao.updateArticle(title, contents,articlenum);
@@ -331,6 +331,20 @@ public class FrontController extends HttpServlet {
 	        	  System.out.println(result +":"+review_seq);
 	        	  isForward=true;
 	        	  dst="deleteReviewCommentView.jsp";
+	          }else if(command.equals("/writeReview.bo")) {
+	        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+	        	  
+	        	  if(user == null) {
+	        		  dst = "reviewboard.bo";
+	        		  isForward = false;
+	        	  }else {
+	        		  dst = "reviewboard/writeReviewArticle.jsp";
+	        	  }
+	          }else if(command.equals("/writeReviewArticle.bo")) {
+	        	  String contents = request.getParameter("contents");
+	        	  System.out.println(contents.length());
+	        	  
+	        	  dst= "reviewboard.bo";
 	          }
 	        	  
 			if(isForward) {

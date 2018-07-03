@@ -112,6 +112,10 @@ div {
 		$("#searchbtn").click(function() {
 			location.href = "reviewboard.bo?search=" + $("#search").val();
 		})
+		
+		$("#writebtn").click(function() {
+			location.href = "writeReview.bo";
+		})
 	</script>
 </body>
 </html>
