@@ -20,7 +20,7 @@
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>       
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-
+<%@ page session="true"%>
 <meta charset="utf-8">
 
 <style type="text/css">
@@ -148,6 +148,7 @@ $(document).ready(function(){
 });
 
 </script>
+
 
 </head>
 
@@ -379,14 +380,12 @@ $(document).ready(function(){
 		}
 	})
 	
-	$("#listbtn").click(function() {
-		if(empty ${param.currentPage}) {
-			location.href = "planboard.plan?currentPage=${param.currentPage}";
-		} else {
-			location.href = "planboard.plan";
-		}
+	$("#listbtn").click(function() {	
+			location.href = "planboard.plan?currentPage=${currentPage}";
+	
 		
-	})
+		
+	});
 	plan_seq = $("input[id='plan_seq']").val();
 	$.ajax({
 		url:"maplist.Ajax",

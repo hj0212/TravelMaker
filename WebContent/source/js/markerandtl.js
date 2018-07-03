@@ -10,6 +10,7 @@ var markers = [],
 // 받아온 jsonArry 정보를 이용해 배열에 넣음 
 var makeMarkerArray = function () {
     if (localStorage.getItem('markerInfo') == null && localStorage.getItem("timelineInfo") == null) {
+       
         markerlocation.push({ location: "서울시청", mapx: 309852, mapy: 552189 });
         timeline.push({date : '0000-00-00', content : "서울시청"});
         return;

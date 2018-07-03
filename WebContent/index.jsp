@@ -13,15 +13,15 @@
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
 
-					" ws://192.168.20.31:8080/WEB_SOCKET_0611/websocket ");
+					" ws://192.168.20.31:8080/WEB_SOCKET_06_18/websocket ");
 
 		
 			var str;
 		
 			
-			<%--  $("input").keydown(function(event) {
+			 $("input").keydown(function(event) {
 		            if (event.which === 13) {
-		            	var id = "<%=nickname%>";
+		            	var nickname = "";
 		            	var msg = $("#livemsg").val();
 		            	
 		    			ws.send(JSON.stringify({id:id, msg:msg}));
@@ -29,7 +29,7 @@
 		    			  
 		            }
 		        });
- --%>
+
 					
 			ws.onopen = function() {
 			
@@ -41,10 +41,11 @@
 				$("#livechathistory").append("<hr class=livehr><div class=chat-message clearfix><img src=https://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32 alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>" + obj.id + "</h5><p class=livep>" + obj.msg + "</p></div></div>");
 			};
 			ws.onclose = function() {
-=======
->>>>>>> KakaoAPI
+			
+			}
 
-
+	}
+	</script>
 </head>
 <body>
 
@@ -77,7 +78,7 @@ document.getElementById("logout").onclick = function(){
 </script>
 
 
-        <div id="live-chat">
+        <div id="live-chat ">
 
             <header class="clearfix">
 
