@@ -11,11 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+
 import dao.FreeCommentDAO;
 import dao.FreeboardDAO;
 import dao.GoodBadDAO;
 import dao.MemberDAO;
 import dao.ReviewDAO;
+import dao.ReviewPhotoDAO;
 import dto.FreeCommentDTO;
 import dto.FreeboardDTO;
 import dto.MemberDTO;
@@ -41,6 +45,7 @@ public class FrontController extends HttpServlet {
 			ReviewDAO rdao = new ReviewDAO();
 			FreeCommentDAO fcdao = new FreeCommentDAO();
 			GoodBadDAO gbdao = new GoodBadDAO();
+			ReviewPhotoDAO rpdao = new ReviewPhotoDAO();
 
 			boolean isForward = true;
 			String dst = null;
@@ -163,41 +168,41 @@ public class FrontController extends HttpServlet {
 	            List<ReviewDTO> reviewList = new ArrayList<>();
 	            reviewList = rdao.getSomeReview(currentPage*12-11, currentPage*12, searchTerm);
 	            request.setAttribute("reviewList", reviewList);
-	         
+	            
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
 	            request.setAttribute("pageNavi", pageNavi);
 	            request.setAttribute("currentPage", currentPage);
 	            
 	            isForward = true;
-	            dst="share_review.jsp?currentPage"+currentPage;
+	            dst="reviewboard/share_review.jsp?currentPage"+currentPage;
 	            
 	         }else if(command.equals("/reviewArticle.bo")) {
-	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-	             rdao.getArticleViewCount(review_seq);
+//	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+//	             rdao.getArticleViewCount(review_seq);
 //	             int listcurrentPage =Integer.parseInt(request.getParameter("listcurrentPage"));
-	             
-	             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
-	             request.setAttribute("review_seq", review_seq);
-	             request.setAttribute("review_title", result1.getReview_title());
-	             request.setAttribute("review_contents", result1.getReview_contents());
-	             request.setAttribute("review_writedate", result1.getReview_writedate());
-	             request.setAttribute("review_writer", result1.getReview_writer());
-	             request.setAttribute("review_writerN", result1.getReview_writerN());
-	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
-
-	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-		            int bad = gbdao.reviewBadSelectData(review_seq);
-		            int good =gbdao.reviewGoodSelectData(review_seq);
-		            request.setAttribute("good", good);
-		            request.setAttribute("bad", bad);	            
-        
-	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
-	             request.setAttribute("commentResult", result2);
-	             /*request.setAttribute("currentPage", currentPage);*/
-	             
-	             isForward = true;            
-	             /*dst = "reviewArticle.jsp?currentPage"+currentPage;*/
-	             dst="reviewArticle.jsp";
+//	             
+//	             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
+//	             request.setAttribute("review_seq", review_seq);
+//	             request.setAttribute("review_title", result1.getReview_title());
+//	             request.setAttribute("review_contents", result1.getReview_contents());
+//	             request.setAttribute("review_writedate", result1.getReview_writedate());
+//	             request.setAttribute("review_writer", result1.getReview_writer());
+//	             request.setAttribute("review_writerN", result1.getReview_writerN());
+//	             request.setAttribute("review_viewcount", result1.getReview_viewcount());
+//
+//	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+//		            int bad = gbdao.reviewBadSelectData(review_seq);
+//		            int good =gbdao.reviewGoodSelectData(review_seq);
+//		            request.setAttribute("good", good);
+//		            request.setAttribute("bad", bad);	            
+//        
+//	             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
+//	             request.setAttribute("commentResult", result2);
+//	             request.setAttribute("currentPage", currentPage);
+//	             
+//	             isForward = true;            
+//	             dst = "reviewArticle.jsp?currentPage"+currentPage;
+//	             dst="reviewArticle.jsp";
 	          }else if(command.equals("/addReviewComment.bo")) {
 	             String comment_text = request.getParameter("comment_text");
 	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
@@ -344,6 +349,8 @@ public class FrontController extends HttpServlet {
 	        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
 	        	  String title = request.getParameter("title");
 	        	  String contents = request.getParameter("contents");
+	        	  String list = request.getParameter("imageList");
+	        	  String[] imageList = null;
 	        	  
 	        	  if(user == null) {
 	        		  isForward = false;
@@ -360,11 +367,20 @@ public class FrontController extends HttpServlet {
 							contents = "내용없음";
 						}
 		  				
-//		  				int result = rdao.insertReview(title, contents, user.getSeq());
+		  				JSONArray array = (JSONArray)new JSONParser().parse(list);
+		  				
+		  				imageList = new String[array.size()];
+		  				
+		  				for(int i = 0; i < array.size(); i++) {
+		  					imageList[i] = (String)array.get(i);
+		  				}
+		  				
+		  				int result = rdao.insertReview(title, contents, user.getSeq(), imageList);
 	        		  }
 	        	  }
-	        	  
 	        	  dst = "reviewboard.bo";
+	          }else if(command.equals("/")) {
+	        	  
 	          }
 	        	  
 			if(isForward) {

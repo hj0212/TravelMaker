@@ -69,6 +69,7 @@
 					</div>
 					<div class="form-group">
 						<textarea name="contents" class="form-control" id="editor"></textarea>
+						<input type="text" readonly style="display:none" id="imageList" name="imageList">
 					</div>
 					<div class="text-right">
 						<input type="button" class="btn btn-primary" value="작성"

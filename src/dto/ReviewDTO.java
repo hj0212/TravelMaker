@@ -9,6 +9,7 @@ public class ReviewDTO {
 	private String review_writerN;
 	private String review_writedate;
 	private int review_viewcount;
+	private String review_thumbnail;
 	
 	public ReviewDTO() {}
 
@@ -95,6 +96,13 @@ public class ReviewDTO {
 		this.review_viewcount = review_viewcount;
 	}
 
+	public String getReview_thumbnail() {
+		return review_thumbnail;
+	}
 
+
+	public void setReview_thumbnail(String review_thumbnail) {
+		this.review_thumbnail = review_thumbnail;
+	}
 	
 }

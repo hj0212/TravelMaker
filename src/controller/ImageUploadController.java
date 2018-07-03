@@ -15,6 +15,8 @@ import org.json.simple.JSONObject;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import dao.ReviewPhotoDAO;
+
 @WebServlet("*.iu")
 public class ImageUploadController extends HttpServlet {
 	
@@ -22,6 +24,7 @@ public class ImageUploadController extends HttpServlet {
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = requestURI.substring(contextPath.length());
+		ReviewPhotoDAO dao = new ReviewPhotoDAO();
 		
 		if(command.equals("/imageUpload.iu")) {
 			// 이미지를 업로드할 경로
@@ -46,6 +49,7 @@ public class ImageUploadController extends HttpServlet {
 				ofileName = mr.getOriginalFileName(file);
 				sfileName = mr.getFilesystemName(file);
 			
+				int result = dao.insertImage(ofileName, sfileName);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -55,6 +59,7 @@ public class ImageUploadController extends HttpServlet {
 			// 생성된 경로를 JSON 형식으로 보내주기 위한 설정
 			JSONObject jobj = new JSONObject();
 			jobj.put("url", uploadPath);
+			jobj.put("name", sfileName);
 			
 			response.setContentType("application/json");
 			response.getWriter().print(jobj.toJSONString());

@@ -16,6 +16,7 @@ import dto.ReviewDTO;
 
 public class ReviewDAO {
 	private MemberDAO mdao = new MemberDAO();
+	private ReviewPhotoDAO rdao = new ReviewPhotoDAO();
 	//-------------------후기 글 전부 가져오기
 	public List<ReviewDTO> getAllReview() throws Exception{
 		Connection con = DBConnection.getConnection();
@@ -54,7 +55,7 @@ public class ReviewDAO {
 		return sb.toString();
 	}
 	
-	public int insertReview(String title, String contents, int writer) throws Exception{
+	public int insertReview(String title, String contents, int writer, String[] array) throws Exception{
 		Connection conn = DBConnection.getConnection();
 		String sql = "INSERT INTO reviewboard_c values(reviewboard_seq.nextval,?,?,?,sysdate,0)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -64,6 +65,14 @@ public class ReviewDAO {
 		pstmt.setInt(3, writer);
 		
 		int result = pstmt.executeUpdate();
+		
+		sql = "UPDATE REVIEW_PHOTOS SET ARTICLE_NO = reviewboard_seq.currval WHERE SYSTEM_FILE_NAME = ?";
+		pstmt = conn.prepareStatement(sql);
+		for(int i = 0; i < array.length; i++) {
+			pstmt.setString(1, array[i]);
+			pstmt.addBatch();
+		}
+		pstmt.executeBatch();
 		
 		conn.commit();
 		pstmt.close();
@@ -80,12 +89,12 @@ public class ReviewDAO {
 		PreparedStatement pstat = null;
 
 		if(searchTerm == null || searchTerm.equals("")) {
-			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard) where num between ? and ?";
+			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard_c) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, startNum);
 			pstat.setInt(2, endNum);
 		} else {
-			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard where review_title like ?) where num between ? and ?";
+			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard_c where review_title like ?) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, "%"+searchTerm+"%");
 			pstat.setInt(2, startNum);
@@ -103,6 +112,8 @@ public class ReviewDAO {
 			tmp.setReview_writerN(mdao.getUserNickname(rs.getInt(4)));
 			tmp.setReview_writedate(rs.getString(5));
 			tmp.setReview_viewcount(rs.getInt(6));
+			// 썸네일 얻기
+			tmp.setReview_thumbnail(rdao.getthumbnail(tmp.getReview_seq()));
 			reviewResult.add(tmp);
 		}
 
