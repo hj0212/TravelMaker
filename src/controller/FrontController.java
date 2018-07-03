@@ -117,6 +117,7 @@ public class FrontController extends HttpServlet {
 						isForward = false;
 						dst = "login.bo";
 					}else {
+						int result = fcdao.addViewCount(seq);
 						FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
 						int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
 						String nickname = mdao.getUserNickname(writerNumber);
