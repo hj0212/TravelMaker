@@ -139,6 +139,12 @@ public class FrontController extends HttpServlet {
 //							System.out.println(tmp.getComment_writer());
 //							System.out.println(tmp.getComment_time());
 //						}
+						  int bad = gbdao.freeBadSelectData(seq);
+					      int good =gbdao.freeGoodSelectData(seq);
+					      request.setAttribute("good", good);
+					       request.setAttribute("bad", bad);	      
+						
+						
 						request.setAttribute("seq", seq);
 						request.setAttribute("commentList", cdto);
 						request.setAttribute("currentPage", currentPage);
