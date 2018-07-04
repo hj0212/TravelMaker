@@ -29,18 +29,20 @@ public class MakerChat {
 		clients.add(session); //연결되어온 세션값을 저장하겠다 
 	}
 	
+	
 	@OnMessage
 	public void handleMessage(String message)throws Exception{
 		System.out.println(message);
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(message);
-		String id = element.getAsJsonObject().get("id").getAsString();
+		String nickname = element.getAsJsonObject().get("nickname").getAsString();
 		String msg = element.getAsJsonObject().get("msg").getAsString();
-
+		String file = element.getAsJsonObject().get("file").getAsString();
 	
-		System.out.println(id + " : " + msg);
+		System.out.println(nickname + " : " + msg+ " : " +file);
 		for(Session tmp : clients) {
-			tmp.getBasicRemote().sendText(message);
+			
+		tmp.getBasicRemote().sendText(message);
 		}
 		
 	}

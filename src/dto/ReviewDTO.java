@@ -94,7 +94,4 @@ public class ReviewDTO {
 	public void setReview_viewcount(int review_viewcount) {
 		this.review_viewcount = review_viewcount;
 	}
-
-
-	
 }

@@ -45,7 +45,7 @@ div {
 </style>
 </head>
 <body>
-	<%@include file="include/mainNavi.jsp"%>
+	<%@include file="../include/mainNavi.jsp"%>
 	<div class="container">
 		<h1 class="divLine">계획, 그리고</h1>
 		<hr />
@@ -99,18 +99,18 @@ div {
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">${pageNavi}</ul>
 			</nav>
-		</div>
-
-
-		<h1 class="divLine">푸터올 곳</h1>
-		<hr />
-		<div class="row">
-			<div class="col-md-12" id="foot"></div>
-		</div>
+		</div>		
+		
+	</div>
+	<div id="footer">
 	</div>
 	<script>
 		$("#searchbtn").click(function() {
 			location.href = "reviewboard.bo?search=" + $("#search").val();
+		})
+		
+		$("#writebtn").click(function() {
+			location.href = "writeReview.bo";
 		})
 	</script>
 </body>

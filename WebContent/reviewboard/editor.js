@@ -20,6 +20,8 @@
 	    })
 	});
 	
+	var snameList = [];
+	
 	// summernote에서 이미지를 업로드 할 시 실행할 함수
 	function sendFile(file, editor) {
 	    // 파일 전송을 위한 폼생성
@@ -35,21 +37,23 @@
 	        success: function (data) {
 	            // 서버에 이미지 저장 성공 후 에디터에 이미지 넣음
 	            $(editor).summernote('editor.insertImage', data.url);
+	            snameList.push(data.name);
 	        }
 	    })
 	};
 	
-	function sendContents() { 
-		$("#editor").html($("#editor").summernote('code')); 
-
-		if($("#editor").summernote('code').length > 65535) { 
-			alert("글자수 제한 범위 초과"); 
-			$('#send').attr('disabled', false); 
-		}else { 
-			$('#send').attr('disabled', true); 
-			document.writeContents.submit(); 
-		} 
-	}; 
+	function sendContents() {
+	    $("#editor").html($("#editor").summernote('code'));
+	    
+	    if($("#editor").summernote('code').length > 65535) {
+	    	alert("글자수 제한 범위 초과");
+	    	$('#send').attr('disabled', false);
+	    }else {
+	    	document.getElementById("imageList").value = JSON.stringify(snameList);
+	    	$('#send').attr('disabled', true);
+	    	document.writeContents.submit();
+	    }
+	};
 	
 	$("#cancel").click(function(){
 		$("#editor").summernote('reset');

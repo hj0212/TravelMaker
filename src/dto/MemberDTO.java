@@ -16,6 +16,7 @@ public class MemberDTO {
 	private String create_date;
 	private String part;
 	private String block;
+	private String photo_system_file_name;
 	
 	public MemberDTO() {}
 	
@@ -109,9 +110,13 @@ public class MemberDTO {
 	public void setBlock(String block) {
 		this.block = block;
 	}
-	
-	
-	
-	
+
+	public String getPhoto_system_file_name() {
+		return photo_system_file_name;
+	}
+
+	public void setPhoto_system_file_name(String photo_system_file_name) {
+		this.photo_system_file_name = photo_system_file_name;
+	}
 }
 	

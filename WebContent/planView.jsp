@@ -11,16 +11,20 @@
 
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
-<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js"
+	type="text/javascript"></script>
+<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
+	rel="stylesheet" type="text/css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>       
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<script src="source/js/jquery.roadmap.min.js"></script>
+<link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
+<script src="source/js/createplan.js"></script>
+<link rel="stylesheet" href="source/css/createplan.css"/>
+<%@ page session="true"%>
 <meta charset="utf-8">
 
 <style type="text/css">
@@ -37,7 +41,7 @@
 
 .wrapper {
 	margin: 13px 0 10px;
-	height: 300px;
+	height: 400px;
 }
 
 .col-md-12, .col-lg-6 {
@@ -47,13 +51,16 @@
 
 .left_half {
 	padding-right: 5px;
+	height: 100%;
 }
 
 .right_half {
 	padding-left: 5px;
 }
-
-.wrapper div {
+.event__date, .event__content{
+	height: 30px;
+}
+.wrapper .right_half div {
 	height: 100%;
 }
 
@@ -98,6 +105,21 @@
 	display: inline;
 	float: right;
 }
+
+#getmyplanbtn {
+	float: left;
+}
+
+.mapsinfo {
+	position: absolute;
+	font-weight: bold;
+	background-color:white;
+	line-height: 30px;
+	top:-50px;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-top: 1px solid black;
+}
 </style>
 
 <script>
@@ -116,12 +138,10 @@ $(document).ready(function(){
 		  data: {article:article},
 		  success:function(good){
 			  console.log("asdasd");
-			
 				 $("#goodbtn").html(""); 
 				 $("#goodbtn").html('<i class="fas fa-heart"></i>'+good);
-				  
 		  }
-		});
+	});
 			
 	});
 	$("#badbtn").click(function(){	
@@ -133,12 +153,8 @@ $(document).ready(function(){
 		  data: {article:article},
 		  success:function(bad){
 			  console.log("asdasd");
-			 
 				 $("#badbtn").html(""); 
 				 $("#badbtn").html('<i class="far fa-frown"></i>'+bad);
-			
-			
-			  
 		  }
 		});
 			
@@ -148,10 +164,7 @@ $(document).ready(function(){
 });
 
 </script>
-
 </head>
-
-
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
@@ -161,6 +174,49 @@ $(document).ready(function(){
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+			role="dialog" aria-labelledby="exampleModalCenterTitle"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<form method="post" id="plan-form">
+						<div class="modal-header">
+							<div class="h1" style="margin: 0 auto;">나의 여행계획 세우기</div>
+						</div>
+						<div class="modal-body">
+							<div class="mobile-title">
+								<input type="text" id="plan_title" name="plan_title"
+									class="from-contol" maxlength=400 placeholder="여행 제목을 입력해주세요">
+							</div>
+							<div id="picker-div">
+								<div id="picker_wrap">
+									<div class="picker-pic">
+										여행 시작 날짜<input id="datepicker" name="plan_startdate" readonly
+											width="170" style="background-color: white;" />
+									</div>
+									<div class="picker-pic" id="datepicker_endarea">
+										여행 종료 날짜<input id="datepicker-end" name="plan_enddate"
+											readonly width="170" style="background-color: white;" />
+									</div>
+								</div>
+							</div>
+							<div id="start-plan">
+								<p id="dayday" style="font-size: 13px; font-style: italic;">여행
+									일수</p>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button id="start-btn" type="button" class="btn btn-primary">여행
+								계획 시작하기</button>
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
 	<div class="container text-center">
 		<div class="input-group input-group-lg" id="plantitle">
 			<div class="input-group-prepend">
@@ -173,7 +229,9 @@ $(document).ready(function(){
 
 		<div id="planinfoarea">
 			<p>작성자 | ${plan.plan_writerN }</p>
-			<p>여행 기간 | ${plan.plan_startdate } ~ ${plan.plan_enddate }</p>
+			<c:if test="${plan.plan_writer eq sessionScope.user.seq}">
+				<p>여행 기간 | ${plan.plan_startdate } ~ ${plan.plan_enddate }</p>
+			</c:if>
 			<p>조회수 | ${plan.plan_viewcount }
 			<p>
 			<div id="planbtnarea">
@@ -186,10 +244,10 @@ $(document).ready(function(){
 		</div>
 
 		<div class="wrapper row">
-			<div class="left_half col-md-12 col-lg-6">
+			<div class="left_half col-sm-12 col-lg-6">
 				<div id="timeline" style="border: 1px solid gray;"></div>
 			</div>
-			<div class="right_half col-md-12 col-lg-6">
+			<div class="right_half col-sm-12 col-lg-6">
 				<div id="map" style="border: 1px solid gray;"></div>
 			</div>
 		</div>
@@ -197,18 +255,18 @@ $(document).ready(function(){
 		<div class="schedule">
 			<ul class="nav nav-tabs" role="tablist">
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
-					<li class="nav-item active"><a class='nav-link'
+					<li class="nav-item"><a class='nav-link'
 						href='#Day${day}' role='tab' data-toggle='tab'>Day${day}</a></li>
 				</c:forEach>
 			</ul>
-
+			
 			<div class="tab-content">
-				<c:set var="isFirst" value="true" />
+			<c:set var="isFirst" value="true" />
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 					<input type="hidden" id="plan_seq" value="${plan_seq }">
-					<div role="tabpanel" class="tab-pane fade show active"
+					<div role="tabpanel" class="tab-pane fade show"
 						id="Day${day}">
-						<table class="table table-striped" id="schedule-table">
+						<table class="table table-hover" id="schedule-table">
 							<c:if test="${isFirst }">
 								<thead>
 									<tr>
@@ -257,8 +315,7 @@ $(document).ready(function(){
 																	</c:otherwise>
 																</c:choose>
 															</c:if>
-															<c:if
-																test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
+															<c:if test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
 																<td name="money"></td>
 																<c:set var="loop_flag" value="true" />
 															</c:if>
@@ -277,6 +334,7 @@ $(document).ready(function(){
 							</c:if>
 						</table>
 					</div>
+					<c:set var="isFirst" value="true" />
 				</c:forEach>
 			</div>
 		</div>
@@ -288,8 +346,8 @@ $(document).ready(function(){
 			<button type="button" class="btn btn-outline-primary" id="badbtn">
 				<i class="far fa-frown"></i>${bad}
 			</button>
-			<button class="btn btn-outline-success">스크랩</button>
-
+			<button type="button" class="btn btn-outline-success"
+					data-toggle="modal" data-target="#exampleModalCenter" id="getmyplanbtn">내 일정으로 가져가기</button>
 			<button class="btn btn-default" style="float: right;">신고</button>
 		</div>
 
@@ -345,6 +403,8 @@ $(document).ready(function(){
 		</div>
 	</div>
 	<script>
+	$(".schedule ul li:first").addClass('active');
+	$("div[id='Day1']").addClass('active');
    /*댓글관련 버튼들*/
    /*댓글 작성*/
    $('#commentbtn').click(function() {
@@ -379,25 +439,160 @@ $(document).ready(function(){
 		}
 	})
 	
-	$("#listbtn").click(function() {
-		if(empty ${param.currentPage}) {
-			location.href = "planboard.plan?currentPage=${param.currentPage}";
-		} else {
-			location.href = "planboard.plan";
-		}
-		
-	})
+	$("#listbtn").click(function() {	
+			location.href = "planboard.plan?currentPage=${currentPage}";
+	});
 	plan_seq = $("input[id='plan_seq']").val();
 	$.ajax({
-		url:"maplist.Ajax",
+		url:"planviewlist.Ajax",
 		type:"post",
-		data:{"plan_seq":plan_seq},
+		data:{"plan_seq":$("input[id='plan_seq']").val()},
 		success:function(data){		
-			console.log(data);
+			var obj = JSON.parse(data);
+			
+			var markerlocation = [];
+		   timeline = [];
+
+		// 다중 마커에 정보창 띄우기
+			var markers = [],
+		    infoWindows = [];
+
+
+		// 받아온 jsonArry 정보를 이용해 배열에 넣음 
+		var makeMarkerArray = function () {
+		    if (obj.jLocationList[0] == null && obj.jTimeLine[0] == null) {
+		    	$(".wrapper").hide();
+		        return;
+		    }
+		    
+		    var jsonArray = obj.jLocationList;
+		    timelineArray = obj.jTimeLine;
+
+		    for (var i = 0; i < jsonArray.length; i++) {
+		        let markerObj = {
+		            location_name: jsonArray[i].location_name,
+		            location_x: jsonArray[i].location_x,
+		            location_y: jsonArray[i].location_y
+		        }
+		        markerlocation.push(markerObj);
+		    }
+
+		    for (var i = timelineArray.length-1; i >= 0; i--) {
+		        let timelineObj = {
+		            date: timelineArray[i].day_seq+"일차",
+		            content: timelineArray[i].location_name,
+		        }
+		        timeline.push(timelineObj);
+		    }
+		};
+		makeMarkerArray();
+
+		// 네이버 지도 생성
+		var map = new naver.maps.Map('map', {
+		    center: new naver.maps.Point(markerlocation[0].location_x, markerlocation[0].location_y),
+		    zoom: 9,
+		    mapTypeId: 'normal',
+		    mapTypes: new naver.maps.MapTypeRegistry({
+		        'normal': naver.maps.NaverMapTypeOption.getNormalMap({
+		            projection: naver.maps.TM128Coord
+		        }),
+		    })
+		});
+
+		// 정보창의 위치를 위한 변수
+		var bounds = map.getBounds();
+
+		// 타임라인을 생성함
+		$("#timeline").roadmap(timeline, {
+		    eventsPerSlide: 4,
+		    slide : 1,
+		    prevArrow : '<i class="fas fa-angle-left"></i>',
+		    nextArrow : '<i class="fas fa-angle-right"></i>',
+		});
+
+		// 좌표에 마커를 찍고 정보를 보여줌
+		var makeMarkerAndInfoWindow = function (markerArray) {
+		    for (var i = 0; i < markerArray.length; i++) {
+		        var marker = new naver.maps.Marker({
+		            map: map,
+		            position: new naver.maps.Point(markerArray[i].location_x, markerArray[i].location_y),
+		            zIndex: 100
+		        });
+
+		        var infoWindow = new naver.maps.InfoWindow({
+		            content: '<div class="mapsinfo" style="position:absolute;width:180px; height:50px;text-align:center;padding:10px;"><p>' + markerArray[i].location_name + '</p></div>'
+		        });
+		        
+		        
+		        markers.push(marker);
+		        infoWindows.push(infoWindow);
+		    };
+
+		};
+		makeMarkerAndInfoWindow(markerlocation);
+
+		// 지도가 멈췄을때 발생하는 이벤트
+		naver.maps.Event.addListener(map, 'idle', function () {
+		    updateMarkers(map, markers);
+		})
+	
+		// 지도가 멈췄을때 마커가 경계 밖에 있으면 보이지 않음
+		function updateMarkers(map, markers) {
+		    var mapBounds = map.getBounds();
+		    var marker, position;
+
+		    for (var i = 0; i < markers.length; i++) {
+		        marker = markers[i]
+		        position = marker.getPosition();
+
+		        if (mapBounds.hasPoint(position)) {
+		            showMarker(map, marker);
+		        } else {
+		            hideMarker(map, marker);
+		        }
+		    }
 		}
+
+		// 마커 보이기
+		function showMarker(map, marker) {
+		    if (marker.setMap()) return;
+		    marker.setMap(map);
+		}
+
+		// 마커 숨기기
+		function hideMarker(map, marker) {
+		    if (!marker.setMap()) return;
+		    marker.setMap(null);
+		}
+
+		// 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환
+		function getClickHandler(seq) {
+		    return function (e) {
+		        var marker = markers[seq],
+		            infoWindow = infoWindows[seq];
+
+		        if (infoWindow.getMap()) {
+		            infoWindow.close();
+		        } else {
+		            infoWindow.open(map, marker);
+		        }
+		    }
+		}
+
+		for (var i = 0, ii = markers.length; i < ii; i++) {
+		    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+		}
+		}
+		
+		
 	});
+	
+	/* $.getJSON("planviewlist.Ajax", function(data) {
+		// 마커에 입력할 배열과 타임라인 정보를 입력할 배열
+		
+	}) */
+	
  
    </script>
 </body>
-<script src="source/js/markerandtl.js"></script>
 </html>
