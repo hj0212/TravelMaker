@@ -68,6 +68,7 @@ public class PlanController extends HttpServlet {
 				List<BudgetDTO> list = new ArrayList<>();
 				System.out.println("budget_plan: " + request.getParameter("budget_plan"));
 				System.out.println("budget_amount: " + request.getParameter("budget_amount"));
+				String budgetplanstr = request.getParameter("budget_plan");
 				String[] budget_plan = request.getParameter("budget_plan").split("/");
 				String[] budget_amount = request.getParameter("budget_amount").split("/");
 				for(int i = 0; i < budget_plan.length; i++) {
@@ -114,28 +115,31 @@ public class PlanController extends HttpServlet {
 				tmp.setSchedule_plan(request.getParameter("schedule"));
 				tmp.setSchedule_ref(request.getParameter("reference"));
 				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
-				
+				int result = 0;
 				List<BudgetDTO> list = new ArrayList<>();
 				System.out.println("budget_seq: " + request.getParameter("budget_seq"));
 				System.out.println("budget_plan: " + request.getParameter("budget_plan"));
 				System.out.println("budget_amount: " + request.getParameter("budget_amount"));
+				String budgetseqstr = request.getParameter("budget_amount");
 				String[] budget_seq = request.getParameter("budget_seq").split("/");
 				String[] budget_plan = request.getParameter("budget_plan").split("/");
 				String[] budget_amount = request.getParameter("budget_amount").split("/");
-				for(int i = 0; i < budget_plan.length; i++) {
-					BudgetDTO btmp = new BudgetDTO();
-					btmp.setBudget_seq(Integer.parseInt(budget_seq[i]));
-					btmp.setPlan_seq(plan);
-					btmp.setDay_seq(day);
-					btmp.setBudget_plan(budget_plan[i]);
-					btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
-					list.add(btmp);
+				if(!budgetseqstr.equals("")) {
+					for(int i = 0; i < budget_plan.length; i++) {
+						BudgetDTO btmp = new BudgetDTO();
+						btmp.setBudget_seq(Integer.parseInt(budget_seq[i]));
+						btmp.setPlan_seq(plan);
+						btmp.setDay_seq(day);
+						btmp.setBudget_plan(budget_plan[i]);
+						btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
+						list.add(btmp);
+					}
+					result = pdao.modiBudget(list);
 				}
 				
 				tmp.setSchedule_seq(schedule_seq);
-				int result = pdao.updateSchedule(tmp);
+				result = pdao.updateSchedule(tmp);
 				
-				result += pdao.modiBudget(list);
 				if(result > 2) {
 					System.out.println("수정성공");
 				} else {
@@ -217,6 +221,7 @@ public class PlanController extends HttpServlet {
 				List<PlanDTO>list = new ArrayList<>();
 				list = pdao.getSomePlan(currentPage*12-11, currentPage*12, searchTerm);
 				request.setAttribute("planList", list);
+				request.setAttribute("currentPage", currentPage);
 				//------------------------------------------------------
 
 				String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
@@ -235,6 +240,7 @@ public class PlanController extends HttpServlet {
 				
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
 				List<PlanCommentDTO> result1 = pdao.getAllPlanComments(plan_seq);
+				int viewcount = pdao.planViewCount(plan_seq);
 				int bad = gbdao.planBadSelectData(plan_seq);
 				int good = gbdao.planGoodSelectData(plan_seq);
 				PlanDTO plan = pdao.getPlandata(plan_seq);
@@ -243,6 +249,7 @@ public class PlanController extends HttpServlet {
 				request.setAttribute("result1", result1);
 				request.setAttribute("plan_seq", plan_seq);
 				request.setAttribute("plan", plan);
+				request.setAttribute("currentPage", currentPage);
 
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				request.setAttribute("plan_period", plan_period);
@@ -263,7 +270,7 @@ public class PlanController extends HttpServlet {
 				request.setAttribute("plan_title", plan_title);
 				
 				isForward=true;
-				dst="planView.jsp?plan_seq="+plan_seq+"currentPage="+currentPage;
+				dst="planView.jsp?plan_seq="+plan_seq+"&currentPage="+currentPage;
 				
 			}else if(command.equals("/insertPlanComment.plan")) {
 				String comment_text = request.getParameter("comment_text");
@@ -303,7 +310,9 @@ public class PlanController extends HttpServlet {
 			} else {
 				response.sendRedirect("error.jsp");
 			}
-		}catch(Exception e) {e.printStackTrace();}	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}	
 
 
 	}

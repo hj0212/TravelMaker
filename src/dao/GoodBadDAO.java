@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBUtils.DBConnection;
+import dto.GoodAllDTO;
 import dto.MemberDTO;
 import dto.PlanDTO;
 
@@ -302,8 +303,60 @@ public class GoodBadDAO {
 			con.close();
 			rs.close();
 			pstmt.close();
-			return result;
-			
+			return result;			
 		}
+		//좋아요수가 많은 게시물 뿌리기
+		public List<PlanDTO> bestPlanData()throws Exception{
+			Connection con = DBConnection.getConnection();
+			String sql ="select * from plan p, (select article_no, count from (select article_no,count(*) count from good_plan  group by article_no order by count desc) where rownum <= 4) s where p.plan_seq = s.article_no";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			List<PlanDTO> result = new ArrayList<>();
+			while(rs.next()) {
+				PlanDTO pdto = new PlanDTO();
+				pdto.setPlan_title(rs.getString("plan_title"));
+				pdto.setPlan_writerN(mdao.getUserNickname(rs.getInt("PLAN_WRITER")));
+				pdto.setPlan_good(rs.getInt("plan_good"));
+				pdto.setPlan_seq(rs.getInt("plan_seq"));
+				pdto.setPlan_viewcount(rs.getInt("plan_viewcount"));
+				result.add(pdto);
+			}
+			con.close();
+			rs.close();
+			pstmt.close();
+			return result;	
+		}
+		//plan good에 좋아요 업데이트
+		public int plangoodUpdate(int article_no)throws Exception{
+			Connection con = DBConnection.getConnection();
+			String sql ="update plan set plan_good = plan_good+1 where plan_seq = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, article_no);
+			int planup = pstmt.executeUpdate();
+			
+			con.commit();
+			con.close();
+			pstmt.close();
+			
+			return planup;
+		
+		}
+	
 		
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

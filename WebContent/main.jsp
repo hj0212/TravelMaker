@@ -23,6 +23,8 @@
 	href="source/lib/slick/slick-theme.css" /> 
 	<script src="include/slider/responsiveslides.min.js"></script>	
 	
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <style>
 div {
 	box-sizing: border-box;
@@ -64,9 +66,11 @@ div {
 
 </head>
 <body>
+
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
+
 		</c:when>
 		<c:otherwise>
 			<%@include file="include/mainNavi.jsp"%>
@@ -77,69 +81,34 @@ div {
 		<h1 class="divLine">BEST PLAN</h1>
 		<hr />
 		<div class="row" id="bestPlanRow">
-			<div class="col-md-12" id="bestPlan">
+			<div class="col-md-12" id="bestPlan"">
 				<div class="data"
-					data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
-					<div class="item">
-						<div class="card col-md-12 col-sm-12 w-100">
-							<div class="card-header">Header</div>
-							<div class="card-body">
-								<h4>Card title</h4>
-								<h6 class="text-muted">Subtitle</h6>
-								<p>Some quick example text to build on the card title .</p>
+					data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'
+					style="max-height: 250px; min-height: 250px; height: 250px;">
+
+					<c:forEach var="tmp" items="${main}">
+						<div class="item"
+							style="width: 400px; max-width: 400px; min-width: 400px; max-height: 250px; min-height: 250px; height: 250px; padding: 5px;">
+							<div class="card col-md-12 col-sm-12 w-100"
+								style="height: 100%; padding: 0px;">
+								<div class="card-header">사진</div>
+								<div class="card-body">
+									<a href="planArticle.plan?plan_seq=${tmp.plan_seq}"
+										style="text-decoration: none; padding: 0px;"><h4>${tmp.plan_title }</h4></a>
+									<h6 class="text-muted">${tmp.plan_writerN}</h6>
+									<div class="btn-list d-inline">
+
+										<i class="far fa-eye"></i> <span>${tmp.plan_viewcount}</span>
+										<i class="fas fa-hand-holding-heart"></i> <span>${tmp.plan_good}</span>
+
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="item">
-						<div class="card col-md-12 col-sm-12 w-100">
-							<div class="card-header">Header</div>
-							<div class="card-body">
-								<h4>Card title</h4>
-								<h6 class="text-muted">Subtitle</h6>
-								<p>Some quick example text to build on the card title .</p>
-							</div>
-						</div>
-					</div>
-					<div class="item">
-						<div class="card col-md-12 col-sm-12 w-100">
-							<div class="card-header">Header</div>
-							<div class="card-body">
-								<h4>Card title</h4>
-								<h6 class="text-muted">Subtitle</h6>
-								<p>Some quick example text to build on the card title .</p>
-							</div>
-						</div>
-					</div>
-					<div class="item">
-						<div class="card col-md-12 col-sm-12 w-100">
-							<div class="card-header">Header</div>
-							<div class="card-body">
-								<h4>Card title</h4>
-								<h6 class="text-muted">Subtitle</h6>
-								<p>Some quick example text to build on the card title .</p>
-							</div>
-						</div>
-					</div>
-					<div class="item">
-						<div class="card col-md-12 col-sm-12 w-100">
-							<div class="card-header">Header</div>
-							<div class="card-body">
-								<h4>Card title</h4>
-								<h6 class="text-muted">Subtitle</h6>
-								<p>Some quick example text to build on the card title .</p>
-							</div>
-						</div>
-					</div>
-					<div class="item">
-						<div class="card col-md-12 col-sm-12 w-100">
-							<div class="card-header">Header</div>
-							<div class="card-body">
-								<h4>Card title</h4>
-								<h6 class="text-muted">Subtitle</h6>
-								<p>Some quick example text to build on the card title .</p>
-							</div>
-						</div>
-					</div>
+					</c:forEach>
+
+
+
 				</div>
 			</div>
 		</div>
@@ -195,6 +164,12 @@ div {
 	<div id="footer">
 		<%@include file="footer1.jsp"%>
 	</div>
+
+	<c:if test="${main==null}">
+		<script>
+			location.href = "main.bo";
+		</script>
+	</c:if>
 	<script src='source/lib/slick/slick.js'></script>
 	<script>
 		$('.data').slick({
@@ -208,6 +183,12 @@ div {
 			autoplaySpeed : 2000
 		});
 	</script>
+	<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>
 </body>
+
 
 </html>
