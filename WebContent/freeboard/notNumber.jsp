@@ -25,7 +25,7 @@ font-weight: 100;
 </head>
 <body>
 	<fieldset>
-	<legend><h1>잘못된 접근입니다</h1></legend>
+	<legend><h1>글 번호가 아닙니다.</h1></legend>
 	<hr>
 	<h5>3초 후 자동으로 페이지가 전환됩니다</h5>
 	</fieldset>
