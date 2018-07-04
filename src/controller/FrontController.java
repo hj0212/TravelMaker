@@ -395,6 +395,7 @@ public class FrontController extends HttpServlet {
 	        	}
 	        	
 	        
+	        
 	        	request.setAttribute("main", main);
 	        	
 	        	isForward=true;
