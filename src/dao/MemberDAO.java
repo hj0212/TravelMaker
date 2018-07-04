@@ -504,7 +504,7 @@ public class MemberDAO {
 				}
 			}
 			else if (part.equals("kakao")) {
-				String sql1 = "select kakao_nickname, kakao_email, photo_system_file_name from users where seq = ?";
+				String sql1 = "select kakao_id, kakao_nickname, kakao_email, photo_system_file_name from users where seq = ?";
 				pstat = con.prepareStatement(sql1);
 				pstat.setInt(1, seq);
 				rs = pstat.executeQuery();
