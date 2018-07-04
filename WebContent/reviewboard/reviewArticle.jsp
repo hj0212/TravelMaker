@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="util" uri="/WEB-INF/tlds/writerToString.tld" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +33,7 @@
 }
 .container {
    width: 970px;
-   margin: 120px;
+   margin-top: 130px;
 }
 .title {
    font-size: 35px;
@@ -50,6 +49,7 @@
    margin-top: 20px;
    border-radius: 10px;
    min-height: 100px;
+   word-wrap: break-word;
 }
 /* 편법임... */
 .contents p {
@@ -65,9 +65,12 @@
    margin-top: 15px;
 }
 .comment {
+   text-align: center;
    background-color: #e9e9e9;
    margin-bottom: 3px;
+   background-color: #e9e9e9;
 }
+
 #comment-bnt:hover {
    color: red;
 }
@@ -79,13 +82,6 @@ tr {
 }
 
 </style>
-<script>
-   $(document).ready(function() {
-      $("#reviewboard-bt").click(function() {
-         $(location).attr("href", "reviewboard.bo?currentPage="+"${currentPage}");
-      });
-   });
-</script>
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
@@ -116,7 +112,6 @@ $(document).ready(function(){
 		});
 			
 	});
-	
 	$("#badbtn").click(function(){	
 	var article =$("#review_seq").text();	
 
@@ -164,20 +159,9 @@ $(document).ready(function(){
          <div class="col-sm-12">${dto.review_title}</div>
       </div>
       <div class="row writer">
-         <div class="col-sm-1 text-left" id="review_seq">${dto.review_seq}</div>
-         <div class="col-sm-5 text-left">${dto.review_writerN}</div>
-         <div class="col-sm-3 text-right">${dto.review_writedate}</div>
+         <div class="col-sm-6 text-left">${dto.review_writerN}</div>
+         <div class="col-sm-4 text-right">${dto.review_writedate}</div>
          <div class="col-sm-2 text-right">${dto.review_viewcount}</div>
-          <c:choose>
-          <c:when test="${sessionScope.user.seq eq dto.review_writer}">
-          <div class="col-sm-1 text-right">
-          <a href="deleteReviewArticle.bo?review_seq=${dto.review_seq}"><i class="far fa-times-circle"></i></a>
-          </div>
-          </c:when>
-          <c:otherwise>
-          <div class="col-sm-1 text-right"></div>
-          </c:otherwise>
-          </c:choose>
       </div>
       <div class="row contents">
          <div class="col-sm-12">${dto.review_contents}</div>
@@ -192,9 +176,11 @@ $(document).ready(function(){
             </button>
          </div>
          <div class="col-sm-4 text-right move">
-            <button type="button" class="btn btn-outline-secondary"
-               id="reviewboard-bt">목록</button>
-            <button type="button" class="btn btn-outline-secondary">스크랩</button>
+            <c:if test="${sessionScope.user.seq eq dto.review_writer}">
+            	<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
+            	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
+            </c:if>
+            <button type="button" class="btn btn-outline-secondary" id="reviewboard-bt">목록</button>
             <button type="button" class="btn btn-outline-danger">신고</button>
          </div>
       </div>
@@ -202,14 +188,14 @@ $(document).ready(function(){
          <button type="button"
             style="border: none; background-color: white; cursor: pointer;"
             id="comment-bnt">댓글보기▼</button>
-         <form action="addReviewComment.bo" method="post" id="reviewCommentForm">
+         <form action="addReviewComment.bo?review_seq=${review_seq}"
+            method="post" id="reviewCommentForm">
             <div style="width: 100%; margin: 0px;">
                <div style="width: 80%">
                   <textarea class="form-control" rows="3" id="comment_text"
                      name="comment_text"
                      style="resize: none; width: 100%; margin: 0px; float: left;"
                      maxlength="70"></textarea>
-                   <input type="text" style="display:none" name="review_seq" readonly value="${review_seq}">
                </div>
                <div
                   style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
@@ -228,22 +214,26 @@ $(document).ready(function(){
                </tr>
             </thead>
             <tbody>
-	            <c:forEach var="comment" items="${commentResult}">
-					<tr>
-						<c:set var='writer' value="${comment.comment_writer}" scope="page"/>  
-						<th scope="row" style="width: 15%; max-width: 15%; max-height: 51px;" class="writer">${util:getUserNickname(writer)}</th>
-						<td style="width: 70%; max-width: 70%;">${comment.comment_text}</td>
-						<td style="width: 15%; font-size: 10px;">${comment.comment_time}
-							<button type="button" class="close" aria-label="Close">
-								<c:if test="${sessionScope.user.seq eq comment.comment_writer}">
-									<a href="deleteFreeComment.bo?articleseq=${comment.free_seq}&commentseq=${comment.comment_seq}&commentwriter=${comment.comment_writer}">
-										<span aria-hidden="true"">&times;</span>
-									</a>
-								</c:if>
-							</button>
-						</td>
-					</tr>
-				</c:forEach>
+
+               <c:forEach var="comment" items="${commentResult}">
+                  <tr>
+                     <th scope="row"
+                        style="width: 15%; max-width: 15%; max-height: 51px;"
+                        class='writer'>${comment.comment_writer}</th>
+                     <td style="width: 70%">${comment.comment_text}</td>
+                     <td style="width: 15%; font-size: 10px;">${comment.comment_time}
+                  
+                             <c:if test="${comment.comment_writer_seq eq sessionScope.user.seq}">
+                        <button type="button" class="close" aria-label="Close" id="deleteComment" >
+                  <a href="deleteReviewComment.bo?comment_seq=${comment.comment_seq}&review_seq=${comment.review_seq}">
+                           <span aria-hidden="true">&times;</span>
+                        </a>
+                        </button>
+                        </c:if>
+                     
+                     </td>
+                  </tr>
+               </c:forEach>
             </tbody>
          </table>
       </div>
