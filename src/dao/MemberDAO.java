@@ -3,6 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import DBUtils.DBConnection;
 import dto.MemberDTO;
@@ -23,8 +25,9 @@ public class MemberDAO {
 			tmp.setPassword(rs.getString(3));
 			tmp.setEmail(rs.getString(4));
 			tmp.setNickname(rs.getString(5));
+			tmp.setBlock(rs.getString("block"));
 		}
-
+		
 		con.close();
 		pstmt.close();
 		rs.close();
@@ -36,7 +39,7 @@ public class MemberDAO {
 		if(!check(dto.getUserid())) {
 
 			Connection con = DBConnection.getConnection();
-			String sql = "insert into users (seq, userid, password, nickname, email) VALUES (users_seq.nextval, ?, ?, ?, ?)";
+			String sql = "insert into users (seq, userid, password, nickname, email, modify_date,create_date) VALUES (users_seq.nextval, ?, ?, ?, ?,sysdate,sysdate)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getUserid());
 			pstmt.setString(2, dto.getPassword());
@@ -57,7 +60,7 @@ public class MemberDAO {
 	public MemberDTO addNaverMember(MemberDTO dto) throws Exception {
 		if(!navercheck(dto.getNaver_id())) {
 			Connection con = DBConnection.getConnection();
-			String sql = "insert into users (seq, naver_id, naver_nickname, naver_email, part) VALUES (users_seq.nextval, ?, ?, ?, 'naver')";
+			String sql = "insert into users (seq, naver_id, naver_nickname, naver_email,modify_date,create_date, part) VALUES (users_seq.nextval, ?, ?, ?,sysdate,sysdate, 'naver')";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 
 			pstmt.setString(1, dto.getNaver_id());
@@ -93,7 +96,7 @@ public class MemberDAO {
 	public MemberDTO addKakaoMember(MemberDTO dto) throws Exception {
 		if(!kakaocheck(dto.getKakao_id())) {
 			Connection con = DBConnection.getConnection();
-			String sql = "insert into users (seq, kakao_id, kakao_nickname, kakao_email, part) VALUES (users_seq.nextval, ?, ?, ?, 'kakao')";
+			String sql = "insert into users (seq, kakao_id, kakao_nickname, kakao_email, modify_date, create_date,part) VALUES (users_seq.nextval, ?, ?, ?, sysdate, sysdate, 'kakao')";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 
 			pstmt.setString(1, dto.getKakao_id());
@@ -117,6 +120,7 @@ public class MemberDAO {
 			tmp.setNaver_id(rs.getString(9));
 			tmp.setNaver_nickname(rs.getString(10));
 			tmp.setNaver_email(rs.getString(11));
+			tmp.setBlock(rs.getString("block"));
 		}
 
 		con.close();
@@ -448,6 +452,76 @@ public class MemberDAO {
 		con.close();
 		return result;
 	}
+	
+	
+		
 
+	public int updateProfileImg (int user_seq, String file_name) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "update users set photo_system_file_name =? where seq=?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setString(1, file_name);
+		pstat.setInt(2, user_seq);
+		int result = pstat.executeUpdate();
+		con.commit();
+		pstat.close();
+		con.close();
+		return result;
+	}
+	
+	public MemberDTO newMemberInfo (int seq , String part) throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from users where part =?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setString(1, part);
+		ResultSet rs = pstat.executeQuery();
+		MemberDTO dto = new MemberDTO();
+		if(rs.next()) {
+			
+			if(part.equals("home")) {
+				String sql1 = "select userid, nickname, email, part, photo_system_file_name from users where seq=?";
+				pstat = con.prepareStatement(sql1);
+				pstat.setInt(1, seq);		
+				rs = pstat.executeQuery();
+				if(rs.next()) {
+					dto = new MemberDTO();
+					dto.setUserid(rs.getString("userid"));
+					dto.setNickname(rs.getString("nickname"));
+					dto.setEmail(rs.getString("email"));
+					dto.setPart(rs.getString("part"));
+					dto.setPhoto_system_file_name(rs.getString("photo_system_file_name"));
+				}
+			}else if (part.equals("naver")) {
+				String sql1 = "select naver_id, naver_nickname, naver_email, photo_system_file_name from users where seq =?";
+				pstat = con.prepareStatement(sql1);
+				pstat.setInt(1, seq);
+				rs = pstat.executeQuery();
+				if(rs.next()) {
+					dto.setNaver_id(rs.getString("naver_id"));
+					dto.setNaver_nickname(rs.getString("naver_nickname"));
+					dto.setNaver_email(rs.getString("naver_email"));
+					dto.setPhoto_system_file_name(rs.getString("photo_system_file_name"));
+				}
+			}
+			else if (part.equals("kakao")) {
+				String sql1 = "select kakao_id, kakao_nickname, kakao_email, photo_system_file_name from users where seq = ?";
+				pstat = con.prepareStatement(sql1);
+				pstat.setInt(1, seq);
+				rs = pstat.executeQuery();
+				if(rs.next()) {
+					dto.setKakao_id(rs.getString("kakao_id"));
+					dto.setKakao_nickname(rs.getString("kakao_nickname"));
+					dto.setKakao_email(rs.getString("kakao_email"));
+					dto.setPhoto_system_file_name(rs.getString("photo_system_file_name"));
+				}
+			}
+		}
+		pstat.close();
+		rs.close();
+		con.close();
+		return dto;	
+		
+	}
+	
 }
 

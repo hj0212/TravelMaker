@@ -13,17 +13,22 @@
 		if(${proc=="login"}) {
 			if(${loginResult==true}) {
 				console.log("로그인 성공");
-				location.href="main.jsp";
+				if(${sessionScope.user.block == "y"}) {
+					location.href = "errorBlock.jsp";
+				} else if(${sessionScope.user.block == "n" || sessionScope.user.block =='x'}) {
+					location.href="main.bo";
+				}
+				
 			} else {
 				console.log("로그인 실패");
 				location.href="newlogin.jsp";
 			}
 		} else if(${proc=="join"}){
 			if(${joinResult==1}) {
-				console.log("가입 성공");
+				alert("가입 성공");
 				location.href="newlogin.jsp";
 			} else {
-				console.log("가입 실패");
+				alert("가입 실패");
 				location.href="newlogin.jsp";
 			}
 		}

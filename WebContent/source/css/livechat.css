@@ -19,6 +19,7 @@
 	right: 24px;
 	position: fixed;
 	width: 300px;
+	
 }
 
 #live-chat header {
@@ -74,6 +75,7 @@
 	text-align: center;
 	top: 0;
 	width: 28px;
+	
 }
 
 .chat-close {
@@ -97,9 +99,7 @@
 .chat-history {
 	height: 252px;
 	padding: 8px 24px;
-	overflow-y: auto;
-	
-
+	overflow-y:scroll;
 }
 
 .chat-message {
@@ -121,7 +121,6 @@
 }
 
 .chat-feedback {
-	
 	font-style: italic;
 	margin: 0 0 0 100px;
 }
@@ -154,7 +153,7 @@ body {
 }
 
 fieldset {
-	text-align:center;
+	text-align: center;
 	border: 0;
 	margin: auto;
 	padding: 0;

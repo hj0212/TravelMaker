@@ -26,7 +26,10 @@
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>       
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script src="source/js/jquery.roadmap.min.js"></script>
-   <link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
+<link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
+<script src="source/js/createplan.js"></script>
+<link rel="stylesheet" href="source/css/createplan.css"/>
+<%@ page session="true"%>
 <meta charset="utf-8">
 
 <style type="text/css">
@@ -105,6 +108,25 @@
 	display: inline;
 	float: right;
 }
+
+#getmyplanbtn {
+	float: left;
+}
+
+.mapsinfo {
+	position: absolute;
+	font-weight: bold;
+	background-color:white;
+	line-height: 30px;
+	top:-50px;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-top: 1px solid black;
+}
+
+.select {
+	background-color: #eee;
+}
 </style>
 
 <script>
@@ -152,13 +174,14 @@ $(document).ready(function(){
 </head>
 <body>
 	<c:choose>
-		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/mainNavi_login.jsp"%>
+		<c:when test="${empty sessionScope.user.seq}">
+		<script>location.href="error.jsp"</script>
 		</c:when>
 		<c:otherwise>
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
+		
 	<div class="container text-center">
 		<div class="input-group input-group-lg" id="plantitle">
 			<div class="input-group-prepend">
@@ -171,7 +194,9 @@ $(document).ready(function(){
 
 		<div id="planinfoarea">
 			<p>작성자 | ${plan.plan_writerN }</p>
-			<p>여행 기간 | ${plan.plan_startdate } ~ ${plan.plan_enddate }</p>
+			<c:if test="${plan.plan_writer eq sessionScope.user.seq}">
+				<p>여행 기간 | ${plan.plan_startdate } ~ ${plan.plan_enddate }</p>
+			</c:if>
 			<p>조회수 | ${plan.plan_viewcount }
 			<p>
 			<div id="planbtnarea">
@@ -195,18 +220,18 @@ $(document).ready(function(){
 		<div class="schedule">
 			<ul class="nav nav-tabs" role="tablist">
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
-					<li class="nav-item active"><a class='nav-link'
+					<li class="nav-item"><a class='nav-link'
 						href='#Day${day}' role='tab' data-toggle='tab'>Day${day}</a></li>
 				</c:forEach>
 			</ul>
-
+			
 			<div class="tab-content">
-				<c:set var="isFirst" value="true" />
+			<c:set var="isFirst" value="true" />
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 					<input type="hidden" id="plan_seq" value="${plan_seq }">
-					<div role="tabpanel" class="tab-pane fade show active"
+					<div role="tabpanel" class="tab-pane fade show"
 						id="Day${day}">
-						<table class="table table-hover" id="schedule-table">
+						<table class="table" id="schedule-table">
 							<c:if test="${isFirst }">
 								<thead>
 									<tr>
@@ -243,19 +268,18 @@ $(document).ready(function(){
 																			<div>
 																				<div class="budget_plan">${bitem.budget_plan}:</div>
 																				<div class="budget_amount">${bitem.budget_amount}</div>
-																			</div> <br> <c:set var="count" value="2" />
+																			</div>
+																			<c:set var="count" value="2" />
 																	</c:when>
 																	<c:otherwise>
 																		<div>
 																			<div class="budget_plan">${bitem.budget_plan}:</div>
 																			<div class="budget_amount">${bitem.budget_amount}</div>
 																		</div>
-																		<br>
 																	</c:otherwise>
 																</c:choose>
 															</c:if>
-															<c:if
-																test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
+															<c:if test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
 																<td name="money"></td>
 																<c:set var="loop_flag" value="true" />
 															</c:if>
@@ -274,6 +298,7 @@ $(document).ready(function(){
 							</c:if>
 						</table>
 					</div>
+					<c:set var="isFirst" value="true" />
 				</c:forEach>
 			</div>
 		</div>
@@ -285,9 +310,9 @@ $(document).ready(function(){
 			<button type="button" class="btn btn-outline-primary" id="badbtn">
 				<i class="far fa-frown"></i>${bad}
 			</button>
-			<button class="btn btn-outline-success" id="getmyplanbtn">내 일정으로 가져가기</button>
-
-			<button class="btn btn-default" style="float: right;">신고</button>
+			<!-- <button type="button" class="btn btn-outline-success"
+					data-toggle="modal" data-target="#exampleModalCenter" id="getmyplanbtn">내 일정으로 가져가기</button>
+			 --><button class="btn btn-default" style="float: right;">신고</button>
 		</div>
 
 		<div class="comments">
@@ -343,6 +368,14 @@ $(document).ready(function(){
 		</div>
 	</div>
 	<script>
+	$("#schedule-table").on('click','.clickable-row',function(event) {
+		$(this).addClass('select').siblings().removeClass('select');
+		
+		
+	});
+	
+	$(".schedule ul li:first").addClass('active');
+	$("div[id='Day1']").addClass('active');
    /*댓글관련 버튼들*/
    /*댓글 작성*/
    $('#commentbtn').click(function() {
@@ -373,17 +406,15 @@ $(document).ready(function(){
 	
 	$("#remobtn").click(function() {
 		if(confirm("여행 계획을 삭제하시겠습니까?")) {
-			location.href = "removePlan.plan?plan=${plan_seq}";
+			location.href = "removePlan.plan?plan_seq=${plan_seq}";
 		}
 	})
 	
 	$("#listbtn").click(function() {	
 			location.href = "planboard.plan?currentPage=${currentPage}";
-	
-		
-		
 	});
 	plan_seq = $("input[id='plan_seq']").val();
+	markerlocation = []
 	$.ajax({
 		url:"planviewlist.Ajax",
 		type:"post",
@@ -391,8 +422,7 @@ $(document).ready(function(){
 		success:function(data){		
 			var obj = JSON.parse(data);
 			
-			var markerlocation = [];
-		   timeline = [];
+		   	timeline = [];
 
 		// 다중 마커에 정보창 띄우기
 			var markers = [],
@@ -402,12 +432,9 @@ $(document).ready(function(){
 		// 받아온 jsonArry 정보를 이용해 배열에 넣음 
 		var makeMarkerArray = function () {
 		    if (obj.jLocationList[0] == null && obj.jTimeLine[0] == null) {
-		        alert("정보나 넣고 오시지.. 서울시청으로 가드림^^");
-		        markerlocation.push({ location_name: "서울시청", location_x: 309852, location_y: 552189 });
-		        timeline.push({date : '0000-00-00', content : "서울시청"});
+		    	$(".wrapper").hide();
 		        return;
 		    }
-			
 		    
 		    var jsonArray = obj.jLocationList;
 		    timelineArray = obj.jTimeLine;
@@ -421,7 +448,7 @@ $(document).ready(function(){
 		        markerlocation.push(markerObj);
 		    }
 
-		    for (var i = 0; i < timelineArray.length; i++) {
+		    for (var i = timelineArray.length-1; i >= 0; i--) {
 		        let timelineObj = {
 		            date: timelineArray[i].day_seq+"일차",
 		            content: timelineArray[i].location_name,

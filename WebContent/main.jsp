@@ -92,9 +92,9 @@ div {
 							<div class="card col-md-12 col-sm-12 w-100"
 								style="height: 100%; padding: 0px;">
 								<div class="card-header">사진</div>
-								<div class="card-body">
+								<div class="card-body"> 
 									<a href="planArticle.plan?plan_seq=${tmp.plan_seq}"
-										style="text-decoration: none; padding: 0px;"><h4>${tmp.plan_title }</h4></a>
+										style="text-decoration: none; padding: 0px;"><h4 style=" max-height:29px; overflow:hidden;">${tmp.plan_title }</h4></a>
 									<h6 class="text-muted">${tmp.plan_writerN}</h6>
 									<div class="btn-list d-inline">
 
@@ -106,8 +106,6 @@ div {
 							</div>
 						</div>
 					</c:forEach>
-
-
 
 				</div>
 			</div>
