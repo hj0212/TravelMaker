@@ -376,21 +376,23 @@ public class FrontController extends HttpServlet {
 	          }else if(command.equals("/main.bo")) {
 	        	List<PlanDTO> main = gbdao.bestPlanData();
 	        	
-	        	
-	        	//파일경로인데 권혜진씨 부탁드립니다
-	        	MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
-	        	String part = (String)request.getSession().getAttribute("part");
-							
-				MemberDTO mdto = mdao.newMemberInfo(user.getSeq(), part);
-				System.out.println("seq :"+user.getSeq());
-				
-				System.out.println("mdto :"+mdto.getPhoto_system_file_name());
-				
-				/*mdto = mdao.getProfileInfo(part, id);*/
-				
-				/*String file_name = ((MemberDTO)request.getSession().getAttribute("user")).getPhoto_system_file_name();*/
-				 request.setAttribute("file_name", mdto.getPhoto_system_file_name());
-	        	
+	        	if(request.getSession().getAttribute("user") != null) {
+	        		//파일경로인데 권혜진씨 부탁드립니다
+		        	MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        	String part = (String)request.getSession().getAttribute("part");
+								
+					MemberDTO mdto = mdao.newMemberInfo(user.getSeq(), part);
+					System.out.println("seq :"+user.getSeq());
+					
+					System.out.println("mdto :"+mdto.getPhoto_system_file_name());
+					
+					/*mdto = mdao.getProfileInfo(part, id);*/
+					
+					/*String file_name = ((MemberDTO)request.getSession().getAttribute("user")).getPhoto_system_file_name();*/
+					 request.setAttribute("file_name", mdto.getPhoto_system_file_name());
+		        	
+		        	
+	        	}
 	        	
 	        
 	        	request.setAttribute("main", main);
