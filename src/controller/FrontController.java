@@ -168,7 +168,7 @@ public class FrontController extends HttpServlet {
 	            
 	            String searchTerm = request.getParameter("search");
 	            List<ReviewDTO> reviewList = new ArrayList<>();
-	            reviewList = rdao.getSomeReview(currentPage*12-11, currentPage*12, searchTerm);
+	            reviewList = rdao.getSomeReview(currentPage*10-9, currentPage*10, searchTerm);
 	            request.setAttribute("reviewList", reviewList);
 	            
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
@@ -372,8 +372,34 @@ public class FrontController extends HttpServlet {
 	        		  }
 	        	  }
 	        	  dst = "reviewboard.bo";
-	          }else if(command.equals("/")) {
-	        	  
+	          }else if(command.equals("/main.bo")) {
+	        	List<PlanDTO> main = gbdao.bestPlanData();
+	        	
+	        	if(request.getSession().getAttribute("user") != null) {
+	        		//파일경로인데 권혜진씨 부탁드립니다
+		        	MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        	String part = (String)request.getSession().getAttribute("part");
+								
+					MemberDTO mdto = mdao.newMemberInfo(user.getSeq(), part);
+					System.out.println("seq :"+user.getSeq());
+					
+					System.out.println("mdto :"+mdto.getPhoto_system_file_name());
+					
+					/*mdto = mdao.getProfileInfo(part, id);*/
+					
+					/*String file_name = ((MemberDTO)request.getSession().getAttribute("user")).getPhoto_system_file_name();*/
+					 request.setAttribute("file_name", mdto.getPhoto_system_file_name());
+		        	
+		        	
+	        	}
+	        	
+	        
+	        	request.setAttribute("main", main);
+	        	
+	        	isForward=true;
+	        	dst="main.jsp";
+	        	
+	        	
 	          }
 	        	  
 			if(isForward) {

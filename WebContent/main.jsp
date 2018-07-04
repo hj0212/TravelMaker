@@ -28,7 +28,7 @@ div {
 }
 
 .container {
-	height: 100%;	
+	height: 100%;
 }
 
 #bestPlan {
@@ -95,7 +95,7 @@ div {
 								<div class="card-header">사진</div>
 								<div class="card-body">
 									<a href="planArticle.plan?plan_seq=${tmp.plan_seq}"
-										style="text-decoration: none; padding: 0px;"><h4>${tmp.plan_title }</h4></a>
+										style="text-decoration: none; padding: 0px;"><h4 style=" max-height:29px; overflow:hidden;">${tmp.plan_title }</h4></a>
 									<h6 class="text-muted">${tmp.plan_writerN}</h6>
 									<div class="btn-list d-inline">
 
@@ -107,8 +107,6 @@ div {
 							</div>
 						</div>
 					</c:forEach>
-
-
 
 				</div>
 			</div>
@@ -166,6 +164,11 @@ div {
 		<%@include file="footer1.jsp"%>
 	</div>
 
+	<c:if test="${main==null}">
+		<script>
+			location.href = "main.bo";
+		</script>
+	</c:if>
 	<script src='source/lib/slick/slick.js'></script>
 	<script>
 		$('.data').slick({
@@ -181,7 +184,7 @@ div {
 	</script>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-
+			<%@include file="include/multiChat.jsp"%>
 		</c:when>
 	</c:choose>
 </body>
