@@ -181,7 +181,7 @@ public class FrontController extends HttpServlet {
 	         }else if(command.equals("/reviewArticle.bo")) {
 	        	 try {
 		             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-		             rdao.getArticleViewCount(review_seq);
+//		             rdao.getArticleViewCount(review_seq);
 		             
 		             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
 		             request.setAttribute("dto", result1);
@@ -212,8 +212,7 @@ public class FrontController extends HttpServlet {
 	             request.setAttribute("review_seq", review_seq);
 	  
 	             isForward = true;
-//	             dst= "reviewboard/reviewCommentView.jsp";
-	             dst= "reviewboard/reviewARticle.jsp";
+	             dst= "reviewboard/reviewCommentView.jsp";
 	          }else if(command.equals("/deleteReviewArticle.bo")) {
 	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 	        	  int result = rdao.deleteReview(review_seq);
@@ -223,7 +222,6 @@ public class FrontController extends HttpServlet {
 	        	  isForward = true;
 	        	  dst="deleteReviewView.jsp";
 	          }else if(command.equals("/deleteCheck.bo")) {
-//	        	  int seq = Integer.parseInt(request.getParameter("articlenum"));
 	        	  request.setAttribute("articlenum", request.getParameter("articlenum"));
 	        	  dst = "freeboard/deleteCheck.jsp";
 	          }else if(command.equals("/deleteFreeArticle.bo")) {
