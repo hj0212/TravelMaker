@@ -63,7 +63,7 @@ body {
   font-weight: 200;
   line-height: 1.5;
   color: #333;
-  text-align: left;
+  text-align: left; 
   background-color: white; }
 
 [tabindex="-1"]:focus {
@@ -475,12 +475,7 @@ pre {
     .container {
       max-width: 1140px; } }
 
-.container-fluid {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto; }
+
 
 .row {
   display: flex;
