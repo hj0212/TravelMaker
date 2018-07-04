@@ -292,11 +292,13 @@ public class ReviewDAO {
 		return result;
 	}
 
-	public int deleteReview(int review_seq) throws Exception{
+	public int deleteReview(int review_seq, int writer) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "delete from reviewboard where review_seq=?";
+		String sql = "delete from reviewboard_c where review_seq=? and review_writer = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
+		pstmt.setInt(2, writer);
+		
 		int result = pstmt.executeUpdate();
 		con.commit();
 		pstmt.close();
@@ -480,5 +482,22 @@ public class ReviewDAO {
 		conn.close();
 		return result;
 	}
-
+	
+	public int writerCheck(int seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "select review_writer from reviewboard_c where review_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, seq);
+		ResultSet rs = pstmt.executeQuery();
+		int writer = 0;
+		
+		if(rs.next()) {
+			writer = rs.getInt(1);
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return writer;
+	}
 }

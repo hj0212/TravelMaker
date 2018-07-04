@@ -285,7 +285,9 @@ $(document).ready(function(){
       })
       
      <c:if test="${sessionScope.user.seq eq dto.review_writer}">
-     	console.log("로그인한 사람 맞아요");
+     	$("#delete").click(function() {
+     		location.href = "deleteReviewCheck.bo?reviewnum=${review_seq}";
+     	})
      </c:if>
    </script>
 </body>
