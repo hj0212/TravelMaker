@@ -240,12 +240,11 @@ public class ReviewDAO {
 
 	public int insertReviewComment(String comment_text, int user, int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		System.out.println(comment_text + " : " + user + " : " + review_seq);
-		String sql = "insert into review_comment values(?,review_comment_seq.nextval,?,?,sysdate)";
+		String sql = "insert into review_comment values(review_comment_seq.nextval,?,?,sysdate,?)";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, review_seq);
-		pstmt.setString(2, comment_text);
-		pstmt.setInt(3, user);
+		pstmt.setString(1, comment_text);
+		pstmt.setInt(2, user);
+		pstmt.setInt(3, review_seq);
 		
 		int result = pstmt.executeUpdate();
 		con.commit();

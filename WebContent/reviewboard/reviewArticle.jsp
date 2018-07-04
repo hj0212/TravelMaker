@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="util" uri="/WEB-INF/tlds/writerToString.tld" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -230,8 +229,7 @@ $(document).ready(function(){
             <tbody>
 	            <c:forEach var="comment" items="${commentResult}">
 					<tr>
-						<c:set var='writer' value="${comment.comment_writer}" scope="page"/>  
-						<th scope="row" style="width: 15%; max-width: 15%; max-height: 51px;" class="writer">${util:getUserNickname(writer)}</th>
+						<th scope="row" style="width: 15%; max-width: 15%; max-height: 51px;" class="writer">${comment.comment_writer}</th>
 						<td style="width: 70%; max-width: 70%;">${comment.comment_text}</td>
 						<td style="width: 15%; font-size: 10px;">${comment.comment_time}
 							<button type="button" class="close" aria-label="Close">

@@ -102,8 +102,7 @@ div {
 		</div>		
 		
 	</div>
-	<div id="footer">
-	</div>
+
 	<script>
 		$("#searchbtn").click(function() {
 			location.href = "reviewboard.bo?search=" + $("#search").val();
