@@ -443,6 +443,7 @@ $(document).ready(function(){
 			location.href = "planboard.plan?currentPage=${currentPage}";
 	});
 	plan_seq = $("input[id='plan_seq']").val();
+	markerlocation = []
 	$.ajax({
 		url:"planviewlist.Ajax",
 		type:"post",
@@ -450,8 +451,7 @@ $(document).ready(function(){
 		success:function(data){		
 			var obj = JSON.parse(data);
 			
-			var markerlocation = [];
-		   timeline = [];
+		   	timeline = [];
 
 		// 다중 마커에 정보창 띄우기
 			var markers = [],
