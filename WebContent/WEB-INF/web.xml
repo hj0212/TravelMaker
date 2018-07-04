@@ -26,9 +26,15 @@
   	</description>
     <role-name>nobody</role-name>
   </security-role>
+  
   <error-page>
     <error-code>403</error-code>
     <location>/main.jsp</location>
+  </error-page>
+  
+  <error-page>
+    <error-code>404</error-code>
+    <location>/pageNotFound.jsp</location>
   </error-page>
   
   <jsp-config>
