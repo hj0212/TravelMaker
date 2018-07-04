@@ -41,8 +41,8 @@
 					<nav class="navbar navbar-inverse navbar-fixed-top"
 						id="sidebar-wrapper" role="navigation">
 					<ul class="nav sidebar-nav">
-						<li class="sidebar-brand"><a href="#"> TravelMaker </a></li>
-						<li><a href="../showMembers.ad">Members</a></li>
+						<li class="sidebar-brand"><a href="main.jsp"> TravelMaker </a></li>
+						<li><a href="showMembers.ad">Members</a></li>
 						<li><a href="#">Log</a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">Reports<span class="caret"></span></a>
@@ -207,6 +207,7 @@
 																	},
 																	error : function() {
 																		alert("다시 시도해주세요.");
+																		location.href="../showMembers.ad";
 																	}
 																})
 
@@ -223,7 +224,7 @@
 		</c:when>
 		<c:otherwise>
 			<script>
-				location.href = "error.jsp"
+				location.href = "../error.jsp"
 			</script>
 		</c:otherwise>
 	</c:choose>

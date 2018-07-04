@@ -18,7 +18,7 @@ public class AdminDAO {
 	public List<ReportFreeDTO> getAllReport_f() throws Exception{
 		Connection conn = DBConnection.getConnection();
 		List<ReportFreeDTO> list = new ArrayList<>();
-		String sql = "select r.reportfree_seq, r.free_seq, f.free_title, f.free_writer, r.report_user, to_char(r.report_date,'yy/MM/dd') report_date from freeboard f, report_free r where r.free_seq = f.free_seq order by reportfree_seq desc";
+		String sql = "select r.reportfree_seq, r.free_seq, f.free_title, f.free_writer, r.report_user, to_char(r.report_date,'yy/MM/dd') report_date from freeboard_c f, report_free r where r.free_seq = f.free_seq order by reportfree_seq desc";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -39,6 +39,40 @@ public class AdminDAO {
 		conn.close();
 		return list;
 	}
+
+	//-------------------------------------------------계획 공유게시판 관리
+	
+	//----------------------------------신고 글 전부 보기	
+	public List<ReportFreeDTO> getAllReport_p() throws Exception{
+		Connection conn = DBConnection.getConnection();
+		List<ReportFreeDTO> list = new ArrayList<>();
+		String sql = "select r.reportfree_seq, r.free_seq, f.free_title, f.free_writer, r.report_user, to_char(r.report_date,'yy/MM/dd') report_date from freeboard_c f, report_free r where r.free_seq = f.free_seq order by reportfree_seq desc";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			ReportFreeDTO tmp = new ReportFreeDTO();
+			tmp.setReportfree_seq(rs.getInt("reportfree_seq"));
+			tmp.setFree_seq(rs.getInt("free_seq"));
+			tmp.setFree_title(rs.getString("free_title"));
+			MemberDAO mdao = new MemberDAO();		
+			tmp.setFree_writer(mdao.getUserNickname(rs.getInt("free_writer")));
+			tmp.setReport_user(mdao.getUserNickname(rs.getInt("report_user")));
+			tmp.setReport_date(rs.getString("report_date"));
+			list.add(tmp);
+		}
+	/*	System.out.println(list.size());*/
+		rs.close();
+		pstmt.close();
+		conn.close();
+		return list;
+	}
+	
+	
+	
+	
+	
+	
 	
 	//--------------------------------------------------회원관리	
 	//-----------------------------모든 회원정보 가져오기

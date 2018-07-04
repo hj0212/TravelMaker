@@ -359,3 +359,10 @@ body, html {
     background: inherit;
     left: 40px;
 }
+
+#linkId{
+	color:red;
+}
+#linkId:visited{
+	color:green;
+}
