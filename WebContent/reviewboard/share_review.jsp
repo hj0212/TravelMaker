@@ -55,8 +55,7 @@ div {
 				<c:when test="${reviewList[0]!= null}">
 					<c:forEach var="item" items="${reviewList}">
 						<div class="card col-md-3 ">
-							<img class="card-img-top"
-								src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
+							<img class="card-img-top" src="${pageContext.request.contextPath}/files/${item.review_thumbnail}" alt="Card image cap">
 							<div class="card-body">
 								<h5 class="card-title">${item.review_title}</h5>
 								<p class="card-text">${item.review_writerN}</p>
