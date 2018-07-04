@@ -41,8 +41,8 @@ public class PlanController extends HttpServlet {
 			MemberDAO mdao = new MemberDAO();
 			GoodBadDAO gbdao = new GoodBadDAO();
 
-         boolean isForward = true;
-         String dst = null;
+			boolean isForward = true;
+			String dst = null;
 
 			if(command.equals("/addSchedule.plan")) {
 				LocationDTO ldto = new LocationDTO();
@@ -88,7 +88,7 @@ public class PlanController extends HttpServlet {
 					System.out.println("등록실패");
 				}	
 
-				isForward = true;
+				isForward = false;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/modiSchedule.plan")) {
 				//				세 값 다 넘어옵니다.
@@ -202,7 +202,7 @@ public class PlanController extends HttpServlet {
 					System.out.println("스케줄수정실패");
 				}
 
-				isForward = true;
+				isForward = false;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/selectSchedule.plan")) {
 
@@ -240,8 +240,7 @@ public class PlanController extends HttpServlet {
 					System.out.println("삭제실패");
 				}
 
-				isForward=true;
-
+				isForward=false;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/createPlan.plan")) {
 				int plan_writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
@@ -299,8 +298,8 @@ public class PlanController extends HttpServlet {
 				request.setAttribute("currentPage", currentPage);
 				//------------------------------------------------------
 
-            String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
-            request.setAttribute("pageNavi", pageNavi);
+				String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
+				request.setAttribute("pageNavi", pageNavi);
 
 				isForward = true;
 				dst="share_plan.jsp";
@@ -321,16 +320,12 @@ public class PlanController extends HttpServlet {
 				PlanDTO plan = pdao.getPlandata(plan_seq);
 				request.setAttribute("good", good);
 				request.setAttribute("bad", bad);
-				
+
 				request.setAttribute("result1", result1);
 				request.setAttribute("plan_seq", plan_seq);
 				request.setAttribute("plan", plan);
 				request.setAttribute("currentPage", currentPage);
 
-				
-			
-				
-				
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				request.setAttribute("plan_period", plan_period);
 
@@ -382,6 +377,9 @@ public class PlanController extends HttpServlet {
 				} else {
 					System.out.println("삭제실패");
 				}
+
+				isForward = false;
+				dst = "planboard.plan";
 			}
 
 			if(isForward) {
@@ -395,11 +393,11 @@ public class PlanController extends HttpServlet {
 		}	
 
 
-   }
+	}
 
-   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      // TODO Auto-generated method stub
-      doGet(request, response);
-   }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
 
 }
