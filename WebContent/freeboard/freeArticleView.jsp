@@ -256,7 +256,9 @@ $(document).ready(function(){
 				});
 
 				$("#writeComment").click(function() {
-					if($("#comment").val() == "") {
+					var pattern = /\s/g;
+					
+					if($("#comment").val() == "" || $("#comment").val().match(pattern)) {
 						alert("댓글을 입력해주세요!")
 						return false;
 					}

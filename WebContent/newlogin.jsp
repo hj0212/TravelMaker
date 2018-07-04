@@ -240,7 +240,7 @@ $("#user_idchek").keyup(function(){
 							<div class="row confirm-password-row">
 								<div class="input-field confirm-password-field col s12">
 									<input id="confirm-password" type="password" class="validate"
-										name="cpw" maxlength="45"> <label
+										name="pwcheck" maxlength="45"> <label
 										for="confirm-password" id="confirm-label">confirm
 										password</label>
 								</div>

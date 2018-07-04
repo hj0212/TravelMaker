@@ -36,18 +36,17 @@
 body {
 	font-family: Raleway, Arial, sans-serif;
 	font-size: 16px;
-	font-weight: 300;
-	color: #6d6d6d;
+	font-weight: 200;
+	/*color: #858585;*/
 	overflow-x: hidden;
 }
-
 a {
 	color: #6d6d6d;
 	text-decoration: none;
 }
 
 a:hover, a:focus {
-	color: #6d6d6d;
+	/*color: #6d6d6d;*/
 	text-decoration: underline
 }
 
@@ -57,6 +56,7 @@ a:focus, .btn:focus {
 
 .img-responsive {
 	border: 1px solid #ddd;
+	color : gray;
 }
 
 /*-----------------------
@@ -257,7 +257,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	background: #fff;
 	border-bottom: 3px solid #cce6ff;
 	outline: none;
-	box-shadow: none;
+	box-snhadow: none;
 	-webkit-transition: border-color .3s ease-in;
 	transition: border-color .3s ease-in;
 }
@@ -307,8 +307,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 					<p class="lead">
 					<p>기능에 대한 안내나 기술 지원이 필요하신가요?</p>
-
-					</p>
+					
 
 					<p>홈페이지를 사용하시는데 궁금하신 점이나, 불편 사항을 적어주세요.</p>
 					<p>문의주신 사항은 24시간 이내에 순차적으로 처리됩니다.</p>
@@ -327,8 +326,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 						<label class="control-label" for="contact-name">이름</label>
 						<div class="controls">
 							<input id="contact-name" name="contactName"
-								placeholder="Your name" class="form-control requiredField"
-								data-new-placeholder="Your name" type="text"
+								placeholder="Name" class="form-control requiredField"
+								data-new-placeholder="Name" type="text"
 								data-error-empty="이름을 적어주세요."> <i class="fa fa-user"></i>
 						</div>
 					</div>
@@ -337,9 +336,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 					<div class="form-group">
 						<label class="control-label" for="contact-mail">이메일</label>
 						<div class=" controls">
-							<input id="contact-mail" name="email" placeholder="Your email"
+							<input id="contact-mail" name="email" placeholder="Email"
 								class="form-control requiredField"
-								data-new-placeholder="Your email" type="email"
+								data-new-placeholder="Email" type="email"
 								data-error-empty="이메일을 적어주세요."
 								data-error-invalid="이메일 형식이 유효하지 않습니다."> <i
 								class="fa fa-envelope"></i>
@@ -351,7 +350,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 						<label class="control-label" for="contact-message">내용</label>
 						<div class="controls">
 							<textarea id="contact-message" name="comments"
-								placeholder="Your message" class="form-control requiredField"
+								placeholder="Write message" class="form-control requiredField"
 								data-new-placeholder="Your message" rows="6"
 								data-error-empty="메시지를 입력해주세요."></textarea>
 							<i class="fa fa-comment"></i>
@@ -362,7 +361,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 					<p>
 						<button name="submit" type="submit"
 							class="btn btn-color2 btn-block" data-error-message="Error!"
-							data-sending-message="Sending..." data-ok-message="Message Sent">
+							data-sending-message="보내는중.." data-ok-message="전송 완료!">
 							<i class="fa fa-paper-plane"></i>전송
 						</button>
 					</p>
