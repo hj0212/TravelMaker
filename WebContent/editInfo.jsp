@@ -30,11 +30,11 @@
               <tr>
                 <td>아이디</td>
                 <td><input type="text" value= "${id}" readonly></td>
-                <td>Otto</td>
+                <td></td>
               </tr>
                <tr>
                 <td>비밀번호</td>
-                <td><input type="password" value= "${pw}" ></td>
+                <td><input type="password" value= "${pw}"></td>
                 <td>Thornton</td>
               </tr>
               <tr>

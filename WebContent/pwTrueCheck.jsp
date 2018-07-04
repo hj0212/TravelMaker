@@ -18,23 +18,16 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>비밀번호 체크</th>                
-              </tr>
-            </thead>
-            <tbody>
+       
             <form class="form-inline" action="pwTrueCheck.do" method="post">
-              <div class="input-group col-md-12">
+              <div class="input-group col-md-12 outline-primary">
                 <input type="password" class="form-control" placeholder="pw을 입력하세요" name="pw">
                 <div class="input-group-append">
-                  <button class="btn btn-cyan" type="submit">확인</button>
+                  <button class="btn btn-outline-primary" type="submit">확인</button>
                 </div>
               </div>
             </form>
-            </tbody>
-          </table>
+
         </div>
       </div>
     </div>

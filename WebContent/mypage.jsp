@@ -77,7 +77,8 @@ text-decoration: none ! important;
 padding:0 auto;
 }
  */
-ul {li { display:inline;
+ul {li 
+{ display:inline;
 	 a { color : #777777;
 	text-decoration: none;
 	&:
@@ -97,6 +98,26 @@ ul {li { display:inline;
 	clear: both;
 } */
 
+ul li:before{
+border-top: 1px solid #777777;
+}
+#tabs,#tab1,#tab2,#tab3,#tab4{
+border:1px solid transparent;
+border-top-left-radius: .25em;
+border-top-right-radius: .25em;
+}
+#tab1,#tab2,#tab3,#tab4{
+display:block;
+padding: .5rem 1rem;
+}
+ul{
+border-bottom: 1px solid #ddd;
+-webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
 #box-container li a {
 	color: #777777 !important;
 	text-decoration: none !important;
@@ -110,10 +131,23 @@ ul {li { display:inline;
 text-align:center;
 float: left;
 display: inline;
-width:100px;
+width:120px;
 height:100%;
 background: white;
 border: 1px solid #777777;
+&::a{
+color:#ddd;
+}
+}
+
+/* #cf-box div a{
+::hover{
+background-color:primary;
+}
+} */
+
+#cf-box button{
+border:1px solid transparent;
 }
 
 #wrapper {
@@ -139,7 +173,7 @@ border-radius: 10px;
 
 #profile-container{
 box-sizing: border-box;
-border:1px solid #777777;
+/* border:1px solid #777777; */
 border-radius: 10px;
 }
 
@@ -177,17 +211,20 @@ text-align:center;
 }
 #img_button{
 	cursor: pointer;
+	 opacity: 3;
+	 background-color: #777777;
+	border: transparent;
 }
 
  </style>
  <script>
  $(document).ready(function(){
-	/*  $("#profile_img").attr('src',${file_name}); */
+	 $("#profile_img").attr('src',"/Git_Practice_Message/file/${file_name}");
 	 $("#img_button").click(function(){
 		 var img_file = $("#img_file").trigger("click");	 
 		 if(img_file){ 
 			 
-		 var selected = $("#profile").text("완료");
+		 var selected = $("#profile").text("프로필 사진 등록");
 	 
 		 if(selected ){
 			 $("#profile").click(function(){
@@ -219,20 +256,22 @@ text-align:center;
 <div id="wrapper">
 	<!--profile부분-->
   <div class="py-5 text-center w-100 h-100" id="profile-cont">
-    <div class="container w-100 h-100 py-5">
+    <div class="container py-5">
       <div class="row">
         <!-- <div class="col-sm-8 col-md-3 col-lg-3"> -->
           <div class="w-100 h-100 py-3 px-1 align-items-center" id="profile-container">
             <!-- <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap"> -->
-            <div class=" py-3 ml-3" id="profile-con" style="width: 344.59px; box-sizing: border-box;">
+            <!--프로필 이미지 업로드-->
+            <div class="col-sm py-3 ml-3 align-center" id="profile-con" style="width: 344.59px; box-sizing: border-box;">
             <form action="profileImg.do" method="post" enctype="multipart/form-data" id="profileImgForm">
-            <button id="img_button" type="button" class="d-inline" title="여기를 누르시면 이미지를 변경하실수있습니다." style="max-height: 238px;height: 238px;width: 344.59px;max-width: 344.59px"><img for="img_file" id="profile_img" src="/Git_Practice_Message/file/${file_name }" alt="Charlie-Chaplin-PNG-Image-17681.png" style="width: 100%;height: 100%"></button>
+            <button id="img_button" type="button" class="d-inline" title="여기를 누르시면 이미지를 변경하실수있습니다." style="max-height: 238px;height: 238px;width: 344.59px;max-width: 344.59px"><img for="img_file" id="profile_img" src="Charlie-Chaplin-PNG-Image-17681.png" alt="프로필 사진을 등록해보세요!" style="width: 100%;height: 100%"></button>
             <div class="align-items-center">
             <input type="file"id="img_file" name="file" accept=".gif, .jpg, .png, .jpeg" value="이미지변경" hidden="true">
-            <button class="btn btn-primary w-100" type="button" id="profile">프로필이미지</button></div>
+            <button class="btn btn-outline-primary" type="button" id="profile" style=" width: 344.59px;">프로필사진</button></div>
             </form>
             </div>
-            <div class="d-inline py-5" id="con">
+            <!--기본 프로필-->
+            <div class="col-sm d-inline py-5" id="con">
               <h4 class="my-4">${nickname}</h4>
               <c:choose>
               <c:when test="${email eq null}">
@@ -243,21 +282,25 @@ text-align:center;
               </c:otherwise>
               </c:choose>
             </div>
-         <div id="cf-box" class="d-inline py-3 my-5" style="border-radius: 15px; border:1px solid #77777;">
-         <div>정보수정</div>
+         <!--회원정보 수정-->
+         <div id="cf-box" class="col-sm d-inline py-3 my-5" style="border-radius: 15px; border:1px solid #77777;">
+         <div>정보수정</div><hr>
   		<c:choose>
   		<c:when test="${sessionScope.part eq 'home'}">
-  		<div class="py-3"><a href="#" id="editInfo">회원정보</a></div>
+  		<!-- <div class="py-3"><a href="#" id="editInfo">회원정보</a></div>
   		<div class="py-3"><a href="#" id="editPw">비밀번호</a></div>
-  		<div class="py-3"><a href="#" id="updateEmail">이메일</a></div>
+  		<div class="py-3"><a href="#" id="updateEmail">이메일</a></div> -->
+  		<button id="editInfo" class="btn-outline-primary">회원정보</button>
+  		<button id="editPw" class="btn-outline-primary">비밀번호</button>
+  		<button id="updateEmail" class="btn-outline-primary">이메일</button>
+  		
   		</c:when>
   		<c:otherwise>
   		<div class="py-3"><a href="#" id="updateEmail">이메일</a></div>
   		</c:otherwise>
   		</c:choose>
   		</div>
-          </div>
-      
+      </div>
 				</div>
 			</div>
 		</div>
@@ -267,15 +310,15 @@ text-align:center;
 			<div class="container">
 
 				<div class="panel-heading">
-					<ul class="nav nav-tabs nav-justified">
-						<li class="nav-item"><a href="#tabone"
+					<ul class="nav nav-tabs nav-justified" id="tabs">
+						<li class="nav-item px-0" id="tab1"><a href="#tabone"
 							class="active nav-link" data-toggle="tab" data-target="#tabone"
 							role="presentation">내후기글</a></li>
-						<li class="nav-item"><a href="#tabtwo" data-toggle="tab"
+						<li class="nav-item px-0" id="tab2"><a href="#tabtwo" class="nav-link" data-toggle="tab"
 							data-target="#tabtwo" role="presentation">내계획</a></li>
-						<li class="nav-item"><a href="#tabthree" data-toggle="tab"
+						<li class="nav-item px-0" id="tab3"><a href="#tabthree" class="nav-link" data-toggle="tab"
 							data-target="#tabthree" role="presentation">Tab 3</a></li>
-						<li class="nav-item"><a href="#tabfour" data-toggle="tab"
+						<li class="nav-item px-0" id="tab4"><a href="#tabfour" class="nav-link" data-toggle="tab"
 							data-target="#tabfour" role="presentation">Tab 4</a></li>
 					</ul>
 				</div>
@@ -286,7 +329,7 @@ text-align:center;
 						<!-- tabone -->
 						<div class="col tab-pane active" id="tabone" role="tabpanel">
 							<div class="row">
-								<c:forEach var="mrr" items="${MyReviewResult}">
+								<c:forEach var="mrr" items="${MyReviewResult}">				
 									<div class="item col-md-3 col-sm-3 w-25">
 										<div class="card">
 											<div class="card-header">
@@ -306,15 +349,13 @@ text-align:center;
 										</div>
 									</div>
 								</c:forEach>
-
-
 							</div>
 						</div>
 
 						<!-- tabtwo -->
 
 
-						<div class="col tab-pane fade" id="tabtwo" role="tabpanel">
+						<div class="col tab-pane" id="tabtwo" role="tabpanel">
 							<div class="row">
 
 								<c:forEach var="mpr" items="${MyPlanResult}">
@@ -340,7 +381,7 @@ text-align:center;
 						</div>
 
 						<!-- tabthree -->
-						<div class="col tab-pane fade" id="tabthree" role="tabpanel">
+						<div class="col tab-pane" id="tabthree" role="tabpanel">
 							<div class="row mt-2 mx-0">
 
 								<c:forEach var="item" items="${flist}">
@@ -373,7 +414,7 @@ text-align:center;
 
 
 						<!-- tabfour -->
-						<div class="col tab-pane fade" id="tabfour" role="tabpanel">
+						<div class="col tab-pane" id="tabfour" role="tabpanel">
 							<div class="row">
 
 
@@ -516,7 +557,7 @@ text-align:center;
 		 }); */
 
 		/* 정보수정버튼 */
-		$(function() {
+		/* $(function() { */
 	/* 		$("#box-container").hide();
 			$("#editlink").on("click", function() {
 				$("#box-container").toggle("fast");
@@ -532,7 +573,7 @@ text-align:center;
 				        if (extFile=="jpg" || extFile=="jpeg" || extFile=="png"){
 		            	readURL(this);
 				        }else{
-				            alert("프로필 사진은 이미지만 입력 가능합니다");
+				            alert("프로필 사진은 이미지 파일만 입력 가능합니다");
 				        } 
 		            	
 		            });
