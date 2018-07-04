@@ -15,10 +15,63 @@ a {
 	color: #6d6d6d;
 	text-decoration: none;
 }
+
+.rslides {
+	position: relative;
+	list-style: none;
+	overflow: hidden;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.rslides li {
+	-webkit-backface-visibility: hidden;
+	position: absolute;
+	display: none;
+	width: 100%;
+	left: 0;
+	top: 0;
+}
+
+.rslides li:first-child {
+	position: relative;
+	display: block;
+	float: left;
+}
+
+.rslides img {
+	display: block;
+	height: 550px;
+	float: left;
+	width: 100%;
+	border: 0;
+}
+
+.navbar-fixed-top.scrolled {
+	background-color: #fff !important;
+	transition: background-color 200ms linear;
+}
+
+.nav-link {
+	font-size: 15pt;
+	font-family: menufont;
+}
+
 </style>
 
+<ul class="rslides">
+		<li><img src="source/img/TRAVEL/travel10.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel11.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel12.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel13.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel14.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel15.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel16.png" alt=""></li>
+	</ul>
+
 	<nav
-		class="navbar fixed-top navbar-right navbar-expand-lg navbar-light shadow-sm"
+		class="navbar fixed-top navbar-right navbar-expand-lg navbar-fixed-top navbar-light"
 		style="background-color: white; height:100px" id="naviId">
 		<a class="navbar-brand" href="main.jsp" style="font-size: 30px"><h1 class="logo">Logo</h1></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -51,4 +104,17 @@ a {
 		</div>
 	</nav>
 
+<script>
+		$(function() {
+			$(".rslides").responsiveSlides();
+		});
+		$(function() {
+			$(document).scroll(
+					function() {
+						var $nav = $(".navbar-fixed-top");
+						$nav.toggleClass('scrolled', $(this).scrollTop() > $nav
+								.height());
+					});
+		});
+	</script>
 </header>
