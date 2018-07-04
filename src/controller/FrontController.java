@@ -86,7 +86,7 @@ public class FrontController extends HttpServlet {
 					dst="freeboard/freeBoardList.jsp?currentPage="+currentPage;
 				}catch(NumberFormatException e) {
 					isForward = false;
-					dst = "numberError.bo";
+					dst = "freeNumberError.bo";
 				}catch(Exception e1) {
 					isForward = false;
 					dst = "freeboardError.bo";
@@ -128,7 +128,7 @@ public class FrontController extends HttpServlet {
 						isForward = false;
 						dst = "login.bo";
 					}else {
-						int result = fcdao.addViewCount(seq);
+						int result = fbdao.addViewCount(seq);
 						FreeboardDTO boardDTO = fbdao.readFreeArticle(seq);
 						int writerNumber = Integer.parseInt(boardDTO.getFree_writer());
 						String nickname = mdao.getUserNickname(writerNumber);
@@ -157,7 +157,7 @@ public class FrontController extends HttpServlet {
 						dst = "freeboard/freeArticleView.jsp";
 					}
 				}catch(NumberFormatException e) {
-					dst = "numberError.bo";
+					dst = "freeNumberError.bo";
 					isForward = false;
 					e.printStackTrace();
 				}catch(Exception e1) {
@@ -213,9 +213,6 @@ public class FrontController extends HttpServlet {
 	        	 }catch(NumberFormatException e) {
 	        		 isForward = false;
 	        		 dst = "numberError.bo";
-	        	 }catch(Exception e1) {
-	        		 isForward = false;
-	        		 dst = "freeboardError.bo";
 	        	 }
 	          }else if(command.equals("/addReviewComment.bo")) {
 	             String comment_text = request.getParameter("comment_text");
@@ -249,12 +246,12 @@ public class FrontController extends HttpServlet {
 		        		  fbdao.deleteArticle(seq);
 		        		  dst = "freeboard.bo";
 		        	  }else {
-		        		  dst = "notWriter.bo";
+		        		  dst = "freenotWriter.bo";
 		        		  isForward = false;
 		        	  }
 	        	  }catch(NumberFormatException e) {
 	        		  isForward = false;
-	        		  dst = "numberError.bo";
+	        		  dst = "freeNumberError.bo";
 	        		  e.printStackTrace();
 	        	  }catch(Exception e1) {
 	        		  isForward = false;
@@ -272,22 +269,20 @@ public class FrontController extends HttpServlet {
 	        			  request.setAttribute("articlenum", articlenum);
 	        			  dst = "freeboard/modifyFreeArticle.jsp";
 	        		  }else {
-	        			  dst = "notWriter.bo";
+	        			  dst = "freenotWriter.bo";
 	        			  isForward = false;
 	        		  }
 	        	  }catch(NumberFormatException e) {
-	        		  dst =  "numberError.bo";
+	        		  dst =  "freeNumberError.bo";
 	        		  isForward = false;
 	        	  }catch(Exception e1) {
 	        		  dst = "freeboardError.bo";
 	        		  isForward = false;
 	        	  }
-	          }else if(command.equals("/numberError.bo")) {
-	        	  isForward = false;
-	        	  dst = "freeboard/notNumber.jsp";
-	          }else if(command.equals("/notWriter.bo")) {
-	        	  isForward = false;
-	        	  dst = "freeboard/notWriter.jsp";
+	          }else if(command.equals("/freeNumberError.bo")) {
+	        	  dst = "notNumber.jsp";
+	          }else if(command.equals("/freenotWriter.bo")) {
+	        	  dst = "notWriter.jsp";
 	          }else if(command.equals("/modifyFreeArticle.bo")) {
 	        	  try {
 		        	  String title = request.getParameter("title");
@@ -310,13 +305,13 @@ public class FrontController extends HttpServlet {
 		        		  int result = fbdao.updateArticle(title, contents,articlenum);
 		        		  dst = "viewFreeArticle.bo?seq="+articlenum;
 		        	  }else {
-		        		  dst = "notWriter.bo";
+		        		  dst = "freenotWriter.bo";
 		        	  }
 		        	  
 		        	  isForward = false;
 	        	  }catch(NumberFormatException e) {
 	        		  e.printStackTrace();
-	        		  dst = "numberError.bo";
+	        		  dst = "freeNumberError.bo";
 	        		  isForward = false;
 	        	  }catch(Exception e1) {
 	        		  isForward = false;
@@ -343,7 +338,7 @@ public class FrontController extends HttpServlet {
 		        	  isForward = false;
 		        	  dst = "viewFreeArticle.bo?seq="+articleseq;
 	        	  }catch(NumberFormatException e) {
-	        		  dst = "numberError.bo";
+	        		  dst = "freeNumberError.bo";
 	        		  isForward = false;
 	        	  }catch(Exception e1) {
 	        		  dst = "freeboradError.bo";
