@@ -47,13 +47,15 @@
 #plan-board {
 	margin-top: 20px;
 	width: 70%;
-	float: left;
+	/* float: left; 여기가 문제가 됨. */
 	margin-bottom: 50px;
 }
+/* 플랜보드가 문제됨 */
 
 #plan-div {
 	margin-top: 20px;
 }
+
 
 #end-bt:hover {
 	background-color: #e9e9e9;
@@ -74,7 +76,7 @@
 	box-sizing: border-box;
 	width: 10px;
 	margin-left: 24px;
-
+	float: left;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -105,6 +107,7 @@
 #totalbudget {
 	width: 150px;
 	float: left;
+	margin-left : 80%;
 }
 
 #delete-table {
@@ -145,11 +148,10 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<script>location.href="error.jsp"</script>
-			<%@include file="include/mainNavi_login.jsp"%>
+			<%@include file="include/mainNavi_login.jsp"%>			
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
+			<%@include file="include/mainNavi.jsp"%>			
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
