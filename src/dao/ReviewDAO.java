@@ -235,6 +235,10 @@ public class ReviewDAO {
 			rdto.setReview_viewcount(rs.getInt("review_viewcount"));
 		}
 
+		rs.close();
+		pstmt.close();
+		con.close();
+		
 		return rdto;
 	}
 

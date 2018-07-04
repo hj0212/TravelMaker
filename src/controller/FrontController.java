@@ -83,10 +83,13 @@ public class FrontController extends HttpServlet {
 					request.setAttribute("pageNavi", pageNavi);
 					request.setAttribute("currentPage", currentPage);
 					
-					isForward = true;
 					dst="freeboard/freeBoardList.jsp?currentPage="+currentPage;
 				}catch(NumberFormatException e) {
+					isForward = false;
 					dst = "numberError.bo";
+				}catch(Exception e1) {
+					isForward = false;
+					dst = "freeboardError.bo";
 				}
 			} else if(command.equals("/freewrite.bo")) {
 				isForward = true;
@@ -142,7 +145,7 @@ public class FrontController extends HttpServlet {
 						  int bad = gbdao.freeBadSelectData(seq);
 					      int good =gbdao.freeGoodSelectData(seq);
 					      request.setAttribute("good", good);
-					       request.setAttribute("bad", bad);	      
+					      request.setAttribute("bad", bad);	      
 						
 						
 						request.setAttribute("seq", seq);
@@ -157,6 +160,9 @@ public class FrontController extends HttpServlet {
 					dst = "numberError.bo";
 					isForward = false;
 					e.printStackTrace();
+				}catch(Exception e1) {
+					isForward = false;
+					dst = "freeboardError.bo";
 				}
 			} else if(command.equals("/login.bo")) {
 				dst = "freeboard/needLogin.jsp";
@@ -205,7 +211,11 @@ public class FrontController extends HttpServlet {
 		             isForward = true;            
 		             dst="reviewboard/reviewArticle.jsp";
 	        	 }catch(NumberFormatException e) {
+	        		 isForward = false;
 	        		 dst = "numberError.bo";
+	        	 }catch(Exception e1) {
+	        		 isForward = false;
+	        		 dst = "freeboardError.bo";
 	        	 }
 	          }else if(command.equals("/addReviewComment.bo")) {
 	             String comment_text = request.getParameter("comment_text");
@@ -243,8 +253,12 @@ public class FrontController extends HttpServlet {
 		        		  isForward = false;
 		        	  }
 	        	  }catch(NumberFormatException e) {
+	        		  isForward = false;
 	        		  dst = "numberError.bo";
 	        		  e.printStackTrace();
+	        	  }catch(Exception e1) {
+	        		  isForward = false;
+	        		  dst = "freeboradError.bo";
 	        	  }
 	          }else if(command.equals("/modifyFreeArticlePage.bo")) {
 	        	  try {
@@ -263,11 +277,17 @@ public class FrontController extends HttpServlet {
 	        		  }
 	        	  }catch(NumberFormatException e) {
 	        		  dst =  "numberError.bo";
+	        		  isForward = false;
+	        	  }catch(Exception e1) {
+	        		  dst = "freeboardError.bo";
+	        		  isForward = false;
 	        	  }
 	          }else if(command.equals("/numberError.bo")) {
-	        	  dst = "notNumber.jsp";
+	        	  isForward = false;
+	        	  dst = "freeboard/notNumber.jsp";
 	          }else if(command.equals("/notWriter.bo")) {
-	        	  dst = "notWriter.jsp";
+	        	  isForward = false;
+	        	  dst = "freeboard/notWriter.jsp";
 	          }else if(command.equals("/modifyFreeArticle.bo")) {
 	        	  try {
 		        	  String title = request.getParameter("title");
@@ -288,7 +308,7 @@ public class FrontController extends HttpServlet {
 		        	  
 		        	  if(user.getSeq() == fbdao.writerCheck(articlenum)) {
 		        		  int result = fbdao.updateArticle(title, contents,articlenum);
-		        		  dst = "freeboard.bo";
+		        		  dst = "viewFreeArticle.bo?seq="+articlenum;
 		        	  }else {
 		        		  dst = "notWriter.bo";
 		        	  }
@@ -298,15 +318,18 @@ public class FrontController extends HttpServlet {
 	        		  e.printStackTrace();
 	        		  dst = "numberError.bo";
 	        		  isForward = false;
+	        	  }catch(Exception e1) {
+	        		  isForward = false;
+	        		  dst = "freeboardError.bo";
 	        	  }
 	          }else if(command.equals("/procFreeComment.bo")) {
-	        	  int aritcleseq = Integer.parseInt(request.getParameter("articlenum"));
-	        	  String comment = request.getParameter("comment");
-	        	  MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-	        	  int writer = dto.getSeq();
-	        	  
-	        	  int result = fcdao.insertComment(aritcleseq,comment,writer);
-	        	  dst = "viewFreeArticle.bo?seq="+aritcleseq;
+		        	  int aritcleseq = Integer.parseInt(request.getParameter("articlenum"));
+		        	  String comment = request.getParameter("comment");
+		        	  MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+		        	  int writer = dto.getSeq();
+		        	  
+		        	  int result = fcdao.insertComment(aritcleseq,comment,writer);
+		        	  dst = "viewFreeArticle.bo?seq="+aritcleseq;
 	          }else if(command.equals("/deleteFreeComment.bo")) {
 	        	  try {
 		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
@@ -321,6 +344,9 @@ public class FrontController extends HttpServlet {
 		        	  dst = "viewFreeArticle.bo?seq="+articleseq;
 	        	  }catch(NumberFormatException e) {
 	        		  dst = "numberError.bo";
+	        		  isForward = false;
+	        	  }catch(Exception e1) {
+	        		  dst = "freeboradError.bo";
 	        		  isForward = false;
 	        	  }
 	          }else if(command.equals("/deleteReviewComment.bo")) {
@@ -397,15 +423,16 @@ public class FrontController extends HttpServlet {
 					 request.setAttribute("file_name", mdto.getPhoto_system_file_name());
 		        	
 		        	
-	        	}
-	        	
-	        
+	          }
 	        	request.setAttribute("main", main);
 	        	
 	        	isForward=true;
 	        	dst="main.jsp";
 	        	
 	        	
+	          }else if(command.equals("/freeboardError.bo")) {
+	        	  isForward = false;
+	        	  dst = "freeboard.bo";
 	          }
 	        	  
 			if(isForward) {

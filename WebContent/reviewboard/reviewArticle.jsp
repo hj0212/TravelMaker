@@ -82,13 +82,6 @@ tr {
 }
 
 </style>
-<script>
-   $(document).ready(function() {
-      $("#reviewboard-bt").click(function() {
-         $(location).attr("href", "reviewboard.bo?currentPage="+"${currentPage}");
-      });
-   });
-</script>
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
@@ -163,26 +156,15 @@ $(document).ready(function(){
 	</c:choose>
    <div class="container">
       <div class="row title  text-center">
-         <div class="col-sm-12">${review_title}</div>
+         <div class="col-sm-12">${dto.review_title}</div>
       </div>
       <div class="row writer">
-         <div class="col-sm-1 text-left" id="review_seq">${review_seq}</div>
-         <div class="col-sm-5 text-left">${review_writerN}</div>
-         <div class="col-sm-3 text-right">${review_writedate}</div>
-         <div class="col-sm-2 text-right">${review_viewcount}</div>
-          <c:choose>
-          <c:when test="${sessionScope.user.seq eq review_writer}">
-          <div class="col-sm-1 text-right">
-          <a href="deleteReviewArticle.bo?review_seq=${review_seq}"><i class="far fa-times-circle"></i></a>
-          </div>
-          </c:when>
-          <c:otherwise>
-          <div class="col-sm-1 text-right"></div>
-          </c:otherwise>
-          </c:choose>
+         <div class="col-sm-6 text-left">${dto.review_writerN}</div>
+         <div class="col-sm-4 text-right">${dto.review_writedate}</div>
+         <div class="col-sm-2 text-right">${dto.review_viewcount}</div>
       </div>
       <div class="row contents">
-         <div class="col-sm-12">${review_contents}</div>
+         <div class="col-sm-12">${dto.review_contents}</div>
       </div>
       <div class="row function">
          <div class="col-sm-4 offset-sm-4 text-center vote">
@@ -194,9 +176,11 @@ $(document).ready(function(){
             </button>
          </div>
          <div class="col-sm-4 text-right move">
-            <button type="button" class="btn btn-outline-secondary"
-               id="reviewboard-bt">목록</button>
-            <button type="button" class="btn btn-outline-secondary">스크랩</button>
+            <c:if test="${sessionScope.user.seq eq dto.review_writer}">
+            	<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
+            	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
+            </c:if>
+            <button type="button" class="btn btn-outline-secondary" id="reviewboard-bt">목록</button>
             <button type="button" class="btn btn-outline-danger">신고</button>
          </div>
       </div>
