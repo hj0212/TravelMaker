@@ -18,7 +18,7 @@
 	<div class="chat" id="chatchat">
 		
 		<div class="chat-history" id="livechathistory"></div>
-		
+
 		<!-- end chat-history -->
 
 		<p class="chat-feedback">Messages</p>
@@ -100,10 +100,12 @@
 						+ obj.msg
 						+ "</p></div></div>"
 				$("#livechathistory").append(chat);
-				var myDiv = $("#livechathistory").get(0);
-				myDiv.scrollTop = myDiv.scrollHeight;		
-						
+				$("#livechathistory").scrollTop($("#livechathistory")[0].scrollHeight);		
+				 
 			};
+			
+			
+			
 			ws.onclose = function() {
 
 			};

@@ -68,7 +68,16 @@ public class AdminController extends HttpServlet {
 				dst = "admin/admin_free.jsp";
 			}
 			
-			
+			//---------------------------admin_free >정렬 바꾸기
+			else if(command.equals("/admin_free_count.ad")) {
+				List<ReportFreeDTO> flist = new ArrayList<>();
+				flist = adao.getAllReport_f();
+				request.setAttribute("freecountreport", flist);
+	
+				isForward = true;
+				dst = "admin/admin_freeCount.jsp";
+				
+			}
 			
 
 			if(isForward) {
