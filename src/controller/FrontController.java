@@ -118,6 +118,7 @@ public class FrontController extends HttpServlet {
 			} else if(command.equals("/viewFreeArticle.bo")) {
 				try {
 					int seq = Integer.parseInt(request.getParameter("seq"));
+					System.out.println(seq);
 					String currentPage = request.getParameter("currentPage");
 					MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 					
@@ -155,7 +156,7 @@ public class FrontController extends HttpServlet {
 			} else if(command.equals("/login.bo")) {
 				dst = "freeboard/needLogin.jsp";
 				
-				//---------후기 공유 게시판 보기
+				//---------�썑湲� 怨듭쑀 寃뚯떆�뙋 蹂닿린
 			} else if(command.equals("/reviewboard.bo")) {
 	            int currentPage = 0;
 	            String currentPageString = request.getParameter("currentPage");
@@ -395,6 +396,7 @@ public class FrontController extends HttpServlet {
 	        	}
 	        	
 	        
+	        
 	        	request.setAttribute("main", main);
 	        	
 	        	isForward=true;
@@ -402,6 +404,10 @@ public class FrontController extends HttpServlet {
 	        	
 	        	
 	          }
+			
+			
+			
+			
 	        	  
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
