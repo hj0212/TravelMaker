@@ -139,7 +139,7 @@ public class FrontController extends HttpServlet {
 //							System.out.println(tmp.getComment_writer());
 //							System.out.println(tmp.getComment_time());
 //						}
-						
+						request.setAttribute("seq", seq);
 						request.setAttribute("commentList", cdto);
 						request.setAttribute("currentPage", currentPage);
 						request.setAttribute("article", boardDTO);
