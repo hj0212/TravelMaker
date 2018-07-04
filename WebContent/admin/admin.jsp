@@ -20,7 +20,7 @@
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="source/css/admin.css">
-
+<script type="text/javascript"> function msg(){alert("준비 중입니다.");} </script>
 <style>
 </style>
 </head>
@@ -38,12 +38,12 @@
 				<div class="row" id="wrapper">
 					<div class="overlay"></div>
 					<!-- Sidebar -->
-					<nav class="navbar navbar-inverse navbar-fixed-top"
+					<nav class="navbar navbar-invers e navbar-fixed-top"
 						id="sidebar-wrapper" role="navigation">
 					<ul class="nav sidebar-nav">
 						<li class="sidebar-brand"><a href="main.jsp"> TravelMaker </a></li>
 						<li><a href="showMembers.ad">Members</a></li>
-						<li><a href="#">Log</a></li>
+						<li><a href="javascript:msg()">Log</a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">Reports<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
@@ -51,7 +51,7 @@
 								<li><a href="admin_free.ad">FreeBoard</a></li>
 								<li><a href="admin_plan.ad">Share_Plan</a></li>
 							</ul></li>
-						<li><a href="#">Contact</a></li>
+						<li><a href="javascript:msg()">Contact</a></li>
 					</ul>
 					</nav>
 
