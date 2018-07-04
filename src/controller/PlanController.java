@@ -321,11 +321,16 @@ public class PlanController extends HttpServlet {
 				PlanDTO plan = pdao.getPlandata(plan_seq);
 				request.setAttribute("good", good);
 				request.setAttribute("bad", bad);
+				
 				request.setAttribute("result1", result1);
 				request.setAttribute("plan_seq", plan_seq);
 				request.setAttribute("plan", plan);
 				request.setAttribute("currentPage", currentPage);
 
+				
+			
+				
+				
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				request.setAttribute("plan_period", plan_period);
 
