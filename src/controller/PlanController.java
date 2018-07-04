@@ -24,7 +24,6 @@ import dto.MemberDTO;
 import dto.PlanCommentDTO;
 import dto.PlanDTO;
 import dto.ScheduleDTO;
-
 /**
  * Servlet implementation class PlanController
  */
@@ -42,11 +41,10 @@ public class PlanController extends HttpServlet {
 			MemberDAO mdao = new MemberDAO();
 			GoodBadDAO gbdao = new GoodBadDAO();
 
-			boolean isForward = true;
-			String dst = null;
+         boolean isForward = true;
+         String dst = null;
 
 			if(command.equals("/addSchedule.plan")) {
-				//				세 값 다 넘어옵니다.
 				LocationDTO ldto = new LocationDTO();
 				ldto.setLocation_name(request.getParameter("place"));
 				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
@@ -90,13 +88,12 @@ public class PlanController extends HttpServlet {
 					System.out.println("등록실패");
 				}	
 
-
 				isForward = true;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/modiSchedule.plan")) {
 				//				세 값 다 넘어옵니다.
 				LocationDTO ldto = new LocationDTO();
-				System.out.println("place:"+request.getParameter("place")+"!");
+				System.out.println("place:"+request.getParameter("place"));
 				ldto.setLocation_name(request.getParameter("place"));
 				ldto.setLocation_id(Integer.parseInt(request.getParameter("location_id")));
 				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
@@ -116,7 +113,9 @@ public class PlanController extends HttpServlet {
 				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
 				System.out.println("schedule_Seq:" + schedule_seq);
 				int result = 0;
-				List<BudgetDTO> list = new ArrayList<>();
+				List<BudgetDTO> remolist = new ArrayList<>();
+				List<BudgetDTO> modilist = new ArrayList<>();
+				List<BudgetDTO> addlist = new ArrayList<>();
 				System.out.println("budget_seq: " + request.getParameter("budget_seq"));
 				System.out.println("budget_plan: " + request.getParameter("budget_plan"));
 				System.out.println("budget_amount: " + request.getParameter("budget_amount"));
@@ -128,17 +127,24 @@ public class PlanController extends HttpServlet {
 				String[] budget_plan = request.getParameter("budget_plan").split("/");
 				String[] budget_amount = request.getParameter("budget_amount").split("/");
 				String[] del_budget_seq = request.getParameter("delbudseq").split("/");
+
 				if(!delbudseqstr.equals("")) {	// 삭제
 					for(int i = 0; i < del_budget_seq.length; i++) {
 						BudgetDTO btmp = new BudgetDTO();
 						btmp.setBudget_seq(Integer.parseInt(del_budget_seq[i]));
-						list.add(btmp);
+						remolist.add(btmp);
 					}
-					result = pdao.deleteBudget(list);
-					System.out.println("예산삭제:" + result);
-				} 	
-				if(budgetseqstr.equals("/") && !budgetplanstr.equals("/")) {	//추가
-					for(int i = 0; i < budget_plan.length; i++) {
+					result = pdao.deleteBudget(remolist);
+					if(result > 0) {
+						System.out.println("삭제성공");
+					} else {
+						System.out.println("삭제실패");
+					}
+				}
+
+				int count = budget_plan.length - budget_seq.length;
+				if(budgetseqstr.equals("")) {
+					for(int i = 0; i < budget_seq.length; i++) {	//추가
 						BudgetDTO btmp = new BudgetDTO();
 						btmp.setPlan_seq(plan);
 						btmp.setDay_seq(day);
@@ -146,31 +152,54 @@ public class PlanController extends HttpServlet {
 						btmp.setSchedule_seq(schedule_seq);
 						btmp.setBudget_plan(budget_plan[i]);
 						btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
-						list.add(btmp);
+						addlist.add(btmp);
 					}
-					result = pdao.addBudget(list);
-				} else if(!budgetseqstr.equals("") && !budgetplanstr.equals("")){	// 수정
-					for(int i = 0; i < budget_plan.length; i++) {
+				} else if(!budgetseqstr.equals("")) {	//수정
+					for(int i = 0; i < budget_seq.length; i++) {
 						BudgetDTO btmp = new BudgetDTO();
 						btmp.setBudget_seq(Integer.parseInt(budget_seq[i]));
 						btmp.setPlan_seq(plan);
 						btmp.setDay_seq(day);
-						System.out.println("여기:"+schedule_seq);
+						System.out.println("여기:" + btmp.getBudget_seq());
 						btmp.setSchedule_seq(schedule_seq);
 						btmp.setBudget_plan(budget_plan[i]);
 						btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
-						list.add(btmp);
+						modilist.add(btmp);
 					}
-					result = pdao.modiBudget(list);
+					result = pdao.modiBudget(modilist);
+					if(result > budget_seq.length) {
+						System.out.println("수정성공");
+					} else {
+						System.out.println("수정실패");
+					}
+				}
+
+				if(count > 0) {
+					for(int j = budget_seq.length-1; j<budget_plan.length; j++) {
+						BudgetDTO btmp = new BudgetDTO();
+						btmp.setPlan_seq(plan);
+						btmp.setDay_seq(day);
+						System.out.println("추가:"+schedule_seq);
+						btmp.setSchedule_seq(schedule_seq);
+						btmp.setBudget_plan(budget_plan[j]);
+						btmp.setBudget_amount(Integer.parseInt(budget_amount[j]));
+						addlist.add(btmp);
+					}
+				}
+				result = pdao.addBudget(addlist);
+				if(result > 0) {
+					System.out.println("추가성공");
+				} else {
+					System.out.println("추가실패");
 				}
 
 				tmp.setSchedule_seq(schedule_seq);
 				result = pdao.updateSchedule(tmp);
 
 				if(result > 0) {
-					System.out.println("수정성공");
+					System.out.println("스케줄수정성공");
 				} else {
-					System.out.println("수정실패");
+					System.out.println("스케줄수정실패");
 				}
 
 				isForward = true;
@@ -270,8 +299,8 @@ public class PlanController extends HttpServlet {
 				request.setAttribute("currentPage", currentPage);
 				//------------------------------------------------------
 
-				String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
-				request.setAttribute("pageNavi", pageNavi);
+            String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
+            request.setAttribute("pageNavi", pageNavi);
 
 				isForward = true;
 				dst="share_plan.jsp";
@@ -361,11 +390,11 @@ public class PlanController extends HttpServlet {
 		}	
 
 
-	}
+   }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // TODO Auto-generated method stub
+      doGet(request, response);
+   }
 
 }

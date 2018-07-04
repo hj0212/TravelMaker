@@ -13,7 +13,8 @@
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
 	rel="stylesheet" type="text/css" />
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="source/js/createplan.js"></script>
@@ -23,10 +24,10 @@
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <style>
 body {
-	margin: 0 auto;
+	margin: 0;
 }
 #searchwrap {
-	padding: 0;
+	padding: 0px;
 }
 .container {
 	padding-top: 140px;
@@ -59,9 +60,11 @@ div {
 	float: right;
 }
 
-
 .footer {
 	height: 300px;
+}
+#contID{
+	margin-top:140px;
 }
 </style>
 </head>
@@ -75,7 +78,7 @@ div {
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	<div class="container">
+	<div class="container" id="contId">
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1"
 			role="dialog" aria-labelledby="exampleModalCenterTitle"
 			aria-hidden="true">
@@ -145,7 +148,7 @@ div {
 				<div class="item col-md-3 mb-3">
 					<div class="card text-center">
 		<a href="planArticle.plan?currentPage=${currentPage}&plan_seq=${item.plan_seq}" style="text-decoration:none;">
-						<div class="card-header planTitle">${item.plan_title}</div>
+						<div class="card-header planTitle" style="line-height:35px;height:55px; overflow:hidden;">${item.plan_title}</div>
 		</a>
 						<div class="card-body mt-1 text-center">
 							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
