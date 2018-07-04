@@ -72,7 +72,7 @@ a {
 
 	<nav
 		class="navbar fixed-top navbar-right navbar-expand-lg navbar-fixed-top navbar-light"
-		style="height:100px" id="naviId">
+		style="height:100px" id="naviId"> 
 		<a class="navbar-brand" href="main.jsp" style="font-size: 30px"><h1 class="logo">Logo</h1></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
