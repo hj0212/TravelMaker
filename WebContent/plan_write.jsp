@@ -145,7 +145,6 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<script>location.href="error.jsp"</script>
 			<%@include file="include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
