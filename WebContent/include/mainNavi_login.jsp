@@ -31,13 +31,24 @@
 				</li>
 				<li class="nav-item"><a class="nav-link" href="reviewboard.bo">Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
-				<li class="nav-item dropdown"><a
+				<li class="nav-item dropdown" style="min-width:160px;"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> ${sessionScope.user.userid}<span
-						class="caret"></span></a>
+					aria-haspopup="true" aria-expanded="false"> 
+					<c:choose>
+					<c:when test="${!empty sessionScope.user.userid}">
+					${sessionScope.user.userid}
+					</c:when>
+					<c:when test="${!empty sessionScope.user.kakao_nickname}">
+					${sessionScope.user.kakao_nickname}
+					</c:when>
+					<c:when test ="${!empty sessionScope.user.naver_nickname}">
+					${sessionScope.user.naver_nickname}
+					</c:when>
+					</c:choose>
+					<span class="caret"></span></a>
 					<ul class="dropdown-menu mt-1 "
-						aria-labelledby="navbarDropdownMenuLink pull-left">
+						aria-labelledby="navbarDropdownMenuLink">
 						<li><a class="dropdown-item" href="mypage.do">My Page</a></li>
 						<li><a class="dropdown-item" href="traveldiary.html">My
 								Plans</a></li>

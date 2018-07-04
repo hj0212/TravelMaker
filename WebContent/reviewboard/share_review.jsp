@@ -47,7 +47,7 @@ div {
 <body>
 	<%@include file="../include/mainNavi.jsp"%>
 	<div class="container">
-		<h1 class="divLine">계획, 그리고</h1>
+		<h1 class="divLine">Review</h1>
 		<hr />
 
 		<div class="row mx-0" id="cardArea">
