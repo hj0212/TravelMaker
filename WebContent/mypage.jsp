@@ -11,7 +11,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 	type="text/css">
-<link rel="stylesheet" href="source/css/mypage.css" type="text/css">
+<!-- <link rel="stylesheet" href="source/css/mypage.css" type="text/css"> -->
 
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -33,18 +33,26 @@
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
 <style>
-#box-container {
+*{
+color:black;
+}
+a{
+text-decoration: none ! important;
+}
+/* #box-container {
 	margin: 0px auto;
-	float: right;
-	/* background : rgba(0, 0, 0, 0.3); */
+	float: left;
+	 background : rgba(0, 0, 0, 0.3); 
 	background: white;
 	border: 1px solid #777777;
-	width: 70%;
-	position: absolute;
+	width: 15%;
+	position: relative;
+	left:320px;
+	top:50px;
 	border-radius: 5px;
 	padding: 5px;
 	z-index: 300;
-	filter: alpha(opacity : '' 80 '');
+	filter: alpha(opacity : '' 30 '');
 }
 
 #box-container:after {
@@ -56,17 +64,21 @@
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-	/* border-bottom-color: rgba(0, 0, 0, 0.3); */
+	 border-bottom-color: rgba(0, 0, 0, 0.3);
 	background: white;
 	border-bottom: 1px solid #777777;
 	border-width: 8px;
 	margin-left: -8px;
 	z-index: 300;
-	filter: alpha(opacity : '' 80 '');
-}
+	filter: alpha(opacity : '' 30 '');
+} */
 
+/* #box-container{
+padding:0 auto;
+}
+ */
 ul {li { display:inline;
-	padding-left: 20px; a { color : #777777;
+	 a { color : #777777;
 	text-decoration: none;
 	&:
 	hover
@@ -79,11 +91,11 @@ ul {li { display:inline;
 }
 }
 }
-.clearfix:after {
+/* .clearfix:after {
 	content: "";
 	display: table;
 	clear: both;
-}
+} */
 
 #box-container li a {
 	color: #777777 !important;
@@ -94,10 +106,20 @@ ul {li { display:inline;
 	list-style: none !important;
 }
 
+#cf-box{
+text-align:center;
+float: left;
+display: inline;
+width:100px;
+height:100%;
+background: white;
+border: 1px solid #777777;
+}
+
 #wrapper {
 	width: 970px;
 	box-sizing: border-box;
-	margin: 0px auto;
+	margin: 100px auto;
 }
 
 .data, .data div {
@@ -108,7 +130,34 @@ ul {li { display:inline;
 	width: 300px;
 	padding: 0;
 }
-/*input file*/
+
+#profile-cont{
+box-sizing: border-box;
+/* border:1px solid #777777; */
+border-radius: 10px;
+}
+
+#profile-container{
+box-sizing: border-box;
+border:1px solid #777777;
+border-radius: 10px;
+}
+
+#profile-con{
+width:30%;
+display:inline;
+box-sizing: border-box;
+float:left;
+}
+#con{
+width:50%;
+height:100%;
+display:inline;
+float: left;
+text-align:center;
+}
+
+/*input file*/ 
 
 #profileImgForm input {             /*input tag 공통 스타일*/
   width: 200px;
@@ -158,34 +207,33 @@ ul {li { display:inline;
 
 
 <body>
-<div id="wrapper">
-<%-- <c:choose>
-		<c:when test="${sessionScope.loginId != null}">
+<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
-	</c:choose> --%>
+	</c:choose>
 	
+<div id="wrapper">
 	<!--profile부분-->
-  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary">
-    <div class="container w-100 h-100 py-0">
+  <div class="py-5 text-center w-100 h-100" id="profile-cont">
+    <div class="container w-100 h-100 py-5">
       <div class="row">
         <!-- <div class="col-sm-8 col-md-3 col-lg-3"> -->
-        <div class= "w-30 d-inline">
-          <div class="card w-100 h-100" id="profile-container">
+          <div class="w-100 h-100 py-3 px-1 align-items-center" id="profile-container">
             <!-- <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap"> -->
-            
+            <div class=" py-3 ml-3" id="profile-con" style="width: 344.59px; box-sizing: border-box;">
             <form action="profileImg.do" method="post" enctype="multipart/form-data" id="profileImgForm">
-            <button id="img_button" type="button" class="circle" title="여기를 누르시면 이미지를 변경하실수있습니다." style="max-height: 238px;height: 238px;width: 344.59px;max-width: 344.59px"><img for="img_file" id="profile_img" src="/Git_Practice_Message/file/${file_name }" alt="Charlie-Chaplin-PNG-Image-17681.png" style="width: 100%;height: 100%"></button>
-            <div class="w-100 h-30 align-items-center" style="box-sizing: border-box;">
-            <input type="file" class="w-30" id="img_file" name="file" accept=".gif, .jpg, .png, .jpeg" value="이미지변경" hidden="true">
+            <button id="img_button" type="button" class="d-inline" title="여기를 누르시면 이미지를 변경하실수있습니다." style="max-height: 238px;height: 238px;width: 344.59px;max-width: 344.59px"><img for="img_file" id="profile_img" src="/Git_Practice_Message/file/${file_name }" alt="Charlie-Chaplin-PNG-Image-17681.png" style="width: 100%;height: 100%"></button>
+            <div class="align-items-center">
+            <input type="file"id="img_file" name="file" accept=".gif, .jpg, .png, .jpeg" value="이미지변경" hidden="true">
             <button class="btn btn-primary w-100" type="button" id="profile">프로필이미지</button></div>
             </form>
-            
-            <div class="card-body h-100 py-4 my-5">
-              <h4 class="card-title my-4">${nickname}</h4>
+            </div>
+            <div class="d-inline py-5" id="con">
+              <h4 class="my-4">${nickname}</h4>
               <c:choose>
               <c:when test="${email eq null}">
               <h4 class="my-4">이메일을 입력해주세요</h4>
@@ -194,68 +242,22 @@ ul {li { display:inline;
                <h4 class="my-4">${email}</h4>
               </c:otherwise>
               </c:choose>
-         <a href="#"  id="editlink" >정보수정</a>
-  		<ul id="box-container">
+            </div>
+         <div id="cf-box" class="d-inline py-3 my-5" style="border-radius: 15px; border:1px solid #77777;">
+         <div>정보수정</div>
   		<c:choose>
   		<c:when test="${sessionScope.part eq 'home'}">
-  		<li class="clearfix"><a  href="#" id="editInfo">회원정보</a></li>
-  		<li class="clearfix"><a  href="#" id="editPw">비밀번호</a></li>
-  		<li class="clearfix"><a  href="#" id="updateEmail">이메일</a></li>
+  		<div class="py-3"><a href="#" id="editInfo">회원정보</a></div>
+  		<div class="py-3"><a href="#" id="editPw">비밀번호</a></div>
+  		<div class="py-3"><a href="#" id="updateEmail">이메일</a></div>
   		</c:when>
   		<c:otherwise>
-  		<li class="clearfix"><a href="#" id="updateEmail">이메일</a></li>
+  		<div class="py-3"><a href="#" id="updateEmail">이메일</a></div>
   		</c:otherwise>
   		</c:choose>
-  		
-  		</ul>
-            </div>
+  		</div>
           </div>
-        </div>
-        <!-- <div class="col-sm-12 col-md-6 col-lg-9 col-12 col-xl-9 w-100 h-100 align-items-center mt-5"> -->
-        <div class="w-70 d-inline mx-5">
-          <div id="tb" class="py-5 my-5">
-            <table class="table col-mt-5 col-md-5 col-sm-12 text-center">
-              <thead>
-                <tr>
-                  <th scope="col" class="text-center">게시글</th>
-                  <th scope="col" class="text-center">스크랩</th>
-                  <th scope="col" class="text-center">좋아요</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="basicBox"> num1
-                      <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="0" fill="none" width="130" height="65"></rect>
-                      </svg>
-											</div>
-										</td>
-										<td>
-											<div class="basicBox">
-												num2
-												<svg width="130" height="65" viewBox="0 0 130 65"
-													xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="0" fill="none" width="130"
-														height="65"></rect>
-                      </svg>
-											</div>
-										</td>
-										<td class="">
-											<div class="basicBox">
-												num3
-												<svg width="130" height="65" viewBox="0 0 130 65"
-													xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="0" fill="none" width="130"
-														height="65"></rect>
-                      </svg>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
+      
 				</div>
 			</div>
 		</div>
@@ -515,12 +517,12 @@ ul {li { display:inline;
 
 		/* 정보수정버튼 */
 		$(function() {
-			$("#box-container").hide();
+	/* 		$("#box-container").hide();
 			$("#editlink").on("click", function() {
 				$("#box-container").toggle("fast");
 			});
 
-		})
+		}) */
 		      $(function() {
 		            $("#img_file").on('change', function(){
 		            	var fileName =$("#img_file").val();
