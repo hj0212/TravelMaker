@@ -193,7 +193,7 @@ public class FrontController extends HttpServlet {
 	         }else if(command.equals("/reviewArticle.bo")) {
 	        	 try {
 		             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-//		             rdao.getArticleViewCount(review_seq);
+		             rdao.reViewCount(review_seq);
 		             
 		             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
 		             request.setAttribute("dto", result1);
@@ -418,13 +418,11 @@ public class FrontController extends HttpServlet {
 					 request.setAttribute("file_name", mdto.getPhoto_system_file_name());
 		        	
 		        	
-	          }
+	        	}
 	        	request.setAttribute("main", main);
 	        	
 	        	isForward=true;
 	        	dst="main.jsp";
-	        	
-	        	
 	          }else if(command.equals("/freeboardError.bo")) {
 	        	  isForward = false;
 	        	  dst = "freeboard.bo";

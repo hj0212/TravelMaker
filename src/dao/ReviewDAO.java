@@ -259,7 +259,7 @@ public class ReviewDAO {
 
 	public List<ReviewCommentDTO> getReviewComment(int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from review_comment where review_seq=? order by comment_time desc";
+		String sql = "select * from review_comment where review_seq=? order by COMMENT_SEQ ASC";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
 		ResultSet rs = pstmt.executeQuery();
@@ -466,9 +466,10 @@ public class ReviewDAO {
 		System.out.println(result);
 		return result;
 	}
+	
 	public int reViewCount(int review_seq) throws Exception {
 		Connection conn = DBConnection.getConnection();
-		String sql = "UPDATE reviewboard set review_viewcount = review_viewcount + 1 where review_seq = ?";
+		String sql = "UPDATE reviewboard_c set review_viewcount = review_viewcount + 1 where review_seq = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
 		
