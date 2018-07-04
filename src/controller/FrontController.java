@@ -491,7 +491,6 @@ public class FrontController extends HttpServlet {
 		  			  
 		  			  for(int i = 0; i < array.size(); i++) {
 		  				imageList[i] = (String)array.get(i);
-		  				System.out.println(imageList[i]);
 		  			   }
 		        	  
 		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
