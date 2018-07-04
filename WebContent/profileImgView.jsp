@@ -9,11 +9,11 @@
 <body>
 <script>
 if(${result}>0){
-	location.href= "reviewArticle.bo?review_seq="+ ${review_seq};
-	System.out.write("댓글 작성됨 reviewCommentView.jsp");
+	location.href ="mypage.do?user_seq="+"${user_seq}";
+	console.log("넘어옴");
 }else{
-	alert("댓글작성에 실패했습니다 \n\t 다시 시도해주세요");
-	location.href= "reviewArticle.bo?review_seq="+ ${review_seq};
+	alert("프로필이미지 변경을 실패하였습니다 \n\t관계자에게 문의해주세요");
+	location.href ="mypage.do?user_seq="+"${user_seq}";
 }
 </script>
 </body>

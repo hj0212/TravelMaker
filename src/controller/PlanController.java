@@ -36,7 +36,7 @@ public class PlanController extends HttpServlet {
 			String command = requestURI.substring(contextPath.length());
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
-			
+
 			PlanDAO pdao = new PlanDAO();
 			MemberDAO mdao = new MemberDAO();
 			GoodBadDAO gbdao = new GoodBadDAO();
@@ -45,13 +45,13 @@ public class PlanController extends HttpServlet {
          String dst = null;
 
 			if(command.equals("/addSchedule.plan")) {
-//				세 값 다 넘어옵니다.
+				//				세 값 다 넘어옵니다.
 				LocationDTO ldto = new LocationDTO();
 				ldto.setLocation_name(request.getParameter("place"));
 				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
 				ldto.setLocation_y(Integer.parseInt(request.getParameter("mapy")));
 				int location_id = pdao.addLocation(ldto);
-				
+
 				ScheduleDTO tmp = new ScheduleDTO();
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
@@ -62,12 +62,10 @@ public class PlanController extends HttpServlet {
 				tmp.setLocation_id(location_id); 
 				tmp.setSchedule_plan(request.getParameter("schedule"));
 				tmp.setSchedule_ref(request.getParameter("reference"));
-				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
-				
+
 				List<BudgetDTO> list = new ArrayList<>();
 				System.out.println("budget_plan: " + request.getParameter("budget_plan"));
 				System.out.println("budget_amount: " + request.getParameter("budget_amount"));
-				String budgetplanstr = request.getParameter("budget_plan");
 				String[] budget_plan = request.getParameter("budget_plan").split("/");
 				String[] budget_amount = request.getParameter("budget_amount").split("/");
 				for(int i = 0; i < budget_plan.length; i++) {
@@ -78,14 +76,14 @@ public class PlanController extends HttpServlet {
 					btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
 					list.add(btmp);
 				}
-				
-				schedule_seq = pdao.addSchedule(tmp);
+
+				int schedule_seq = pdao.addSchedule(tmp);
 				for(BudgetDTO btmp : list) {
 					btmp.setSchedule_seq(schedule_seq);
 				}
-				
+
 				int result = pdao.addBudget(list);
-				if(result > 1) {
+				if(result > 0) {
 					System.out.println("등록성공");
 				} else {
 					System.out.println("등록실패");
@@ -95,14 +93,15 @@ public class PlanController extends HttpServlet {
 				isForward = true;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/modiSchedule.plan")) {
-//				세 값 다 넘어옵니다.
+				//				세 값 다 넘어옵니다.
 				LocationDTO ldto = new LocationDTO();
+				System.out.println("place:"+request.getParameter("place")+"!");
 				ldto.setLocation_name(request.getParameter("place"));
 				ldto.setLocation_id(Integer.parseInt(request.getParameter("location_id")));
 				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
 				ldto.setLocation_y(Integer.parseInt(request.getParameter("mapy")));
 				int location_id = pdao.addLocation(ldto);
-				
+
 				ScheduleDTO tmp = new ScheduleDTO();
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
@@ -114,32 +113,60 @@ public class PlanController extends HttpServlet {
 				tmp.setSchedule_plan(request.getParameter("schedule"));
 				tmp.setSchedule_ref(request.getParameter("reference"));
 				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
+				System.out.println("schedule_Seq:" + schedule_seq);
 				int result = 0;
 				List<BudgetDTO> list = new ArrayList<>();
 				System.out.println("budget_seq: " + request.getParameter("budget_seq"));
 				System.out.println("budget_plan: " + request.getParameter("budget_plan"));
 				System.out.println("budget_amount: " + request.getParameter("budget_amount"));
-				String budgetseqstr = request.getParameter("budget_amount");
+				System.out.println("del_budget_seq: " + request.getParameter("delbudseq"));
+				String budgetseqstr = request.getParameter("budget_seq");
+				String budgetplanstr = request.getParameter("budget_plan");
+				String delbudseqstr = request.getParameter("delbudseq");
 				String[] budget_seq = request.getParameter("budget_seq").split("/");
 				String[] budget_plan = request.getParameter("budget_plan").split("/");
 				String[] budget_amount = request.getParameter("budget_amount").split("/");
-				if(!budgetseqstr.equals("")) {
+				String[] del_budget_seq = request.getParameter("delbudseq").split("/");
+				if(!delbudseqstr.equals("")) {	// 삭제
+					for(int i = 0; i < del_budget_seq.length; i++) {
+						BudgetDTO btmp = new BudgetDTO();
+						btmp.setBudget_seq(Integer.parseInt(del_budget_seq[i]));
+						list.add(btmp);
+					}
+					result = pdao.deleteBudget(list);
+					System.out.println("예산삭제:" + result);
+				} 	
+				if(budgetseqstr.equals("/") && !budgetplanstr.equals("/")) {	//추가
+					for(int i = 0; i < budget_plan.length; i++) {
+						BudgetDTO btmp = new BudgetDTO();
+						btmp.setPlan_seq(plan);
+						btmp.setDay_seq(day);
+						System.out.println("저기:"+schedule_seq);
+						btmp.setSchedule_seq(schedule_seq);
+						btmp.setBudget_plan(budget_plan[i]);
+						btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
+						list.add(btmp);
+					}
+					result = pdao.addBudget(list);
+				} else if(!budgetseqstr.equals("") && !budgetplanstr.equals("")){	// 수정
 					for(int i = 0; i < budget_plan.length; i++) {
 						BudgetDTO btmp = new BudgetDTO();
 						btmp.setBudget_seq(Integer.parseInt(budget_seq[i]));
 						btmp.setPlan_seq(plan);
 						btmp.setDay_seq(day);
+						System.out.println("여기:"+schedule_seq);
+						btmp.setSchedule_seq(schedule_seq);
 						btmp.setBudget_plan(budget_plan[i]);
 						btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
 						list.add(btmp);
 					}
 					result = pdao.modiBudget(list);
 				}
-				
+
 				tmp.setSchedule_seq(schedule_seq);
 				result = pdao.updateSchedule(tmp);
-				
-				if(result > 2) {
+
+				if(result > 0) {
 					System.out.println("수정성공");
 				} else {
 					System.out.println("수정실패");
@@ -149,25 +176,24 @@ public class PlanController extends HttpServlet {
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/selectSchedule.plan")) {
 
-            int plan = Integer.parseInt(request.getParameter("plan"));
-            int day = Integer.parseInt(request.getParameter("day"));
-            String create = request.getParameter("create");
-            int plan_period = pdao.getPlanperiod(plan);
-            request.setAttribute("plan_period", plan_period);
-            if(create.equals("f")) {
-               List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
-               List<BudgetDTO> blist = pdao.selectBudget(plan, day);
-               int totalBudget = pdao.getTotalBudget(plan, day);
-               request.setAttribute("totalBudget", totalBudget);
-               request.setAttribute("create", create);
-               request.setAttribute("scheduleList", list);
-               request.setAttribute("budgetList", blist);
-            } else {
-
-               request.setAttribute("create", create);
-            }
-            String plan_title = pdao.getPlantitle(plan);
-            request.setAttribute("plan_title", plan_title);
+				int plan = Integer.parseInt(request.getParameter("plan"));
+				int day = Integer.parseInt(request.getParameter("day"));
+				String create = request.getParameter("create");
+				int plan_period = pdao.getPlanperiod(plan);
+				request.setAttribute("plan_period", plan_period);
+				if(create.equals("f")) {
+					List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
+					List<BudgetDTO> blist = pdao.selectBudget(plan, day);
+					int totalBudget = pdao.getTotalBudget(plan, day);
+					request.setAttribute("totalBudget", totalBudget);
+					request.setAttribute("create", create);
+					request.setAttribute("scheduleList", list);
+					request.setAttribute("budgetList", blist);
+				} else {
+					request.setAttribute("create", create);
+				}
+				String plan_title = pdao.getPlantitle(plan);
+				request.setAttribute("plan_title", plan_title);
 
 				isForward = true;
 				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
@@ -177,16 +203,16 @@ public class PlanController extends HttpServlet {
 				int delseq = Integer.parseInt(request.getParameter("delseq"));
 				int result = pdao.deleteBudget(delseq);
 				result += pdao.deleteSchedule(delseq);
-				
+
 				if(result>0) {
 					System.out.println("삭제성공");
 				}else {
 					System.out.println("삭제실패");
 				}
-				
+
 				isForward=true;
 
-				dst="selectSchedule.plan?plan="+plan+"&day=1&create=f";
+				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/createPlan.plan")) {
 				int plan_writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
 				String plan_startdate = request.getParameter("plan_startdate");
@@ -203,11 +229,31 @@ public class PlanController extends HttpServlet {
 				request.setAttribute("plan_period", plan_period);
 				isForward=true;
 
-            dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";
-         }
+				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";
+			} else if(command.equals("/toMyPlan.plan")) {
+				int plan_writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+				String plan_startdate = request.getParameter("plan_startdate");
+				String plan_enddate = request.getParameter("plan_enddate");
+				String plan_title = request.getParameter("plan_title");
+				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0);
+				int plan_seq = pdao.startPlanInsertData(pdto);
+				int plan_period = pdao.getPlanperiod(plan_seq);
+				System.out.println("planseq: " + plan_seq);
+				List<ScheduleDTO> list = pdao.selectAllSchedule(plan_seq);
+				int result = pdao.insertAllSchedule(list);
+				if(result>0) {
+					System.out.println("플랜복사완료");
+				}else {
+					System.out.println("플랜복사실패");
+				}
+				request.setAttribute("plan_period", plan_period);
+				isForward=true;
 
-//----------------------------------planList 가져오기
-         else if(command.equals("/planboard.plan")) {
+				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=f";
+			}
+
+			//----------------------------------planList 가져오기
+			else if(command.equals("/planboard.plan")) {
 
 				int currentPage = 0;
 				String currentPageString = request.getParameter("currentPage");
@@ -236,7 +282,7 @@ public class PlanController extends HttpServlet {
 				} else {
 					currentPage = Integer.parseInt(currentPageString);
 				}
-				
+
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
 				List<PlanCommentDTO> result1 = pdao.getAllPlanComments(plan_seq);
 				int viewcount = pdao.planViewCount(plan_seq);
@@ -252,7 +298,7 @@ public class PlanController extends HttpServlet {
 
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				request.setAttribute("plan_period", plan_period);
-				
+
 				List<ScheduleDTO> list = new ArrayList<>();
 				List<BudgetDTO> blist = new ArrayList<>();
 				for(int i = 0; i < plan_period; i++) {
@@ -264,13 +310,13 @@ public class PlanController extends HttpServlet {
 					request.setAttribute("budgetList", blist);
 					request.setAttribute("totalBudget", totalBudget);
 				}
-				
+
 				String plan_title = pdao.getPlantitle(plan_seq);
 				request.setAttribute("plan_title", plan_title);
-				
+
 				isForward=true;
 				dst="planView.jsp?plan_seq="+plan_seq+"&currentPage="+currentPage;
-				
+
 			}else if(command.equals("/insertPlanComment.plan")) {
 				String comment_text = request.getParameter("comment_text");
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
@@ -279,7 +325,7 @@ public class PlanController extends HttpServlet {
 				int result = pdao.insertPlanComment(plan_seq, comment_text, comment_writer);
 				request.setAttribute("result", result);
 				request.setAttribute("plan_seq", plan_seq);
-				
+
 				isForward= true;
 				dst="planCommentView.jsp";
 			}else if(command.equals("/deletePlanComment.plan")) {
@@ -290,7 +336,7 @@ public class PlanController extends HttpServlet {
 				int result = pdao.deletePlanComment(comment_seq, writer);
 				request.setAttribute("result", result);
 				request.setAttribute("plan_seq", plan_seq);
-				
+
 				isForward= true;
 				dst = "deletePlanCommentView.jsp";
 			}else if(command.equals("/removePlan.plan")) {
@@ -302,7 +348,7 @@ public class PlanController extends HttpServlet {
 					System.out.println("삭제실패");
 				}
 			}
-			
+
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
