@@ -167,8 +167,8 @@ $(document).ready(function(){
 </head>
 <body>
 	<c:choose>
-		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/mainNavi_login.jsp"%>
+		<c:when test="${empty sessionScope.user.seq}">
+		<script>location.href="error.jsp"</script>
 		</c:when>
 		<c:otherwise>
 			<%@include file="include/mainNavi.jsp"%>
