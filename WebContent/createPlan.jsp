@@ -100,7 +100,8 @@
 }
 
 #picker_wrap {
-	width: 390px; height : 100%;
+	width: 390px;
+	height: 100%;
 	margin: 0 auto;
 	height: 100%;
 }
@@ -141,147 +142,152 @@
 						<div class="modal-body">
 							<div class="mobile-title">
 								<input type="text" id="plan_title" name="plan_title"
-									class="from-contol" maxlength=400 placeholder="여행 제목을 입력해주세요">
+									class="form-control" maxlength=400 placeholder="여행 제목을 입력해주세요">
 							</div>
 							<div id="picker-div">
 								<div id="picker_wrap">
 									<div class="picker-pic">
-										여행 시작 날짜<input id="datepicker" name="plan_startdate" readonly
-											width="170" style="background-color: white;" />
+										여행 시작 날짜<input class="form-control" id="datepicker"
+											name="plan_startdate" readonly width="170"
+											style="background-color: white;" />
 									</div>
 									<div class="picker-pic" id="datepicker_endarea">
-										여행 종료 날짜<input id="datepicker-end" name="plan_enddate"
-											readonly width="170" style="background-color: white;" />
+										여행 종료 날짜<input id="datepicker-end" class="form-control"
+											name="plan_enddate" readonly width="170"
+											style="background-color: white;" />
 									</div>
 								</div>
 							</div>
-							<div id="start-plan">
-								<p id="dayday" style="font-size: 13px; font-style: italic;">여행
-									일수</p>
-							</div>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-							<button id="start-bt" type="button" class="btn btn-primary">여행
-								계획 시작하기</button>
+
+						<div id="start-plan">
+							<input class="input-group-addon" id="dayday" name="datepage"
+								style="font-size: 13px; font-style: italic;" readonly
+								placeholder="여행일수">
 						</div>
 					</form>
 				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+					<button id="start-bt" type="button" class="btn btn-primary">여행
+						계획 시작하기</button>
+				</div>
+
 			</div>
 		</div>
 	</div>
 
 	<script>
-		$(document).ready(
-				function() {
-					var minDate = new Date();
-					var maxDate = new Date();
+		$(document).ready(function() {
+			var minDate = new Date();
+			var maxDate = new Date();
 
-					var mm = minDate.getDate() - 1;
-					var dd = maxDate.getDate() + 62;
-					minDate.setDate(mm);
-					maxDate.setDate(dd);
+			var mm = minDate.getDate() - 1;
+			var dd = maxDate.getDate() + 62;
+			minDate.setDate(mm);
+			maxDate.setDate(dd);
 
-					$("#datepicker").datepicker({
-						uiLibrary : 'bootstrap4',
-						format : 'yyyy-mm-dd',
-						language : "ko",
-						minDate : minDate,
-						maxDate : maxDate,
-					});
+			$("#datepicker").datepicker({
+				uiLibrary : 'bootstrap4',
+				format : 'yyyy-mm-dd',
+				language : "ko",
+				minDate : minDate,
+				maxDate : maxDate,
+			});
 
-					$("#datepicker-end").datepicker({
-						uiLibrary : 'bootstrap4',
-						format : 'yyyy-mm-dd',
-						language : "ko",
-						constrainInput : true,
-						minDate : minDate,
-						maxDate : maxDate,
-					});
+			$("#datepicker-end").datepicker({
+				uiLibrary : 'bootstrap4',
+				format : 'yyyy-mm-dd',
+				language : "ko",
+				constrainInput : true,
+				minDate : minDate,
+				maxDate : maxDate,
+			});
 
-					var todate = "";
-					var enddate = "";
+			var stdate = "";
+			var enddate = "";
 
-					var formdt = null;
-					var todt = null;
-					var datepage = "";
+			var fromdt = null;
+			var todt = null;
+			var datepage = "";
 
-					$("#datepicker").change(
-							function() {
-								todate = $(this).val();
-								$("#datepicker-end").val("");
-								
-								if (enddate != "") {
-									var arrtodate = todate.split("/");
-									var arrenddate = enddate.split("/");
-									formdt = new Date(arrtodate[0],
-											arrtodate[1], arrtodate[2]);
-									todt = new Date(arrenddate[0],
-											arrenddate[1], arrenddate[2]);
-									console.log((todt.getTime() - formdt
-											.getTime())
-											/ (24 * 60 * 60 * 1000));
-									datepage = (todt.getTime() - formdt
-											.getTime())
-											/ (24 * 60 * 60 * 1000);
-									if (datepage == 0) {
-										$("#dayday").html("당일 여행");
-									} else if (datepage < 0) {
-										$("#dayday").html("출발일이 더늦을수없습니다");
-									} else {
-										$("#dayday")
-												.html(datepage + 1 + "일 여행");
-									}
-								}
-							});
+			$("#datepicker").change(function() {
+				stdate = $(this).val();
+				$("#datepicker-end").val("");
 
-					$("#datepicker-end").change(
-							function() {
-								if (todate != "") {
-									enddate = $(this).val();
-									console.log(todate + ":" + enddate);
-									
-									var arrtodate = todate.split("-");
-									var arrenddate = enddate.split("-");
-									formdt = new Date(arrtodate[0], arrtodate[1],
-											arrtodate[2]);
-									todt = new Date(arrenddate[0], arrenddate[1],
-											arrenddate[2]);
-									console.log((todt.getTime() - formdt.getTime())
-											/ (24 * 60 * 60 * 1000));
-									datepage = (todt.getTime() - formdt.getTime())
-											/ (24 * 60 * 60 * 1000);
-									if (datepage == 0) {
-										$("#dayday").html("당일 여행");
-									} else if (datepage < 0) {
-										$("#dayday").html("출발일이 더늦을수없습니다");
-									}else {									
-										$("#dayday").html(datepage+1 + "일 여행");
-									}
-								} else {
-									alert("시작 날짜를 먼저 입력하세요.");
-									$(this).val("");
-								}
-							});
+				if (enddate != "") {
+					/* var arrtodate = todate.split("/");
+					var arrenddate = enddate.split("/"); */
+					/* formdt = new Date(arrtodate[0],
+					arrenddate[1], arrenddate[2]); */
+					fromdt = new Date(stdate);
+					todt = new Date(enddate);
+					var bt = todt.getTime() - fromdt.getTime();
+					var datepage = bt / (1000 * 60 * 60 * 24);
+					/* 		datepage = (todt.getTime() - formdt
+									.getTime())
+									/ (24 * 60 * 60 * 1000); */
+					if (datepage == 0) {
+						$("#dayday").html("당일 여행");
+					} else if (datepage < 0) {
+						$("#dayday").html("출발일이 더늦을수없습니다");
+					} else {
+						$("#dayday").val(datepage + 1 + "일 여행");
+					}
+				}
+			});
 
-					$("#start-bt").click(
-							function() {
-								if (datepage < 0) {
-									alert("여행일을 제대로 설정해주세요.");
-								} else if ($("#plan_title").val() == "") {
-									alert("여행 제목을 지어주세요.")
-								} else {
-									$("#plan-form").attr("action",
-											"createPlan.plan?datePage="+datepage).submit();
-								}
-					});
+			$("#datepicker-end").change(function() {
+				if (stdate != "") {
+					enddate = $(this).val();
 
-					$('#myModal').on('shown.bs.modal', function() {
-						$('#myInput').trigger('focus')
-					});
+					/* var arrtodate = stdate.split("-");
+					var arrenddate = enddate.split("-");
+					formdt = new Date(arrtodate[0],
+							arrtodate[1], arrtodate[2]);
+					todt = new Date(arrenddate[0],
+							arrenddate[1], arrenddate[2]);
+					console.log((todt.getTime() - formdt
+							.getTime())
+							/ (24 * 60 * 60 * 1000));
+					datepage = (todt.getTime() - formdt
+							.getTime())
+							/ (24 * 60 * 60 * 1000); */
+					fromdt = new Date(stdate);
+					todt = new Date(enddate);
+					var bt = todt.getTime() - fromdt.getTime();
+					var datepage = bt / (1000 * 60 * 60 * 24);
 
-				});
+					if (datepage == 0) {
+						$("#dayday").html("당일 여행");
+					} else if (datepage < 0) {
+						$("#dayday").html("출발일이 더늦을수없습니다");
+					} else {
+						$("#dayday").val(datepage + 1 + "일 여행");
+					}
+				} else {
+					alert("시작 날짜를 먼저 입력하세요.");
+					$(this).val("");
+				}
+			});
+
+			$("#start-bt").click(function() {
+				if (datepage < 0) {
+					alert("여행일을 제대로 설정해주세요.");
+				} else if ($("#plan_title").val() == "") {
+					alert("여행 제목을 지어주세요.")
+				} else {
+					$("#plan-form").submit();
+					$("#plan-form").attr("action", "createPlan.plan");
+				}
+			});
+
+			$('#myModal').on('shown.bs.modal', function() {
+				$('#myInput').trigger('focus')
+			});
+
+		});
 	</script>
 
 </body>

@@ -16,9 +16,9 @@
 	</header>
 
 	<div class="chat" id="chatchat">
-
-		<div class="chat-history" id="livechathistory"></div>
 		
+		<div class="chat-history" id="livechathistory"></div>
+
 		<!-- end chat-history -->
 
 		<p class="chat-feedback">Messages</p>
@@ -35,7 +35,13 @@
 
 
 	</div>
-	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	
+	<script>
+	$(document).ready(function(){
+		
+	});
+
+	</script>
 	<script>
 		(function() {
 
@@ -58,11 +64,15 @@
 	<script>
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					"ws://192.168.20.8:8081/Git_Practice_Message/websocket");
+					"ws://192.168.20.15:8080/WEB_06_18/websocket");
 			var str;
 
 			$("input").keydown(function(event) {
 				if (event.which === 13) {
+					if($("input").val() == ""){
+						
+					}else{
+					
 					var nickname = '${sessionScope.nickname}';
 					var msg = $("#livemsg").val();
 					var file ="${file_name}";
@@ -73,10 +83,9 @@
 						
 					}));
 					$("#livemsg").val("");
-
-				}
+					};
+				};
 			});
-
 			ws.onopen = function() {
 
 				//document.getElementById("contents").innerHTML += str+"님이 입장하셨습니다"+"<br>";
@@ -91,10 +100,15 @@
 						+ obj.msg
 						+ "</p></div></div>"
 				$("#livechathistory").append(chat);
+				$("#livechathistory").scrollTop($("#livechathistory")[0].scrollHeight);		
+				 
 			};
+			
+			
+			
 			ws.onclose = function() {
 
 			};
-
+			
 		}
 	</script>
