@@ -1,7 +1,6 @@
 package dto;
 
 public class ReviewDTO {
-
 	private int review_seq;
 	private String review_title;
 	private String review_contents;
@@ -9,6 +8,7 @@ public class ReviewDTO {
 	private String review_writerN;
 	private String review_writedate;
 	private int review_viewcount;
+	private String review_thumbnail;
 	
 	public ReviewDTO() {}
 
@@ -93,5 +93,13 @@ public class ReviewDTO {
 
 	public void setReview_viewcount(int review_viewcount) {
 		this.review_viewcount = review_viewcount;
+	}
+
+	public String getReview_thumbnail() {
+		return review_thumbnail;
+	}
+
+	public void setReview_thumbnail(String review_thumbnail) {
+		this.review_thumbnail = review_thumbnail;
 	}
 }

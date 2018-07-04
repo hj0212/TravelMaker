@@ -112,6 +112,7 @@ public class ReviewDAO {
 			tmp.setReview_writerN(mdao.getUserNickname(rs.getInt(4)));
 			tmp.setReview_writedate(rs.getString(5));
 			tmp.setReview_viewcount(rs.getInt(6));
+			tmp.setReview_thumbnail(getThumbnail(tmp.getReview_seq()));
 			reviewResult.add(tmp);
 		}
 
@@ -499,5 +500,26 @@ public class ReviewDAO {
 		conn.close();
 		
 		return writer;
+	}
+	
+	public String getThumbnail(int seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "select system_file_name from (select rp.* from review_photos rp, reviewboard_c rc where rp.article_no = rc.review_seq and rc.review_seq = ?) where rownum = 1";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, seq);
+		String fname = "";
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			fname = rs.getString(1);
+		}else {
+			fname = "Charlie-Chaplin-PNG-Image-17681.png";
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		return fname;
 	}
 }

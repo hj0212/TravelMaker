@@ -422,7 +422,6 @@ public class FrontController extends HttpServlet {
 	          }else if(command.equals("/deleteFreeReview.bo")) {
 	        	  try {
 		        	  int seq = Integer.parseInt(request.getParameter("seq"));
-		        	  System.out.println(seq + " : deleteFreeReview.do");
 		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
 		        	  
 		        	  if(user.getSeq() == rdao.writerCheck(seq)) {
