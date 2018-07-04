@@ -24,7 +24,6 @@ import dto.MemberDTO;
 import dto.PlanCommentDTO;
 import dto.PlanDTO;
 import dto.ScheduleDTO;
-
 /**
  * Servlet implementation class PlanController
  */
@@ -42,8 +41,8 @@ public class PlanController extends HttpServlet {
 			MemberDAO mdao = new MemberDAO();
 			GoodBadDAO gbdao = new GoodBadDAO();
 
-			boolean isForward = true;
-			String dst = null;
+         boolean isForward = true;
+         String dst = null;
 
 			if(command.equals("/addSchedule.plan")) {
 				LocationDTO ldto = new LocationDTO();
@@ -300,8 +299,8 @@ public class PlanController extends HttpServlet {
 				request.setAttribute("currentPage", currentPage);
 				//------------------------------------------------------
 
-				String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
-				request.setAttribute("pageNavi", pageNavi);
+            String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
+            request.setAttribute("pageNavi", pageNavi);
 
 				isForward = true;
 				dst="share_plan.jsp";
@@ -391,11 +390,11 @@ public class PlanController extends HttpServlet {
 		}	
 
 
-	}
+   }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // TODO Auto-generated method stub
+      doGet(request, response);
+   }
 
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -169,7 +170,7 @@
 					<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 						<li class="timeline-item">
 							<div class="timeline-badge">
-								<i class="dayCount">${day}일차</i>
+								<i class="dayCount"> ${day}</i>
 							</div>
 							<c:if test="${day eq param.day }">
 							<div class="timeline-panel">
@@ -205,8 +206,8 @@
 				$(location).attr('href',"selectSchedule.plan?plan=${param.plan}&day="+day+"&create=f");
 			})
 		</script>
-		<!-- 일차 페이징 끝 -->
 
+		<!-- 일차 페이징 끝 -->
 		<div id="schedulearea">
 			<table class="table table-bordered" id="schedule-plan">
 				<thead>

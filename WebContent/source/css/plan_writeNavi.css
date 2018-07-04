@@ -18,7 +18,7 @@
 }
 
 .timeline .timeline-item {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	position: relative;
 }
 
@@ -60,7 +60,7 @@
 	border: 1px solid #c0c0c0;
 	background: #ffffff;
 	border-radius: 2px;
-	padding: 10px;
+	padding: 5px;
 	-webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
 	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
 }
@@ -147,7 +147,7 @@
 	width: 90px;
 	text-align: center;
 	margin-bottom: 5px;
-	margin-top:20px;
+	margin-top:10px;
 }
 
 .timeline-horizontal .timeline-item .timeline-panel:before {
@@ -187,4 +187,7 @@
 
 .timeline-horizontal .timeline-item .active {
 	background-color: #67d8e0;
+}
+.timeline-item .disc{
+	font-size:12px;
 }
