@@ -46,7 +46,6 @@ public class PlanController extends HttpServlet {
 			String dst = null;
 
 			if(command.equals("/addSchedule.plan")) {
-				//				세 값 다 넘어옵니다.
 				LocationDTO ldto = new LocationDTO();
 				ldto.setLocation_name(request.getParameter("place"));
 				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
@@ -89,8 +88,7 @@ public class PlanController extends HttpServlet {
 				} else {
 					System.out.println("등록실패");
 				}	
-
-
+				
 				isForward = true;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/modiSchedule.plan")) {
