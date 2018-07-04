@@ -35,7 +35,7 @@
 
 
 	</div>
-	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	
 	<script>
 	$(document).ready(function(){
 		
@@ -63,7 +63,7 @@
 	<script>
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					"ws://192.168.20.15:8080/WEB_06_18/websocket");
+					"ws://59.10.249.73/TravelMaker/websocket");
 			var str;
 
 			$("input").keydown(function(event) {

@@ -120,6 +120,10 @@
 	border-right: 1px solid black;
 	border-top: 1px solid black;
 }
+
+.select {
+	background-color: #eee;
+}
 </style>
 
 <script>
@@ -174,48 +178,6 @@ $(document).ready(function(){
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
-			role="dialog" aria-labelledby="exampleModalCenterTitle"
-			aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<form method="post" id="plan-form">
-						<div class="modal-header">
-							<div class="h1" style="margin: 0 auto;">나의 여행계획 세우기</div>
-						</div>
-						<div class="modal-body">
-							<div class="mobile-title">
-								<input type="text" id="plan_title" name="plan_title"
-									class="from-contol" maxlength=400 placeholder="여행 제목을 입력해주세요">
-							</div>
-							<div id="picker-div">
-								<div id="picker_wrap">
-									<div class="picker-pic">
-										여행 시작 날짜<input id="datepicker" name="plan_startdate" readonly
-											width="170" style="background-color: white;" />
-									</div>
-									<div class="picker-pic" id="datepicker_endarea">
-										여행 종료 날짜<input id="datepicker-end" name="plan_enddate"
-											readonly width="170" style="background-color: white;" />
-									</div>
-								</div>
-							</div>
-							<div id="start-plan">
-								<p id="dayday" style="font-size: 13px; font-style: italic;">여행
-									일수</p>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button id="start-btn" type="button" class="btn btn-primary">여행
-								계획 시작하기</button>
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
 		
 	<div class="container text-center">
 		<div class="input-group input-group-lg" id="plantitle">
@@ -266,7 +228,7 @@ $(document).ready(function(){
 					<input type="hidden" id="plan_seq" value="${plan_seq }">
 					<div role="tabpanel" class="tab-pane fade show"
 						id="Day${day}">
-						<table class="table table-hover" id="schedule-table">
+						<table class="table" id="schedule-table">
 							<c:if test="${isFirst }">
 								<thead>
 									<tr>
@@ -304,14 +266,13 @@ $(document).ready(function(){
 																				<div class="budget_plan">${bitem.budget_plan}:</div>
 																				<div class="budget_amount">${bitem.budget_amount}</div>
 																			</div>
-																			<br> <c:set var="count" value="2" />
+																			<c:set var="count" value="2" />
 																	</c:when>
 																	<c:otherwise>
 																		<div>
 																			<div class="budget_plan">${bitem.budget_plan}:</div>
 																			<div class="budget_amount">${bitem.budget_amount}</div>
 																		</div>
-																		<br>
 																	</c:otherwise>
 																</c:choose>
 															</c:if>
@@ -346,9 +307,9 @@ $(document).ready(function(){
 			<button type="button" class="btn btn-outline-primary" id="badbtn">
 				<i class="far fa-frown"></i>${bad}
 			</button>
-			<button type="button" class="btn btn-outline-success"
+			<!-- <button type="button" class="btn btn-outline-success"
 					data-toggle="modal" data-target="#exampleModalCenter" id="getmyplanbtn">내 일정으로 가져가기</button>
-			<button class="btn btn-default" style="float: right;">신고</button>
+			 --><button class="btn btn-default" style="float: right;">신고</button>
 		</div>
 
 		<div class="comments">
@@ -403,6 +364,12 @@ $(document).ready(function(){
 		</div>
 	</div>
 	<script>
+	$("#schedule-table").on('click','.clickable-row',function(event) {
+		$(this).addClass('select').siblings().removeClass('select');
+		
+		
+	});
+	
 	$(".schedule ul li:first").addClass('active');
 	$("div[id='Day1']").addClass('active');
    /*댓글관련 버튼들*/
@@ -435,7 +402,7 @@ $(document).ready(function(){
 	
 	$("#remobtn").click(function() {
 		if(confirm("여행 계획을 삭제하시겠습니까?")) {
-			location.href = "removePlan.plan?plan=${plan_seq}";
+			location.href = "removePlan.plan?plan_seq=${plan_seq}";
 		}
 	})
 	
@@ -443,6 +410,7 @@ $(document).ready(function(){
 			location.href = "planboard.plan?currentPage=${currentPage}";
 	});
 	plan_seq = $("input[id='plan_seq']").val();
+	markerlocation = []
 	$.ajax({
 		url:"planviewlist.Ajax",
 		type:"post",
@@ -450,8 +418,7 @@ $(document).ready(function(){
 		success:function(data){		
 			var obj = JSON.parse(data);
 			
-			var markerlocation = [];
-		   timeline = [];
+		   	timeline = [];
 
 		// 다중 마커에 정보창 띄우기
 			var markers = [],
