@@ -45,7 +45,7 @@
 
 .wrapper {
 	margin: 13px 0 10px;
-	height: 400px;
+	height: 100%;;
 }
 
 .col-md-12, .col-lg-6 {
@@ -55,11 +55,21 @@
 
 .left_half {
 	padding-right: 5px;
-	height: 100%;
+	padding-left: 5px;
+	height: 400px;
+	float: left;
+}
+
+#timeline {
+	margin: 0;
+	width: 100%;
 }
 
 .right_half {
 	padding-left: 5px;
+	padding-right: 5px;
+	float:right;
+	height: 400px;
 }
 .event__date, .event__content{
 	height: 30px;
@@ -420,7 +430,7 @@ $(document).ready(function(){
 	});
 	
 	$("#timeline").on('click','.event',function(event) {
-		$(this).addClass('select').siblings().removeClass('select');
+		$(this).addClass('select').parent().siblings().children('.event').removeClass('select');
 		var index = $(event.currentTarget).closest("li").index();
 		map.panTo(new naver.maps.Point(markerlocation[index].location_x,markerlocation[index].location_y));
 	});
@@ -566,8 +576,6 @@ $(document).ready(function(){
 		        var marker = markers[seq],
 		            infoWindow = infoWindows[seq];
 				
-		        console.log(markerlocation[seq].location_x+":"+markerlocation[seq].location_y);
-		        
 		        if (infoWindow.getMap()) {
 		            infoWindow.close();
 		        } else {
