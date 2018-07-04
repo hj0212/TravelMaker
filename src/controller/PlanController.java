@@ -321,11 +321,16 @@ public class PlanController extends HttpServlet {
 				PlanDTO plan = pdao.getPlandata(plan_seq);
 				request.setAttribute("good", good);
 				request.setAttribute("bad", bad);
+				
 				request.setAttribute("result1", result1);
 				request.setAttribute("plan_seq", plan_seq);
 				request.setAttribute("plan", plan);
 				request.setAttribute("currentPage", currentPage);
 
+				
+			
+				
+				
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				request.setAttribute("plan_period", plan_period);
 
@@ -370,13 +375,16 @@ public class PlanController extends HttpServlet {
 				isForward= true;
 				dst = "deletePlanCommentView.jsp";
 			}else if(command.equals("/removePlan.plan")) {
-				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
+				int plan_seq = Integer.parseInt(request.getParameter("plan"));
 				int result = pdao.removePlan(plan_seq);
 				if(result > 0) {
 					System.out.println("삭제성공");
 				} else {
 					System.out.println("삭제실패");
 				}
+				
+				isForward = false;
+				dst = "planboard.plan";
 			}
 
 			if(isForward) {
