@@ -8,7 +8,6 @@ public class ReportFreeDTO {
 	private String free_writer;
 	private String report_user;
 	private String report_date;
-	private String report_count;
 	private String report_link;
 	
 	public ReportFreeDTO(){}
@@ -25,7 +24,6 @@ public class ReportFreeDTO {
 		this.free_writer = free_writer;
 		this.report_user = report_user;
 		this.report_date = report_date;
-		this.report_count = report_count;
 		this.report_link = report_link;
 	}
 
@@ -69,14 +67,6 @@ public class ReportFreeDTO {
 
 	public void setReport_date(String report_date) {
 		this.report_date = report_date;
-	}
-
-	public String getReport_count() {
-		return report_count;
-	}
-
-	public void setReport_count(String report_count) {
-		this.report_count = report_count;
 	}
 
 	public String getReport_link() {

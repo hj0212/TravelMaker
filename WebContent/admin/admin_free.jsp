@@ -72,7 +72,6 @@
 												<th class="text-center" style="width:15%;">작성자</th>											
 												<th class="text-center" style="width:15%;">신고자</th>
 												<th class="text-center" style="width:15%;">신고 날짜</th>
-												<th class="text-center" style="width:15%;">신고누적</th>
 												<th class="text-center" style="width:20%;">확인</th>
 											</tr>
 
@@ -83,8 +82,7 @@
 													<td>${f.free_title}</td>
 													<td>${f.free_writer}</td>
 													<td>${f.report_user}</td>
-													<td>${f.free_date}</td>
-													<td>${f.free_count}</td>
+													<td>${f.report_date}</td>
 													<td>확인링크</td>											
 												</tr>
 											</c:forEach>
