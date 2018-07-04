@@ -121,8 +121,12 @@
 	border-top: 1px solid black;
 }
 
-.select {
+#schedule-table .select {
 	background-color: #eee;
+}
+
+#timeline li .select {
+	font-weight: bold;
 }
 </style>
 
@@ -364,14 +368,9 @@ $(document).ready(function(){
 		</div>
 	</div>
 	<script>
-	$("#schedule-table").on('click','.clickable-row',function(event) {
-		$(this).addClass('select').siblings().removeClass('select');
-		
-		
-	});
-	
 	$(".schedule ul li:first").addClass('active');
 	$("div[id='Day1']").addClass('active');
+	
    /*댓글관련 버튼들*/
    /*댓글 작성*/
    $('#commentbtn').click(function() {
@@ -409,8 +408,33 @@ $(document).ready(function(){
 	$("#listbtn").click(function() {	
 			location.href = "planboard.plan?currentPage=${currentPage}";
 	});
+	
+	$("#schedule-table").on('click','.clickable-row',function(event) {
+		$(this).addClass('select').siblings().removeClass('select');
+		var index = $(event.currentTarget).closest("tr").index();
+		map.panTo(new naver.maps.Point(markerlocation[index].location_x,markerlocation[index].location_y));
+	});
+	
+	$("#timeline").on('click','.event',function(event) {
+		$(this).addClass('select').siblings().removeClass('select');
+		var index = $(event.currentTarget).closest("li").index();
+		map.panTo(new naver.maps.Point(markerlocation[index].location_x,markerlocation[index].location_y));
+	});
+	
 	plan_seq = $("input[id='plan_seq']").val();
-	markerlocation = []
+	markerlocation = [];
+	
+	map = new naver.maps.Map('map', {
+	    center: new naver.maps.Point(37.3595704, 127.105399),
+	    zoom: 5,
+	    mapTypeId: 'normal',
+	    mapTypes: new naver.maps.MapTypeRegistry({
+	        'normal': naver.maps.NaverMapTypeOption.getNormalMap({
+	            projection: naver.maps.TM128Coord
+	        }),
+	    })
+	});
+	
 	$.ajax({
 		url:"planviewlist.Ajax",
 		type:"post",
@@ -435,7 +459,7 @@ $(document).ready(function(){
 		    var jsonArray = obj.jLocationList;
 		    timelineArray = obj.jTimeLine;
 
-		    for (var i = 0; i < jsonArray.length; i++) {
+		    for (var i = jsonArray.length-1; i >=0 ; i--) {
 		        let markerObj = {
 		            location_name: jsonArray[i].location_name,
 		            location_x: jsonArray[i].location_x,
@@ -455,7 +479,7 @@ $(document).ready(function(){
 		makeMarkerArray();
 
 		// 네이버 지도 생성
-		var map = new naver.maps.Map('map', {
+		map = new naver.maps.Map('map', {
 		    center: new naver.maps.Point(markerlocation[0].location_x, markerlocation[0].location_y),
 		    zoom: 9,
 		    mapTypeId: 'normal',
@@ -537,7 +561,9 @@ $(document).ready(function(){
 		    return function (e) {
 		        var marker = markers[seq],
 		            infoWindow = infoWindows[seq];
-
+				
+		        console.log(markerlocation[seq].location_x+":"+markerlocation[seq].location_y);
+		        
 		        if (infoWindow.getMap()) {
 		            infoWindow.close();
 		        } else {
@@ -552,13 +578,7 @@ $(document).ready(function(){
 		}
 		
 		
-	});
-	
-	/* $.getJSON("planviewlist.Ajax", function(data) {
-		// 마커에 입력할 배열과 타임라인 정보를 입력할 배열
-		
-	}) */
-	
+	});	
  
    </script>
 </body>
