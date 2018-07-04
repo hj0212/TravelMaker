@@ -54,8 +54,7 @@
 			$('.chat-close').on('click', function(e) {
 
 				e.preventDefault();
-				$('#live-chat').html().fadeOut(300);
-							
+				$('#live-chat').html().fadeOut(300);						
 			});
 
 		})();
@@ -86,7 +85,6 @@
 				};
 			});
 			ws.onopen = function() {
-
 				//document.getElementById("contents").innerHTML += str+"님이 입장하셨습니다"+"<br>";
 			};
 
@@ -99,12 +97,10 @@
 						+ obj.msg
 						+ "</p></div></div>"
 				$("#livechathistory").append(chat);
-				$("#livechathistory").scrollTop($("#livechathistory")[0].scrollHeight);		
-				 
+				$("#livechathistory").scrollTop($("#livechathistory")[0].scrollHeight);			 
 			};
 			
-			
-			
+					
 			ws.onclose = function() {
 
 			};

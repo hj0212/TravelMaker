@@ -139,6 +139,20 @@ public class FreeboardDAO {
 		return writer;
 	}
 	
+	public int addViewCount(int articleseq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "UPDATE freeboard_c set free_viewcount = free_viewcount + 1 where free_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, articleseq);
+		
+		int result = pstmt.executeUpdate();
+		
+		conn.commit();
+		pstmt.close();
+		conn.close();
+		return result;
+	}
+	
 	public ArrayList<FreeboardDTO> selectBoard(int startNum, int endNum, String searchTerm) throws Exception {
 		Connection con = DBConnection.getConnection();
 		

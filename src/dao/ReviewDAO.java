@@ -204,7 +204,7 @@ public class ReviewDAO {
 
 	public int getArticleViewCount (int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select review_viewcount from reviewboard where review_seq = ?";
+		String sql = "select review_viewcount from reviewboard_c where review_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
 		ResultSet rs = pstmt.executeQuery();
@@ -235,17 +235,20 @@ public class ReviewDAO {
 			rdto.setReview_viewcount(rs.getInt("review_viewcount"));
 		}
 
+		rs.close();
+		pstmt.close();
+		con.close();
+		
 		return rdto;
 	}
 
 	public int insertReviewComment(String comment_text, int user, int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		System.out.println(comment_text + " : " + user + " : " + review_seq);
-		String sql = "insert into review_comment values(?,review_comment_seq.nextval,?,?,sysdate)";
+		String sql = "insert into review_comment values(review_comment_seq.nextval,?,?,sysdate,?)";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, review_seq);
-		pstmt.setString(2, comment_text);
-		pstmt.setInt(3, user);
+		pstmt.setString(1, comment_text);
+		pstmt.setInt(2, user);
+		pstmt.setInt(3, review_seq);
 		
 		int result = pstmt.executeUpdate();
 		con.commit();

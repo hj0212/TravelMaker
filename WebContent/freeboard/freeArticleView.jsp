@@ -255,8 +255,11 @@ $(document).ready(function(){
 					}
 				});
 
-				$("#procComment").click(function() {
-
+				$("#writeComment").click(function() {
+					if($("#comment").val() == "") {
+						alert("댓글을 입력해주세요!")
+						return false;
+					}
 				});
 
 				$("#goList").click(function() {
@@ -264,17 +267,13 @@ $(document).ready(function(){
 				})
 
 				<c:if test="${article.free_writer == sessionScope.user.seq}">
-				$("#delete")
-						.click(
-								function() {
+				$("#delete").click(function() {
 									location.href = "deleteCheck.bo?articlenum=${article.free_seq}";
-								})
+				})
 
-				$("#update")
-						.click(
-								function() {
-									location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
-								})
+				$("#update").click(function() {
+					location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
+				})
 				</c:if>
 			</script>
 </body>
