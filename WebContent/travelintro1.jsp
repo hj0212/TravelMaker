@@ -27,10 +27,10 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:200);
 
 body {
-	font-family: 'Raleway', sans-serif;
+	font-family: Raleway, sans-serif;
 	font-size: 16px;
-	font-weight: 200;
-	color: #858585;
+	/*font-weight: 200;*/
+	/*color: #858585;*/
 	overflow-x: hidden;
 }
 
@@ -39,7 +39,7 @@ a {
 	text-decoration: none;
 }
 a:hover, a:focus {
-	color: #6d6d6d;
+	/*color: #6d6d6d;*/
 	text-decoration: underline
 }
 
@@ -72,9 +72,7 @@ a:hover, a:focus {
 	height: 70px;
 }
 
-h5, .h5{
-	font-weight: 300;
-}
+
 </style>
 </head>
 <body>

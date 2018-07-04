@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <head>
 <title>일정 확인</title>
 
@@ -17,7 +16,8 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script
 	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>       
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
@@ -26,7 +26,7 @@
 <style type="text/css">
 * {
 	padding: 0;
-	margin: 0;	
+	margin: 0;
 }
 
 .container {
@@ -85,7 +85,6 @@
 #planinfoarea {
 	text-align: left;
 	height: 36px;
-	
 }
 
 #planinfoarea p {
@@ -96,6 +95,11 @@
 #planbtnarea {
 	display: inline;
 	float: right;
+}
+
+a {
+	color: #6d6d6d;
+	text-decoration: none;
 }
 </style>
 
@@ -244,8 +248,7 @@ $(document).ready(function(){
 																			<div>
 																				<div class="budget_plan">${bitem.budget_plan}:</div>
 																				<div class="budget_amount">${bitem.budget_amount}</div>
-																			</div>
-																			<br> <c:set var="count" value="2" />
+																			</div> <br> <c:set var="count" value="2" />
 																	</c:when>
 																	<c:otherwise>
 																		<div>
@@ -329,7 +332,8 @@ $(document).ready(function(){
 									<c:if test="${pc.comment_writer eq sessionScope.user.seq}">
 										<button type="button" class="close" aria-label="Close"
 											id="deleteComment">
-											<a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
+											<a
+												href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
 												<span aria-hidden="true">&times;</span>
 											</a>
 										</button>

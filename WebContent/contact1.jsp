@@ -36,14 +36,17 @@
 body {
 	font-family: Raleway, Arial, sans-serif;
 	font-size: 16px;
-	font-weight: 300;
-	
+	font-weight: 200;
+	/*color: #858585;*/
 	overflow-x: hidden;
 }
-
+a {
+	color: #6d6d6d;
+	text-decoration: none;
+}
 
 a:hover, a:focus {
-
+	/*color: #6d6d6d;*/
 	text-decoration: underline
 }
 
@@ -304,8 +307,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 					<p class="lead">
 					<p>기능에 대한 안내나 기술 지원이 필요하신가요?</p>
-
-					</p>
+					
 
 					<p>홈페이지를 사용하시는데 궁금하신 점이나, 불편 사항을 적어주세요.</p>
 					<p>문의주신 사항은 24시간 이내에 순차적으로 처리됩니다.</p>
@@ -334,7 +336,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 					<div class="form-group">
 						<label class="control-label" for="contact-mail">이메일</label>
 						<div class=" controls">
-							<input id="contact-mail" name="email" placeholder="Your email"
+							<input id="contact-mail" name="email" placeholder="Email"
 								class="form-control requiredField"
 								data-new-placeholder="Email" type="email"
 								data-error-empty="이메일을 적어주세요."

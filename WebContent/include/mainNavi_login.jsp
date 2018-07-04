@@ -11,6 +11,10 @@
 	white-space: nowrap;
 	overflow: hidden;
 }
+a {
+	color: #6d6d6d;
+	text-decoration: none;
+}
 </style>
 
 	<nav

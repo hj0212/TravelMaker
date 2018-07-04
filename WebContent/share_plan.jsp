@@ -156,6 +156,7 @@ div {
 	box-sizing: border-box;
 	margin-top: 30px;
 }
+
 </style>
 </head>
 <body>
@@ -231,7 +232,7 @@ div {
 
 		<!-- plan 리스트  -->
 		<h1 class="divLine">Plan</h1>
-		<hr />
+		<hr/>
 
 		<div class="row mt-2 mx-0">
 			<c:forEach var="item" items="${planList}">

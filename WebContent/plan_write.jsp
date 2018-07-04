@@ -134,7 +134,11 @@
  .category {
      color: dodgerblue;
      font-size: 12px;
- }
+ } 
+ a {
+	color: #6d6d6d;
+	text-decoration: none;
+}
 </style>
 
 </head>
@@ -142,10 +146,10 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/mainNavi_login.jsp"%>
+			<%@include file="include/mainNavi_login.jsp"%>			
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
+			<%@include file="include/mainNavi.jsp"%>			
 		</c:otherwise>
 	</c:choose>
 	<div class="container">

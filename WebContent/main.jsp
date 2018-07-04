@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>TravelMaker</title>
 <!-- 부트 스트랩 코드-->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
@@ -15,11 +15,14 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-
 <link rel="stylesheet" href="source/css/mainPage.css">
+
 <link rel="stylesheet" type="text/css" href="source/lib/slick/slick.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css"
 	href="source/lib/slick/slick-theme.css" /> 
+	<script src="include/slider/responsiveslides.min.js"></script>	
+	
 <style>
 div {
 	box-sizing: border-box;
@@ -69,7 +72,7 @@ div {
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	<div class="container">
+	<div class="container"  style="margin-top:-140px;">
 
 		<h1 class="divLine">BEST PLAN</h1>
 		<hr />
