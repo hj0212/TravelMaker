@@ -10,6 +10,7 @@
 	color: black;
 	line-height: 2em;
 }
+
 </style>
 
 <footer class="page-footer font-small blue pt-4 mt-4"
