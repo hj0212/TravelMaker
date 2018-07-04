@@ -64,7 +64,7 @@
 
 						<div class="container">
 							<div class="row">
-								<div class="input-group mt-2 col-md-6 col-md-offset-3 "
+								<div class="input-group mt-2 col-md-6 col-md-offset-4 "
 									id="search_area">
 									<input type="text" class="form-control" placeholder="회원 닉네임 검색"
 										aria-label="reply" aria-describedby="basic-addon2" id="search">
@@ -78,7 +78,7 @@
 								
 							</div>
 
-							<table class="table col-md-12" id="members">
+							<table class="table col-md-12 col-md-offset-1 mt-2" id="members">
 								<thead>
 									<tr>
 										<th class="text-center col-md-12">회원 관리</th>
