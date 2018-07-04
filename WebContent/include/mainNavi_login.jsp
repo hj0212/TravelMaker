@@ -34,7 +34,7 @@
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> userId <span
+					aria-haspopup="true" aria-expanded="false"> ${sessionScope.user.userid}<span
 						class="caret"></span></a>
 					<ul class="dropdown-menu mt-1 mr-5"
 						aria-labelledby="navbarDropdownMenuLink">
