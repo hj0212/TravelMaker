@@ -308,7 +308,7 @@ public class GoodBadDAO {
 		//좋아요수가 많은 게시물 뿌리기
 		public List<PlanDTO> bestPlanData()throws Exception{
 			Connection con = DBConnection.getConnection();
-			String sql ="select * from plan p, (select article_no, count from (select article_no,count(*) count from good_plan  group by article_no order by count desc) where rownum <= 4) s where p.plan_seq = s.article_no";
+			String sql ="select * from plan p, (select article_no, count from (select article_no,count(*) count from good_plan group by article_no order by count desc) where rownum <= 4) s where p.plan_seq = s.article_no order by plan_good desc";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			List<PlanDTO> result = new ArrayList<>();

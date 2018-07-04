@@ -446,6 +446,34 @@ $(document).ready(function() {
 			location.href = "planboard.plan";
 		}
 	});
+	
+	$(".budget input[id^=money]").keydown(function(){
+		var str = $(".budget input[id^=money]").val();
+	
+		if(numcheck(str)){
+			var regex = /\s/g;
+			document.getElementById("user_idchek").value =document.getElementById("user_idchek").value.replace(regex,"");
+		};
+		
+		function numcheck(str){
+			var regex =/\s/g;
+			return regex.test(str);
+		};
+	});
+	
+	$(".budget input[id^=money]").on('keydown', '.budget input[id^=money]', function() {
+		var str = $(this).val();
+		
+		if(numcheck(str)){
+			var regex = /^[0-9]/g;
+			
+		};
+		
+		function numcheck(str){
+			var regex =/^[0-9]/g;
+			return regex.test(str);
+		};
+	})
 
 	budgetcount = 1;
 	$("#moneyaddbtn").click(function() {

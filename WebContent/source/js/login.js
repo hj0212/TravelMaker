@@ -5,7 +5,6 @@ $(document).ready(function(){
 		var str = $("#user_idchek").val();
 	
 		if(blankid(str)){
-			
 			var regex = /\s/g;
 			document.getElementById("user_idchek").value =document.getElementById("user_idchek").value.replace(regex,"");
 		};
@@ -21,7 +20,6 @@ $(document).ready(function(){
 	document.getElementById("user_idchek").onblur= function(){
 		var str = document.getElementById("user_idchek").value;
 		if(!idcheck(str)){
-	
 			document.getElementById("user_idchek").value ="";
 			$("#label-text").html("id 형식이  맞지않습니다");								
 		};		

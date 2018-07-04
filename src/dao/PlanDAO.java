@@ -522,7 +522,7 @@ public class PlanDAO {
 		if(rs.next()) {
 			result = false;
 		}
-
+		System.out.println("location check : " + location_id +",result:" + result);
 		rs.close();
 		pstmt.close();
 		con.close();
@@ -572,6 +572,7 @@ public class PlanDAO {
 			tmp.setSchedule_plan(rs.getString(10));
 			tmp.setSchedule_ref(rs.getString(11));
 			result.add(tmp);
+			System.out.println(tmp.getSchedule_plan());
 		}
 
 		rs.close();
