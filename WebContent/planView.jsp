@@ -406,7 +406,7 @@ $(document).ready(function(){
 	
 	$("#remobtn").click(function() {
 		if(confirm("여행 계획을 삭제하시겠습니까?")) {
-			location.href = "removePlan.plan?plan_seq=${plan_seq}";
+			location.href = "removePlan.plan?plan=${plan_seq}";
 		}
 	})
 	
