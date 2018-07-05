@@ -21,7 +21,7 @@ public class PlanDAO {
 	private MemberDAO mdao = new MemberDAO();
 	public PlanDTO getPlandata(int plan_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "select plan_seq, plan_writer,to_char(plan_startdate, 'YYYY/MM/DD') plan_startdate,to_char(plan_enddate, 'YYYY/MM/DD') plan_enddate,plan_title,plan_viewcount,plan_reportcount  from plan where plan_seq = ?";
+		String sql = "select plan_seq, plan_writer,to_char(plan_startdate, 'YYYY/MM/DD') plan_startdate,to_char(plan_enddate, 'YYYY/MM/DD') plan_enddate,plan_title,plan_viewcount,plan_reportcount from plan where plan_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan_seq);
 		ResultSet rs = pstmt.executeQuery();

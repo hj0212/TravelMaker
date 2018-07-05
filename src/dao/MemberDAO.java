@@ -37,7 +37,6 @@ public class MemberDAO {
 
 	public int addMember(MemberDTO dto) throws Exception {
 		if(!check(dto.getUserid())) {
-
 			Connection con = DBConnection.getConnection();
 			String sql = "insert into users (seq, userid, password, nickname, email, modify_date,create_date) VALUES (users_seq.nextval, ?, ?, ?, ?,sysdate,sysdate)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -53,7 +52,7 @@ public class MemberDAO {
 
 			return result;
 		}
-
+		System.out.println("여기");
 		return -1;
 	}
 
@@ -136,12 +135,10 @@ public class MemberDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setString(1, id);
 		ResultSet rs = pstmt.executeQuery();
-		boolean result;
+		boolean result = false;
 		if(rs.next()) {
 			result = true;
-		} else {
-			result = false;
-		}
+		} 
 
 		rs.close();
 		con.close();
