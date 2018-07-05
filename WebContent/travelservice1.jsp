@@ -25,10 +25,10 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:200);
 
 body {
-	font-family: 'Raleway', sans-serif;
+	font-family: Raleway, sans-serif;
 	font-size: 16px;
 	font-weight: 200;
-	color: #858585;
+	/*color: #858585;*/
 	overflow-x: hidden;
 }
 
@@ -127,7 +127,7 @@ h5, .h5{
 					<div class="card-body question">
 						<font class="fsize1">TravelMaker는 회원제 서비스로서 간단한 회원가입 절차를 통해
 							가입한 후 사용하실 수 있습니다.</font><br> <font class="fsize2">(카카오톡,
-							네이버 로그인으로도 가입 가능합니다.)</font><br> <img src="loginmain.JPG">
+							네이버 로그인으로도 가입 가능합니다.)</font><br> <img src="source/img/travelqalogin.png">
 					</div>
 
 				</div>

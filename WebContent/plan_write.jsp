@@ -47,13 +47,15 @@
 #plan-board {
 	margin-top: 20px;
 	width: 70%;
-	float: left;
+	/* float: left; 여기가 문제가 됨. */
 	margin-bottom: 50px;
 }
+/* 플랜보드가 문제됨 */
 
 #plan-div {
 	margin-top: 20px;
 }
+
 
 #end-bt:hover {
 	background-color: #e9e9e9;
@@ -74,7 +76,7 @@
 	box-sizing: border-box;
 	width: 10px;
 	margin-left: 24px;
-
+	float: left;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -136,7 +138,11 @@
  
  input[type="time"] {
  	display: inline;
- 	width: 130px;
+ 	width: 152px;
+ }
+ 
+ #savebtn {
+ 	margin: 0 3px;
  }
 </style>
 
@@ -145,10 +151,10 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/mainNavi_login.jsp"%>
+			<%@include file="include/mainNavi_login.jsp"%>			
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
+			<%@include file="include/mainNavi.jsp"%>			
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
@@ -160,7 +166,7 @@
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
 				name="plantitle" value="${plan_title}" readonly>
-			<button type="button" class="btn btn-primary" id="savebtn">임시 저장</button>
+			<button type="button" class="btn btn-outline-primary" id="savebtn">임시 저장</button>
 			<button type="button" class="btn btn-primary" id="endbtn">등록</button>
 		</div>
 		<!-- 여기 몇일 여행인지 받아서 개수만큼 돌리기 -->
@@ -443,6 +449,12 @@
 <script>
 $(document).ready(function() {
 	$("#endbtn").click(function() {
+		if(confirm("등록하시겠습니까?")) {
+			location.href = "savePlan.plan";
+		}
+	});
+	
+	$("#savebtn").click(function() {
 		if(confirm("입력된 일정을 저장하고 나가시겠습니까?")) {
 			location.href = "planboard.plan";
 		}

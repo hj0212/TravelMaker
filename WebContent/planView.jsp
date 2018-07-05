@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <head>
 <title>일정 확인</title>
 
@@ -35,7 +34,6 @@
 * {
 	padding: 0;
 	margin: 0;
-	text-align: center;
 }
 
 .container {
@@ -109,7 +107,6 @@
 #planinfoarea {
 	text-align: left;
 	height: 36px;
-	line-height: 36px;
 }
 
 #planinfoarea p {
@@ -473,7 +470,7 @@
 	
 	$("#remobtn").click(function() {
 		if(confirm("여행 계획을 삭제하시겠습니까?")) {
-			location.href = "removePlan.plan?plan_seq=${plan_seq}";
+			location.href = "removePlan.plan?plan=${plan_seq}";
 		}
 	})
 	

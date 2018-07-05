@@ -207,7 +207,7 @@ $("#user_idchek").keyup(function(){
 			<div id="loginarea">
 				<div class="card white hoverable" id="loginbox">
 					<div class="card-content black-text">
-						<div class="row card-title" id="card-title">
+						<div class="row card-title" id	="card-title">
 							<div class="col s6 left-align login-link active">
 								<span>Log in</span>
 							</div>

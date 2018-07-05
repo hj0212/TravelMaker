@@ -121,7 +121,6 @@ public class FrontController extends HttpServlet {
 			} else if(command.equals("/viewFreeArticle.bo")) {
 				try {
 					int seq = Integer.parseInt(request.getParameter("seq"));
-					System.out.println(seq);
 					String currentPage = request.getParameter("currentPage");
 					MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 					
@@ -172,19 +171,22 @@ public class FrontController extends HttpServlet {
 			} else if(command.equals("/reviewboard.bo")) {
 	            int currentPage = 0;
 	            String currentPageString = request.getParameter("currentPage");
-	            
-	            if(currentPageString == null) {
+	           
+	            if(currentPageString == null || currentPageString =="") {
 	               currentPage = 1;
 	            } else {
 	               currentPage = Integer.parseInt(currentPageString);
 	            }
+	           
+	            
 	            
 	            String searchTerm = request.getParameter("search");
 	            List<ReviewDTO> reviewList = new ArrayList<>();
-	            reviewList = rdao.getSomeReview(currentPage*10-9, currentPage*10, searchTerm);
+	            reviewList = rdao.getSomeReview(currentPage*12-11, currentPage*12, searchTerm);
 	            request.setAttribute("reviewList", reviewList);
 	            
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
+	            System.out.println("pageNavi :"+pageNavi);
 	            request.setAttribute("pageNavi", pageNavi);
 	            request.setAttribute("currentPage", currentPage);
 	            
@@ -194,7 +196,7 @@ public class FrontController extends HttpServlet {
 	         }else if(command.equals("/reviewArticle.bo")) {
 	        	 try {
 		             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-//		             rdao.getArticleViewCount(review_seq);
+		             rdao.reViewCount(review_seq);
 		             
 		             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
 		             request.setAttribute("dto", result1);
@@ -227,15 +229,7 @@ public class FrontController extends HttpServlet {
 	  
 	             isForward = true;
 	             dst= "reviewboard/reviewCommentView.jsp";
-	          }else if(command.equals("/deleteReviewArticle.bo")) {
-	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-	        	  int result = rdao.deleteReview(review_seq);
-	        	  
-	        	  request.setAttribute("result", result);
-	        	  request.setAttribute("review_seq", review_seq);
-	        	  isForward = true;
-	        	  dst="deleteReviewView.jsp";
-	          }else if(command.equals("/deleteCheck.bo")) {
+	          }else if(command.equals("/deleteFreeCheck.bo")) {
 	        	  request.setAttribute("articlenum", request.getParameter("articlenum"));
 	        	  dst = "freeboard/deleteCheck.jsp";
 	          }else if(command.equals("/deleteFreeArticle.bo")) {
@@ -256,13 +250,12 @@ public class FrontController extends HttpServlet {
 	        		  e.printStackTrace();
 	        	  }catch(Exception e1) {
 	        		  isForward = false;
-	        		  dst = "freeboradError.bo";
+	        		  dst = "freeboardError.bo";
 	        	  }
 	          }else if(command.equals("/modifyFreeArticlePage.bo")) {
 	        	  try {
 	        		  int articlenum = Integer.parseInt(request.getParameter("articlenum"));
 	        		  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
-	        		  request.setAttribute("articlenum", articlenum);
 	        		  
 	        		  if(user.getSeq() == fbdao.writerCheck(articlenum)) {
 	        			  FreeboardDTO dto = fbdao.readFreeArticle(articlenum);
@@ -306,6 +299,7 @@ public class FrontController extends HttpServlet {
 		        		  int result = fbdao.updateArticle(title, contents,articlenum);
 		        		  dst = "viewFreeArticle.bo?seq="+articlenum;
 		        	  }else {
+		        		  isForward = false;
 		        		  dst = "freenotWriter.bo";
 		        	  }
 		        	  
@@ -342,19 +336,20 @@ public class FrontController extends HttpServlet {
 	        		  dst = "freeNumberError.bo";
 	        		  isForward = false;
 	        	  }catch(Exception e1) {
-	        		  dst = "freeboradError.bo";
+	        		  dst = "freeboardError.bo";
 	        		  isForward = false;
 	        	  }
 	          }else if(command.equals("/deleteReviewComment.bo")) {
 	        	  int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
 	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
 	        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+	        	  
 	        	  int comment_writer_seq = user.getSeq();
-	        	  System.out.println(comment_seq +":"+review_seq+":"+comment_writer_seq);
+	        	  
 	        	  int result = rdao.deleteReviewComment(comment_seq, comment_writer_seq);
 	        	  request.setAttribute("result", result);
 	        	  request.setAttribute("review_seq", review_seq);
-	        	  System.out.println(result +":"+review_seq);
+	        	  
 	        	  isForward=true;
 	        	  dst="deleteReviewCommentView.jsp";
 	          }else if(command.equals("/writeReview.bo")) {
@@ -409,9 +404,6 @@ public class FrontController extends HttpServlet {
 		        	String part = (String)request.getSession().getAttribute("part");
 								
 					MemberDTO mdto = mdao.newMemberInfo(user.getSeq(), part);
-					System.out.println("seq :"+user.getSeq());
-					
-					System.out.println("mdto :"+mdto.getPhoto_system_file_name());
 					
 					/*mdto = mdao.getProfileInfo(part, id);*/
 					
@@ -419,22 +411,107 @@ public class FrontController extends HttpServlet {
 					 request.setAttribute("file_name", mdto.getPhoto_system_file_name());
 		        	
 		        	
-	          }
+	        	}
 	        	request.setAttribute("main", main);
 	        	
 	        	isForward=true;
 	        	dst="main.jsp";
-	        	
-	        	
 	          }else if(command.equals("/freeboardError.bo")) {
 	        	  isForward = false;
 	        	  dst = "freeboard.bo";
+	          }else if(command.equals("/deleteReviewCheck.bo")) {
+	        	  request.setAttribute("articlenum", request.getParameter("reviewnum"));
+	        	  dst = "reviewboard/deleteCheck.jsp";
+	          }else if(command.equals("/deleteFreeReview.bo")) {
+	        	  try {
+		        	  int seq = Integer.parseInt(request.getParameter("seq"));
+		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        	  
+		        	  if(user.getSeq() == rdao.writerCheck(seq)) {
+		        		  rdao.deleteReview(seq, user.getSeq());
+		        		  dst = "reviewboard.bo";
+		        	  }else {
+		        		  dst = "reviewnotWriter.bo";
+		        		  isForward = false;
+		        	  }
+	        	  }catch(NumberFormatException e) {
+	        		  isForward = false;
+	        		  dst = "reviewNumberError.bo";
+	        		  e.printStackTrace();
+	        	  }catch(Exception e1) {
+	        		  isForward = false;
+	        		  dst = "reviewError.bo";
+	        	  }
+	          }else if(command.equals("/reviewnotWriter.bo")) {
+	        	  dst = "notWriter.jsp";
+	          }else if(command.equals("/reviewNumberError.bo")) {
+	        	  dst = "notNumber.jsp";
+	          }else if(command.equals("/reviewError.bo")) {
+	        	  isForward = false;
+	        	  dst = "reviewborad.bo";
+	          }else if(command.equals("/modifyReviewArticlePage.bo")) {
+	        	  try {
+	        		  int articlenum = Integer.parseInt(request.getParameter("reviewnum"));
+	        		  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+	        		  
+	        		  if(user.getSeq() == rdao.writerCheck(articlenum)) {
+	        			  ReviewDTO dto = rdao.getReviewArticle(articlenum);
+	        			  request.setAttribute("contents", dto);
+	        			  request.setAttribute("articlenum", articlenum);
+	        			  dst = "reviewboard/modifyReview.jsp";
+	        		  }else {
+	        			  dst = "reviewnotWriter.bo";
+	        			  isForward = false;
+	        		  }
+	        	  }catch(NumberFormatException e) {
+	        		  dst = "reviewNumberError.bo";
+	        		  isForward = false;
+	        	  }catch(Exception e1) {
+	        		  dst = "reviewError.bo";
+	        		  isForward = false;
+	        	  }
+	          }else if(command.equals("/modifyReview.bo")) {
+	        	  try {
+	        		  String title = request.getParameter("title");
+	        		  String contents = request.getParameter("contents");
+	        		  String list = request.getParameter("imageList");
+	        		  int articlenum = Integer.parseInt(request.getParameter("articlenum"));
+	        		  String[] imageList = null;
+	        		  
+		        	  if((title == null || title == "") && (contents == null || contents == "")) {
+		        		  title = "제목없음";
+		        	  }else if(contents == null || contents == "" ) {
+		        		  contents = "내용없음";
+		        	  }else if(title == null || title == "") {
+		        		  title = "제목없음";
+		        		  contents = "내용없음";
+		        	  }
+		        	  
+		  			  JSONArray array = (JSONArray)new JSONParser().parse(list);
+		  				
+		  			  imageList = new String[array.size()];
+		  			  
+		  			  for(int i = 0; i < array.size(); i++) {
+		  				imageList[i] = (String)array.get(i);
+		  			   }
+		        	  
+		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        	  
+		        	  if(user.getSeq() == rdao.writerCheck(articlenum)) {
+		        		  int result = rdao.updateReview(title, contents, user.getSeq(), imageList, articlenum);
+		        		  dst = "reviewArticle.bo?review_seq="+articlenum;
+		        	  }else {
+		        		  isForward = false;
+		        		  dst = "reviewnotWriter.bo";
+		        	  }
+	        	  }catch(NumberFormatException e) {
+	        		  dst = "reviewNumberError.bo";
+	        		  isForward = false;
+	        	  }catch(Exception e1) {
+	        		  isForward = false;
+	        		  dst = "reviewError.bo";
+	        	  }
 	          }
-			
-			
-			
-			
-	        	  
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);

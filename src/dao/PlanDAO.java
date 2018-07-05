@@ -771,8 +771,10 @@ public class PlanDAO {
 		for(int i = startNavi; i <= endNavi; i++) {
 			if(currentPage == i) {
 				sb.append("<li class='page-item'><a class='page-link' href='planboard.plan?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
+				System.out.println("1번임");
 			} else {
 				sb.append("<li class='page-item'><a class='page-link' href='planboard.plan?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
+				System.out.println("2번임");
 			}
 		}
 
@@ -1055,22 +1057,13 @@ public class PlanDAO {
 		return result;
 	}
 
-	public int insertAllSchedule(List<ScheduleDTO> list) throws Exception {
+	public int savePlan(int plan_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "insert into schedule VALUES (?,?,schedule_seq.nextval, ?, ?, ?, ?, ?)";
+		String sql = "update plan set plan_check = 'y' where plan_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		int result = 0;
-		for(ScheduleDTO dto: list) {
-			pstmt.setInt(1, dto.getPlan_seq());
-			pstmt.setInt(2, dto.getDay_seq());
-			pstmt.setString(3, dto.getSchedule_starttime());
-			pstmt.setString(4, dto.getSchedule_endtime());
-			pstmt.setInt(5, dto.getLocation_id());
-			pstmt.setString(6, dto.getSchedule_plan());
-			pstmt.setString(7, dto.getSchedule_ref());			
-			result = pstmt.executeUpdate();
-			con.commit();
-		}
+		pstmt.setInt(1, plan_seq);
+		int result = pstmt.executeUpdate();
+		
 		pstmt.close();
 		con.close();
 		return result;

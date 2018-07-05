@@ -41,7 +41,7 @@
 		})
 		
 		$("#main").click(function(){
-			location.href="main.jsp";
+			location.href="main.bo";
 		})
 	</script>
 </body>
