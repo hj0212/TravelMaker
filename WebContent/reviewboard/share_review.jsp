@@ -60,7 +60,7 @@
 			<%@include file="../include/mainNavi.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@include file="../include/mainNavi_login.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 
 		</c:otherwise>
 	</c:choose>

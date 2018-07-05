@@ -192,7 +192,7 @@ $(document).ready(function(){
 		<script>location.href="error.jsp"</script>
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
+			<%@include file="include/otherNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
 		

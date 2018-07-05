@@ -86,11 +86,9 @@ a {
 				<li class="nav-item active"><a class="nav-link"
 					href="planboard.plan">Plans <span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="selectSchedule.plan?plan=1&day=1&create=f">Schedules</a></li>
 				<li class="nav-item"><a class="nav-link" href="reviewboard.bo">Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
-				<li class="nav-item dropdown" style="min-width: 160px;"><a
+				<li class="nav-item dropdown" style="min-width: 150px;"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> <c:choose>
