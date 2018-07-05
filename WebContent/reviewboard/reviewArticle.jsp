@@ -92,7 +92,7 @@ $(document).ready(function(){
 
 	$("#goodbtn").click(function(){
 
-	var article =$("#review_seq").text();
+	var article ="${review_seq}";
 	
 	console.log(goodbtn);
 
@@ -110,7 +110,7 @@ $(document).ready(function(){
 		});
 	});
 	$("#badbtn").click(function(){	
-	var article =$("#review_seq").text();	
+	var article ="${review_seq}";	
 
 	$.ajax({
 		  type:'POST',
@@ -178,7 +178,9 @@ $(document).ready(function(){
             	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
             </c:if>
             <button type="button" class="btn btn-outline-secondary" id="reviewboard-bt">목록</button>
-            <button type="button" class="btn btn-outline-danger">신고</button>
+            <c:if test="${!(sessionScope.user.seq eq dto.review_writer)}">
+	            <button type="button" class="btn btn-outline-danger">신고</button>
+            </c:if>
          </div>
       </div>
       <div class="comments">
@@ -238,6 +240,20 @@ $(document).ready(function(){
    </div>
  
    <script>
+/*       $("#comment-write-bnt").click(
+                  function() {
+                     var con = confirm("댓글을작성하시겠습니까?");
+                     var comment = $("#comment_text").val();
+                     if (con) {
+                        if (comment != "") {
+                           alert("댓글이 성공적으로 달렸습니다");
+                           $("#comment_text").val("");
+                        } else {
+                           alert("댓글을 작성해주세요.");
+                        }
+                     } else {
+                     }
+                  }); */
       var commentBntCount = 2;
       $("#comment-bnt").click(function() {
          var writer = $(".writer").text();
@@ -260,20 +276,16 @@ $(document).ready(function(){
    		  alert("내용을 입력해주세요");
    	   }
        });
-/*       $("#comment-write-bnt").click(
-                  function() {
-                     var con = confirm("댓글을작성하시겠습니까?");
-                     var comment = $("#comment_text").val();
-                     if (con) {
-                        if (comment != "") {
-                           alert("댓글이 성공적으로 달렸습니다");
-                           $("#comment_text").val("");
-                        } else {
-                           alert("댓글을 작성해주세요.");
-                        }
-                     } else {
-                     }
-                  }); */
+      
+      $("#reviewboard-bt").click(function() {
+    	  location.href = "reviewboard.bo";
+      })
+      
+     <c:if test="${sessionScope.user.seq eq dto.review_writer}">
+     	$("#delete").click(function() {
+     		location.href = "deleteReviewCheck.bo?reviewnum=${review_seq}";
+     	})
+     </c:if>
    </script>
 </body>
 </html>

@@ -370,7 +370,7 @@ public class PlanController extends HttpServlet {
 				isForward= true;
 				dst = "deletePlanCommentView.jsp";
 			}else if(command.equals("/removePlan.plan")) {
-				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
+				int plan_seq = Integer.parseInt(request.getParameter("plan"));
 				int result = pdao.removePlan(plan_seq);
 				if(result > 0) {
 					System.out.println("삭제성공");

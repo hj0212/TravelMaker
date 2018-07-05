@@ -273,7 +273,7 @@ $(document).ready(function(){
 
 				<c:if test="${article.free_writer == sessionScope.user.seq}">
 				$("#delete").click(function() {
-									location.href = "deleteCheck.bo?articlenum=${article.free_seq}";
+					location.href = "deleteFreeCheck.bo?articlenum=${article.free_seq}";
 				})
 
 				$("#update").click(function() {

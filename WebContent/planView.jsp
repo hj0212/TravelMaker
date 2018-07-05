@@ -5,17 +5,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <head>
 <title>일정 확인</title>
 
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js"
-	type="text/javascript"></script>
-<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
-	rel="stylesheet" type="text/css" />
+<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>       
@@ -31,7 +36,6 @@
 * {
 	padding: 0;
 	margin: 0;
-	text-align: center;
 }
 
 .container {
@@ -103,7 +107,6 @@
 #planinfoarea {
 	text-align: left;
 	height: 36px;
-	line-height: 36px;
 }
 
 #planinfoarea p {
@@ -363,7 +366,8 @@ $(document).ready(function(){
 									<c:if test="${pc.comment_writer eq sessionScope.user.seq}">
 										<button type="button" class="close" aria-label="Close"
 											id="deleteComment">
-											<a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
+											<a
+												href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
 												<span aria-hidden="true">&times;</span>
 											</a>
 										</button>
@@ -411,7 +415,7 @@ $(document).ready(function(){
 	
 	$("#remobtn").click(function() {
 		if(confirm("여행 계획을 삭제하시겠습니까?")) {
-			location.href = "removePlan.plan?plan_seq=${plan_seq}";
+			location.href = "removePlan.plan?plan=${plan_seq}";
 		}
 	})
 	

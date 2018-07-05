@@ -40,7 +40,7 @@
 		</c:otherwise>
 	</c:choose>
 	<div class="container text-center">
-		<h1>글을 삭제하시겠습니까?</h1>
+		<h1>리뷰를 삭제하시겠습니까?</h1>
 		<button type="button" class="btn btn-light" id="delete" onclick="deleteContents(); this.disabled=true;">삭제</button>
 		<button type="button" class="btn btn-light" id="goArticle" onclick="goArticle(); this.disabled=true;">게시글로가기</button>
 		<button type="button" class="btn btn-light" id="list" onclick="goList(); this.disabled=true;">목록</button>
@@ -48,15 +48,15 @@
 </body>
 <script>
 	function deleteContents() {
-		location.href = "deleteFreeArticle.bo?seq="+"${articlenum}";
+		location.href = "deleteFreeReview.bo?seq="+${articlenum};
 	}
 	
 	function goArticle() {
-		location.href = "viewFreeArticle.bo?seq="+"${articlenum}";
+		location.href = "viewFreeArticle.bo?seq="+${articlenum};
 	}
 	
 	function goList() {
-		location.href = "freeboard.bo";
+		location.href = "reviewboard.bo";
 	}
 </script>
 </html>
