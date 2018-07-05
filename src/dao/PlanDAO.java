@@ -21,7 +21,7 @@ public class PlanDAO {
 	private MemberDAO mdao = new MemberDAO();
 	public PlanDTO getPlandata(int plan_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "select plan_seq, plan_writer,to_char(plan_startdate, 'YYYY/MM/DD') plan_startdate,to_char(plan_enddate, 'YYYY/MM/DD') plan_enddate,plan_title,plan_viewcount,plan_reportcount  from plan where plan_seq = ?";
+		String sql = "select plan_seq, plan_writer,to_char(plan_startdate, 'YYYY/MM/DD') plan_startdate,to_char(plan_enddate, 'YYYY/MM/DD') plan_enddate,plan_title,plan_viewcount from plan where plan_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan_seq);
 		ResultSet rs = pstmt.executeQuery();
@@ -35,7 +35,6 @@ public class PlanDAO {
 			dto.setPlan_enddate(rs.getString(4));
 			dto.setPlan_title(rs.getString(5));
 			dto.setPlan_viewcount(rs.getInt(6));
-			dto.setPlan_reportcount(rs.getInt(7));
 		}
 
 		rs.close();
@@ -1057,24 +1056,44 @@ public class PlanDAO {
 		return result;
 	}
 
-	public int insertAllSchedule(List<ScheduleDTO> list) throws Exception {
+	public int savePlan(int plan_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "insert into schedule VALUES (?,?,schedule_seq.nextval, ?, ?, ?, ?, ?)";
+		String sql = "update plan set plan_check = 'y' where plan_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		int result = 0;
-		for(ScheduleDTO dto: list) {
-			pstmt.setInt(1, dto.getPlan_seq());
-			pstmt.setInt(2, dto.getDay_seq());
-			pstmt.setString(3, dto.getSchedule_starttime());
-			pstmt.setString(4, dto.getSchedule_endtime());
-			pstmt.setInt(5, dto.getLocation_id());
-			pstmt.setString(6, dto.getSchedule_plan());
-			pstmt.setString(7, dto.getSchedule_ref());			
-			result = pstmt.executeUpdate();
-			con.commit();
-		}
+		pstmt.setInt(1, plan_seq);
+		int result = pstmt.executeUpdate();
+		
 		pstmt.close();
 		con.close();
+		return result;
+	}
+	
+	public List<PlanDTO> getMyTmpPlan (int seq) throws Exception{
+		Connection con = DBConnection.getConnection();
+		List<PlanDTO> result = new ArrayList<>();
+		String sql = "select * from plan where plan_writer = ? and plan_check= 'y'";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, seq);
+		ResultSet rs = pstat.executeQuery();
+
+		while(rs.next()) {
+				PlanDTO pdto = new PlanDTO();
+				pdto.setPlan_seq(rs.getInt("plan_seq"));
+				pdto.setPlan_writerN(mdao.getUserNickname(rs.getInt("plan_writer")));
+				pdto.setPlan_writer(rs.getInt("plan_writer"));
+				pdto.setPlan_title(rs.getString("plan_title"));
+				pdto.setPlan_good(rs.getInt("plan_good"));
+				pdto.setPlan_viewcount(rs.getInt("plan_viewcount"));
+				pdto.setPlan_startdate(rs.getString("plan_startdate"));
+				pdto.setPlan_enddate(rs.getString("plan_enddate"));
+				pdto.setPlan_check(rs.getString("plan_check"));
+				result.add(pdto);
+			}
+
+		
+		con.close();
+		pstat.close();
+		rs.close();
 		return result;
 	}
 }

@@ -107,7 +107,6 @@ $(document).ready(function(){
 		if(pw==conpw){
 			$("#confirm-label").html("<font color=blue>confirm password(일치)</font>");
 		}else{
-			
 			$("#confirm-label").html("<font color=red>confirm password(불일치)</font>");
 			if(pw == ""){
 				$("#confirm-label").html("confirm password");
