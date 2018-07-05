@@ -41,6 +41,7 @@ public class MemberController extends HttpServlet {
 
 			boolean isForward = true;
 			String dst = null;
+			System.out.println(command);
 
 			if(command.equals("/login.do")) {
 				MemberDTO dto = new MemberDTO();
@@ -288,6 +289,7 @@ public class MemberController extends HttpServlet {
 				isForward = true;
 				dst="pwCheckView.jsp";
 			}else if(command.equals("/modiHomeMemInfo.do")) {
+				
 				String id = (String)request.getSession().getAttribute("loginId");
 				String email = request.getParameter("email");
 				String nickname = request.getParameter("nickname");
@@ -297,38 +299,7 @@ public class MemberController extends HttpServlet {
 
 				isForward = true;
 				dst = "editInfoView.jsp";
-			}
-			/*else if(command.equals("/toPwTrueCheck.do")) {
-				isForward=true;
-				dst="pwTrueCheck.jsp";
-			}else if(command.equals("/pwTrueCheck.do")) {
-				String id = (String)request.getSession().getAttribute("loginId");
-				String pw = request.getParameter("pw");
-				boolean result = mdao.isHomeMemberPW(id, pw);
-				request.setAttribute("result", result);		
-				isForward = true;
-				dst="pwTrueCheckView.jsp";
-			}else if(command.equals("/toModiPw.do")) {			
-				isForward=true;
-				dst="modiPw.jsp";
-			}else if(command.equals("/modiPw.do")) {
-				String id = (String)request.getSession().getAttribute("loginId");
-				String pw = request.getParameter("pw");
-				String repw = request.getParameter("repw");
-				if(pw.equals(repw)) {
-					int result = mdao.updatePw(id, repw);
-					request.setAttribute("result", result);
-					isForward = true;
-					dst="modiPwView.jsp";
-				}else {
-					isForward = false;
-				}
-			}else if(command.equals("/toLogin.do")) {
-				isForward=true;
-				dst="newlogin.jsp";
-*/
-
-			else if(command.equals("/editInfoNK.do")){
+			}else if(command.equals("/editInfoNK.do")){
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 				String part = user.getPart();
 				
@@ -395,7 +366,7 @@ public class MemberController extends HttpServlet {
 				// 이미지를 업로드할 경로
 				String uploadPath = request.getServletContext().getRealPath("file");
 				int size = 10 * 1024 * 1024;	// 업로드 사이즈 10M 이하,
-				System.out.println(uploadPath);
+
 				// 경로가 없을 경우 결로 생성
 				File f = new File(uploadPath);
 				if(!f.exists()) {
@@ -419,14 +390,7 @@ public class MemberController extends HttpServlet {
 				}
 				
 				uploadPath = contextPath +"/file/"+ sfileName;
-				
-		/*		// 생성된 경로를 JSON 형식으로 보내주기 위한 설정
-				JSONObject jobj = new JSONObject();
-				jobj.put("url", uploadPath);
-				
-				response.setContentType("application/json");
-				response.getWriter().print(jobj.toJSONString());*/
-				
+
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 				int user_seq = user.getSeq();
 				System.out.println("user_seq :"+user_seq);
@@ -437,11 +401,7 @@ public class MemberController extends HttpServlet {
 				user = mdao.newMemberInfo(user_seq, part);
 				request.setAttribute("file_name",file_name);
 				request.setAttribute("user_seq", user_seq);
-				
-				System.out.println("file_name :"+user.getPhoto_system_file_name());
-				System.out.println("fileUpload결과 : "+result);
-				System.out.println(uploadPath);
-			
+
 				request.setAttribute("uploadPath", uploadPath);
 		
 				
