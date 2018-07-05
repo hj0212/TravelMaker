@@ -66,13 +66,15 @@ public class ReviewDAO {
 		
 		int result = pstmt.executeUpdate();
 		
-		sql = "UPDATE REVIEW_PHOTOS SET ARTICLE_NO = reviewboard_seq.currval WHERE SYSTEM_FILE_NAME = ?";
-		pstmt = conn.prepareStatement(sql);
-		for(int i = 0; i < array.length; i++) {
-			pstmt.setString(1, array[i]);
-			pstmt.addBatch();
+		if(array.length > 0) {
+			sql = "UPDATE REVIEW_PHOTOS SET ARTICLE_NO = reviewboard_seq.currval WHERE SYSTEM_FILE_NAME = ?";
+			pstmt = conn.prepareStatement(sql);
+			for(int i = 0; i < array.length; i++) {
+				pstmt.setString(1, array[i]);
+				pstmt.addBatch();
+			}
+			pstmt.executeBatch();
 		}
-		pstmt.executeBatch();
 		
 		conn.commit();
 		pstmt.close();
