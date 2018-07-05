@@ -80,6 +80,36 @@ public class ReviewDAO {
 		
 		return result;
 	}
+	
+	public int updateReview(String title, String contents, int writer, String[] array, int seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "update reviewboard_c set review_title = ?, review_contents = ? where review_writer = ? and review_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, title);
+		StringReader sr = new StringReader(contents);
+		pstmt.setCharacterStream(2, sr, contents.length());
+		pstmt.setInt(3, writer);
+		pstmt.setInt(4, seq);
+		
+		int result = pstmt.executeUpdate();
+		
+		if(array.length > 0) {
+			sql = "UPDATE REVIEW_PHOTOS SET ARTICLE_NO = ? WHERE SYSTEM_FILE_NAME = ?";
+			pstmt = conn.prepareStatement(sql);
+			for(int i = 0; i < array.length; i++) {
+				pstmt.setInt(1, seq);
+				pstmt.setString(2, array[i]);
+				pstmt.addBatch();
+			}
+			pstmt.executeBatch();
+		}
+		
+		conn.commit();
+		pstmt.close();
+		conn.close();
+		
+		return result;
+	}
 
 	//-----------------------네비에 정한 개수만큼 기록 가져오기
 	public ArrayList<ReviewDTO> getSomeReview(int startNum, int endNum, String searchTerm) throws Exception {
@@ -187,10 +217,8 @@ public class ReviewDAO {
 		for(int i = startNavi; i <= endNavi; i++) {
 			if(currentPage == i) {
 				sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
-				System.out.println("1번임");
 			}else {
 				sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
-				System.out.println("2번임");
 			}
 		}
 
@@ -468,7 +496,6 @@ public class ReviewDAO {
 		con.commit();
 		pstat.close();
 		con.close();
-		System.out.println(result);
 		return result;
 	}
 	

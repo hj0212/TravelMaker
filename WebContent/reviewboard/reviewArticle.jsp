@@ -45,12 +45,15 @@
    padding: 0px;
 }
 .contents {
+   padding : 10px;
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
    min-height: 100px;
    word-wrap: break-word;
 }
+
+
 /* 편법임... */
 .contents p {
    margin: 0 0 0.0001pt;
@@ -284,6 +287,10 @@ $(document).ready(function(){
      <c:if test="${sessionScope.user.seq eq dto.review_writer}">
      	$("#delete").click(function() {
      		location.href = "deleteReviewCheck.bo?reviewnum=${review_seq}";
+     	})
+     	
+     	$("#update").click(function() {
+     		location.href = "modifyReviewArticlePage.bo?reviewnum=${review_seq}";
      	})
      </c:if>
    </script>

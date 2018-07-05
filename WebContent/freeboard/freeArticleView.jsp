@@ -51,7 +51,7 @@
 }
 
 .contents {
-   padding-top : 10px;
+   padding : 10px;
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
@@ -261,9 +261,9 @@ $(document).ready(function(){
 				});
 
 				$("#writeComment").click(function() {
-					var pattern = /\s/g;
+					var tmp = $("#comment").val().replace(/\s|　/gi, '');
 					
-					if($("#comment").val() == "" || $("#comment").val().match(pattern)) {
+					if(tmp == '') {
 						alert("댓글을 입력해주세요!")
 						return false;
 					}
@@ -274,13 +274,13 @@ $(document).ready(function(){
 				})
 
 				<c:if test="${article.free_writer == sessionScope.user.seq}">
-				$("#delete").click(function() {
-					location.href = "deleteFreeCheck.bo?articlenum=${article.free_seq}";
-				})
-
-				$("#update").click(function() {
-					location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
-				})
+					$("#delete").click(function() {
+						location.href = "deleteFreeCheck.bo?articlenum=${article.free_seq}";
+					})
+	
+					$("#update").click(function() {
+						location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
+					})
 				</c:if>
 			</script>
 </body>
