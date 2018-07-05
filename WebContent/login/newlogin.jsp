@@ -97,7 +97,7 @@
 			  var userid = $("#userid").val();
 			  var password = $("#password").val();
 			  if($(".btn-login").text()=="Log in") {
-				  $("#userform").attr('action','login.do').submit();
+				  $("#userform").attr('action','../login.do').submit();
 			  }else if(userid==""){
 				  alert("ID를 입력해주세요");
 			  }else if(password==""){
@@ -191,7 +191,7 @@ $("#user_idchek").keyup(function(){
 </script>
 
 
-<script type="text/javascript" src="source/js/login.js"></script>
+<script type="text/javascript" src="../source/js/login.js"></script>
 
 
 </head>
@@ -200,7 +200,7 @@ $("#user_idchek").keyup(function(){
 	<div id="container">
 		<div class="row">
 			<h1 id="title" class="center col s12">
-				<a href="main.jsp">TRAVEL MAKER</a>
+				<a href="../main.jsp">TRAVEL MAKER</a>
 			</h1>
 		</div>
 		<div class="row">
@@ -307,7 +307,7 @@ $("#user_idchek").keyup(function(){
 							<div class="row_margin forgot-password-row">
 								<div id="naver_id_login"></div>
 								<script type="text/javascript">
-								  	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://59.10.249.73/TravelMaker/loginProc.html");
+								  	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://59.10.249.73/TravelMaker/login/loginProc.html");
 								  	var state = naver_id_login.getUniqState();
 								  	naver_id_login.setButton("green", 3, 48);
 								  	naver_id_login.setDomain("http://59.10.249.73/");
@@ -317,7 +317,7 @@ $("#user_idchek").keyup(function(){
 							</div>
 							<div class="row forgot-password-row">
 								<span class="blue-text text-lighten-1 waves-effect"> <a
-									href="findPw.jsp" style="margin-right: 0px">Forgot
+									href="../findPw.jsp" style="margin-right: 0px">Forgot
 										Password?</a></span>
 							</div>
 						</div>

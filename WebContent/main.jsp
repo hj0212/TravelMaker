@@ -19,12 +19,10 @@
 
 <link rel="stylesheet" type="text/css" href="source/lib/slick/slick.css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css"
-	href="source/lib/slick/slick-theme.css" /> 
-	<script src="include/slider/responsiveslides.min.js"></script>	
+  <link rel="stylesheet" type="text/css" href="source/lib/slick/slick-theme.css" /> 
+<script src="include/slider/responsiveslides.min.js"></script>	
 	
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <style>
 div {
 	box-sizing: border-box;

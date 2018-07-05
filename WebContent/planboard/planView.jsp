@@ -23,10 +23,10 @@
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-<script src="source/js/jquery.roadmap.min.js"></script>
-<link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
-<script src="source/js/createplan.js"></script>
-<link rel="stylesheet" href="source/css/createplan.css" />
+<script src="../source/js/jquery.roadmap.min.js"></script>
+<link rel="stylesheet" href="../source/css/jquery.roadmap.min.css">
+<script src="../source/js/createplan.js"></script>
+<link rel="stylesheet" href="../source/css/createplan.css" />
 <%@ page session="true"%>
 <meta charset="utf-8">
 
@@ -419,8 +419,7 @@
 									<c:if test="${pc.comment_writer eq sessionScope.user.seq}">
 										<button type="button" class="close" aria-label="Close"
 											id="deleteComment">
-											<a
-												href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
+											<a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
 												<span aria-hidden="true">&times;</span>
 											</a>
 										</button>
