@@ -178,7 +178,7 @@ div {
 
 
 	</div>
-	<%@include file="footer1.jsp"%>
+	<%@include file="../footer1.jsp"%>
 
 	<script>
 		$("#searchbtn").click(function() {
