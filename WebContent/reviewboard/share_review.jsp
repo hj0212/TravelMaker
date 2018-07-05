@@ -17,71 +17,85 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
 <style>
-.container {
-	padding-top: 140px;
-}
-
-div {
-	box-sizing: border-box;
-}
-
-#cardArea .card .card-img-top {
-	height: 250px;
-	padding: 0px;
-}
-
-.card-body .card-title, .card-text {
-	text-align: center;
-}
-
-.card-body {
-	text-align: right;
-	padding: 0px;
-}
-
-#search_area[type="button"] {
-	align: right;
-}
+	.container {
+		padding-top: 140px;
+	}
+	
+	div {
+		box-sizing: border-box;
+	}
+	
+	.card-body .card-title, .card-text {
+		text-align: center;
+	}
+	
+	.card-footer {
+		margin-top: 10px;
+		padding-right: 0px;
+	}
+	
+	.card-body {
+		text-align: right;
+		padding: 5px;
+	}
+	
+	.card-img-top {
+		height:250px;
+		width: 100%;
+		object-fit:cover;
+	}
+	
+	.card-title {
+		height: 24px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	
+	.card {
+		margin-top: 15px;
+	}
 </style>
 </head>
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq == null}">
-		<%@include file="../include/mainNavi.jsp"%>
+			<%@include file="../include/mainNavi.jsp"%>
 		</c:when>
 		<c:otherwise>
-		<%@include file="../include/mainNavi_login.jsp" %>
-		
+			<%@include file="../include/mainNavi_login.jsp"%>
+
 		</c:otherwise>
 	</c:choose>
 
-	
+
 	<div class="container">
 		<h1 class="divLine">계획, 그리고</h1>
 		<hr />
 
-		<div class="row mx-0" id="cardArea">
+		<div class="row" id="cardArea">
 			<c:choose>
 				<c:when test="${reviewList[0]!= null}">
 					<c:forEach var="item" items="${reviewList}">
-						<div class="card col-md-3 ">
-							<img class="card-img-top" src="${pageContext.request.contextPath}/files/${item.review_thumbnail}" alt="Card image cap">
-							<div class="card-body">
-								<h5 class="card-title">${item.review_title}</h5>
-								<p class="card-text">${item.review_writerN}</p>
-								<a href="reviewArticle.bo?review_seq=${item.review_seq}"
-									class="btn btn-primary">Read</a>
-								<div class="card-footer bg-transparent">
-									<small class="text-muted">"${item.review_writedate}"</small>
+						<div class="col-md-3 ">
+							<div class="card">
+								<img class="card-img-top" src="${pageContext.request.contextPath}/files/${item.review_thumbnail}" alt="Card image cap">
+								<div class="card-body">
+									<h5 class="card-title">${item.review_title}</h5>
+									<p class="card-text">${item.review_writerN}</p>
+									<a href="reviewArticle.bo?review_seq=${item.review_seq}" class="btn btn-primary">Read</a>
+									<div class="card-footer bg-transparent"><small class="text-muted">"${item.review_writedate}"</small></div>
 								</div>
 							</div>
 						</div>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
-					
-						<div class="text-center mt-4 mb-4"><h4>검색 결과가 존재하지 않습니다.</h4></div>
-					
+
+					<div class="text-center mt-4 mb-4">
+						<h4>검색 결과가 존재하지 않습니다.</h4>
+					</div>
+
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -108,8 +122,8 @@ div {
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">${pageNavi}</ul>
 			</nav>
-		</div>		
-		
+		</div>
+
 	</div>
 
 	<script>

@@ -22,7 +22,7 @@ import dao.ReviewDAO;
 import dao.ReviewPhotoDAO;
 import dto.FreeCommentDTO;
 import dto.FreeboardDTO;
-//import dto.GoodAllDTO;
+import dto.GoodAllDTO;
 import dto.MemberDTO;
 import dto.PlanDTO;
 import dto.ReviewCommentDTO;
@@ -186,7 +186,6 @@ public class FrontController extends HttpServlet {
 	            request.setAttribute("reviewList", reviewList);
 	            
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
-	            System.out.println("pageNavi :"+pageNavi);
 	            request.setAttribute("pageNavi", pageNavi);
 	            request.setAttribute("currentPage", currentPage);
 	            
