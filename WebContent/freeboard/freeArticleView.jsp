@@ -51,7 +51,7 @@
 }
 
 .contents {
-   padding-top : 10px;
+   padding : 10px;
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
@@ -93,9 +93,6 @@
 
 tr {
    border-bottom: 3px dotted #e9e9e9;
-}
-#goList {
-	float: right;
 }
 
 #reportbtn {
@@ -192,8 +189,8 @@ $(document).ready(function(){
             	<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
             	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
             </c:if>
-            <button type="button" class="btn btn-outline-secondary" id="goList">목록</button>
             <button type="button" class="btn btn-outline-danger">신고</button>
+            <button type="button" class="btn btn-outline-secondary" id="goList">목록</button>
          </div>
       </div>
       <div class="comments">
@@ -261,7 +258,9 @@ $(document).ready(function(){
 				});
 
 				$("#writeComment").click(function() {
-					if($("#comment").val() == "") {
+					var tmp = $("#comment").val().replace(/\s|　/gi, '');
+					
+					if(tmp == '') {
 						alert("댓글을 입력해주세요!")
 						return false;
 					}
@@ -272,13 +271,13 @@ $(document).ready(function(){
 				})
 
 				<c:if test="${article.free_writer == sessionScope.user.seq}">
-				$("#delete").click(function() {
-					location.href = "deleteFreeCheck.bo?articlenum=${article.free_seq}";
-				})
-
-				$("#update").click(function() {
-					location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
-				})
+					$("#delete").click(function() {
+						location.href = "deleteFreeCheck.bo?articlenum=${article.free_seq}";
+					})
+	
+					$("#update").click(function() {
+						location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
+					})
 				</c:if>
 			</script>
 </body>
