@@ -101,6 +101,9 @@ tr {
 #reportbtn {
 	float: left;
 }
+#writeComment{
+cursor: pointer;
+}
 </style>
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -207,7 +210,7 @@ $(document).ready(function(){
 	            </div>
 	            <div
 	               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-	               <button style="width: 100%; height: 86px;background-color: white" id="writeComment"  class=""btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
+	               <button style="width: 100%; height: 86px;background-color: white" id="writeComment"  ><i class="fa fa-comments"></i>댓글 작성</button>
 	            </div>
 	         </div>
 		 </form>

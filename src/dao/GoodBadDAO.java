@@ -312,6 +312,7 @@ public class GoodBadDAO {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			List<PlanDTO> result = new ArrayList<>();
+			int count=1;
 			while(rs.next()) {
 				PlanDTO pdto = new PlanDTO();
 				pdto.setPlan_title(rs.getString("plan_title"));
@@ -319,6 +320,7 @@ public class GoodBadDAO {
 				pdto.setPlan_good(rs.getInt("plan_good"));
 				pdto.setPlan_seq(rs.getInt("plan_seq"));
 				pdto.setPlan_viewcount(rs.getInt("plan_viewcount"));
+				System.out.println(count++);
 				result.add(pdto);
 			}
 			con.close();

@@ -59,6 +59,9 @@ a {
 	font-size: 15pt;
 	font-family: menufont;
 }
+
+
+
 </style>
 
 	<ul class="rslides">
@@ -70,11 +73,11 @@ a {
 		<li><img src="source/img/TRAVEL/travel15.png" alt=""></li>
 		<li><img src="source/img/TRAVEL/travel16.png" alt=""></li>
 	</ul>
-
+	
 	<nav
 		class="navbar fixed-top navbar-expand-lg navbar-fixed-top navbar-light"
 		style="height: 100px;" id="naviId">
-
+		
 		<a class="navbar-brand" href="main.jsp" style="font-size: 30px">
 			<h1 class="logo">Logo</h1>
 		</a>
@@ -84,6 +87,8 @@ a {
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			
+			
 			<ul class="navbar-nav ml-auto ">
 				<li class="nav-item active"><a class="nav-link"
 					href="planboard.plan">Plans <span class="sr-only">(current)</span>
