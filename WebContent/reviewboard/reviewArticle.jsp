@@ -177,10 +177,10 @@ $(document).ready(function(){
             	<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
             	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
             </c:if>
-            <button type="button" class="btn btn-outline-secondary" id="reviewboard-bt">목록</button>
             <c:if test="${!(sessionScope.user.seq eq dto.review_writer)}">
 	            <button type="button" class="btn btn-outline-danger">신고</button>
             </c:if>
+            <button type="button" class="btn btn-outline-secondary" id="reviewboard-bt">목록</button>
          </div>
       </div>
       <div class="comments">
