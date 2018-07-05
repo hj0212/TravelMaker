@@ -31,7 +31,7 @@ div {
 }
 
 #bestPlan {
-	height: 400px;
+	height: 300px;
 }
 
 #bests {
@@ -62,6 +62,10 @@ div {
 .hls_sol .btn {
 	bottom: 10px;
 }
+#bestImage {
+	margin-bottom: 15px;
+}
+
 </style>
 
 </head>
@@ -76,7 +80,7 @@ div {
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	<div class="container"  style="margin-top:-140px;">
+	<div class="container"  style="margin-top:-90px;">
 
 		<h1 class="divLine">BEST PLAN</h1>
 		<hr />
@@ -144,6 +148,7 @@ div {
 	<script src='source/lib/slick/slick.js'></script>
 	<script>
 		$('.data').slick({
+			centerMode: true,
 			dots : true,
 			infinite : true,
 			slidesToShow : 3,
@@ -151,7 +156,7 @@ div {
 			variableWidth : true,
 			autoplay : true,
 			speed : 500,
-			autoplaySpeed : 2000
+			autoplaySpeed : 1000
 		});
 	</script>
 	<c:choose>
