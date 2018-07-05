@@ -40,6 +40,7 @@ public class PlanController extends HttpServlet {
 			PlanDAO pdao = new PlanDAO();
 			MemberDAO mdao = new MemberDAO();
 			GoodBadDAO gbdao = new GoodBadDAO();
+			
 
 			boolean isForward = true;
 			String dst = null;
@@ -205,7 +206,8 @@ public class PlanController extends HttpServlet {
 				isForward = false;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/selectSchedule.plan")) {
-
+				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+				
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
 				String create = request.getParameter("create");
@@ -224,9 +226,14 @@ public class PlanController extends HttpServlet {
 				}
 				String plan_title = pdao.getPlantitle(plan);
 				request.setAttribute("plan_title", plan_title);
-
-				isForward = true;
-				dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
+				if(dto == null) {
+					isForward=false;
+					dst="login.bo";
+				}else {					
+					isForward = true;
+					dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
+				}
+				
 			} else if(command.equals("/deleteSchedule.plan")) {
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
@@ -247,7 +254,7 @@ public class PlanController extends HttpServlet {
 				String plan_startdate = request.getParameter("plan_startdate");
 				String plan_enddate = request.getParameter("plan_enddate");
 				String plan_title = request.getParameter("plan_title");
-				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0);
+				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0,"");
 				int plan_seq = pdao.startPlanInsertData(pdto);
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				if(plan_seq>0) {
@@ -259,31 +266,10 @@ public class PlanController extends HttpServlet {
 				isForward=true;
 
 				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";
-			} else if(command.equals("/toMyPlan.plan")) {
-				int plan_writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
-				String plan_startdate = request.getParameter("plan_startdate");
-				String plan_enddate = request.getParameter("plan_enddate");
-				String plan_title = request.getParameter("plan_title");
-				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0);
-				int plan_seq = pdao.startPlanInsertData(pdto);
-				int plan_period = pdao.getPlanperiod(plan_seq);
-				System.out.println("planseq: " + plan_seq);
-				List<ScheduleDTO> list = pdao.selectAllSchedule(plan_seq);
-				int result = pdao.insertAllSchedule(list);
-				if(result>0) {
-					System.out.println("플랜복사완료");
-				}else {
-					System.out.println("플랜복사실패");
-				}
-				request.setAttribute("plan_period", plan_period);
-				isForward=true;
-
-				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=f";
 			}
-
 			//----------------------------------planList 가져오기
 			else if(command.equals("/planboard.plan")) {
-
+				MemberDTO dto = ((MemberDTO)request.getSession().getAttribute("user"));
 				int currentPage = 0;
 				String currentPageString = request.getParameter("currentPage");
 				if(currentPageString == null) {
@@ -296,6 +282,7 @@ public class PlanController extends HttpServlet {
 				list = pdao.getSomePlan(currentPage*12-11, currentPage*12, searchTerm);
 				request.setAttribute("planList", list);
 				request.setAttribute("currentPage", currentPage);
+				request.setAttribute("user", dto);
 				//------------------------------------------------------
 
 				String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
@@ -306,6 +293,8 @@ public class PlanController extends HttpServlet {
 			}else if(command.equals("/planArticle.plan")) {
 				int currentPage = 0;
 				String currentPageString = request.getParameter("currentPage");
+				MemberDTO dto = ((MemberDTO)request.getSession().getAttribute("user"));
+				
 				if(currentPageString == null || currentPageString == "") {
 					currentPage = 1;
 				} else {
@@ -331,21 +320,30 @@ public class PlanController extends HttpServlet {
 
 				List<ScheduleDTO> list = new ArrayList<>();
 				List<BudgetDTO> blist = new ArrayList<>();
+				List<Integer> daytotalBudget = new ArrayList<>();
+				int totalBudget = 0;
 				for(int i = 0; i < plan_period; i++) {
 					list = pdao.selectSchedule(plan_seq, i+1, list);
 					blist = pdao.selectBudget(plan_seq, i+1, blist);
-					int totalBudget = pdao.getTotalBudget(plan_seq, i+1);
-
+					int daybudget = pdao.getTotalBudget(plan_seq, i+1);
+					daytotalBudget.add(daybudget);
+					totalBudget += daybudget;
 					request.setAttribute("scheduleList", list);
 					request.setAttribute("budgetList", blist);
+					request.setAttribute("daytotalBudget", daytotalBudget);
 					request.setAttribute("totalBudget", totalBudget);
 				}
-
+				System.out.println(totalBudget);
 				String plan_title = pdao.getPlantitle(plan_seq);
 				request.setAttribute("plan_title", plan_title);
-
+				
+				if(dto == null) {
+					isForward=false;
+					dst="login.bo";
+				}else {
 				isForward=true;
 				dst="planView.jsp?plan_seq="+plan_seq+"&currentPage="+currentPage;
+				}
 
 			}else if(command.equals("/insertPlanComment.plan")) {
 				String comment_text = request.getParameter("comment_text");
@@ -380,13 +378,25 @@ public class PlanController extends HttpServlet {
 
 				isForward = false;
 				dst = "planboard.plan";
+			}else if(command.equals("/savePlan.plan")) {
+				int plan_seq = Integer.parseInt(request.getParameter("plan"));
+				int result = pdao.savePlan(plan_seq);
+				if(result > 0) {
+					System.out.println("등록성공");
+				} else {
+					System.out.println("등록실패");
+				}
+
+				isForward = false;
+				dst = "planboard.plan";
 			}
+
 
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
 			} else {
-				response.sendRedirect("error.jsp");
+				response.sendRedirect(dst);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
