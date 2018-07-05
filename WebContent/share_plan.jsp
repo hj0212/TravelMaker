@@ -47,8 +47,14 @@ div {
 	text-align: justify;
 	padding: 0px;
 }
-#search_area[type="button"] {
-	align: right;
+#search_area{
+	margin:0 auto;
+	text-align: center;
+		
+}
+
+#user-plan{
+	float:right;
 }
 .item {
 	display: inline-block;
@@ -70,13 +76,22 @@ div {
 </style>
 </head>
 <body>
+	<c:choose>
+	<c:when test="${user==null}">
+	<script>
+		$(document).ready(function(){
+			$("#user-plan").prop('hidden',true);
+		});
+	</script>
+	</c:when>
+	</c:choose>
 	<!-- 네비  -->
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/otherNavi.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
+			<%@include file="include/otherNavi_login.jsp"%>
 		</c:otherwise>
 	</c:choose>
 	<div class="container" id="contId">
@@ -125,9 +140,9 @@ div {
 
 		<!-- 검색/ 글쓰기 버튼  -->
 		<div class="row col-md-12">
-			<div class="input-group mt-2 col-md-12" id="search_area">
+			<div class="input-group " id="search_area">
 				<input type="text"
-					class="form-control ml-auto col-4 justify-content-center"
+					class=" form-control ml-auto col-4 justify-content-center"
 					placeholder="제목 검색" aria-label="reply"
 					aria-describedby="basic-addon2" id="search">
 				<div class="input-group-append">
@@ -135,7 +150,7 @@ div {
 						id="searchbtn" name="searchbtn">검색</button>
 				</div>
 				<button type="button" class="btn btn-primary ml-auto"
-					data-toggle="modal" data-target="#exampleModalCenter">나의
+					data-toggle="modal" data-target="#exampleModalCenter" id="user-plan">나의
 					여행 계획 세우기</button>
 			</div>
 		</div>

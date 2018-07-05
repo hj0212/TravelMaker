@@ -2,10 +2,9 @@
 	pageEncoding="UTF-8"%> --%>
 
 <header>
-	<style>
+<style>
 .logo {
-	background: transparent url('source/img/travellogo2.png') center center
-		no-repeat;
+	background: transparent url('source/img/travellogo2.png') center center no-repeat;
 	width: 195px;
 	background-size: contain;
 	text-indent: 100%;

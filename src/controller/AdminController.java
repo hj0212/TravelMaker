@@ -68,7 +68,7 @@ public class AdminController extends HttpServlet {
 				dst = "admin/admin_free.jsp";
 			}
 			
-			//---------------------------admin_free >정렬 바꾸기
+			//---------------------------admin_free >정렬 바꾸기..할지말지 고민중.
 			else if(command.equals("/admin_free_count.ad")) {
 				List<ReportFreeDTO> flist = new ArrayList<>();
 				flist = adao.getAllReport_f();
