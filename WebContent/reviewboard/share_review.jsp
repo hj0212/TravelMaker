@@ -74,7 +74,7 @@
 			<c:choose>
 				<c:when test="${reviewList[0]!= null}">
 					<c:forEach var="item" items="${reviewList}">
-						<div class="col-md-3 ">
+						<div class="col-md-4">
 							<div class="card">
 								<img class="card-img-top" src="${pageContext.request.contextPath}/files/${item.review_thumbnail}" alt="Card image cap">
 								<div class="card-body">
@@ -100,7 +100,7 @@
 					<div class="input-group col-md-4 offset-md-4">
 						<input type="text" class="form-control" placeholder="제목 검색" id="search">
 						<div class="input-group-append">
-							<button class="btn" id="searchbtn"><i class="fas fa-search"></i></button>
+							<button class="btn btn-outline-secondary" id="searchbtn">검색</button>
 						</div>
 					</div>
 					<div class="col-md-4 text-right">
