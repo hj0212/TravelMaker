@@ -3,7 +3,7 @@
 
 <header>
 <style>
-	.logo {
+.logo {
 	background: transparent url('source/img/travellogo2.png') center center no-repeat;
 	width: 195px;
 	background-size: contain;

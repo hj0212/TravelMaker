@@ -285,6 +285,10 @@ $(document).ready(function(){
      	$("#delete").click(function() {
      		location.href = "deleteReviewCheck.bo?reviewnum=${review_seq}";
      	})
+     	
+     	$("#update").click(function() {
+     		location.href = "modifyReviewArticlePage.bo?reviewnum=${review_seq}";
+     	})
      </c:if>
    </script>
 </body>

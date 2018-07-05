@@ -60,5 +60,5 @@
 	});
 	
 	$("#list").click(function() {
-		location.href="freeboard.bo";
+		location.href="reviewboard.bo";
 	})
