@@ -40,7 +40,7 @@ public class PlanController extends HttpServlet {
 			PlanDAO pdao = new PlanDAO();
 			MemberDAO mdao = new MemberDAO();
 			GoodBadDAO gbdao = new GoodBadDAO();
-			
+
 
 			boolean isForward = true;
 			String dst = null;
@@ -207,7 +207,7 @@ public class PlanController extends HttpServlet {
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/selectSchedule.plan")) {
 				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-				
+
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
 				String create = request.getParameter("create");
@@ -233,9 +233,9 @@ public class PlanController extends HttpServlet {
 					dst="login.bo";
 				}else {					
 					isForward = true;
-					dst="plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
+					dst="planboard/plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
 				}
-				
+
 			} else if(command.equals("/deleteSchedule.plan")) {
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
@@ -267,13 +267,9 @@ public class PlanController extends HttpServlet {
 				}
 				request.setAttribute("plan_period", plan_period);
 				request.setAttribute("plan_state", false);
-				if(dto == null) {
-					isForward=false;
-					dst="login.bo";
-				}else {					
-					isForward=true;
-					dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";
-				}
+				
+				isForward=true;
+				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";
 			}
 			//----------------------------------planList 가져오기
 			else if(command.equals("/planboard.plan")) {
@@ -295,12 +291,12 @@ public class PlanController extends HttpServlet {
 				request.setAttribute("pageNavi", pageNavi);
 
 				isForward = true;
-				dst="share_plan.jsp";
+				dst="planboard/share_plan.jsp";
 			}else if(command.equals("/planArticle.plan")) {
 				int currentPage = 0;
 				String currentPageString = request.getParameter("currentPage");
 				MemberDTO dto = ((MemberDTO)request.getSession().getAttribute("user"));
-				
+
 				if(currentPageString == null || currentPageString == "") {
 					currentPage = 1;
 				} else {
@@ -342,13 +338,13 @@ public class PlanController extends HttpServlet {
 				System.out.println(totalBudget);
 				String plan_title = pdao.getPlantitle(plan_seq);
 				request.setAttribute("plan_title", plan_title);
-				
+
 				if(dto == null) {
 					isForward=false;
 					dst="login.bo";
 				}else {
-				isForward=true;
-				dst="planView.jsp?plan_seq="+plan_seq+"&currentPage="+currentPage;
+					isForward=true;
+					dst="planboard/planView.jsp?plan_seq="+plan_seq+"&currentPage="+currentPage;
 				}
 
 			}else if(command.equals("/insertPlanComment.plan")) {
@@ -361,7 +357,7 @@ public class PlanController extends HttpServlet {
 				request.setAttribute("plan_seq", plan_seq);
 
 				isForward= true;
-				dst="planCommentView.jsp";
+				dst="planboard/planCommentView.jsp";
 			}else if(command.equals("/deletePlanComment.plan")) {
 				int plan_seq = Integer.parseInt(request.getParameter("plan_seq"));
 				int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));

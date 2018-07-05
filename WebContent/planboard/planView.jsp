@@ -221,7 +221,7 @@
 			</script>
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/otherNavi.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
 

@@ -88,10 +88,10 @@ div {
 	<!-- 네비  -->
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/otherNavi.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/otherNavi_login.jsp"%>
+			<%@include file="../include/otherNavi_login.jsp"%>
 		</c:otherwise>
 	</c:choose>
 	<div class="container" id="contId">
@@ -193,7 +193,7 @@ div {
 
 
 	</div>
-	<%@include file="footer1.jsp"%>
+	<%@include file="../footer1.jsp"%>
 
 	<script>
 		$("#searchbtn").click(function() {
@@ -203,7 +203,7 @@ div {
 </body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/multiChat.jsp"%>
+			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
 	</c:choose>
 </html>
