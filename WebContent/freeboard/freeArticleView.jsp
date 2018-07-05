@@ -94,7 +94,13 @@
 tr {
    border-bottom: 3px dotted #e9e9e9;
 }
+#goList {
+	float: right;
+}
 
+#reportbtn {
+	float: left;
+}
 </style>
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -173,22 +179,21 @@ $(document).ready(function(){
          </div>
       </div>
       <div class="row function">
-          <div class="col-sm-4 offset-sm-4 text-center vote">
+         <div class="col-sm-4 offset-sm-4 text-center vote">
             <button type="button" class="btn btn-outline-danger" id="goodbtn">
                <i class="fas fa-heart"></i>${good}
             </button>
             <button type="button" class="btn btn-outline-primary" id="badbtn">
                <i class="far fa-frown"></i>${bad}
             </button>
-         </div> 
-         <div class="col-sm-4 offset-sm-8 text-right move">
-            <button type="button" class="btn btn-outline-secondary" id="goList">목록</button>
-            <!-- <button type="button" class="btn btn-outline-secondary">스크랩</button>
-            <button type="button" class="btn btn-outline-danger">신고</button> -->
+         </div>
+         <div class="col-sm-4 text-right move">
             <c:if test="${article.free_writer == sessionScope.user.seq}">
             	<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
             	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
             </c:if>
+            <button type="button" class="btn btn-outline-secondary" id="goList">목록</button>
+            <button type="button" class="btn btn-outline-danger">신고</button>
          </div>
       </div>
       <div class="comments">
