@@ -398,7 +398,7 @@ public class MemberDAO {
 
 	public int updateHomeMemberInfo(String id, String pw, String email, String nickname) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "update users set password=?, nickname=?, email=? where userid=?";
+		String sql = "update users set password=?, nickname=?, email=?, modify_date= to_char(sysdate,'YYYY/MM/DD') where userid=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setString(1, pw);
 		pstmt.setString(2, nickname);
@@ -407,6 +407,34 @@ public class MemberDAO {
 		int result = pstmt.executeUpdate();
 		con.commit();
 		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	public int updateNKMemberInfo(String id, String nickname, String email, int seq, String part) throws Exception{
+		Connection con = DBConnection.getConnection();
+		PreparedStatement pstat = null;
+		int result =0;
+		if(part.equals("naver")) {
+			String sql = "update users set naver_id=?, naver_nickname=?, naver_email=?, modify_date= to_char(sysdate,'YYYY/MM/DD') where seq=?";
+			pstat = con.prepareStatement(sql);
+			pstat.setString(1, id);
+			pstat.setString(2, nickname);
+			pstat.setString(3, email);
+			pstat.setInt(4, seq);
+			result = pstat.executeUpdate();
+		}else if (part.equals("kakao")) {
+			String sql = "update users set kakao_id=?, kakao_nickname=?, kakao_email=?, modify_date= to_char(sysdate,'YYYY/MM/DD') where seq=?";			
+			pstat = con.prepareStatement(sql);
+			pstat.setString(1, id);
+			pstat.setString(2, nickname);
+			pstat.setString(3, email);
+			pstat.setInt(4, seq);
+			result = pstat.executeUpdate();
+
+		}
+		con.commit();
+		pstat.close();
 		con.close();
 		return result;
 	}
