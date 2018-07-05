@@ -67,7 +67,7 @@ public class MemberController extends HttpServlet {
 					request.getSession().setAttribute("nickname", nickname);
 					if(user.getBlock().equals("y")) {
 						isForward = true;
-						dst="errorBlock.jsp";
+						dst="login/errorBlock.jsp";
 					}
 					else if(user.getBlock().equals("n") || user.getBlock().equals("x")){
 						isForward = true;
@@ -75,7 +75,7 @@ public class MemberController extends HttpServlet {
 					}
 				} else {
 					isForward = false;
-					dst="newlogin.jsp";
+					dst="login/newlogin.jsp";
 				}
 
 			} else if(command.equals("/join.do")) {
@@ -88,7 +88,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("proc", "join");
 				request.setAttribute("joinResult", result);	
 				isForward = true;
-				dst="newlogin.jsp";
+				dst="login/newlogin.jsp";
 
 			} else if(command.equals("/navlogin.do")) {				
 				String id = request.getParameter("id");
@@ -111,7 +111,7 @@ public class MemberController extends HttpServlet {
 
 				if(user.getBlock().equals("y")) {
 					isForward = true;
-					dst="errorBlock.jsp";
+					dst="login/errorBlock.jsp";
 				}else {
 					isForward = false;
 					dst="main.bo";
@@ -137,7 +137,7 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("nickname", nickname);
 				if(user.getBlock().equals("y")) {
 					isForward = true;
-					dst="errorBlock.jsp";
+					dst="login/errorBlock.jsp";
 				}else {
 					isForward = true;
 					dst="main.jsp";
@@ -164,7 +164,7 @@ public class MemberController extends HttpServlet {
 				}
 
 				isForward = true;
-				dst="admin.jsp";
+				dst="admin/admin.jsp";
 			}else if(command.equals("/mypage.do")) {
 				try {
 				String part = (String)request.getSession().getAttribute("part");
