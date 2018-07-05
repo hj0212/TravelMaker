@@ -158,18 +158,18 @@ public class ReviewDAO {
 		String sql;
 		PreparedStatement pstat;
 
-
 		if(searchTerm == null || searchTerm.equals("")) {
-			sql = "select count(*) totalCount from reviewboard";
+			sql = "select count(*) totalCount from reviewboard_c";
 			pstat = con.prepareStatement(sql);
 		} else {
-			sql = "select count(*) totalCount from reviewboard where review_title like ?";
+			sql = "select count(*) totalCount from reviewboard_c where review_title like ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, "%"+searchTerm+"%");
 		}
 
 		ResultSet rs= pstat.executeQuery();
-		if(rs.next());
+		rs.next();
+		
 		int recordTotalCount = rs.getInt("totalCount"); 
 		//System.out.println(recordTotalCount);
 		int recordCountPerPage = 12;  
@@ -217,8 +217,10 @@ public class ReviewDAO {
 		for(int i = startNavi; i <= endNavi; i++) {
 			if(currentPage == i) {
 				sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
-			} else {
+				System.out.println("1번임");
+			}else {
 				sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
+				System.out.println("2번임");
 			}
 		}
 
@@ -367,7 +369,7 @@ public class ReviewDAO {
 		String sql;
 		PreparedStatement pstat = null;
 
-		if(searchTerm == null || searchTerm.equals("null")) {
+		if(searchTerm == null || searchTerm.equals("")) {
 			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard where review_writer=?) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1,seq);
@@ -402,21 +404,21 @@ public class ReviewDAO {
 		return myReviewResult;
 	}
 
-	public String getMyReviewPageNavi(int seq, int currentPage, String searchTerm) throws Exception {
+	public String getMyReviewPageNavi( int seq,int currentPage, String searchTerm) throws Exception {
 		Connection con = DBConnection.getConnection();		
 		String sql;
 		PreparedStatement pstat;
 		ResultSet rs;
 
 		if(searchTerm == null || searchTerm.equals("")) {
-			sql = "select count(*) totalCount from reviewboard where review_writer=?";
+			sql = "select count(*) totalCount from reviewboard where review_writer=?";		
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, seq);
 		} else {
 			sql = "select count(*) totalCount from reviewboard where review_writer=? and review_title || review_contents like ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, seq);
-			pstat.setString(2, "%"+searchTerm+"%");
+			pstat.setString(1, "%"+searchTerm+"%");
 		
 		}
 

@@ -771,8 +771,10 @@ public class PlanDAO {
 		for(int i = startNavi; i <= endNavi; i++) {
 			if(currentPage == i) {
 				sb.append("<li class='page-item'><a class='page-link' href='planboard.plan?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
+				System.out.println("1번임");
 			} else {
 				sb.append("<li class='page-item'><a class='page-link' href='planboard.plan?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
+				System.out.println("2번임");
 			}
 		}
 
