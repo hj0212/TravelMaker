@@ -216,10 +216,9 @@ public class MemberController extends HttpServlet {
 
 				/*planList*/
 				
-				int seq = Integer.parseInt(request.getParameter("plan_seq"));
-				String plan_check = request.getParameter("plan_check");
-				List<PlanDTO>list = new ArrayList<>();
-				list = pdao.getMyTmpPlan(seq, plan_check);
+				int seq = user.getSeq();
+				List<PlanDTO> list = new ArrayList<>();
+				list = pdao.getMyTmpPlan(seq);
 				request.setAttribute("planList", list);
 				
 				isForward = true;
@@ -440,18 +439,6 @@ public class MemberController extends HttpServlet {
 				isForward = true;
 				dst = "admin/admin.jsp";
 			}
-			
-			
-
-
-
-				
-				
-				
-				
-				
-				
-				
 			
 
 			if(isForward) {

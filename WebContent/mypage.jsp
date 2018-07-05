@@ -309,7 +309,7 @@ text-align:center;
 			<c:forEach var="item" items="${planList}">
 				<div class="item col-md-3 mb-3">
 					<div class="card text-center">
-		<a href="planArticle.plan?currentPage=${currentPage}&plan_seq=${item.plan_seq}" style="text-decoration:none;">
+		<a href="selectSchedule.plan?plan=${item.plan_seq}&day=1&create=f" style="text-decoration:none;">
 						<div class="card-header planTitle" style="line-height:35px;height:55px; overflow:hidden;">${item.plan_title}</div>
 		</a>
 						<div class="card-body mt-1 text-center">
