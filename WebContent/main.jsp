@@ -148,6 +148,7 @@ div {
 	<script src='source/lib/slick/slick.js'></script>
 	<script>
 		$('.data').slick({
+			centerMode: true,
 			dots : true,
 			infinite : true,
 			slidesToShow : 3,
