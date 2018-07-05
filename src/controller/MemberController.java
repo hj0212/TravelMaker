@@ -349,7 +349,7 @@ public class MemberController extends HttpServlet {
 			}else if(command.equals("/toEditInfoNK.do")) {
 				
 				isForward=true;
-			dst="toEditInfoNK.jsp";
+				dst="toEditInfoNK.jsp";
 				//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
 			}else if(command.equals("/checkEmail.do")){
 				String id=request.getParameter("id");
