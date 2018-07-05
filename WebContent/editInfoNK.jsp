@@ -143,7 +143,7 @@ $(document).ready(function(){
       <div class="row mt-5">
         <div class="table-responsive-sm col-md-12">
         
-        <form action="modiHomeMemInfo.do" method="post" id="editInfoForm">
+        <form action="modiNKMemInfo.do" method="post" id="editInfoForm">
           <table class="table table-hover">
             <thead>
               <tr>
@@ -159,16 +159,6 @@ $(document).ready(function(){
                 <td><input type="text" value= "${id}" readonly></td>
                 <td>수정불가</td>
               </tr>
-               <tr>
-                <td scop="row">비밀번호</td>
-                <td><input type="password" value= "${pw}" id="password"></td>
-                <td id="password-label"></td>
-              </tr>
-              <tr>
-                <td scop="row">비밀번호 재확인</td>
-                <td><input type="password" value="${pw}" name="pw" id="confirm-password"></td>
-                <td id="confirm-label"></td>
-              </tr>
               <tr>
                 <td scop="row">닉네임</td>
                 <td><input type="text" value= "${nickname}" name="nickname" id="nickname" placeholder="특수문자제외한 2글자이상"></td>
@@ -180,9 +170,7 @@ $(document).ready(function(){
                 <td id="email-label"></td>
               </tr>
               <tr>
-               
                 <td colspan="3" style="text-align:right"><button id="edit" type="button" class="btn btn-outline-primary btn-lg">수정</button></td>
-                
               </tr>
               </tbody>
               

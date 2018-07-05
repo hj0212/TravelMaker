@@ -11,10 +11,11 @@ public class PlanDTO {
 	private int plan_bad;
 	private int plan_viewcount;
 	private int plan_reportcount;
+	private String plan_check;
 
 	public PlanDTO() {	}
 	public PlanDTO(int plan_seq, int plan_writer, String plan_writerN, String plan_startdate, String plan_enddate,
-			String plan_title, int plan_good, int plan_bad, int plan_viewcount, int plan_reportcount) {
+			String plan_title, int plan_good, int plan_bad, int plan_viewcount, int plan_reportcount, String plan_check) {
 		super();
 		this.plan_seq = plan_seq;
 		this.plan_writer = plan_writer;
@@ -26,6 +27,7 @@ public class PlanDTO {
 		this.plan_bad = plan_bad;
 		this.plan_viewcount = plan_viewcount;
 		this.plan_reportcount = plan_reportcount;
+		this.plan_check = plan_check;
 	}
 
 
@@ -95,6 +97,13 @@ public class PlanDTO {
 	public void setPlan_reportcount(int plan_reportcount) {
 		this.plan_reportcount = plan_reportcount;
 	}
+	public String getPlan_check() {
+		return plan_check;
+	}
+	public void setPlan_check(String plan_check) {
+		this.plan_check = plan_check;
+	}
 
+	
 
 }
