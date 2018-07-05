@@ -66,6 +66,38 @@ div {
 	margin-bottom: 15px;
 }
 
+.container-fulid {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.rounded-circle.go {
+	width: 120px;
+	height: 120px;
+}
+
+.rounded-circle.go:hover {
+	opacity: 0.8;
+}
+
+.travelgo {
+	display: flex;
+	align-items: center;
+	justify-content: center;		
+}
+.travelgo:hover {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0.8;			
+}
+
+
+.travelch {
+	font-size:30pt;
+	color:black;
+}
+
 </style>
 
 </head>
@@ -80,7 +112,41 @@ div {
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	<div class="container"  style="margin-top:-90px;">
+	
+	<div class="mainintro" style="margon-top: -100px;">
+		<!--  background-color: rgb(241,243,245); -->
+		<p style="text-align: center; font-size: 20pt; font-weight: 100;">TRAVELMAKER로
+			상상속 여행을 현실로 만들어보세요!</p>
+	</div>
+	
+	<div class="container">
+	
+	<!-- 메인  트래블메이커 안내 div 시작-->
+		<div class="container-fluid text-center"
+			style="height: 300px; background-color: rgb(241, 243, 245); padding: 40px; margin-top: -140px;">
+
+			<div class="row">
+				<div class="col-md-4  col-sm-4">
+					<i class="fas fa-map fa-7x" style="color: gray"></i>
+					<h3>최적 루트</h3>
+					다양한 여행기로<br> 일정,교통편 최적화
+				</div>
+				<div class="col-md-4  col-sm-4">
+					<i class="far fa-calendar-alt fa-7x" style="color: gray"></i>
+					<h3>여행기 관리</h3>
+					나만의 여행기로<br>그날, 그날 여행 기록
+				</div>
+				<div class="col-md-4  col-sm-4">
+					<i class="far fa-comments fa-7x" style="color: gray"></i>
+					<h3>유저 채팅</h3>
+					실시간 채팅으로<br> 계획에 대한 빠른 피드백
+				</div>
+			</div>
+
+
+		</div>
+		<!-- 메인  트래블메이커 안내 div 종료-->
+	
 
 		<h1 class="divLine">BEST PLAN</h1>
 		<hr />
@@ -135,6 +201,103 @@ div {
 			</c:forEach>
 		</div>
 		<!--bestImage 영역 끝 -->
+		
+			<!--  트레블메이커 추천 여행 시작 -->
+		<h1 class="divLine">TRAVELMAKER에서 보장하는 재밌는 여행!</h1>
+		<hr>
+		<div class="container-fluid text-center"
+			style="height: 230px; margin: auto;">
+			<div class="row">
+				<hr style="color: gray">
+
+				<div class="col">
+					<a href="#"><img src="source/img/TRAVEL/wonju.jpg"
+						class="rounded-circle go" alt="원주 뮤지엄산" title="원주 뮤지엄산"></a><br>
+					<b>원주 뮤지엄산</b><br>
+					<p style="font-size: 10pt">
+						세계적인 건축가 <br> 안도 타다오가 설계한 전원형 뮤지엄 여행
+					</p>
+				</div>
+				<div class="col">
+					<a href="#"><img src="source/img/TRAVEL/iksan.jpg"
+						class="rounded-circle go" alt="미륵사지석탑" title="익산 미륵사지석탑"></a><br>
+					<b>익산 미륵사지석탑</b><br>
+					<p style="font-size: 10pt">복원을 끝낸 익산 미륵사지 석탑여행</p>
+				</div>
+				<div class="col">
+					<a href="#"><img src="source/img/TRAVEL/damyang.jpg"
+						class="rounded-circle go" alt="기차여행" title="남도 명소 .별미"></a><br>
+					<b>남도 명소 .별미</b><br>
+					<p style="font-size: 10pt">1박2일 KTX/SRT 기차여행</p>
+				</div>
+				<div class="col">
+					<div class="col">
+						<a href="#"><img src="source/img/TRAVEL/haesu.jpg"
+							class="rounded-circle go" alt="해수욕장" title="전국 유명 해수욕장"></a><br>
+						<b>전국 유명 해수욕장</b><br>
+						<p style="font-size: 10pt">왕복 셔틀 버스로 교통비 절약 해수욕장 당일 여행!</p>
+					</div>
+				</div>
+				<div class="col">
+					<div class="col">
+						<a href="#"><img src="source/img/TRAVEL/bosung.jpg"
+							class="rounded-circle go" alt="보성 녹차" title="보성 녹차"></a> <br>
+						<b>보성 녹차</b><br>
+						<p style="font-size: 10pt">바베큐코스가 포함된 녹차 투어 패키지</p>
+					</div>
+				</div>
+				<div class="col">
+					<div class="col">
+						<a href="#"><img src="source/img/TRAVEL/jeonju.jpg"
+							class="rounded-circle go" alt="맛있는 전주" title="맛있는 전주"></a><br>
+						<b>맛있는 전주</b><br>
+						<p style="font-size: 10pt">
+							먹으러가자!<br> 유명 맛집투어 패키지!
+						</p>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+		<!--  트레블메이커 추천 여행 종료 -->
+
+
+		<h1 class="divLine">TRAVELMAKER에서 추천하는 여행!</h1>
+		<hr>
+		<div class="container-fluid">
+			<a href="#" style="text-decoration:none;">
+			<div class="travelgo"
+				style="width: 100%; height: 300px; background-image: url(source/img/TRAVEL/travel13.png);">
+				<h5 class="travelch">이레빌딩
+					투어!</h5>
+			</div></a>
+			<br>
+			<a href="#" style="text-decoration:none;">
+			<div class="travelgo"
+				style="width: 100%; height: 300px; background-image: url(source/img/TRAVEL/travel13.png);">
+				<h5 class="travelch">이레빌딩
+					투어!</h5>
+			</div></a>
+			<br>
+			<a href="#" style="text-decoration:none;">
+			<div class="travelgo"
+				style="width: 100%; height: 300px; background-image: url(source/img/TRAVEL/travel13.png);">
+				<h5 class="travelch">이레빌딩
+					투어!</h5>
+			</div></a>
+
+			<hr style="color: gray">
+			<p style="color: gray; text-align: center; font-size: 20pt;">지금
+				당신의 TRAVELMAKER를 시작해보세요!!</p>
+			<hr style="color: gray">
+		</div>
+	</div>
+
+	<div style="height: 100px; background-color: orange">
+		<p style="font-size: 50pt;">테스트입니다</p>
+		
+		
 	</div>
 	<div id="footer">
 		<%@include file="footer1.jsp"%>
