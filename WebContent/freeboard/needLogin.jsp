@@ -52,7 +52,7 @@
 		});
 		
 		$("#goList").click(function(){
-			location.href = "freeboard.bo";
+			window.history.back();
 		});
 	</script>
 </body>
