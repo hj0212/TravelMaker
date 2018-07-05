@@ -51,7 +51,7 @@
 }
 
 .contents {
-   padding-top : 10px;
+   padding : 10px;
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
@@ -158,7 +158,7 @@ $(document).ready(function(){
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.loginId !=null}">
-			<%@include file="../include/mainNavi_login.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:when>
 		<c:otherwise>
 			<%@include file="../include/mainNavi.jsp"%>
