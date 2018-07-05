@@ -5,17 +5,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <head>
 <title>일정 확인</title>
 
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js"
-	type="text/javascript"></script>
-<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
-	rel="stylesheet" type="text/css" />
+<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>       
@@ -31,7 +36,6 @@
 * {
 	padding: 0;
 	margin: 0;
-	text-align: center;
 }
 
 .container {
@@ -41,7 +45,7 @@
 
 .wrapper {
 	margin: 13px 0 10px;
-	height: 400px;
+	height: 100%;;
 }
 
 .col-md-12, .col-lg-6 {
@@ -51,11 +55,21 @@
 
 .left_half {
 	padding-right: 5px;
-	height: 100%;
+	padding-left: 5px;
+	height: 400px;
+	float: left;
+}
+
+#timeline {
+	margin: 0;
+	width: 100%;
 }
 
 .right_half {
 	padding-left: 5px;
+	padding-right: 5px;
+	float:right;
+	height: 400px;
 }
 .event__date, .event__content{
 	height: 30px;
@@ -93,7 +107,6 @@
 #planinfoarea {
 	text-align: left;
 	height: 36px;
-	line-height: 36px;
 }
 
 #planinfoarea p {
@@ -121,8 +134,12 @@
 	border-top: 1px solid black;
 }
 
-.select {
+#schedule-table .select {
 	background-color: #eee;
+}
+
+#timeline li .select {
+	font-weight: bold;
 }
 </style>
 
@@ -349,7 +366,8 @@ $(document).ready(function(){
 									<c:if test="${pc.comment_writer eq sessionScope.user.seq}">
 										<button type="button" class="close" aria-label="Close"
 											id="deleteComment">
-											<a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
+											<a
+												href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
 												<span aria-hidden="true">&times;</span>
 											</a>
 										</button>
@@ -364,14 +382,9 @@ $(document).ready(function(){
 		</div>
 	</div>
 	<script>
-	$("#schedule-table").on('click','.clickable-row',function(event) {
-		$(this).addClass('select').siblings().removeClass('select');
-		
-		
-	});
-	
 	$(".schedule ul li:first").addClass('active');
 	$("div[id='Day1']").addClass('active');
+	
    /*댓글관련 버튼들*/
    /*댓글 작성*/
    $('#commentbtn').click(function() {
@@ -402,15 +415,40 @@ $(document).ready(function(){
 	
 	$("#remobtn").click(function() {
 		if(confirm("여행 계획을 삭제하시겠습니까?")) {
-			location.href = "removePlan.plan?plan_seq=${plan_seq}";
+			location.href = "removePlan.plan?plan=${plan_seq}";
 		}
 	})
 	
 	$("#listbtn").click(function() {	
 			location.href = "planboard.plan?currentPage=${currentPage}";
 	});
+	
+	$("#schedule-table").on('click','.clickable-row',function(event) {
+		$(this).addClass('select').siblings().removeClass('select');
+		var index = $(event.currentTarget).closest("tr").index();
+		map.panTo(new naver.maps.Point(markerlocation[index].location_x,markerlocation[index].location_y));
+	});
+	
+	$("#timeline").on('click','.event',function(event) {
+		$(this).addClass('select').parent().siblings().children('.event').removeClass('select');
+		var index = $(event.currentTarget).closest("li").index();
+		map.panTo(new naver.maps.Point(markerlocation[index].location_x,markerlocation[index].location_y));
+	});
+	
 	plan_seq = $("input[id='plan_seq']").val();
-	markerlocation = []
+	markerlocation = [];
+	
+	map = new naver.maps.Map('map', {
+	    center: new naver.maps.Point(37.3595704, 127.105399),
+	    zoom: 5,
+	    mapTypeId: 'normal',
+	    mapTypes: new naver.maps.MapTypeRegistry({
+	        'normal': naver.maps.NaverMapTypeOption.getNormalMap({
+	            projection: naver.maps.TM128Coord
+	        }),
+	    })
+	});
+	
 	$.ajax({
 		url:"planviewlist.Ajax",
 		type:"post",
@@ -435,7 +473,7 @@ $(document).ready(function(){
 		    var jsonArray = obj.jLocationList;
 		    timelineArray = obj.jTimeLine;
 
-		    for (var i = 0; i < jsonArray.length; i++) {
+		    for (var i = jsonArray.length-1; i >=0 ; i--) {
 		        let markerObj = {
 		            location_name: jsonArray[i].location_name,
 		            location_x: jsonArray[i].location_x,
@@ -455,7 +493,7 @@ $(document).ready(function(){
 		makeMarkerArray();
 
 		// 네이버 지도 생성
-		var map = new naver.maps.Map('map', {
+		map = new naver.maps.Map('map', {
 		    center: new naver.maps.Point(markerlocation[0].location_x, markerlocation[0].location_y),
 		    zoom: 9,
 		    mapTypeId: 'normal',
@@ -537,7 +575,7 @@ $(document).ready(function(){
 		    return function (e) {
 		        var marker = markers[seq],
 		            infoWindow = infoWindows[seq];
-
+				
 		        if (infoWindow.getMap()) {
 		            infoWindow.close();
 		        } else {
@@ -552,13 +590,7 @@ $(document).ready(function(){
 		}
 		
 		
-	});
-	
-	/* $.getJSON("planviewlist.Ajax", function(data) {
-		// 마커에 입력할 배열과 타임라인 정보를 입력할 배열
-		
-	}) */
-	
+	});	
  
    </script>
 </body>

@@ -11,7 +11,8 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 	type="text/css">
-<link rel="stylesheet" href="source/css/mypage.css" type="text/css">
+<!--  <link rel="stylesheet" href="source/css/mypage.css" type="text/css"> 헤더 푸터 에러남 -->
+
 
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -76,9 +77,7 @@ ul {li { display:inline;
 	white;
 }
 
-}
-}
-}
+
 .clearfix:after {
 	content: "";
 	display: table;

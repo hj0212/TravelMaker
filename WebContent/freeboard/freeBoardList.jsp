@@ -36,7 +36,7 @@ div {
 }
 
 .container {
-	weight:970px;
+	weight: 970px;
 }
 
 #navi {
@@ -69,6 +69,11 @@ div {
 
 #writebtn {
 	float: right;
+}
+
+a {
+	color: #6d6d6d;
+	text-decoration: none;
 }
 </style>
 <script>

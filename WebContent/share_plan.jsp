@@ -23,6 +23,7 @@
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <style>
+
 body {
 	margin: 0;
 }
@@ -141,7 +142,7 @@ div {
 
 		<!-- plan 리스트  -->
 		<h1 class="divLine">Plan</h1>
-		<hr />
+		<hr/>
 
 		<div class="row mt-2 mx-0">
 			<c:forEach var="item" items="${planList}">
