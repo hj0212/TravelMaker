@@ -22,7 +22,7 @@ import dao.ReviewDAO;
 import dao.ReviewPhotoDAO;
 import dto.FreeCommentDTO;
 import dto.FreeboardDTO;
-//import dto.GoodAllDTO;
+import dto.GoodAllDTO;
 import dto.MemberDTO;
 import dto.PlanDTO;
 import dto.ReviewCommentDTO;
@@ -186,7 +186,6 @@ public class FrontController extends HttpServlet {
 	            request.setAttribute("reviewList", reviewList);
 	            
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
-	            System.out.println("pageNavi :"+pageNavi);
 	            request.setAttribute("pageNavi", pageNavi);
 	            request.setAttribute("currentPage", currentPage);
 	            
@@ -199,10 +198,11 @@ public class FrontController extends HttpServlet {
 		             rdao.reViewCount(review_seq);
 		             
 		             ReviewDTO result1 = rdao.getReviewArticle(review_seq);
+		             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");		             
 		             request.setAttribute("dto", result1);
 		             request.setAttribute("review_seq", review_seq);
-	
-		             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+		       
+		             
 			         int bad = gbdao.reviewBadSelectData(review_seq);
 			         int good =gbdao.reviewGoodSelectData(review_seq);
 			         request.setAttribute("good", good);
@@ -211,8 +211,15 @@ public class FrontController extends HttpServlet {
 		             List<ReviewCommentDTO> result2 = rdao.getReviewComment(review_seq);	             
 		             request.setAttribute("commentResult", result2);
 		             
-		             isForward = true;            
-		             dst="reviewboard/reviewArticle.jsp";
+		             if(dto == null) {
+		            	 isForward=false;
+		            	 dst="login.bo";
+		             }else {
+		            	  isForward = true;            
+				          dst="reviewboard/reviewArticle.jsp";
+		             }
+		             
+		          
 	        	 }catch(NumberFormatException e) {
 	        		 isForward = false;
 	        		 dst = "numberError.bo";

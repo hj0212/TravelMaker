@@ -217,10 +217,8 @@ public class ReviewDAO {
 		for(int i = startNavi; i <= endNavi; i++) {
 			if(currentPage == i) {
 				sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
-				System.out.println("1번임");
 			}else {
 				sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
-				System.out.println("2번임");
 			}
 		}
 
@@ -498,7 +496,6 @@ public class ReviewDAO {
 		con.commit();
 		pstat.close();
 		con.close();
-		System.out.println(result);
 		return result;
 	}
 	
