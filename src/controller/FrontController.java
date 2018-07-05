@@ -171,19 +171,22 @@ public class FrontController extends HttpServlet {
 			} else if(command.equals("/reviewboard.bo")) {
 	            int currentPage = 0;
 	            String currentPageString = request.getParameter("currentPage");
-	            
-	            if(currentPageString == null) {
+	           
+	            if(currentPageString == null || currentPageString =="") {
 	               currentPage = 1;
 	            } else {
 	               currentPage = Integer.parseInt(currentPageString);
 	            }
+	           
+	            
 	            
 	            String searchTerm = request.getParameter("search");
 	            List<ReviewDTO> reviewList = new ArrayList<>();
-	            reviewList = rdao.getSomeReview(currentPage*10-9, currentPage*10, searchTerm);
+	            reviewList = rdao.getSomeReview(currentPage*12-11, currentPage*12, searchTerm);
 	            request.setAttribute("reviewList", reviewList);
 	            
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
+	            System.out.println("pageNavi :"+pageNavi);
 	            request.setAttribute("pageNavi", pageNavi);
 	            request.setAttribute("currentPage", currentPage);
 	            

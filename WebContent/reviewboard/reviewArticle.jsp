@@ -92,7 +92,7 @@ $(document).ready(function(){
 
 	$("#goodbtn").click(function(){
 
-	var article =$("#review_seq").text();
+	var article ="${review_seq}";
 	
 	console.log(goodbtn);
 
@@ -110,7 +110,7 @@ $(document).ready(function(){
 		});
 	});
 	$("#badbtn").click(function(){	
-	var article =$("#review_seq").text();	
+	var article ="${review_seq}";	
 
 	$.ajax({
 		  type:'POST',

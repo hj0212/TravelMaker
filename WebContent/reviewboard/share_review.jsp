@@ -45,7 +45,17 @@ div {
 </style>
 </head>
 <body>
-	<%@include file="../include/mainNavi.jsp"%>
+	<c:choose>
+		<c:when test="${sessionScope.user.seq == null}">
+		<%@include file="../include/mainNavi.jsp"%>
+		</c:when>
+		<c:otherwise>
+		<%@include file="../include/mainNavi_login.jsp" %>
+		
+		</c:otherwise>
+	</c:choose>
+
+	
 	<div class="container">
 		<h1 class="divLine">계획, 그리고</h1>
 		<hr />
