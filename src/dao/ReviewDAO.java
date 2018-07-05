@@ -65,19 +65,21 @@ public class ReviewDAO {
 		pstmt.setInt(3, writer);
 		
 		int result = pstmt.executeUpdate();
+		pstmt.close();
 		
 		if(array.length > 0) {
 			sql = "UPDATE REVIEW_PHOTOS SET ARTICLE_NO = reviewboard_seq.currval WHERE SYSTEM_FILE_NAME = ?";
-			pstmt = conn.prepareStatement(sql);
+			PreparedStatement pstmt2 = conn.prepareStatement(sql);
 			for(int i = 0; i < array.length; i++) {
-				pstmt.setString(1, array[i]);
-				pstmt.addBatch();
+				pstmt2.setString(1, array[i]);
+				pstmt2.addBatch();
+				pstmt2.clearParameters();
 			}
-			pstmt.executeBatch();
+			pstmt2.executeBatch();
+			pstmt2.close();
 		}
 		
 		conn.commit();
-		pstmt.close();
 		conn.close();
 		
 		return result;
@@ -94,20 +96,22 @@ public class ReviewDAO {
 		pstmt.setInt(4, seq);
 		
 		int result = pstmt.executeUpdate();
+		pstmt.close();
 		
 		if(array.length > 0) {
 			sql = "UPDATE REVIEW_PHOTOS SET ARTICLE_NO = ? WHERE SYSTEM_FILE_NAME = ?";
-			pstmt = conn.prepareStatement(sql);
+			PreparedStatement pstmt2 = conn.prepareStatement(sql);
 			for(int i = 0; i < array.length; i++) {
-				pstmt.setInt(1, seq);
-				pstmt.setString(2, array[i]);
-				pstmt.addBatch();
+				pstmt2.setInt(1, seq);
+				pstmt2.setString(2, array[i]);
+				pstmt2.addBatch();
+				pstmt2.clearParameters();
 			}
-			pstmt.executeBatch();
+			pstmt2.executeBatch();
+			pstmt2.close();
 		}
 		
 		conn.commit();
-		pstmt.close();
 		conn.close();
 		
 		return result;

@@ -291,7 +291,11 @@ $(document).ready(function(){
     		  data : {value : ${review_seq}},
     		  
     		  success: function(response) {
-    			  console.log(response);
+    			  if(response == 1){
+    				  alert("신고는 한 번만 가능합니다.");
+    			  }else{
+    				  alert("신고가 접수되었습니다.");
+    			  }
     		  },
     	  })
       })

@@ -16,6 +16,7 @@ import com.google.gson.JsonObject;
 
 import dao.MemberDAO;
 import dao.PlanDAO;
+import dao.ReviewReportDAO;
 import dto.LocationDTO;
 import dto.MemberDTO;
 import dto.ScheduleDTO;
@@ -25,7 +26,8 @@ import dto.ScheduleDTO;
  */
 @WebServlet("*.Ajax")
 public class AjaxController extends HttpServlet {
-
+	ReviewReportDAO rrdao = new ReviewReportDAO();
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String requestURI= request.getRequestURI();
@@ -77,11 +79,20 @@ public class AjaxController extends HttpServlet {
 				pw.close();
 				return;
 			} else if(command.equals("/reviewReport.Ajax")) {
-				System.out.println(request.getParameter("value"));
-				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-				System.out.println(dto.getSeq());
-				
-				response.getWriter().print("통신성공!!");
+				try {
+					int seq = Integer.parseInt(request.getParameter("value"));
+					MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+//					System.out.println(dto.getSeq());
+					
+					if(dto == null) {
+						response.sendRedirect("reviewArticle.bo?review_seq="+seq);
+					}else {
+						int result = rrdao.reviewReport(dto.getSeq(), seq);
+						response.getWriter().print(result);
+					}
+				}catch(Exception e) {
+					response.sendRedirect("reviewboard.bo");
+				}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
