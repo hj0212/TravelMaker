@@ -302,7 +302,31 @@ text-align:center;
      
      <!--임시저장-->
      <div>
-     
+     <h1 class="divLine">작성중인Plan</h1>
+		<hr/>
+
+		<div class="row mt-2 mx-0">
+			<c:forEach var="item" items="${planList}">
+				<div class="item col-md-3 mb-3">
+					<div class="card text-center">
+		<a href="planArticle.plan?currentPage=${currentPage}&plan_seq=${item.plan_seq}" style="text-decoration:none;">
+						<div class="card-header planTitle" style="line-height:35px;height:55px; overflow:hidden;">${item.plan_title}</div>
+		</a>
+						<div class="card-body mt-1 text-center">
+							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
+							<div class="btn-list d-inline">
+
+								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
+									class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
+							</div>
+							<hr>
+							<p class="text-center">여기다 뭐넣을까여</p>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+
+		</div>
      
      
      

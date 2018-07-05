@@ -248,7 +248,7 @@ public class PlanController extends HttpServlet {
 				String plan_startdate = request.getParameter("plan_startdate");
 				String plan_enddate = request.getParameter("plan_enddate");
 				String plan_title = request.getParameter("plan_title");
-				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0);
+				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0,"");
 				int plan_seq = pdao.startPlanInsertData(pdto);
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				if(plan_seq>0) {
@@ -265,7 +265,7 @@ public class PlanController extends HttpServlet {
 				String plan_startdate = request.getParameter("plan_startdate");
 				String plan_enddate = request.getParameter("plan_enddate");
 				String plan_title = request.getParameter("plan_title");
-				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0);
+				PlanDTO pdto = new PlanDTO(0,plan_writer,"",plan_startdate,plan_enddate,plan_title,0,0,0,0,"");
 				int plan_seq = pdao.startPlanInsertData(pdto);
 				int plan_period = pdao.getPlanperiod(plan_seq);
 				System.out.println("planseq: " + plan_seq);
