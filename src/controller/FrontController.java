@@ -27,6 +27,7 @@ import dto.MemberDTO;
 import dto.PlanDTO;
 import dto.ReviewCommentDTO;
 import dto.ReviewDTO;
+import dto.ReviewPhotoMainDTO;
 
 /**
  * Servlet implementation class FrontController
@@ -187,7 +188,7 @@ public class FrontController extends HttpServlet {
 	            request.setAttribute("reviewList", reviewList);
 	            
 	            String pageNavi = rdao.getPageNavi(currentPage, searchTerm);
-	            System.out.println("pageNavi :"+pageNavi);
+	          /*  System.out.println("pageNavi :"+pageNavi);*/
 	            request.setAttribute("pageNavi", pageNavi);
 	            request.setAttribute("currentPage", currentPage);
 	            
@@ -396,8 +397,14 @@ public class FrontController extends HttpServlet {
 	        		  }
 	        	  }
 	        	  dst = "reviewboard.bo";
+	            	  
+ //---------------------------------------------------메인화면
+	          
 	          }else if(command.equals("/main.bo")) {
 	        	List<PlanDTO> main = gbdao.bestPlanData();
+	        	List <ReviewPhotoMainDTO> photoList = new ArrayList<>();
+	        	photoList = rdao.getNewReview();
+	        	request.setAttribute("photoList", photoList);
 	        	
 	        	if(request.getSession().getAttribute("user") != null) {
 	        		//파일경로인데 권혜진씨 부탁드립니다

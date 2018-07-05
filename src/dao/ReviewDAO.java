@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBUtils.DBConnection;
-import dto.MemberDTO;
 import dto.ReviewCommentDTO;
 import dto.ReviewDTO;
+import dto.ReviewPhotoMainDTO;
 
 public class ReviewDAO {
 	private MemberDAO mdao = new MemberDAO();
@@ -121,6 +121,34 @@ public class ReviewDAO {
 		rs.close();	
 		return reviewResult;
 	}
+	
+	public List<ReviewPhotoMainDTO> getNewReview() throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from (select rownum, rp.review_photo_seq, rp.article_no, rp.original_file_name, rp.system_file_name, r.review_title, r.review_writer, r.review_writedate from review_photos rp, reviewboard_c r where rp.article_no = r.review_seq)where rownum between 1 and 4 order by review_photo_seq desc";
+		PreparedStatement pstmt = con.prepareStatement(sql);		
+		ResultSet rs = pstmt.executeQuery();
+		List<ReviewPhotoMainDTO> result = new ArrayList<>();
+
+		while(rs.next()) {		
+			String nick = mdao.getUserNickname(rs.getInt(7));
+			ReviewPhotoMainDTO tmp = new ReviewPhotoMainDTO();
+			tmp.setRownum(rs.getInt(1));
+			tmp.setReview_photo_seq(rs.getInt(2));
+			tmp.setArticle_no(rs.getInt(3));
+			tmp.setOriginal_file_name(rs.getString(4));
+			tmp.setSystem_file_name(rs.getString(5));
+			tmp.setReview_title(rs.getString(6));
+			tmp.setReview_writer(nick);
+			tmp.setReview_writedate(rs.getString(8));
+			result.add(tmp);
+		}
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	
 
 	//-------------------페이지 네비	
 	public String getPageNavi(int currentPage, String searchTerm) throws Exception {
