@@ -79,7 +79,7 @@ public class AdminDAO {
 	
 	public List<MemberDTO> getAllMembers() throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select seq, userid,email,nickname,naver_nickname,naver_email,kakao_nickname,kakao_email,to_char(create_date,'YY/MM/DD')create_date,part,block from users order by seq desc";
+		String sql = "select seq, userid,email,nickname,naver_nickname,naver_email,kakao_nickname,kakao_email,to_char(create_date,'YY/MM/DD')create_date,part,block from users where seq!=33333 order by seq desc";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		List<MemberDTO> result = new ArrayList<>();
