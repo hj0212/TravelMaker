@@ -14,10 +14,10 @@ if(${result}>0){
 	 
 	 /* location.href="homeMemInfo.do"; */
 }else{
-	alert("비밀번호가 일치하지 않습니다 \n\t 관리자에게 문의해주세요");
-	opener.location.href="mypage.do";
-	 close(); 
-/* location.href="mypage.do"; */
+	alert("비밀번호가 일치하지 않습니다 \n\t다시입력해주세요");
+	/* opener.location.href="mypage.do";
+	 close(); */ 
+ location.href="toPwCheck.do";
 }
 </script>
 </body>

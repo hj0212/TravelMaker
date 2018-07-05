@@ -573,7 +573,7 @@ background-color:#eee;
 				function() {
 					/* location.href="toPwCheck.do"; */
 					window.open("toPwCheck.do", "_blank",
-							"width=500, height=300, scrollbars=no");
+							"width=500, height=300, scrollbars=no, left=500, top=300");
 				})
 
 				$("#editInfoNK").click(

@@ -206,6 +206,10 @@ $(document).ready(function(){
             <tbody>
 
                <c:forEach var="comment" items="${commentResult}">
+               <c:if test = "${comment.comment_seq eq null }"><tr>
+               <td class='writer' style="width:100%">입력된 댓글이 없습니다</td></tr>
+               </c:if>
+               <c:if test = "${comment.comment_seq ne null }">
                   <tr>
                      <th scope="row"
                         style="width: 15%; max-width: 15%; max-height: 51px;"
@@ -223,12 +227,13 @@ $(document).ready(function(){
                      
                      </td>
                   </tr>
+                  </c:if>
                </c:forEach>
             </tbody>
          </table>
       </div>
    </div>
-   </div>
+  
  
    <script>
 /*       $("#comment-write-bnt").click(
