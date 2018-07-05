@@ -45,12 +45,15 @@
    padding: 0px;
 }
 .contents {
+   padding : 10px;
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
    min-height: 100px;
    word-wrap: break-word;
 }
+
+
 /* 편법임... */
 .contents p {
    margin: 0 0 0.0001pt;
