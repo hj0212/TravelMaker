@@ -94,9 +94,6 @@
 tr {
    border-bottom: 3px dotted #e9e9e9;
 }
-#goList {
-	float: right;
-}
 
 #reportbtn {
 	float: left;
@@ -192,8 +189,8 @@ $(document).ready(function(){
             	<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
             	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
             </c:if>
-            <button type="button" class="btn btn-outline-secondary" id="goList">목록</button>
             <button type="button" class="btn btn-outline-danger">신고</button>
+            <button type="button" class="btn btn-outline-secondary" id="goList">목록</button>
          </div>
       </div>
       <div class="comments">
