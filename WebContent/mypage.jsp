@@ -218,6 +218,9 @@ text-align:center;
 	border: transparent;
 }
 
+.card-header{
+background-color:#eee;
+}
  </style>
  <script>
  $(document).ready(function(){
