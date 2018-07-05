@@ -151,10 +151,10 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/otherNavi_login.jsp"%>			
+			<%@include file="../include/otherNavi_login.jsp"%>			
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/otherNavi.jsp"%>			
+			<%@include file="../include/otherNavi.jsp"%>			
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
@@ -446,7 +446,7 @@
         </div>
     </div>
     <div class="footer" style="height: 300px;">
-    <%@include file="footer1.jsp"%>
+    <%@include file="../footer1.jsp"%>
     </div>
 <script>
 $(document).ready(function() {
