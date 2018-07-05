@@ -1067,4 +1067,33 @@ public class PlanDAO {
 		con.close();
 		return result;
 	}
+	
+	public List<PlanDTO> getMyTmpPlan (int seq) throws Exception{
+		Connection con = DBConnection.getConnection();
+		List<PlanDTO> result = new ArrayList<>();
+		String sql = "select * from plan where plan_writer = ? and plan_check= 'y'";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, seq);
+		ResultSet rs = pstat.executeQuery();
+
+		while(rs.next()) {
+				PlanDTO pdto = new PlanDTO();
+				pdto.setPlan_seq(rs.getInt("plan_seq"));
+				pdto.setPlan_writerN(mdao.getUserNickname(rs.getInt("plan_writer")));
+				pdto.setPlan_writer(rs.getInt("plan_writer"));
+				pdto.setPlan_title(rs.getString("plan_title"));
+				pdto.setPlan_good(rs.getInt("plan_good"));
+				pdto.setPlan_viewcount(rs.getInt("plan_viewcount"));
+				pdto.setPlan_startdate(rs.getString("plan_startdate"));
+				pdto.setPlan_enddate(rs.getString("plan_enddate"));
+				pdto.setPlan_check(rs.getString("plan_check"));
+				result.add(pdto);
+			}
+
+		
+		con.close();
+		pstat.close();
+		rs.close();
+		return result;
+	}
 }
