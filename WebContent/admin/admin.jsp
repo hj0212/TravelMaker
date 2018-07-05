@@ -73,9 +73,7 @@
 										<button class="btn btn-outline-secondary " type="button"
 											id="searchbtn" name="searchbtn">검색</button>
 									</span>
-
-								</div>
-								
+								</div>								
 							</div>
 
 							<table class="table col-md-12" id="members">
@@ -212,7 +210,6 @@
 																})
 
 													});
-
 								})
 
 				$("#searchbtn").click(
