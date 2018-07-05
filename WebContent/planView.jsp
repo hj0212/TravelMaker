@@ -46,6 +46,9 @@
 	height: 100%;;
 }
 
+.schedule {
+	margin-top: 10px;
+}
 .col-md-12, .col-lg-6 {
 	padding-right: 0;
 	padding-left: 0;
@@ -247,8 +250,8 @@
 				<button class="btn btn-outline-secondary" id="listbtn">목록</button>
 			</div>
 		</div>
-
-		<div class="wrapper row">
+		<c:if test="${!empty scheduleList }">
+		<div id="view" class="wrapper row">
 			<div class="left_half col-sm-12 col-lg-6">
 				<div id="timeline" style="border: 1px solid gray;"></div>
 			</div>
@@ -256,7 +259,7 @@
 				<div id="map" style="border: 1px solid gray;"></div>
 			</div>
 		</div>
-
+		</c:if>
 		<div class="schedule">
 			<ul class="nav nav-tabs" role="tablist">
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
@@ -434,12 +437,6 @@
 <script>
 	$(".schedule ul li:first").addClass('active');
 	$("div[id='Day1']").addClass('active');
-	
-	$(".schedule>ul>li").click(function() {
-		var rowCount = 
-		console.log(rowCount);
-	})
-	
    /*댓글관련 버튼들*/
    /*댓글 작성*/
    $('#commentbtn').click(function() {

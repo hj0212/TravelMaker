@@ -109,13 +109,13 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
 
-//				if(user.getBlock().equals("y")) {
-//					isForward = true;
-//					dst="errorBlock.jsp";
-//				}else {
+				if(user.getBlock().equals("y")) {
+					isForward = true;
+					dst="errorBlock.jsp";
+				}else {
 					isForward = false;
 					dst="main.bo";
-//				}	
+				}	
 
 			}else if(command.equals("/kakaologin.do")) {
 				String id = request.getParameter("id");
@@ -166,10 +166,10 @@ public class MemberController extends HttpServlet {
 				isForward = true;
 				dst="admin.jsp";
 			}else if(command.equals("/mypage.do")) {
+				try {
 				String part = (String)request.getSession().getAttribute("part");
-				String id = (String)request.getSession().getAttribute("loginId");			
+				String id = (String)request.getSession().getAttribute("loginId");	
 				MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
-				
 			
 				/*프로필부분 출력*/
 				MemberDTO mdto = mdao.newMemberInfo(user.getSeq(), part);
@@ -181,8 +181,9 @@ public class MemberController extends HttpServlet {
 
 				/*String file_name = ((MemberDTO)request.getSession().getAttribute("user")).getPhoto_system_file_name();*/
 				request.setAttribute("file_name", mdto.getPhoto_system_file_name());
-
+				System.out.println(request.getAttribute("uploadPath"));
 				request.setAttribute("uploadPath", request.getAttribute("uploadPath"));
+				
 				if(part.equals("home")) {
 					request.setAttribute("nickname", mdto.getNickname());
 					request.setAttribute("email", mdto.getEmail());
@@ -227,6 +228,10 @@ public class MemberController extends HttpServlet {
 				
 				isForward = true;
 				dst="mypage.jsp";
+				}catch(Exception e) {
+					isForward = false;
+					dst="login.bo";
+				}
 			}else if(command.equals("/logout.do")) {
 				request.getSession().invalidate();
 

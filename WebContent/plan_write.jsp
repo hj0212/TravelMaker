@@ -166,7 +166,9 @@
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
 				name="plantitle" value="${plan_title}" readonly>
+			<c:if test="${plan_state eq false}">
 			<button type="button" class="btn btn-outline-primary" id="savebtn">임시 저장</button>
+			</c:if>
 			<button type="button" class="btn btn-primary" id="endbtn">등록</button>
 		</div>
 		<!-- 여기 몇일 여행인지 받아서 개수만큼 돌리기 -->
