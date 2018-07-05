@@ -463,7 +463,7 @@ $(document).ready(function() {
 	budgetcount = 1;
 	$("#moneyaddbtn").click(function() {
 		budgetcount++;
-	 	$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'><input type='hidden' class='budget_seq'>"
+	 	$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'><input type='hidden' class='budget_seq' id='budget"+budgetcount+"'>"
 				+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+budgetcount+"'><i class='far fa-times-circle'></i></button></div></div>");
 	});
 	
