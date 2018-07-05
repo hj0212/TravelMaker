@@ -74,7 +74,7 @@
 			<c:choose>
 				<c:when test="${reviewList[0]!= null}">
 					<c:forEach var="item" items="${reviewList}">
-						<div class="col-md-3 ">
+						<div class="col-md-4">
 							<div class="card">
 								<img class="card-img-top" src="${pageContext.request.contextPath}/files/${item.review_thumbnail}" alt="Card image cap">
 								<div class="card-body">

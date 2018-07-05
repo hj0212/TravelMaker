@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import dao.FreeReportDAO;
 import dao.MemberDAO;
 import dao.PlanDAO;
 import dao.ReviewReportDAO;
@@ -27,6 +28,7 @@ import dto.ScheduleDTO;
 @WebServlet("*.Ajax")
 public class AjaxController extends HttpServlet {
 	ReviewReportDAO rrdao = new ReviewReportDAO();
+	FreeReportDAO frdao = new FreeReportDAO();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -82,7 +84,6 @@ public class AjaxController extends HttpServlet {
 				try {
 					int seq = Integer.parseInt(request.getParameter("value"));
 					MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-//					System.out.println(dto.getSeq());
 					
 					if(dto == null) {
 						response.sendRedirect("reviewArticle.bo?review_seq="+seq);
@@ -92,6 +93,20 @@ public class AjaxController extends HttpServlet {
 					}
 				}catch(Exception e) {
 					response.sendRedirect("reviewboard.bo");
+				}
+			} else if(command.equals("/freeReport.Ajax")) {
+				try {
+					int seq = Integer.parseInt(request.getParameter("value"));
+					MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+					
+					if(dto == null) {
+						response.sendRedirect("viewFreeArticle.bo?seq="+seq);
+					}else {
+						int result = frdao.freeReport(dto.getSeq(), seq);
+						response.getWriter().print(result);
+					}
+				}catch(Exception e) {
+					response.sendRedirect("freeboard.bo");
 				}
 			}
 		}catch(Exception e) {
