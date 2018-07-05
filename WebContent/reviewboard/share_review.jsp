@@ -52,6 +52,15 @@
 	.card {
 		margin-top: 15px;
 	}
+	
+	.card:hover {
+		opacity : 0.6;
+		cursor : pointer;
+	}
+	
+    .card a {
+        text-decoration: none;
+    }
 </style>
 </head>
 <body>
@@ -75,6 +84,7 @@
 				<c:when test="${reviewList[0]!= null}">
 					<c:forEach var="item" items="${reviewList}">
 						<div class="col-md-4">
+							<a href="reviewArticle.bo?review_seq=${item.review_seq}">
 							<div class="card">
 								<img class="card-img-top" src="${pageContext.request.contextPath}/files/${item.review_thumbnail}" alt="Card image cap">
 								<div class="card-body">
@@ -84,6 +94,7 @@
 									<div class="card-footer bg-transparent"><small class="text-muted">"${item.review_writedate}"</small></div>
 								</div>
 							</div>
+							</a>
 						</div>
 					</c:forEach>
 				</c:when>
