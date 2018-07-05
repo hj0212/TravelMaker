@@ -16,14 +16,18 @@
 	type="text/javascript"></script>
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
 	rel="stylesheet" type="text/css" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>       
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script src="source/js/jquery.roadmap.min.js"></script>
 <link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
 <script src="source/js/createplan.js"></script>
-<link rel="stylesheet" href="source/css/createplan.css"/>
+<link rel="stylesheet" href="source/css/createplan.css" />
 <%@ page session="true"%>
 <meta charset="utf-8">
 
@@ -64,12 +68,14 @@
 .right_half {
 	padding-left: 5px;
 	padding-right: 5px;
-	float:right;
+	float: right;
 	height: 400px;
 }
-.event__date, .event__content{
+
+.event__date, .event__content {
 	height: 30px;
 }
+
 .wrapper .right_half div {
 	height: 100%;
 }
@@ -123,9 +129,9 @@
 .mapsinfo {
 	position: absolute;
 	font-weight: bold;
-	background-color:white;
+	background-color: white;
 	line-height: 30px;
-	top:-50px;
+	top: -50px;
 	border-left: 1px solid black;
 	border-right: 1px solid black;
 	border-top: 1px solid black;
@@ -138,61 +144,87 @@
 #timeline li .select {
 	font-weight: bold;
 }
+
+#totalbudgetarea {
+	float:right;
+}
+
+#totalbudgetarea, #budgetarea {
+	width: 220px;
+}
+
+#budgetarea>input, #totalbudgetarea>input {
+	background-color: white;
+}
+
+#budgetarea input, #budgetarea span, #totalbudgetarea input, #totalbudgetarea span {
+	font-size: medium;
+	height: 35px;
+	line-height: 19px;
+}
+
+.schedule>.nav-tabs {
+	width: 700px;
+	float: left;
+	border: none;
+	padding-bottom: 6px;
+}
 </style>
 
 <script>
+	$(document).ready(function() {
 
+		$("#goodbtn").click(function() {
 
+			var article = "${plan_seq}";
 
-$(document).ready(function(){
+			$.ajax({
+				type : 'POST',
+				url : "plangood.btns",
+				data : {
+					article : article
+				},
+				success : function(good) {
+					console.log("asdasd");
+					$("#goodbtn").html("");
+					$("#goodbtn").html('<i class="fas fa-heart"></i>' + good);
+				}
+			});
 
-	$("#goodbtn").click(function(){
-
-	var article ="${plan_seq}";
-
-	$.ajax({
-		  type:'POST',
-		  url:"plangood.btns",
-		  data: {article:article},
-		  success:function(good){
-			  console.log("asdasd");
-				 $("#goodbtn").html(""); 
-				 $("#goodbtn").html('<i class="fas fa-heart"></i>'+good);
-		  }
-	});
-			
-	});
-	$("#badbtn").click(function(){	
-	var article ="${plan_seq}";	
-
-	$.ajax({
-		  type:'POST',
-		  url:"planbad.btns",
-		  data: {article:article},
-		  success:function(bad){
-			  console.log("asdasd");
-				 $("#badbtn").html(""); 
-				 $("#badbtn").html('<i class="far fa-frown"></i>'+bad);
-		  }
 		});
-			
-	});
-	
-	
-});
+		$("#badbtn").click(function() {
+			var article = "${plan_seq}";
 
+			$.ajax({
+				type : 'POST',
+				url : "planbad.btns",
+				data : {
+					article : article
+				},
+				success : function(bad) {
+					console.log("asdasd");
+					$("#badbtn").html("");
+					$("#badbtn").html('<i class="far fa-frown"></i>' + bad);
+				}
+			});
+
+		});
+
+	});
 </script>
 </head>
 <body>
 	<c:choose>
 		<c:when test="${empty sessionScope.user.seq}">
-		<script>location.href="error.jsp"</script>
+			<script>
+				location.href = "error.jsp"
+			</script>
 		</c:when>
 		<c:otherwise>
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-		
+
 	<div class="container text-center">
 		<div class="input-group input-group-lg" id="plantitle">
 			<div class="input-group-prepend">
@@ -231,23 +263,29 @@ $(document).ready(function(){
 		<div class="schedule">
 			<ul class="nav nav-tabs" role="tablist">
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
-					<li class="nav-item"><a class='nav-link'
-						href='#Day${day}' role='tab' data-toggle='tab'>Day${day}</a></li>
+					<li class="nav-item"><a class='nav-link' href='#Day${day}'
+						role='tab' data-toggle='tab'>Day${day}</a></li>
 				</c:forEach>
 			</ul>
-			
+			<div class="input-group input-group-lg budgetarea" id="totalbudgetarea">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="inputGroup-sizing-lg">총 예산</span>
+				</div>
+				<input type="text" class="form-control" aria-label="Large"
+					aria-describedby="inputGroup-sizing-sm" value="${totalBudget}원"
+					readonly>
+			</div>
 			<div class="tab-content">
-			<c:set var="isFirst" value="true" />
+				<c:set var="isFirst" value="true" />
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
-					<input type="hidden" id="plan_seq" value="${plan_seq }">
-					<div role="tabpanel" class="tab-pane fade show"
-						id="Day${day}">
+					<input type="hidden" id="plan_seq" value="${plan_seq}">
+					<div role="tabpanel" class="tab-pane fade show" id="Day${day}">
 						<table class="table" id="schedule-table">
 							<c:if test="${isFirst }">
 								<thead>
 									<tr>
 										<th scope="col" style="width: 160px;">시간</th>
-										<th scope="col" style="width: 170px;">장소</th>
+										<th scope="col" style="width: 190px;">장소</th>
 										<th scope="col">일정</th>
 										<th scope="col">예산</th>
 										<th scope="col">참고</th>
@@ -259,6 +297,7 @@ $(document).ready(function(){
 								<tbody id="schedule-tbody"
 									style="table-layout: fixed; word-break: break-all;">
 									<c:forEach var="item" items="${scheduleList}">
+
 										<c:if test="${item.day_seq eq day }">
 											<tr class="clickable-row">
 												<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
@@ -279,8 +318,7 @@ $(document).ready(function(){
 																			<div>
 																				<div class="budget_plan">${bitem.budget_plan}:</div>
 																				<div class="budget_amount">${bitem.budget_amount}</div>
-																			</div>
-																			<c:set var="count" value="2" />
+																			</div> <c:set var="count" value="2" />
 																	</c:when>
 																	<c:otherwise>
 																		<div>
@@ -290,7 +328,8 @@ $(document).ready(function(){
 																	</c:otherwise>
 																</c:choose>
 															</c:if>
-															<c:if test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
+															<c:if
+																test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
 																<td name="money"></td>
 																<c:set var="loop_flag" value="true" />
 															</c:if>
@@ -304,7 +343,23 @@ $(document).ready(function(){
 											</tr>
 										</c:if>
 									</c:forEach>
-
+									<c:forEach var="bud" items="${daytotalBudget}"
+										varStatus="status">
+										<c:if test="${status.count eq day}">
+											<tr>
+												<td colspan=5>
+													<div class="input-group input-group-lg .budgetarea" id="budgetarea">
+														<div class="input-group-prepend">
+															<span class="input-group-text" id="inputGroup-sizing-lg">일별
+																예산</span>
+														</div>
+														<input type="text" class="form-control" aria-label="Large"
+															aria-describedby="inputGroup-sizing-sm" value="${bud}원"
+															readonly>
+													</div>
+											</tr>
+										</c:if>
+									</c:forEach>
 								</tbody>
 							</c:if>
 						</table>
@@ -323,7 +378,8 @@ $(document).ready(function(){
 			</button>
 			<!-- <button type="button" class="btn btn-outline-success"
 					data-toggle="modal" data-target="#exampleModalCenter" id="getmyplanbtn">내 일정으로 가져가기</button>
-			 --><button class="btn btn-default" style="float: right;">신고</button>
+			 -->
+			<button class="btn btn-default" style="float: right;">신고</button>
 		</div>
 
 		<div class="comments">
@@ -363,7 +419,8 @@ $(document).ready(function(){
 									<c:if test="${pc.comment_writer eq sessionScope.user.seq}">
 										<button type="button" class="close" aria-label="Close"
 											id="deleteComment">
-											<a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
+											<a
+												href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
 												<span aria-hidden="true">&times;</span>
 											</a>
 										</button>
@@ -377,9 +434,14 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
-	<script>
+<script>
 	$(".schedule ul li:first").addClass('active');
 	$("div[id='Day1']").addClass('active');
+	
+	$(".schedule>ul>li").click(function() {
+		var rowCount = 
+		console.log(rowCount);
+	})
 	
    /*댓글관련 버튼들*/
    /*댓글 작성*/
