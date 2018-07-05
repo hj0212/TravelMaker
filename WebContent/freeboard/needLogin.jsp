@@ -23,7 +23,7 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
 	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="source/css/codepenNavi.css">
+<link rel="stylesheet" href="../source/css/codepenNavi.css">
 <style>
 	.container {
 		margin-top : 15%;
@@ -48,7 +48,7 @@
 	
 	<script>
 		$("#goLogin").click(function(){
-			location.href = "newlogin.jsp";
+			location.href = "../login/newlogin.jsp";
 		});
 		
 		$("#goList").click(function(){
