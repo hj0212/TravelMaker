@@ -6,16 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Share Review</title>
-<!-- 부트스트랩 CDN -->
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-
+	<!-- 부트스트랩 CDN -->
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <style>
 	.container {
 		padding-top: 140px;
@@ -98,32 +95,26 @@
 
 				</c:otherwise>
 			</c:choose>
-		</div>
-		<!-- review 카드 모음영역 끝 -->
-
-		<!-- 검색/ 글쓰기 버튼  -->
-		<div class="row col-md-12">
-			<div class="input-group mt-2 col-md-12" id="search_area">
-				<input type="text"
-					class="form-control ml-auto col-4 justify-content-center"
-					placeholder="제목 검색" aria-label="reply"
-					aria-describedby="basic-addon2" id="search">
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary mx-1" type="button"
-						id="searchbtn" name="searchbtn">검색</button>
-
+			<div class="mt-4 mb-2 col-md-12">
+				<div class="row">
+					<div class="input-group col-md-4 offset-md-4">
+						<input type="text" class="form-control" placeholder="제목 검색" id="search">
+						<div class="input-group-append">
+							<button class="btn" id="searchbtn"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+					<div class="col-md-4 text-right">
+						<button class="btn btn-primary" id="writebtn">글쓰기</button>
+					</div>
 				</div>
-				<button type="button" class="btn btn-primary ml-auto" id="writebtn">글쓰기</button>
+			</div>
+			<!-- 페이지 네비 -->
+			<div class="col-md-12">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">${pageNavi}</ul>
+				</nav>
 			</div>
 		</div>
-
-		<!-- 페이지 네비 -->
-		<div class="col-md-12 mt-2">
-			<nav aria-label="Page navigation example">
-				<ul class="pagination justify-content-center">${pageNavi}</ul>
-			</nav>
-		</div>
-
 	</div>
 
 	<script>
