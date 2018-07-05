@@ -790,7 +790,7 @@ public class PlanDAO {
 
 	public List<PlanCommentDTO> getAllPlanComments (int plan_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from plan_comment where plan_seq =?";
+		String sql = "select * from plan_comment where plan_seq =? order by comment_seq desc";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, plan_seq);
 		ResultSet rs = pstat.executeQuery();

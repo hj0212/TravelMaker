@@ -380,21 +380,21 @@
 		</div>
 
 		<div class="comments">
-			<form action="insertPlanComment.plan?plan_seq=${plan_seq}"
-				method="post" id="planCommentForm" name="planCommentForm">
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" placeholder="reply"
-						aria-label="reply" aria-describedby="basic-addon2"
-						id="comment_text" name="comment_text">
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="button"
-							id="commentbtn" name="commentbtn">댓글작성</button>
-					</div>
-				</div>
-			</form>
-			<button type="button"
-				style="border: none; background-color: white; cursor: pointer;"
-				id="comment-bnt">댓글보기▼</button>
+		 <button type="button" style="border: none; background-color: white;"
+            id="comment-bnt">댓글보기▼</button>
+		 <form method="post"  action="insertPlanComment.plan?plan_seq=${plan_seq}" id="planCommentForm" name="planCommentForm" >
+	         <div style="width: 100%; margin: 0px;">
+	            <div style="width: 80%">
+	               <textarea class="form-control" rows="3" id="comment" style="resize: none; width: 100%; margin: 0px; float: left;" maxlength="65" name="comment_text" id="comment_text"></textarea>
+	               <input type="text" readonly value="" name="articlenum" style="display:none">
+	            </div>
+	            <div
+	               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
+	               <button style="width: 100%; height: 86px;background-color: white" id="commentbtn" name="commentbtn" >
+	               <i class="fa fa-comments">댓글 작성</i></button>
+	            </div>
+	         </div>
+		 </form>
 			<div id="planCommentList">
 				<table class="table" id="comment-table">
 					<thead id="comment-thead">
