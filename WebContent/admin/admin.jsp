@@ -125,7 +125,7 @@
 
 											<td class="text-center">${m.part}</td>
 											<td class="text-center">${m.create_date}</td>
-											<td class="text-left"><c:choose>
+											<td class="vertical-align-middle text-center"><c:choose>
 													<c:when test="${m.block =='n' || m.block == 'x'}">
 														<div class="TriSea-technologies-Switch">
 															<input id="TriSeaDanger${status.index}" name="TriSea1" type="checkbox" /> 

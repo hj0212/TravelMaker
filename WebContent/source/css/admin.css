@@ -354,12 +354,12 @@ body, html {
 .TriSea-technologies-Switch > input[type="checkbox"]:checked + label::before {
     background: inherit;
     opacity: 0.5;
+    left:0px;
 }
 .TriSea-technologies-Switch > input[type="checkbox"]:checked + label::after {
     background: inherit;
     left: 40px;
 }
-
 #linkId{
 	color:red;
 }
