@@ -107,7 +107,6 @@
 #totalbudget {
 	width: 150px;
 	float: left;
-	margin-left : 80%;
 }
 
 #delete-table {
@@ -139,7 +138,11 @@
  
  input[type="time"] {
  	display: inline;
- 	width: 130px;
+ 	width: 152px;
+ }
+ 
+ #savebtn {
+ 	margin: 0 3px;
  }
 </style>
 
@@ -163,7 +166,7 @@
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
 				name="plantitle" value="${plan_title}" readonly>
-			<button type="button" class="btn btn-primary" id="savebtn">임시 저장</button>
+			<button type="button" class="btn btn-outline-primary" id="savebtn">임시 저장</button>
 			<button type="button" class="btn btn-primary" id="endbtn">등록</button>
 		</div>
 		<!-- 여기 몇일 여행인지 받아서 개수만큼 돌리기 -->
@@ -446,6 +449,12 @@
 <script>
 $(document).ready(function() {
 	$("#endbtn").click(function() {
+		if(confirm("등록하시겠습니까?")) {
+			location.href = "savePlan.plan";
+		}
+	});
+	
+	$("#savebtn").click(function() {
 		if(confirm("입력된 일정을 저장하고 나가시겠습니까?")) {
 			location.href = "planboard.plan";
 		}
