@@ -88,13 +88,16 @@ a {
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.loginId !=null}">
-			<%@include file="../include/mainNavi_login.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:when>
 		<c:otherwise>
 			<%@include file="../include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
+	<h1 class="divLine">FreeTalk</h1>
+		<hr/>
+	
 		<div class="row">
 			<div class="col-md-12" id="bestPlan">
 				<table class="table table-light">
