@@ -106,11 +106,8 @@ $(document).ready(function(){
 				 $("#goodbtn").html(""); 
 				 $("#goodbtn").html('<i class="fas fa-heart"></i>'+good);
 			 
-			
-			  
 		  }
 		});
-			
 	});
 	$("#badbtn").click(function(){	
 	var article =$("#review_seq").text();	
