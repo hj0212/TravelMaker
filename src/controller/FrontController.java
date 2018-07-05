@@ -121,7 +121,7 @@ public class FrontController extends HttpServlet {
 			} else if(command.equals("/viewFreeArticle.bo")) {
 				try {
 					int seq = Integer.parseInt(request.getParameter("seq"));
-					System.out.println(seq);
+					/*System.out.println(seq);*/
 					String currentPage = request.getParameter("currentPage");
 					MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 					

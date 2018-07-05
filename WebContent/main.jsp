@@ -81,7 +81,7 @@ div {
 		<h1 class="divLine">BEST PLAN</h1>
 		<hr />
 		<div class="row" id="bestPlanRow">
-			<div class="col-md-12" id="bestPlan"">
+			<div class="col-md-12" id="bestPlan">
 				<div class="data"
 					data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'
 					style="max-height: 250px; min-height: 250px; height: 250px;">
