@@ -91,7 +91,7 @@ a {
 				<li class="nav-item"><a class="nav-link" href="reviewboard.bo">Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
 				<li class="nav-item"><a class="nav-link" href="newlogin.jsp">Login</a></li>
-				<li class="nav-item"><a class="nav-link" href="join.do">Join</a></li>
+				<li class="nav-item"><a class="nav-link" href="newlogin.jsp">Join</a></li>
 
 			</ul>
 		</div>

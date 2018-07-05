@@ -91,7 +91,7 @@ div {
 			<%@include file="include/otherNavi.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
+			<%@include file="include/otherNavi_login.jsp"%>
 		</c:otherwise>
 	</c:choose>
 	<div class="container" id="contId">
