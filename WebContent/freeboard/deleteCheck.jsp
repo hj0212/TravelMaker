@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="source/css/codepenNavi.css">
 <style>
 .container {
-	margin-top: 15%;
+	margin-top: 5%;
 }
 </style>
 </head>

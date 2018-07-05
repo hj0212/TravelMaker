@@ -45,12 +45,15 @@
    padding: 0px;
 }
 .contents {
+   padding : 10px;
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
    min-height: 100px;
    word-wrap: break-word;
 }
+
+
 /* 편법임... */
 .contents p {
    margin: 0 0 0.0001pt;
@@ -92,7 +95,7 @@ $(document).ready(function(){
 
 	$("#goodbtn").click(function(){
 
-	var article =$("#review_seq").text();
+	var article ="${review_seq}";
 	
 	console.log(goodbtn);
 
@@ -110,7 +113,7 @@ $(document).ready(function(){
 		});
 	});
 	$("#badbtn").click(function(){	
-	var article =$("#review_seq").text();	
+	var article ="${review_seq}";	
 
 	$.ajax({
 		  type:'POST',
@@ -177,10 +180,10 @@ $(document).ready(function(){
             	<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
             	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
             </c:if>
-            <button type="button" class="btn btn-outline-secondary" id="reviewboard-bt">목록</button>
             <c:if test="${!(sessionScope.user.seq eq dto.review_writer)}">
 	            <button type="button" class="btn btn-outline-danger">신고</button>
             </c:if>
+            <button type="button" class="btn btn-outline-secondary" id="reviewboard-bt">목록</button>
          </div>
       </div>
       <div class="comments">
@@ -284,6 +287,10 @@ $(document).ready(function(){
      <c:if test="${sessionScope.user.seq eq dto.review_writer}">
      	$("#delete").click(function() {
      		location.href = "deleteReviewCheck.bo?reviewnum=${review_seq}";
+     	})
+     	
+     	$("#update").click(function() {
+     		location.href = "modifyReviewArticlePage.bo?reviewnum=${review_seq}";
      	})
      </c:if>
    </script>
