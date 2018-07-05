@@ -259,7 +259,7 @@ public class PlanController extends HttpServlet {
 				isForward=true;
 
 				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";
-			} else if(command.equals("/toMyPlan.plan")) {
+			}/* else if(command.equals("/toMyPlan.plan")) {
 				int plan_writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
 				String plan_startdate = request.getParameter("plan_startdate");
 				String plan_enddate = request.getParameter("plan_enddate");
@@ -279,7 +279,7 @@ public class PlanController extends HttpServlet {
 				isForward=true;
 
 				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=f";
-			}
+			}*/
 
 			//----------------------------------planList 가져오기
 			else if(command.equals("/planboard.plan")) {
@@ -331,16 +331,20 @@ public class PlanController extends HttpServlet {
 
 				List<ScheduleDTO> list = new ArrayList<>();
 				List<BudgetDTO> blist = new ArrayList<>();
+				List<Integer> daytotalBudget = new ArrayList<>();
+				int totalBudget = 0;
 				for(int i = 0; i < plan_period; i++) {
 					list = pdao.selectSchedule(plan_seq, i+1, list);
 					blist = pdao.selectBudget(plan_seq, i+1, blist);
-					int totalBudget = pdao.getTotalBudget(plan_seq, i+1);
-
+					int daybudget = pdao.getTotalBudget(plan_seq, i+1);
+					daytotalBudget.add(daybudget);
+					totalBudget += daybudget;
 					request.setAttribute("scheduleList", list);
 					request.setAttribute("budgetList", blist);
+					request.setAttribute("daytotalBudget", daytotalBudget);
 					request.setAttribute("totalBudget", totalBudget);
 				}
-
+				System.out.println(totalBudget);
 				String plan_title = pdao.getPlantitle(plan_seq);
 				request.setAttribute("plan_title", plan_title);
 
