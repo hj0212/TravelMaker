@@ -19,8 +19,10 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import beans.SendMail;
 import dao.AdminDAO;
 import dao.MemberDAO;
+import dao.PlanDAO;
 import dao.ReviewDAO;
 import dto.MemberDTO;
+import dto.PlanDTO;
 import dto.ReviewDTO;
 
 
@@ -35,6 +37,7 @@ public class MemberController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
 
+			PlanDAO pdao = new PlanDAO();
 			ReviewDAO rdao = new ReviewDAO();
 			MemberDAO mdao = new MemberDAO();
 			AdminDAO adao = new AdminDAO();
@@ -164,7 +167,7 @@ public class MemberController extends HttpServlet {
 				MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
 				
 			
-				
+				/*프로필부분 출력*/
 				MemberDTO mdto = mdao.newMemberInfo(user.getSeq(), part);
 				System.out.println("seq :"+user.getSeq());
 				
@@ -190,7 +193,7 @@ public class MemberController extends HttpServlet {
 					request.setAttribute("file_name", mdto.getPhoto_system_file_name());
 				}
 				
-			
+			/*리뷰와 망가진 네비*/
 				
 				/*List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq());
 		        request.setAttribute("MyReviewResult", MyReviewResult);*/
@@ -211,6 +214,14 @@ public class MemberController extends HttpServlet {
 				String MyReviewPageNavi = rdao.getMyReviewPageNavi(user.getSeq(), currentPage, searchTerm);
 				request.setAttribute("MyReviewPageNavi", MyReviewPageNavi);
 
+				/*planList*/
+				
+				int seq = Integer.parseInt(request.getParameter("plan_seq"));
+				String plan_check = request.getParameter("plan_check");
+				List<PlanDTO>list = new ArrayList<>();
+				list = pdao.getMyTmpPlan(seq, plan_check);
+				request.setAttribute("planList", list);
+				
 				isForward = true;
 				dst="mypage.jsp";
 			}else if(command.equals("/logout.do")) {
