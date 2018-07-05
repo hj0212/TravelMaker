@@ -87,11 +87,11 @@ a {
 </head>
 <body>
 	<c:choose>
-		<c:when test="${sessionScope.loginId !=null}">
-			<%@include file="../include/otherNavi.jsp"%>
+		<c:when test="${empty sessionScope.user.seq}">
+			<%@include file="../include/otherNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@include file="../include/mainNavi.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
