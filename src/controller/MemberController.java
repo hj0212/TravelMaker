@@ -297,7 +297,8 @@ public class MemberController extends HttpServlet {
 
 				isForward = true;
 				dst = "editInfoView.jsp";
-			}else if(command.equals("/toPwTrueCheck.do")) {
+			}
+			/*else if(command.equals("/toPwTrueCheck.do")) {
 				isForward=true;
 				dst="pwTrueCheck.jsp";
 			}else if(command.equals("/pwTrueCheck.do")) {
@@ -325,8 +326,40 @@ public class MemberController extends HttpServlet {
 			}else if(command.equals("/toLogin.do")) {
 				isForward=true;
 				dst="newlogin.jsp";
+*/
 
+			else if(command.equals("/editInfoNK.do")){
+				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+				String part = user.getPart();
+				
+				if(part.equals("naver")) {
+					request.setAttribute("id", user.getNaver_id());
+					request.setAttribute("nickname", user.getNaver_nickname());
+					request.setAttribute("email", user.getNaver_email());
+				}else if(part.equals("kakao")) {
+					request.setAttribute("id", user.getKakao_id());
+					request.setAttribute("nickname", user.getKakao_nickname());
+					request.setAttribute("email", user.getKakao_email());
+				}
+				isForward=true;
+				dst="editInfoNK.jsp";
 
+			}else if(command.equals("/modiNKMemInfo.do")) {
+				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+				String part = user.getPart();
+				int seq = user.getSeq();
+				String id = request.getParameter("id");
+				String nickname = request.getParameter("nickname");
+				String email = request.getParameter("email");
+				int result  = mdao.updateNKMemberInfo(id, nickname, email, seq, part);
+				request.setAttribute("result", result);
+				
+				isForward= true;
+				dst = "editInfoNKView.jsp";
+			}else if(command.equals("/toEditInfoNK.do")) {
+				
+				isForward=true;
+			dst="toEditInfoNK.jsp";
 				//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
 			}else if(command.equals("/checkEmail.do")){
 				String id=request.getParameter("id");

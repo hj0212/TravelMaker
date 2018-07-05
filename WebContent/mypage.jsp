@@ -127,7 +127,7 @@ border-bottom: 1px solid #ddd;
 	list-style: none !important;
 }
 
-#cf-box{
+/* #cf-box{
 text-align:center;
 float: left;
 display: inline;
@@ -138,7 +138,7 @@ border: 1px solid #777777;
 &::a{
 color:#ddd;
 }
-}
+} */
 
 /* #cf-box div a{
 ::hover{
@@ -146,9 +146,10 @@ background-color:primary;
 }
 } */
 
-#cf-box button{
-border:1px solid transparent;
-}
+ #cf-box button{
+/* border:1px solid transparent; */
+border-radius: 10px;
+} 
 
 #wrapper {
 	width: 970px;
@@ -271,32 +272,25 @@ text-align:center;
             </form>
             </div>
             <!--기본 프로필-->
-            <div class="col-sm d-inline py-5" id="con">
-              <h4 class="my-4">${nickname}</h4>
+            <div class="col-sm d-inline py-5 my-5" id="con">
+              <h4 class="my-2">${nickname}</h4>
               <c:choose>
               <c:when test="${email eq null}">
-              <h4 class="my-4">이메일을 입력해주세요</h4>
+              <h4 class="my-2">이메일을 입력해주세요</h4>
               </c:when>
               <c:otherwise>
                <h4 class="my-4">${email}</h4>
               </c:otherwise>
               </c:choose>
-            </div>
+       
          <!--회원정보 수정-->
-         <div id="cf-box" class="col-sm d-inline py-3 my-5" style="border-radius: 15px; border:1px solid #77777;">
-         <div>정보수정</div><hr>
+         <div id="cf-box" class="col-sm d-inline py-3 my-5">
   		<c:choose>
   		<c:when test="${sessionScope.part eq 'home'}">
-  		<!-- <div class="py-3"><a href="#" id="editInfo">회원정보</a></div>
-  		<div class="py-3"><a href="#" id="editPw">비밀번호</a></div>
-  		<div class="py-3"><a href="#" id="updateEmail">이메일</a></div> -->
-  		<button id="editInfo" class="btn-outline-primary">회원정보</button>
-  		<button id="editPw" class="btn-outline-primary">비밀번호</button>
-  		<button id="updateEmail" class="btn-outline-primary">이메일</button>
-  		
+  		<button id="editInfo" class="btn btn-outline-primary">정보수정</button>  		
   		</c:when>
   		<c:otherwise>
-  		<div class="py-3"><a href="#" id="updateEmail">이메일</a></div>
+  		<button id="editInfoNK" class="btn btn-outline-primary">정보수정</button> 
   		</c:otherwise>
   		</c:choose>
   		</div>
@@ -304,7 +298,7 @@ text-align:center;
 				</div>
 			</div>
 		</div>
-
+     </div>
 		<!--tab부분-->
 		<div class="py-5 mt-10">
 			<div class="container">
@@ -507,63 +501,7 @@ text-align:center;
 		$("#searchbtn").click(function() {
 			location.href = "mypage.do?search=" + $("#search").val();
 		})
-		/*슬라이드*/
-		/* $('.item').slick({
-		 dots: true,
-		 infinite: true,
-		 autoplay: true,
-		 variableWidth : true,
-		 autoplaySpeed: 1000,
-		 speed: 300,
-		 slidesToShow: 3,
-		 slidesToScroll : 1,
-		 adaptiveHeight: true
-		 }); */
 
-		/* 	$('.item').slick({
-		 dots: true,
-		 infinite: false,
-		 speed: 300,
-		 slidesToShow: 4,
-		 slidesToScroll: 4,
-		 responsive: [
-		 {
-		 breakpoint: 1024,
-		 settings: {
-		 slidesToShow: 3,
-		 slidesToScroll: 3,
-		 infinite: true,
-		 dots: true
-		 }
-		 },
-		 {
-		 breakpoint: 600,
-		 settings: {
-		 slidesToShow: 2,
-		 slidesToScroll: 2
-		 }
-		 },
-		 {
-		 breakpoint: 480,
-		 settings: {
-		 slidesToShow: 1,
-		 slidesToScroll: 1
-		 }
-		 }
-		 // You can unslick at a given breakpoint now by adding:
-		 // settings: "unslick"
-		 // instead of a settings object
-		 ]
-		 }); */
-
-		/* 정보수정버튼 */
-		/* $(function() { */
-	/* 		$("#box-container").hide();
-			$("#editlink").on("click", function() {
-				$("#box-container").toggle("fast");
-			});
-
-		}) */
 		      $(function() {
 		            $("#img_file").on('change', function(){
 		            	var fileName =$("#img_file").val();
@@ -598,17 +536,12 @@ text-align:center;
 					window.open("toPwCheck.do", "_blank",
 							"width=500, height=300, scrollbars=no");
 				})
-		$("#updateEmail").click(
-				function() {
-					/* location.href="toUpdateEmail.do"; */
-					window.open("toUpdateEmail.do", "_blank",
-							"width=500, height=300, scrollbars=no");
-				})
-		$("#editPw").click(
-				function() {
-					window.open("toPwTrueCheck.do", "_blank",
-							"width=500, height=300, scrollbars=no");
-				})
+
+				$("#editInfoNK").click(
+			function(){
+				window.open("toEditInfoNK.do","_blank","width=1000, height=800, scrollbars=no, left=500, top=100");
+			})
+		
 	</script>
 </body>
 
