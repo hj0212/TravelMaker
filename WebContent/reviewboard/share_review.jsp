@@ -57,17 +57,17 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq == null}">
-			<%@include file="../include/mainNavi.jsp"%>
+			<%@include file="../include/otherNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@include file="../include/mainNavi_login.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 
 		</c:otherwise>
 	</c:choose>
 
 
 	<div class="container">
-		<h1 class="divLine">계획, 그리고</h1>
+		<h1 class="divLine">Review</h1>
 		<hr />
 
 		<div class="row" id="cardArea">

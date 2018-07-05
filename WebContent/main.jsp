@@ -31,7 +31,7 @@ div {
 }
 
 #bestPlan {
-	height: 400px;
+	height: 300px;
 }
 
 #bests {
@@ -62,6 +62,10 @@ div {
 .hls_sol .btn {
 	bottom: 10px;
 }
+#bestImage {
+	margin-bottom: 15px;
+}
+
 </style>
 
 </head>
@@ -76,12 +80,12 @@ div {
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	<div class="container"  style="margin-top:-140px;">
+	<div class="container"  style="margin-top:-90px;">
 
 		<h1 class="divLine">BEST PLAN</h1>
 		<hr />
 		<div class="row" id="bestPlanRow">
-			<div class="col-md-12" id="bestPlan"">
+			<div class="col-md-12" id="bestPlan">
 				<div class="data"
 					data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'
 					style="max-height: 250px; min-height: 250px; height: 250px;">
@@ -111,51 +115,24 @@ div {
 			</div>
 		</div>
 
-		<h1 class="divLine">BEST IMAGE</h1>
+		<h1 class="divLine">NEW IMAGE</h1>
 		<hr />
 		<div class="row col-md-12 mx-0" id="bestImage">
-			<div class="col-md-3 hls_sol px-1">
-				<img src="travel1.jpg" alt="">
+<!-- 카드 시작 -->				
+			<c:set var="i" value="1"/>
+			<c:forEach var="item" items="${photoList}">		
+				<div class="col-md-3 hls_sol px-1">
+				<img src="${pageContext.request.contextPath}/files/${item.system_file_name}" alt="">
 				<div class="hls_sol_data">
-					<h1>1</h1>
+					<h1>${i}</h1>
 					<div class="hls_data">
-						<a href="" target="" class="hls_title">여행자님</a> <a href=""
-							class="btn btn-pro">여행계획보기</a>
+						<a href="" target="" class="hls_title">${item.review_title}</a> 
+						<a href="reviewArticle.bo?review_seq=${item.article_no}" class="btn btn-pro">여행계획보기</a>
 					</div>
 				</div>
 			</div>
-
-			<div class="hls_sol col-md-3 px-1">
-				<img src="travel1.jpg" alt="">
-				<div class="hls_sol_data">
-					<h1>2</h1>
-					<div class="hls_data">
-						<a href="" target="" class="hls_title">여행자님</a> <a href=""
-							class="btn btn-pro">여행계획보기</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 hls_sol px-1">
-				<img src="travel1.jpg" alt="">
-				<div class="hls_sol_data">
-					<h1>3</h1>
-					<div class="hls_data">
-						<a href="" target="" class="hls_title">여행자님</a> <a href=""
-							class="btn btn-pro">여행계획보기</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 hls_sol px-1">
-				<img src="travel1.jpg" alt="">
-				<div class="hls_sol_data">
-					<h1>4</h1>
-					<div class="hls_data">
-						<a href="" target="" class="hls_title">여행자님</a> <a href=""
-							class="btn btn-pro">여행계획보기</a>
-					</div>
-				</div>
-			</div>
-
+			<c:set var="i" value="${i+1}"/>
+			</c:forEach>
 		</div>
 		<!--bestImage 영역 끝 -->
 	</div>
@@ -171,6 +148,7 @@ div {
 	<script src='source/lib/slick/slick.js'></script>
 	<script>
 		$('.data').slick({
+			centerMode: true,
 			dots : true,
 			infinite : true,
 			slidesToShow : 3,
@@ -178,7 +156,7 @@ div {
 			variableWidth : true,
 			autoplay : true,
 			speed : 500,
-			autoplaySpeed : 2000
+			autoplaySpeed : 1000
 		});
 	</script>
 	<c:choose>
