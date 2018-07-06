@@ -18,6 +18,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import beans.SendMail;
 import dao.AdminDAO;
+import dao.GoodBadDAO;
 import dao.MemberDAO;
 import dao.PlanDAO;
 import dao.ReviewDAO;
@@ -41,6 +42,7 @@ public class MemberController extends HttpServlet {
 			ReviewDAO rdao = new ReviewDAO();
 			MemberDAO mdao = new MemberDAO();
 			AdminDAO adao = new AdminDAO();
+			GoodBadDAO gdao = new GoodBadDAO();
 
 			boolean isForward = true;
 			String dst = null;
@@ -223,6 +225,14 @@ public class MemberController extends HttpServlet {
 				List<PlanDTO> list = new ArrayList<>();
 				list = pdao.getMyTmpPlan(seq);
 				request.setAttribute("planList", list);
+				
+				
+				
+				/*좋아요누른글*/
+				List<PlanDTO> flist = new ArrayList<>();
+				flist = gdao.favoriteData(seq);
+				request.setAttribute("flist", flist);
+				
 				
 				isForward = true;
 				dst="mypage.jsp";
