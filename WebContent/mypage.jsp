@@ -329,12 +329,14 @@ text-align:center;
 
 		<!--임시저장-->
 		<div>
-			<c:if test="${planList.size() == 0 }">
-			<div class="col-md-12 align-items-center">
+			<c:if test="${empty planList}">
+			<div class="row-md-12">
+			<div class="col-md-12">
 				<fieldset class="border p-4" style="text-align:center;">
 				<legend class="w-auto"><h1>작성중인 Plan이 없습니다</h1></legend>
 				<h5>당신의 Plan을 만들어보세요!</h5>
 				</fieldset>
+			</div>
 			</div>
 			</c:if>
 			</div>
@@ -395,12 +397,14 @@ text-align:center;
 
 						<!-- tabone -->
 						<div class="col tab-pane active" id="tabone" role="tabpanel">
-							<div class="row" style="height:300px;">
+							<div class="row">
 													
-						<c:if test="${MyReviewResult.size() == 0}">						
+						<c:if test="${empty MyReviewResult}">	
 						<div class="noArticle col-md-12 w-100 h-100 py-5">	
+						<div style="height:300px;">
 						<h3 style="margin:50px;">표시할 내용이 없습니다</h3>	
-						<small>당신의 후기글을 기다립니다</small>				
+						<small>당신의 후기글을 기다립니다</small>		
+						</div>		
 						</div>
 						</c:if>
 							
@@ -432,13 +436,15 @@ text-align:center;
 
 
 						<div class="col tab-pane" id="tabtwo" role="tabpanel">
-							<div class="row" style="height:300px;">
+							<div class="row">
 
-			<c:if test="${MyPlanResult.size() == 0}">						
+			<c:if test="${empty MyPlanResult}">						
 						<div class="noArticle col-md-12 w-100 h-100 py-5">	
+						<div style="height:300px;">
 						<h3 style="margin:50px;">표시할 내용이 없습니다</h3>	
 						<small>당신의 여행계획을 기다립니다</small>				
 						</div>
+						</div> 
 						</c:if>
 
 								<c:forEach var="mpr" items="${MyPlanResult}">
@@ -465,12 +471,14 @@ text-align:center;
 
 						<!-- tabthree -->
 						<div class="col tab-pane" id="tabthree" role="tabpanel">
-							<div class="row mt-2 mx-0" style="height:300px;">
+							<div class="row mt-2 mx-0">
 
-	<c:if test="${flist.size() == 0}">						
-						<div class="noArticle col-md-12 w-100 h-100 py-5">	
+						<c:if test="${empty flist}">						
+						<div class="noArticle col-md-12 w-100 h-100 py-5">
+						<div style="height:300px;">
 						<h3 style="margin:50px;">표시할 내용이 없습니다</h3>	
 						<small>좋아요를 눌러보세요...ㅜ</small>				
+						</div>
 						</div>
 						</c:if>
 
@@ -521,6 +529,8 @@ text-align:center;
 								<ul class="pagination justify-content-center">${MyReviewPageNavi}</ul>
 							</nav>
 						</div>
+						
+						
 					</div>
 				</div>
 			</div>
