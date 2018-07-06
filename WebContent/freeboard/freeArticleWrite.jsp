@@ -41,8 +41,7 @@ pageEncoding="UTF-8"%>
 		<c:choose>
 			<c:when test="${sessionScope.user.seq eq null}">
 				<script>
-					alert("비회원은 이용 불가능합니다.");
-					location.href = "toLogin.do";
+					location.href = "login.bo";
 				</script>
 			</c:when>
 			<c:otherwise>
