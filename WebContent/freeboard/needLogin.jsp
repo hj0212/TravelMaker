@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title></title>
 <!-- 부트 스트랩 코드-->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -23,23 +23,15 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
 	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="source/css/codepenNavi.css">
 <style>
 	.container {
-		margin-top : 15%;
+		margin-top : 25%;
 		width: 970px;
 	}
 </style>
 </head>
 <body>
-	<c:choose>
-		<c:when test="${sessionScope.loginId !=null}">
-			<%@include file="../include/mainNavi_login.jsp"%>
-		</c:when>
-		<c:otherwise>
-			<%@include file="../include/mainNavi.jsp"%>
-		</c:otherwise>
-	</c:choose>
+	<%@include file="../include/otherNavi_login.jsp"%>
 	<div class="container text-center">
 		<h1>비회원은 이용할 수 없습니다.</h1>
 		<button type="button" class="btn btn-light" id="goLogin">로그인하기</button>
@@ -48,7 +40,7 @@
 	
 	<script>
 		$("#goLogin").click(function(){
-			location.href = "newlogin.jsp";
+			location.href = "login/newlogin.jsp";
 		});
 		
 		$("#goList").click(function(){

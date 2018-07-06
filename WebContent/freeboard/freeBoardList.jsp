@@ -111,7 +111,9 @@ a {
 						</tr>
 					</thead>
 					<tbody>
-						<c:choose>
+						
+
+						<c:choose>						
 							<c:when test="${freeboardlist[0] != null}">
 								<c:forEach var="item" items="${freeboardlist}">
 									<tr>
@@ -123,6 +125,8 @@ a {
 										<td align="center">${item.free_writedate}</td>
 										<td align="center">${item.free_viewcount}</td>
 									</tr>
+								
+								
 								</c:forEach>
 							</c:when>
 							<c:otherwise>

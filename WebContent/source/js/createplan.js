@@ -90,8 +90,7 @@ $(document).ready(
 						} else if ($("#plan_title").val() == "") {
 							alert("여행 제목을 지어주세요.")
 						} else {
-							$("#plan-form").attr("action",
-							"toMyPlan.plan").submit();
+							$("#plan-form").attr("action","createPlan.plan").submit();
 						}
 					});
 			$('#myModal').on('shown.bs.modal', function() {

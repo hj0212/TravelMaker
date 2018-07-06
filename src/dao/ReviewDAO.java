@@ -402,7 +402,7 @@ public class ReviewDAO {
 		PreparedStatement pstat = null;
 
 		if(searchTerm == null || searchTerm.equals("")) {
-			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard where review_writer=?) where num between ? and ?";
+			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard_c where review_writer=?) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1,seq);
 			pstat.setInt(2, startNum);

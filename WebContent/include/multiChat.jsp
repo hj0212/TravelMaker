@@ -92,7 +92,7 @@
 			ws.onmessage = function(msg) {
 				var obj = JSON.parse(msg.data);
 				console.log(obj.nickname + ":" + obj.msg  + ":" +obj.file);
-				var chat = "<hr class=livehr><div class=chat-message clearfix><img src='/Git_Practice_Message/file/"+obj.file+"' alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>"
+				var chat = "<hr class=livehr><div class=chat-message clearfix><img src='/TravelMaker/file/"+obj.file+"' alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>"
 						+ obj.nickname
 						+ "</h5><p class=livep>"
 						+ obj.msg
