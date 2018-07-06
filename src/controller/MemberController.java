@@ -212,12 +212,17 @@ public class MemberController extends HttpServlet {
 					currentPage = Integer.parseInt(currentPageString);
 				}
 
-				String searchTerm = request.getParameter("search");
-				List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq(), currentPage*12-11, currentPage*12, searchTerm);
+				List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq(), currentPage*12-11, currentPage*12);
 				request.setAttribute("MyReviewResult", MyReviewResult);
 
-				String MyReviewPageNavi = rdao.getMyReviewPageNavi(user.getSeq(), currentPage, searchTerm);
+				String MyReviewPageNavi = rdao.getMyReviewPageNavi(user.getSeq(), currentPage);
 				request.setAttribute("MyReviewPageNavi", MyReviewPageNavi);
+				
+				List<PlanDTO> MyPlanResult = pdao.getMyPlans(user.getSeq(), currentPage*12-11, currentPage*12);
+				request.setAttribute("MyPlanResult", MyPlanResult);
+
+				String MyPlanPageNavi = pdao.getMyPlanPageNavi(user.getSeq(), currentPage);
+				request.setAttribute("MyPlanPageNavi", MyPlanPageNavi);
 
 				/*planList*/
 				
@@ -225,7 +230,6 @@ public class MemberController extends HttpServlet {
 				List<PlanDTO> list = new ArrayList<>();
 				list = pdao.getMyTmpPlan(seq);
 				request.setAttribute("planList", list);
-				
 				
 				
 				/*좋아요누른글*/
