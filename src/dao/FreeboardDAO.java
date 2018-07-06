@@ -54,6 +54,25 @@ public class FreeboardDAO {
 		return result;
 	}
 	
+	public int recentArticle(int writer) throws Exception {
+		int result = 0;
+		Connection conn = DBConnection.getConnection();
+		String sql = "select free_seq from (select free_seq from freeboard_c where free_writer = ? ORDER BY free_seq DESC) where rownum = 1";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, writer);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		return result;
+	}
+	
 	public int updateArticle(String title, String contents, int articlenum) throws Exception {
 		Connection conn = DBConnection.getConnection();
 		String sql = "UPDATE freeboard_c set free_title = ?, free_contents = ? WHERE free_seq = ?";
