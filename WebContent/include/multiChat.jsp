@@ -47,7 +47,7 @@
 						if("${sessionScope.img}" !=""){
 							file="${sessionScope.img}";
 						}else {		
-							file ="/WEB_06_18/file/${sessionScope.file_name}";
+							file ="/TravelMaker/file/${sessionScope.file_name}";
 						}							
 					var nickname = '${sessionScope.nickname}';
 					var msg = $("#livemsg").val();	
