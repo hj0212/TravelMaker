@@ -388,6 +388,7 @@ public class MemberController extends HttpServlet {
 			}else if(command.equals("/profileImg.do")) {
 				// 이미지를 업로드할 경로
 				String uploadPath = request.getServletContext().getRealPath("file");
+				
 				int size = 10 * 1024 * 1024;	// 업로드 사이즈 10M 이하,
 
 				// 경로가 없을 경우 결로 생성
@@ -413,7 +414,7 @@ public class MemberController extends HttpServlet {
 				}
 
 				uploadPath = contextPath +"/file/"+ sfileName;
-
+				System.out.println(uploadPath);
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 				int user_seq = user.getSeq();
 				System.out.println("user_seq :"+user_seq);
