@@ -69,6 +69,7 @@ div {
 	text-decoration: none;
 	color: black;
 }
+
 .container-fulid {
 	margin-right: auto;
 	margin-left: auto;
@@ -127,16 +128,16 @@ div {
 	</c:choose>
 	
 	
-	
 	<div class="mainintro" style="margon-top: -100px;">
 		<!--  background-color: rgb(241,243,245); -->
 		<p
 			style="text-align: center; font-size: 40pt; font-family: 'Nanum Pen Script', cursive;">TRAVELMAKER로
 			상상속 여행을 현실로 만들어보세요!</p>
 	</div>
+
 	<div class="container">
-	
-	<!-- 메인  트래블메이커 안내 div 시작-->
+
+		<!-- 메인  트래블메이커 안내 div 시작-->
 		<div class="container-fluid text-center"
 			style="height: 300px; background-color: rgb(241, 243, 245); padding: 40px; margin-top: -140px;">
 			<div class="d-flex">
@@ -158,10 +159,6 @@ div {
 			</div>
 		</div>
 		<!-- 메인  트래블메이커 안내 div 종료-->
-		
-		
-	
-	<div class="container"  style="margin-top:-90px;">
 
 		<h1 class="divLine"><a href="planboard.plan">BEST PLAN</a></h1>
 		<hr />
@@ -317,7 +314,7 @@ div {
 
 
 	<p
-		style="font-size: 50pt; color: white; font-family: 'Nanum Pen Script', cursive; text-align: center; background-color: rgb(241, 243, 245);">
+		style="font-size: 50pt; color: white; font-family: 'Nanum Pen Script', cursive; text-align: center; background-color: gray;">
 		지금 당신의 TRAVELMAKER를 시작해보세요!!</p>
 
 
@@ -346,7 +343,8 @@ div {
 	</div>
 	<!-- 트레블 메이커 추천 여행 종료  -->
 
-</div>
+		
+		
 	<div id="footer">
 		<%@include file="footer1.jsp"%>
 	</div>
