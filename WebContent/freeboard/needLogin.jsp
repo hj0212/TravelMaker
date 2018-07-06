@@ -25,20 +25,13 @@
 	crossorigin="anonymous"></script>
 <style>
 	.container {
-		margin-top : 15%;
+		margin-top : 25%;
 		width: 970px;
 	}
 </style>
 </head>
 <body>
-	<c:choose>
-		<c:when test="${sessionScope.loginId !=null}">
-			<%@include file="../include/mainNavi_login.jsp"%>
-		</c:when>
-		<c:otherwise>
-			<%@include file="../include/mainNavi.jsp"%>
-		</c:otherwise>
-	</c:choose>
+	<%@include file="../include/otherNavi_login.jsp"%>
 	<div class="container text-center">
 		<h1>비회원은 이용할 수 없습니다.</h1>
 		<button type="button" class="btn btn-light" id="goLogin">로그인하기</button>
