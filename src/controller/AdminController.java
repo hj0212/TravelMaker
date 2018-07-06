@@ -59,7 +59,7 @@ public class AdminController extends HttpServlet {
 			
 			//--------------------------admin_free > 신고당한 자유게시판 글 보기
 			else if(command.equals("/admin_free.ad")) {
-				System.out.println("신고글확인ctrl들어옴");
+				/*System.out.println("신고글확인ctrl들어옴");*/
 				List<ReportFreeDTO> flist = new ArrayList<>();
 				flist = adao.getAllReport_f();
 				request.setAttribute("freereport", flist);

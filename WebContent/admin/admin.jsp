@@ -81,7 +81,7 @@
 							<table class="table col-md-12" id="members">
 								<thead>
 									<tr>
-										<th class="col-md-12 text-center" colspan=7>회원 관리</th>
+										<th class="col-md-12 text-center" style="font-size:20px;" colspan=7>회원 관리</th>
 									</tr>
 								</thead>
 								<tbody>
