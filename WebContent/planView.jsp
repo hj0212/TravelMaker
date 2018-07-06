@@ -404,6 +404,11 @@
 							<th scope="col" style="width: 15%;">Last</th>
 						</tr>
 					</thead>
+					<c:if test="${result1.size() == 0 }">
+               <tr>
+               <td colspan="3">표시할 댓글이 없습니다</td>
+               </tr>
+            </c:if>
 					<tbody>
 						<c:forEach var="pc" items="${result1}">
 							<tr>
