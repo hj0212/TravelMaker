@@ -195,11 +195,7 @@ div {
 			</nav>
 		</div>
 	</div>
-	<c:choose>
-		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="../include/multiChat.jsp"%>
-		</c:when>
-	</c:choose>
+
 	<%@include file="../footer1.jsp"%>
 
 	<script>
@@ -214,4 +210,5 @@ div {
 			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
 	</c:choose>	
+
 </html>

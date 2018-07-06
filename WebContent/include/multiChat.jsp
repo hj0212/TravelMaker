@@ -38,8 +38,8 @@
 			var str;
 			var file ="";
 		
-			$("#livemsg").keydown(function(event) {
-				if (event.which === 13) {
+			$("#livemsg").keypress(function(event) {
+				if (event.keyCode === 13) {
 					if($("#livemsg").val() == ""){
 						
 					}else{
