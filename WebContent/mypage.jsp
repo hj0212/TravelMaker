@@ -400,14 +400,14 @@ text-align:center;
 						<div class="col tab-pane active" id="tabone" role="tabpanel">
 							<div class="row">
 													
-						<c:if test="${empty MyReviewResult}">	
+				<c:if test="${empty MyReviewResult}">	
 						<div class="noArticle col-md-12 w-100 h-100 py-5">	
 						<div style="height:300px;">
 						<h3 style="margin:50px;">표시할 내용이 없습니다</h3>	
 						<small>당신의 후기글을 기다립니다</small>		
 						</div>		
 						</div>
-						</c:if>					
+						</c:if>				
 						
 								<c:forEach var="mrr" items="${MyReviewResult}">
 									<div class="item col-md-3 col-sm-3 w-25">
