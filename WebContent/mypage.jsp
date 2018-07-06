@@ -407,8 +407,7 @@ text-align:center;
 						<small>당신의 후기글을 기다립니다</small>		
 						</div>		
 						</div>
-						</c:if>
-							
+						</c:if>					
 						
 								<c:forEach var="mrr" items="${MyReviewResult}">
 									<div class="item col-md-3 col-sm-3 w-25">
@@ -424,7 +423,7 @@ text-align:center;
 												alt="Card image cap">
 											<div class="card-body">
 												<p>${mrr.review_viewcount}</p>
-												<h6 class="text-muted">${mrr.review_contents}</h6>
+												<h6 class="text-muted" style="overflow:hidden;">${mrr.review_contents}</h6>
 												<p>${mrr.review_writedate}</p>
 											</div>
 										</div>
