@@ -224,7 +224,7 @@ background-color:#eee;
  </style>
  <script>
  $(document).ready(function(){
-	 $("#profile_img").attr('src',"/Git_Practice_Message/file/${file_name}");
+	 $("#profile_img").attr('src',"/TravelMaker/file/${file_name}");
 	 $("#img_button").click(function(){
 		 var img_file = $("#img_file").trigger("click");	 
 		 if(img_file){ 

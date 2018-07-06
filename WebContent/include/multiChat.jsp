@@ -63,18 +63,25 @@
 	<script>
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					"ws://59.10.249.73/TravelMaker/websocket");
+					"ws://localhost:8080/WEB_06_18/websocket");
 			var str;
-
+			var file ="";
+		
 			$("input").keydown(function(event) {
 				if (event.which === 13) {
 					if($("input").val() == ""){
 						
 					}else{
-					
+						
+						if("${sessionScope.img}" !=""){
+							file="${sessionScope.img}";
+						}else {		
+							file ="/TravelMaker/file/${file_name}";
+						}							
 					var nickname = '${sessionScope.nickname}';
-					var msg = $("#livemsg").val();
-					var file ="${file_name}";
+					var msg = $("#livemsg").val();	
+					
+									
 					ws.send(JSON.stringify({
 						nickname : nickname,
 						msg : msg,
@@ -92,7 +99,7 @@
 			ws.onmessage = function(msg) {
 				var obj = JSON.parse(msg.data);
 				console.log(obj.nickname + ":" + obj.msg  + ":" +obj.file);
-				var chat = "<hr class=livehr><div class=chat-message clearfix><img src='/Git_Practice_Message/file/"+obj.file+"' alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>"
+				var chat = "<hr class=livehr><div class=chat-message clearfix><img src='"+obj.file+"' alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>"
 						+ obj.nickname
 						+ "</h5><p class=livep>"
 						+ obj.msg

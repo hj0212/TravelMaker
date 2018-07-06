@@ -125,6 +125,7 @@ public class MemberController extends HttpServlet {
 				String id = request.getParameter("id");
 				String name = request.getParameter("name");
 				String email = request.getParameter("email");
+				String img = request.getParameter("img");
 				MemberDTO dto = new MemberDTO();
 				dto.setKakao_id(id);
 				dto.setKakao_nickname(name);
@@ -136,6 +137,7 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("part", "kakao");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
+				request.getSession().setAttribute("img",img );
 
 				String nickname=mdao.getUserNickname(user.getSeq());
 				request.getSession().setAttribute("nickname", nickname);
@@ -183,12 +185,14 @@ public class MemberController extends HttpServlet {
 				/*mdto = mdao.getProfileInfo(part, id);*/
 
 				/*String file_name = ((MemberDTO)request.getSession().getAttribute("user")).getPhoto_system_file_name();*/
+			/*	System.out.println(file_name);*/
 				request.setAttribute("file_name", mdto.getPhoto_system_file_name());
 				
 				if(part.equals("home")) {
 					request.setAttribute("nickname", mdto.getNickname());
 					request.setAttribute("email", mdto.getEmail());
-					request.setAttribute("file_name", mdto.getPhoto_system_file_name());
+					request.setAttribute("file_name",mdto.getPhoto_system_file_name());
+					System.out.println("파일"+mdto.getPhoto_system_file_name());
 				}else if(part.equals("naver")) {
 					request.setAttribute("nickname", mdto.getNaver_nickname());
 					request.setAttribute("email", mdto.getNaver_email());
