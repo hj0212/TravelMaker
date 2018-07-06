@@ -85,6 +85,25 @@ public class ReviewDAO {
 		return result;
 	}
 	
+	public int recentArticle(int writer) throws Exception {
+		int result = 0;
+		Connection conn = DBConnection.getConnection();
+		String sql = "select review_seq from (select review_seq from reviewboard_c where review_writer = ? ORDER BY review_seq DESC) where rownum = 1";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, writer);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		return result;
+	}
+	
 	public int updateReview(String title, String contents, int writer, String[] array, int seq) throws Exception {
 		Connection conn = DBConnection.getConnection();
 		String sql = "update reviewboard_c set review_title = ?, review_contents = ? where review_writer = ? and review_seq = ?";
