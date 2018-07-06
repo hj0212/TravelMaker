@@ -34,7 +34,7 @@
 	<script>
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					"ws://localhost:8080/WEB_06_18/websocket");
+					"ws://59.10.249.73/websocket");
 			var str;
 			var file ="";
 		
