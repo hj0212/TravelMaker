@@ -15,12 +15,9 @@
 	type="text/javascript"></script>
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
 	rel="stylesheet" type="text/css" />
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script src="source/js/jquery.roadmap.min.js"></script>
@@ -250,6 +247,7 @@
 				<button class="btn btn-outline-secondary" id="listbtn">목록</button>
 			</div>
 		</div>
+		<script>console.log("${!empty scheduleList}")</script>
 		<c:if test="${!empty scheduleList }">
 		<div id="view" class="wrapper row">
 			<div class="left_half col-sm-12 col-lg-6">
@@ -407,6 +405,11 @@
 							<th scope="col" style="width: 15%;">Last</th>
 						</tr>
 					</thead>
+					<c:if test="${result1.size() == 0 }">
+               <tr>
+               <td colspan="3">표시할 댓글이 없습니다</td>
+               </tr>
+            </c:if>
 					<tbody>
 						<c:forEach var="pc" items="${result1}">
 							<tr>
@@ -419,8 +422,7 @@
 									<c:if test="${pc.comment_writer eq sessionScope.user.seq}">
 										<button type="button" class="close" aria-label="Close"
 											id="deleteComment">
-											<a
-												href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
+											<a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
 												<span aria-hidden="true">&times;</span>
 											</a>
 										</button>

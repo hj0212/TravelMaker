@@ -204,7 +204,7 @@ $(document).ready(function(){
 	            </div>
 	            <div
 	               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-	               <button style="width: 100%; height: 86px;background-color: white" id="writeComment"  class=""btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
+	               <button style="width: 100%; height: 86px;background-color: white" id="writeComment" ><i class="fa fa-comments"></i>댓글 작성</button>
 	            </div>
 	         </div>
 		 </form>
@@ -219,6 +219,11 @@ $(document).ready(function(){
 
                </tr>
             </thead>
+             <c:if test="${commentList.size() == 0 }">
+               <tr>
+               <td colspan="3">표시할 댓글이 없습니다</td>
+               </tr>
+            </c:if>
             <tbody>
 	            <c:forEach var="comment" items="${commentList}">
 					<tr>

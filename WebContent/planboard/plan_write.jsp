@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>일정 등록</title>
 <script type="text/javascript"
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
 <link rel="stylesheet"
@@ -29,8 +29,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/css/tempusdominus-bootstrap-4.min.css" />
 <script
 	src="source/lib/lightswitch05-table-to-json/jquery.tabletojson.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="source/css/plan_writeNavi.css">
+<link rel="stylesheet" type="text/css" href="source/css/plan_writeNavi.css">
 <style>
 #title-board {
 	font-size: 15px;
