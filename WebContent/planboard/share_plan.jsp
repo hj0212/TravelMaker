@@ -30,6 +30,7 @@ body {
 }
 .container {
 	padding-top: 140px;
+	min-height: 570px;
 }
 div {
 	box-sizing: border-box;
@@ -45,10 +46,9 @@ div {
 	text-align: justify;
 	padding: 0px;
 }
+
 #search_area{
-	margin:0 auto;
-	text-align: center;
-		
+	margin: 10px auto;
 }
 
 #user-plan{
@@ -70,6 +70,12 @@ div {
 }
 #contID{
 	margin-top:140px;
+}
+#naviarea {
+	margin-bottom: 150px;
+}
+.divLine {
+	margin-top: 30px;
 }
 </style>
 </head>
@@ -137,8 +143,8 @@ div {
 		</div>
 
 		<!-- 검색/ 글쓰기 버튼  -->
-		<div class="row col-md-12">
-			<div class="input-group " id="search_area">
+		<div class="row col-md-12" id="search_area">
+			<div class="input-group">
 				<input type="text"
 					class=" form-control ml-auto col-4 justify-content-center"
 					placeholder="제목 검색" aria-label="reply"
@@ -157,7 +163,7 @@ div {
 		<h1 class="divLine">Plan</h1>
 		<hr/>
 
-		<div class="row mt-2 mx-0">
+		<div class="row mt-2 mx-0" id="planlistarea">
 			<c:forEach var="item" items="${planList}">
 				<div class="item col-md-3 mb-3">
 					<div class="card text-center">
@@ -183,7 +189,7 @@ div {
 
 
 		<!-- 페이지 네비 -->
-		<div class="col-md-12 mt-2">
+		<div class="col-md-12 mt-2" id="naviarea">
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">${pageNavi}</ul>
 			</nav>
