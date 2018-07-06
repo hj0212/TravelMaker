@@ -459,7 +459,7 @@
    /*댓글 작성*/
    
    $("#commentbtn").click(function() {
-	   var tmp = $("#comment_text").val().replace(/\s|　/gi, '');;
+	   var tmp = $("#comment_text").val().replace(/\s|　/gi, '');
 	   if(tmp==''){
 		   alert("내용을 입력해주세요");		  
 	   }else{		
