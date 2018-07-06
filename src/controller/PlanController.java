@@ -112,7 +112,6 @@ public class PlanController extends HttpServlet {
 				tmp.setSchedule_plan(request.getParameter("schedule"));
 				tmp.setSchedule_ref(request.getParameter("reference"));
 				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
-				System.out.println("schedule_Seq:" + schedule_seq);
 				int result = 0;
 				List<BudgetDTO> remolist = new ArrayList<>();
 				List<BudgetDTO> modilist = new ArrayList<>();
