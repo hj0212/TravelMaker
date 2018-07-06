@@ -445,9 +445,9 @@ public class ReviewDAO {
 		if(searchTerm == null || searchTerm.equals("")) {
 			sql = "select count(*) totalCount from reviewboard where review_writer=?";		
 			pstat = con.prepareStatement(sql);
-			pstat.setInt(1, seq);
+			pstat.setInt(1, seq); 
 		} else {
-			sql = "select count(*) totalCount from reviewboard where review_writer=? and review_title || review_contents like ?";
+			sql = "select count(*) totalCount from reviewboard where review_writer=? and (review_title || review_contents) like ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, seq);
 			pstat.setString(1, "%"+searchTerm+"%");
