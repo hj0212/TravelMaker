@@ -35,7 +35,7 @@
 					<nav class="navbar navbar-inverse navbar-fixed-top"
 						id="sidebar-wrapper" role="navigation">
 					<ul class="nav sidebar-nav">
-						<li class="sidebar-brand"><a href="#"> TravelMaker </a></li>
+						<li class="sidebar-brand"><a href="main.jsp"> TravelMaker </a></li>
 						<li><a href="showMembers.ad">Members</a></li>
 						<li><a href="javascript:msg()">Log</a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -62,7 +62,7 @@
 									<table class="table col-md-12">
 										<thead>
 											<tr>
-												<th colspan=8 class="text-center">자유게시판 신고 관리 </th>		
+												<th colspan=8 class="text-center" style="font-size:20px;">자유게시판 신고 관리 </th>		
 											</tr>
 											<!-- <button type="button" class="btn btn-outline-light pull-right" id="alignReport">신고수 확인</button> -->
 										</thead>
