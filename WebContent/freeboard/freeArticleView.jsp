@@ -219,6 +219,11 @@ $(document).ready(function(){
 
                </tr>
             </thead>
+             <c:if test="${commentList.size() == 0 }">
+               <tr>
+               <td colspan="3">표시할 댓글이 없습니다</td>
+               </tr>
+            </c:if>
             <tbody>
 	            <c:forEach var="comment" items="${commentList}">
 					<tr>

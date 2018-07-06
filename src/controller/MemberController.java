@@ -70,7 +70,7 @@ public class MemberController extends HttpServlet {
 					request.getSession().setAttribute("nickname", nickname);
 					if(user.getBlock().equals("y")) {
 						isForward = true;
-						dst="errorBlock.jsp";
+						dst="login/errorBlock.jsp";
 					}
 					else if(user.getBlock().equals("n") || user.getBlock().equals("x")){
 						isForward = true;
@@ -78,7 +78,7 @@ public class MemberController extends HttpServlet {
 					}
 				} else {
 					isForward = false;
-					dst="newlogin.jsp";
+					dst="login/newlogin.jsp";
 				}
 
 			} else if(command.equals("/join.do")) {
@@ -91,7 +91,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("proc", "join");
 				request.setAttribute("joinResult", result);	
 				isForward = true;
-				dst="newlogin.jsp";
+				dst="login/newlogin.jsp";
 
 			} else if(command.equals("/navlogin.do")) {				
 				String id = request.getParameter("id");
@@ -102,7 +102,7 @@ public class MemberController extends HttpServlet {
 				dto.setNaver_nickname(name);
 				dto.setNaver_email(email);
 
-				MemberDTO user = mdao.loginMember(dto);
+				MemberDTO user = mdao.addNaverMember(dto);
 				user.setPart("naver");
 
 				String nickname=mdao.getUserNickname(user.getSeq());
@@ -111,14 +111,15 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("part", "naver");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
-
-//				if(user.getBlock().equals("y")) {
-//					isForward = true;
-//					dst="errorBlock.jsp";
-//				}else {
+				
+				
+				if(user.getBlock().equals("y")) {
+					isForward = true;
+					dst="login/errorBlock.jsp";
+				}else {
 					isForward = false;
 					dst="main.bo";
-//				}	
+				}	
 
 			}else if(command.equals("/kakaologin.do")) {
 				String id = request.getParameter("id");
@@ -140,10 +141,10 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("nickname", nickname);
 				if(user.getBlock().equals("y")) {
 					isForward = true;
-					dst="errorBlock.jsp";
+					dst="login/errorBlock.jsp";
 				}else {
 					isForward = true;
-					dst="main.jsp";
+					dst="main.bo";
 				}
 
 
@@ -167,12 +168,11 @@ public class MemberController extends HttpServlet {
 				}
 
 				isForward = true;
-				dst="admin.jsp";
+				dst="admin/admin.jsp";
 			}else if(command.equals("/mypage.do")) {
 				String part = (String)request.getSession().getAttribute("part");
-				String id = (String)request.getSession().getAttribute("loginId");			
+				String id = (String)request.getSession().getAttribute("loginId");	
 				MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
-				
 			
 				/*프로필부분 출력*/
 				MemberDTO mdto = mdao.newMemberInfo(user.getSeq(), part);
@@ -184,8 +184,7 @@ public class MemberController extends HttpServlet {
 
 				/*String file_name = ((MemberDTO)request.getSession().getAttribute("user")).getPhoto_system_file_name();*/
 				request.setAttribute("file_name", mdto.getPhoto_system_file_name());
-
-				request.setAttribute("uploadPath", request.getAttribute("uploadPath"));
+				
 				if(part.equals("home")) {
 					request.setAttribute("nickname", mdto.getNickname());
 					request.setAttribute("email", mdto.getEmail());
@@ -242,7 +241,7 @@ public class MemberController extends HttpServlet {
 				request.getSession().invalidate();
 
 				isForward = true;
-				dst="main.jsp";	
+				dst="main.bo";	
 
 
 				//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
@@ -355,7 +354,7 @@ public class MemberController extends HttpServlet {
 			}else if(command.equals("/toEditInfoNK.do")) {
 				
 				isForward=true;
-			dst="toEditInfoNK.jsp";
+				dst="toEditInfoNK.jsp";
 				//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
 			}else if(command.equals("/checkEmail.do")){
 				String id=request.getParameter("id");
