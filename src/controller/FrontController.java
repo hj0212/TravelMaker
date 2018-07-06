@@ -526,7 +526,12 @@ public class FrontController extends HttpServlet {
 	        		  isForward = false;
 	        		  dst = "reviewError.bo";
 	        	  }
+	          // 마지막에 주소 에러 방지
+	          }else {
+	        	  dst = "main.bo";
+	        	  isForward = false;
 	          }
+			
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
