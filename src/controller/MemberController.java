@@ -58,7 +58,8 @@ public class MemberController extends HttpServlet {
 				boolean result = false;
 				if(user.getSeq() > 0) {
 					result = true;
-
+					request.getSession().setMaxInactiveInterval(60*60) ;
+					
 					request.setAttribute("proc", "login");
 					request.setAttribute("loginResult", result);
 					request.getSession().setAttribute("part", "home");
