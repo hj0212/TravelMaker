@@ -153,7 +153,7 @@ h5, .h5{
 			</div>
 			<div class="team">
 				<div class="teamimg"
-					style="background-image: url('test1.jpg'); background-size: 170px;"></div>
+					style="background-image: url('source/img/profile/kimchang.gif'); background-size: 170px;"></div>
 				<h4
 					style="text-align: center; margin-bottom: 2px; margin-top: 25px;">김창영</h4>
 				<p style="text-align: center;">Team Member</p>
@@ -215,7 +215,7 @@ h5, .h5{
 
 			<div class="team">
 				<div class="teamimg"
-					style="background-image: url('test1.jpg'); background-size: 170px;"></div>
+					style="background-image: url('source/img/profile/madong2.gif'); background-size: 170px;"></div>
 				<h4
 					style="text-align: center; margin-bottom: 2px; margin-top: 25px;">송호진</h4>
 				<p style="text-align: center;">Team Member</p>
