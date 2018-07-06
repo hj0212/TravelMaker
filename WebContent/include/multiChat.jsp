@@ -67,16 +67,16 @@
 			var str;
 			var file ="";
 		
-			$("input").keydown(function(event) {
+			$("#livemsg").keydown(function(event) {
 				if (event.which === 13) {
-					if($("input").val() == ""){
+					if($("#livemsg").val() == ""){
 						
 					}else{
 						
 						if("${sessionScope.img}" !=""){
 							file="${sessionScope.img}";
 						}else {		
-							file ="/TravelMaker/file/${file_name}";
+							file ="/WEB_06_18/file/${file_name}";
 						}							
 					var nickname = '${sessionScope.nickname}';
 					var msg = $("#livemsg").val();	
