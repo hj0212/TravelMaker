@@ -34,12 +34,12 @@
 	<script>
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					"ws://59.10.249.73/TravelMaker/websocket");
+					"ws://localhost:8080/WEB_06_18/websocket");
 			var str;
 			var file ="";
 		
-			$("#livemsg").keydown(function(event) {
-				if (event.which === 13) {
+			$("#livemsg").keypress(function(event) {
+				if (event.keyCode === 13) {
 					if($("#livemsg").val() == ""){
 						
 					}else{
@@ -47,7 +47,7 @@
 						if("${sessionScope.img}" !=""){
 							file="${sessionScope.img}";
 						}else {		
-							file ="/TravelMaker/file/${sessionScope.file_name}";
+							file ="/WEB_06_18/file/${sessionScope.file_name}";
 						}							
 					var nickname = '${sessionScope.nickname}';
 					var msg = $("#livemsg").val();	

@@ -62,32 +62,29 @@
 									<table class="table col-md-12">
 										<thead>
 											<tr>
-												<th colspan=8 class="text-center">자유게시판 신고 관리 <button type="button" class="btn btn-outline-light pull-right" id="alignReport">신고수 확인</button></th>		
+												<th colspan=8 class="text-center"  style="font-size:20px;">자유게시판 신고 관리 <button type="button"  href ="admin_free.ad"class="btn btn-outline-light pull-right" id="alignReport2">전체 신고글 확인</button></th>		
 											</tr>
 										</thead>
 										<tbody class="text-center">
 											<tr>
-												<th style="width:10%">번호</th>
-												<th class="text-center" style="width:10%;">글 번호</th>
+												<th style="width:10%">글 번호</th>
 												<th class="text-center" style="width:30%;">글 제목</th>
-												<th class="text-center" style="width:15%;">작성자</th>											
-												<th class="text-center" style="width:15%;">신고자</th>
-												<th class="text-center" style="width:15%;">신고 날짜</th>
-												<th class="text-center" style="width:20%;">확인</th>
+												<th class="text-center" style="width:20%;">작성자</th>											
+												<th class="text-center" style="width:10%;">작성 날짜</th>
+												<th class="text-center" style="width:15%;">조회 수</th>
+												<th class="text-center" style="width:15%;">신고 수</th>
 											</tr>
 
-											<c:forEach var="f" items="${freereport}" varStatus="status">
+											<c:forEach var="fc" items="${freecountreport}" varStatus="status">
 												<tr>
-													<th>${f.reportfree_seq}</th>
-													<td>${f.free_seq}</td>
-													<fmt:parseNumber var="seq" type="number" integerOnly="true" value="${f.free_seq}"/>
-												
-													<td>${f.free_title}</td>
-													<td>${f.free_writer}</td>
-													<td>${f.report_user}</td>
-													<td>${f.report_date}</td>
-																							
-													<td><a href="viewFreeArticle.bo?seq=${seq}" id="linkId">확인</a></td>											
+													<th>${fc.free_seq}</th>
+													<td>${fc.free_title}</td>
+												<%-- 	<fmt:parseNumber var="seq" type="number" integerOnly="true" value="${f.free_seq}"/> --%>
+													<td>${fc.free_writer}</td>
+													<td>${fc.free_writedate}</td>
+													<td>${fc.free_viewcount}</td>
+													<td>${fc.report_count}</td>									
+													<%-- <td><a href="viewFreeArticle.bo?seq=${seq}" id="linkId">확인</a></td>		 --%>									
 												</tr>
 											</c:forEach>
 
@@ -112,7 +109,8 @@
 
 			<script>
 				$(document).ready(
-					function() {
+					
+						function() {
 						var trigger = $('.hamburger'), overlay = $('.overlay'), isClosed = false;
 						trigger.click(function() {
 							hamburger_cross();});
@@ -133,12 +131,11 @@
 
 					$('[data-toggle="offcanvas"]').click(
 						function() {
-							$('#wrapper').toggleClass('toggled');});
+							$('#wrapper').toggleClass('toggled');})
 					
-					$("#alingReport").click(function(){
-						
-						
-					})
+					/* $("#alingReport2").click(function(){
+						location.href="admin_free.ad";	
+					}) */
 					
 					
 					})	

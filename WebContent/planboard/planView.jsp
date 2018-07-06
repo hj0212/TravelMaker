@@ -394,7 +394,7 @@
 		 <form method="post" <%-- action="insertPlanComment.plan?plan_seq=${plan_seq}" --%>  id="planCommentForm" name="planCommentForm" >
 	         <div style="width: 100%; margin: 0px;">
 	            <div style="width: 80%">
-	               <textarea class="form-control" rows="3" id="comment" style="resize: none; width: 100%; margin: 0px; float: left;" maxlength="65" name="comment_text" id="comment_text"></textarea>
+	               <textarea class="form-control" rows="3" style="resize: none; width: 100%; margin: 0px; float: left;" maxlength="65" name="comment_text" id="comment_text"></textarea>
 	               <input type="text" readonly value="" name="articlenum" style="display:none">
 	            </div>
 	            <div
@@ -459,7 +459,7 @@
    /*댓글 작성*/
    
    $("#commentbtn").click(function() {
-	   var tmp = $("#comment").val().replace(/\s|　/gi, '');;
+	   var tmp = $("#comment_text").val().replace(/\s|　/gi, '');
 	   if(tmp==''){
 		   alert("내용을 입력해주세요");		  
 	   }else{		

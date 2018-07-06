@@ -210,4 +210,5 @@ div {
 			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
 	</c:choose>	
+
 </html>
