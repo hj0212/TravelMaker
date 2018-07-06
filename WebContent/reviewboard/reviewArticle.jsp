@@ -203,9 +203,13 @@ $(document).ready(function(){
                   <th scope="col" style="width: 15%;">Last</th>
                </tr>
             </thead>
+            <c:if test="${commentResult.size() == 0 }">
+               <tr>
+               <td colspan="3">표시할 댓글이 없습니다</td>
+               </tr>
+            </c:if>
             <tbody>
-
-               <c:forEach var="comment" items="${commentResult}">
+               <c:forEach var="comment" items="${commentResult}">               
                   <tr>
                      <th scope="row"
                         style="width: 15%; max-width: 15%; max-height: 51px;"
@@ -223,12 +227,15 @@ $(document).ready(function(){
                      
                      </td>
                   </tr>
+                  
                </c:forEach>
+          
+         
             </tbody>
          </table>
       </div>
    </div>
-   </div>
+  
  
    <script>
 /*       $("#comment-write-bnt").click(

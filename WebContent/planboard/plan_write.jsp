@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>일정 등록</title>
 <script type="text/javascript"
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
 <link rel="stylesheet"
@@ -29,8 +29,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/css/tempusdominus-bootstrap-4.min.css" />
 <script
 	src="source/lib/lightswitch05-table-to-json/jquery.tabletojson.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="source/css/plan_writeNavi.css">
+<link rel="stylesheet" type="text/css" href="source/css/plan_writeNavi.css">
 <style>
 #title-board {
 	font-size: 15px;
@@ -151,10 +150,10 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/otherNavi_login.jsp"%>			
+			<%@include file="../include/otherNavi_login.jsp"%>			
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/otherNavi.jsp"%>			
+			<%@include file="../include/otherNavi.jsp"%>			
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
@@ -166,7 +165,9 @@
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
 				name="plantitle" value="${plan_title}" readonly>
+			<c:if test="${plan_state eq false}">
 			<button type="button" class="btn btn-outline-primary" id="savebtn">임시 저장</button>
+			</c:if>
 			<button type="button" class="btn btn-primary" id="endbtn">등록</button>
 		</div>
 		<!-- 여기 몇일 여행인지 받아서 개수만큼 돌리기 -->
@@ -444,7 +445,7 @@
         </div>
     </div>
     <div class="footer" style="height: 300px;">
-    <%@include file="footer1.jsp"%>
+    <%@include file="../footer1.jsp"%>
     </div>
 <script>
 $(document).ready(function() {
