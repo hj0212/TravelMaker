@@ -67,8 +67,7 @@ a {
 	<div
 		class="navbar fixed-top collapse navbar-collapse navbar-expand-lg navbar-light shadow-sm "
 		style="background-color: white; height: 100px" id="navId">
-		<a class="navbar-brand" href="main.jsp" style="font-size: 30px"><h1
-				class="logo">Logo</h1></a>
+		<a class="navbar-brand" href="main.jsp" style="font-size: 30px"><h1 class="logo">Logo</h1></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
 			aria-expanded="false" aria-label="Toggle navigation">
