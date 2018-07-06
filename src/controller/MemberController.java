@@ -173,9 +173,7 @@ public class MemberController extends HttpServlet {
 			
 				/*프로필부분 출력*/
 				MemberDTO mdto = mdao.newMemberInfo(user.getSeq(), part);
-				System.out.println("seq :"+user.getSeq());
-
-				System.out.println("mdto :"+mdto.getPhoto_system_file_name());
+			
 
 				/*mdto = mdao.getProfileInfo(part, id);*/
 

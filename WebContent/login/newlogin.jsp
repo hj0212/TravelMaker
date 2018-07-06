@@ -97,7 +97,7 @@
 			  var userid = $("#userid").val();
 			  var password = $("#password").val();
 			  if($(".btn-login").text()=="Log in") {
-				  $("#userform").attr('action','login.do').submit();
+				  $("#userform").attr('action','../login.do').submit();
 			  }else if(userid==""){
 				  alert("ID를 입력해주세요");
 			  }else if(password==""){
@@ -111,7 +111,7 @@
 	  $(".btn-login").click(function() {
 		  if($(".btn-login").text()=="Log in") {
 			  console.log("로그인");
-			  $("#userform").attr('action','login.do').submit();
+			  $("#userform").attr('action','../login.do').submit();
 		  } else if($(".btn-login").text()=="Sign up"){
 			  console.log("사인업");
 			  var id = $("#user_idcheck").val();
@@ -138,7 +138,7 @@
 			  }else if(conpw != pw){
 				  alert("패스워드가 일치 하지않습니다");
 			  }else{
-				  $("#userform").attr('action','join.do').submit();
+				  $("#userform").attr('action','../join.do').submit();
 			  }		  
 			  
 			  
