@@ -62,9 +62,9 @@
 									<table class="table col-md-12">
 										<thead>
 											<tr>
-												<th colspan=8 class="text-center" style="font-size:20px;">자유게시판 신고 관리 </th>		
+												<th colspan=8 class="text-center" style="font-size:20px;">자유게시판 신고 관리 <button type="button" class="btn btn-outline-light pull-right" id="alignReport">신고수 확인</button></th>		
 											</tr>
-											<!-- <button type="button" class="btn btn-outline-light pull-right" id="alignReport">신고수 확인</button> -->
+											  
 										</thead>
 										<tbody class="text-center">
 											<tr>
@@ -135,11 +135,11 @@
 						function() {
 							$('#wrapper').toggleClass('toggled');});
 					
-					/* $("#alignReport").click(function(){
+					 $("#alignReport").click(function(){
 						 location.href="admin_free_count.ad"; 
-						alert("준비중입니다.");						
+								
 						
-					}) */
+					}) 
 					
 					
 					})	
