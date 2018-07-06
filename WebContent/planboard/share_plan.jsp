@@ -209,10 +209,9 @@ div {
 	</script>
 	
 </body>
-<c:choose>
+	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
-	</c:choose>
-	
+	</c:choose>	
 </html>

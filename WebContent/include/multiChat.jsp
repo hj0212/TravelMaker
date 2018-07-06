@@ -34,7 +34,7 @@
 	<script>
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					"ws://localhost:8080/WEB_06_18/websocket");
+					"ws://59.10.249.73/TravelMaker/websocket");
 			var str;
 			var file ="";
 		
@@ -47,7 +47,7 @@
 						if("${sessionScope.img}" !=""){
 							file="${sessionScope.img}";
 						}else {		
-							file ="/WEB_06_18/file/${file_name}";
+							file ="/TravelMaker/file/${sessionScope.file_name}";
 						}							
 					var nickname = '${sessionScope.nickname}';
 					var msg = $("#livemsg").val();	
