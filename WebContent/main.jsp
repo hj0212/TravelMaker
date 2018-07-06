@@ -116,14 +116,16 @@ div {
 
 </head>
 <body>
-
+	<script type="text/javascript">console.log(${sessionScope.user.seq})</script>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="../include/mainNavi_login.jsp"%>
+			<%@include file="include/mainNavi_login.jsp"%>
 
 		</c:when>
 		<c:otherwise>
-			<%@include file="../include/mainNavi.jsp"%>
+			<script type="text/javascript">console.log(${sessionScope.user.seq})</script>
+	
+			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
 	
