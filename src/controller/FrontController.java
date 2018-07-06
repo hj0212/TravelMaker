@@ -424,7 +424,7 @@ public class FrontController extends HttpServlet {
 					/*mdto = mdao.getProfileInfo(part, id);*/
 					
 					/*String file_name = ((MemberDTO)request.getSession().getAttribute("user")).getPhoto_system_file_name();*/
-					 request.setAttribute("file_name", mdto.getPhoto_system_file_name());
+					request.getSession().setAttribute("file_name", mdto.getPhoto_system_file_name());
 		        	
 		        	
 	        	}

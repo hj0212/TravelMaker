@@ -284,7 +284,8 @@ $("#user_idchek").keyup(function(){
 								    	            	data:{
 								    	            		id:res.id,
 								    	            		name:res.properties.nickname,
-								    	            		email:res.kaccount_email
+								    	            		email:res.kaccount_email,
+								    	            		img:res.properties.profile_image
 								    	             	},
 								    	            	success:function(data) {
 								    	            		location.href = "../main.jsp";

@@ -203,7 +203,7 @@ background-color:primary;
 	font-weight: 300;
 	border-color: transparent;
 	font-size: 10px;
-	background: #777777;
+	background: white;
 	color: #fff;
 	cursor: pointer;
 }
@@ -216,8 +216,8 @@ background-color:primary;
 #img_button {
 	cursor: pointer;
 	opacity: 3;
-	background-color: #777777;
-	border: transparent;
+	background-color: white;
+	border: 1px boder black;
 }
 
 .card-header {
@@ -231,7 +231,7 @@ background-color:primary;
 	text-align: center;
 }
 
-.navbar-nav, #pagenaviarea ul {
+.navbar-nav, #pagenaviarea ul, #footer ul {
 	border: none;
 }
 
@@ -242,6 +242,8 @@ background-color:primary;
 #tempplanarea {
 	margin-bottom: 60px;
 }
+
+
 </style>
 <script>
 	$(document).ready(function() {
@@ -286,17 +288,17 @@ background-color:primary;
 							<form action="profileImg.do" method="post"
 								enctype="multipart/form-data" id="profileImgForm">
 								<button id="img_button" type="button" class="d-inline"
-									title="여기를 누르시면 이미지를 변경하실수있습니다."
-									style="max-height: 238px; height: 238px; width: 344.59px; max-width: 344.59px">
+									title="여기를 누르면 이미지를 변경할 수 있습니다."
+									style="max-height: 250px; height: 250px; width: 300px; max-width: 344.59px">
 									<img for="img_file" id="profile_img"
-										src="Charlie-Chaplin-PNG-Image-17681.png"
-										alt="프로필 사진을 등록해보세요!" style="width: 100%; height: 100%">
+										src="/TravelMaker/file/${file_name }"
+										alt="여기를 눌러 프로필 사진을 등록해보세요!" style="width: 100%; height: 100%">
 								</button>
 								<div class="align-items-center">
 									<input type="file" id="img_file" name="file"
 										accept=".gif, .jpg, .png, .jpeg" value="이미지변경" hidden="true">
 									<button class="btn btn-outline-primary" type="button"
-										id="profile" style="width: 344.59px;">프로필사진</button>
+										id="profile" style="width: 300px;">프로필사진</button>
 								</div>
 							</form>
 						</div>
@@ -361,7 +363,7 @@ background-color:primary;
 								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
 									class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
 							</div>
-							<h6 class="text-muted">${item.plan_startdate}~ ${item.plan_enddate}</h6>
+							<h6 class="text-muted" style="margin-top:8px;">${item.plan_startdate}~ ${item.plan_enddate}</h6>
 						</div>
 					</div>
 				</div>
@@ -458,8 +460,7 @@ background-color:primary;
 								</div>
 							</div>
 						</c:forEach>
-								<!-- 페이징 -->
-				<div class="col-md-12 mt-2" id="pagenaviarea">
+					<div class="col-md-12 mt-2" id="pagenaviarea">
 					<nav aria-label="Page navigation">
 						<ul class="pagination justify-content-center">${MyPlanPageNavi}</ul>
 					</nav>
@@ -507,22 +508,6 @@ background-color:primary;
 
 					</div>
 				</div>
-
-				<!-- 검색  -->
-				<div class="row col-md-12">
-					<div class="input-group mt-2 col-md-12" id="inputSearch">
-						<input type="text"
-							class="form-control ml-auto col-4 justify-content-center"
-							aria-label="reply" aria-describedby="basic-addon2" id="search">
-						<div class="input-group-append">
-							<button class="btn btn-outline-primery mx-1" type="button"
-								id="searchbtn" name="searchbtn">검색</button>
-						</div>
-					</div>
-				</div>
-
-				
-
 
 			</div>
 		</div>

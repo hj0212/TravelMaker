@@ -207,10 +207,11 @@ div {
 			location.href = "planboard.plan?search=" + $("#search").val();
 		})
 	</script>
+	
 </body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
-	</c:choose>
+	</c:choose>	
 </html>

@@ -149,11 +149,11 @@ a {
 			</div>
 		</div>
 	</div>
-<%-- 	<c:choose>
+	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
-	</c:choose> --%>
+	</c:choose>
 	<div id="footer">
 		<%@include file="../footer1.jsp"%>
 	</div>
