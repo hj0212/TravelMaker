@@ -273,8 +273,8 @@ public class FrontController extends HttpServlet {
 		        		  dst = "freeboard.bo";
 		        	  }else {
 		        		  dst = "freenotWriter.bo";
-		        		  isForward = false;
 		        	  }
+		        	  isForward = false;
 	        	  }catch(NumberFormatException e) {
 	        		  isForward = false;
 	        		  dst = "freeNumberError.bo";
