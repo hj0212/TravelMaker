@@ -1071,7 +1071,6 @@ public class PlanDAO {
 			pdto.setPlan_viewcount(rs.getInt("plan_viewcount"));
 			pdto.setPlan_startdate(rs.getString("plan_startdate"));
 			pdto.setPlan_enddate(rs.getString("plan_enddate"));
-			pdto.setPlan_check(rs.getString("plan_check"));
 			result.add(pdto);
 		}
 
