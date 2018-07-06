@@ -223,6 +223,14 @@ background-color:primary;
 .card-header {
 	background-color: #eee;
 }
+
+/*noArticle*/
+
+.noArticle{
+border-top:1px dotted #eee;
+border-bottom: 1px dotted #eee;
+text-align:center;
+}
 </style>
 <script>
 	$(document).ready(
@@ -321,17 +329,18 @@ background-color:primary;
 
 		<!--임시저장-->
 		<div>
-			<h1 class="divLine">작성중인Plan</h1>
-			<div class="col-md-12 align-items-center">
 			<c:if test="${planList.size() == 0 }">
-				<fieldset class="border p-4 w-50" style="text-align:center;">
-				<legend class="w-auto">표시할 내용이 없습니다</legend>
-				당신의 Plan을 만들어보세요!
+			<div class="col-md-12 align-items-center">
+				<fieldset class="border p-4" style="text-align:center;">
+				<legend class="w-auto"><h1>작성중인 Plan이 없습니다</h1></legend>
+				<h5>당신의 Plan을 만들어보세요!</h5>
 				</fieldset>
+			</div>
 			</c:if>
 			</div>
-			<div class="row mt-2 mx-0">
 				<c:forEach var="item" items="${planList}">
+			<h1 class="divLine">작성중인Plan</h1>
+			<div class="row mt-2 mx-0">
 					<hr/>
 					<div class="item col-md-3 mb-3">
 						<div class="card text-center">
@@ -360,7 +369,7 @@ background-color:primary;
 
 
 
-		</div>
+	
 
 
 		<!--tab부분-->
@@ -378,18 +387,24 @@ background-color:primary;
 						<li class="nav-item px-0" id="tab3"><a href="#tabthree"
 							class="nav-link" data-toggle="tab" data-target="#tabthree"
 							role="presentation">좋아요누른글</a></li>
-						<li class="nav-item px-0" id="tab4"><a href="#tabfour"
-							class="nav-link" data-toggle="tab" data-target="#tabfour"
-							role="presentation">Tab 4</a></li>
 					</ul>
 				</div>
 				<div class="pannel-body">
 
-					<div class="row tab-content ">
+					<div class="row tab-content">
 
 						<!-- tabone -->
 						<div class="col tab-pane active" id="tabone" role="tabpanel">
-							<div class="row">
+							<div class="row" style="height:300px;">
+													
+						<c:if test="${MyReviewResult.size() == 0}">						
+						<div class="noArticle col-md-12 w-100 h-100 py-5">	
+						<h3 style="margin:50px;">표시할 내용이 없습니다</h3>	
+						<small>당신의 후기글을 기다립니다</small>				
+						</div>
+						</c:if>
+							
+						
 								<c:forEach var="mrr" items="${MyReviewResult}">
 									<div class="item col-md-3 col-sm-3 w-25">
 										<div class="card">
@@ -417,7 +432,14 @@ background-color:primary;
 
 
 						<div class="col tab-pane" id="tabtwo" role="tabpanel">
-							<div class="row">
+							<div class="row" style="height:300px;">
+
+			<c:if test="${MyPlanResult.size() == 0}">						
+						<div class="noArticle col-md-12 w-100 h-100 py-5">	
+						<h3 style="margin:50px;">표시할 내용이 없습니다</h3>	
+						<small>당신의 여행계획을 기다립니다</small>				
+						</div>
+						</c:if>
 
 								<c:forEach var="mpr" items="${MyPlanResult}">
 									<div class="item col-md-3 col-sm-3 w-25">
@@ -443,7 +465,14 @@ background-color:primary;
 
 						<!-- tabthree -->
 						<div class="col tab-pane" id="tabthree" role="tabpanel">
-							<div class="row mt-2 mx-0">
+							<div class="row mt-2 mx-0" style="height:300px;">
+
+	<c:if test="${flist.size() == 0}">						
+						<div class="noArticle col-md-12 w-100 h-100 py-5">	
+						<h3 style="margin:50px;">표시할 내용이 없습니다</h3>	
+						<small>좋아요를 눌러보세요...ㅜ</small>				
+						</div>
+						</c:if>
 
 								<c:forEach var="item" items="${flist}">
 									<div class="item col-md-3 mb-3">
@@ -473,68 +502,6 @@ background-color:primary;
 							</div>
 						</div>
 
-
-						<!-- tabfour -->
-						<div class="col tab-pane" id="tabfour" role="tabpanel">
-							<div class="row">
-
-
-								<div class="item col-md-3 col-sm-3 w-25">
-									<div class="card">
-										<div class="card-header">Header</div>
-										<img class="card-img-top float-left rounded"
-											src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg"
-											alt="Card image cap">
-										<div class="card-body">
-											<h4>Card title</h4>
-											<h6 class="text-muted">Subtitle</h6>
-											<p>Some quick example text to build on the card title .</p>
-										</div>
-									</div>
-								</div>
-								<div class="item col-md-3 col-sm-3 w-25">
-									<div class="card">
-										<div class="card-header">Header</div>
-										<img class="card-img-top float-left rounded"
-											src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg"
-											alt="Card image cap">
-										<div class="card-body">
-											<h4>Card title</h4>
-											<h6 class="text-muted">Subtitle</h6>
-											<p>Some quick example text to build on the card title .</p>
-										</div>
-									</div>
-								</div>
-								<div class="item col-md-3 col-sm-3 w-25">
-									<div class="card">
-										<div class="card-header">Header</div>
-										<img class="card-img-top float-left rounded"
-											src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg"
-											alt="Card image cap">
-										<div class="card-body">
-											<h4>Card title</h4>
-											<h6 class="text-muted">Subtitle</h6>
-											<p>Some quick example text to build on the card title .</p>
-										</div>
-									</div>
-								</div>
-								<div class="item col-md-3 col-sm-3 w-25">
-									<div class="card">
-										<div class="card-header">Header</div>
-										<img class="card-img-top float-left rounded"
-											src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg"
-											alt="Card image cap">
-										<div class="card-body">
-											<h4>Card title</h4>
-											<h6 class="text-muted">Subtitle</h6>
-											<p>Some quick example text to build on the card title .</p>
-										</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-
 						<!-- 검색  -->
 						<div class="row col-md-12">
 							<div class="input-group mt-2 col-md-12" id="inputSearch">
@@ -558,7 +525,7 @@ background-color:primary;
 				</div>
 			</div>
 		</div>
-	</div>
+	
 	<div id="footer">
 		<%@include file="footer1.jsp"%>
 	</div>
