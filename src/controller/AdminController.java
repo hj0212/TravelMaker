@@ -71,7 +71,7 @@ public class AdminController extends HttpServlet {
 			//---------------------------admin_free >정렬 바꾸기..할지말지 고민중.
 			else if(command.equals("/admin_free_count.ad")) {
 				List<ReportFreeDTO> flist = new ArrayList<>();
-				flist = adao.getAllReport_f();
+				flist = adao.getReportAlign_f();
 				request.setAttribute("freecountreport", flist);
 	
 				isForward = true;

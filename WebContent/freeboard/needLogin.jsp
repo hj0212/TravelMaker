@@ -40,7 +40,7 @@
 	
 	<script>
 		$("#goLogin").click(function(){
-			location.href = "login/newlogin.jsp";
+			location.href = "login.do";
 		});
 		
 		$("#goList").click(function(){
