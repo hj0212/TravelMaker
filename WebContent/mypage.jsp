@@ -331,7 +331,7 @@ text-align:center;
 		<div>
 			<c:if test="${empty planList}">
 			<div class="row-md-12">
-			<div class="col-md-12">
+			<div class="col-md-12 col-sm-4">
 				<fieldset class="border p-4" style="text-align:center;">
 				<legend class="w-auto"><h1>작성중인 Plan이 없습니다</h1></legend>
 				<h5>당신의 Plan을 만들어보세요!</h5>
@@ -342,8 +342,9 @@ text-align:center;
 			</div>
 				<c:forEach var="item" items="${planList}">
 			<h1 class="divLine">작성중인Plan</h1>
-			<div class="row mt-2 mx-0">
-					<hr/>
+			<hr/>
+			<div class="row mt-2">
+					
 					<div class="item col-md-3 mb-3">
 						<div class="card text-center">
 							<a
@@ -388,7 +389,7 @@ text-align:center;
 							role="presentation">내계획</a></li>
 						<li class="nav-item px-0" id="tab3"><a href="#tabthree"
 							class="nav-link" data-toggle="tab" data-target="#tabthree"
-							role="presentation">좋아요누른글</a></li>
+							role="presentation">내<i class="glyphicon glyphicon-heart"></i>글</a></li>
 					</ul>
 				</div>
 				<div class="pannel-body">
