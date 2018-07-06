@@ -189,6 +189,7 @@ background-color:primary;
 
 #con {
 	height: 100%;
+	margin: 0;
 	display: inline;
 	float: left;
 	text-align: center;
@@ -230,8 +231,16 @@ background-color:primary;
 	text-align: center;
 }
 
-.navbar-nav {
+.navbar-nav, #pagenaviarea ul {
 	border: none;
+}
+
+#profile-container {
+	padding: 0;
+}
+
+#tempplanarea {
+	margin-bottom: 60px;
 }
 </style>
 <script>
@@ -266,12 +275,11 @@ background-color:primary;
 
 	<div id="wrapper">
 		<!--profile부분-->
-		<div class="py-5 text-center w-100 h-100" id="profile-cont">
+		<div class="py-1 text-center w-100 h-100" id="profile-cont">
 			<div class="container py-5">
 				<div class="row">
 					<!-- <div class="col-sm-8 col-md-3 col-lg-3"> -->
-					<div class="w-100 h-100 py-3 px-1 align-items-center"
-						id="profile-container">
+					<div class="w-100 h-100 py-3 px-1 align-items-center" id="profile-container">
 						<!-- <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap"> -->
 						<!--프로필 이미지 업로드-->
 						<div class="col-sm-12 col-lg-5 py-3 ml-3 align-center"
@@ -294,7 +302,7 @@ background-color:primary;
 							</form>
 						</div>
 						<!--기본 프로필-->
-						<div class="col-sm-12 col-lg-7 d-inline py-5 my-5" id="con">
+						<div class="col-sm-12 col-lg-7 d-inline py-5 my-3" id="con">
 							<h4 class="my-2">${nickname}</h4>
 							<c:choose>
 								<c:when test="${email eq null}">
@@ -325,32 +333,32 @@ background-color:primary;
 		<!--임시저장-->
 		<div>
 			<c:if test="${empty planList}">
-			<div class="row-md-12">
-			<div class="col-md-12 col-sm-4">
-				<fieldset class="border p-4" style="text-align:center;">
-				<legend class="w-auto"><h1>작성중인 Plan이 없습니다</h1></legend>
-				<h5>당신의 Plan을 만들어보세요!</h5>
-				</fieldset>
-			</div>
-			</div>
+				<div class="row-md-12">
+					<div class="col-md-12 col-sm-4">
+						<fieldset class="border p-4" style="text-align: center;">
+							<legend class="w-auto">
+								<h1>작성중인 Plan이 없습니다</h1>
+							</legend>
+							<h5>당신의 Plan을 만들어보세요!</h5>
+						</fieldset>
+					</div>
+				</div>
 			</c:if>
 		</div>
 		<c:forEach var="item" items="${planList}">
 			<h1 class="divLine">작성중인Plan</h1>
-			<hr/>
-			<div class="row mt-2">
-					
-					<div class="item col-md-3 mb-3">
-						<div class="card text-center">
-							<a
-								href="selectSchedule.plan?plan=${item.plan_seq}&day=1&create=f"
-								style="text-decoration: none;">
-								<div class="card-header planTitle"
-									style="line-height: 35px; height: 55px; overflow: hidden;">${item.plan_title}</div>
-							</a>
-							<div class="card-body mt-1 text-center">
-								<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
-								<div class="btn-list d-inline">
+			<hr />
+			<div class="row mt-2" id="tempplanarea">
+				<div class="item col-md-3 mb-3">
+					<div class="card text-center">
+						<a href="selectSchedule.plan?plan=${item.plan_seq}&day=1&create=f"
+							style="text-decoration: none;">
+							<div class="card-header planTitle"
+								style="line-height: 35px; height: 55px; overflow: hidden;">${item.plan_title}</div>
+						</a>
+						<div class="card-body mt-1 text-center">
+							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
+							<div class="btn-list d-inline">
 
 								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
 									class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
@@ -360,185 +368,160 @@ background-color:primary;
 						</div>
 					</div>
 				</div>
+			</div>
 		</c:forEach>
 
-	</div>
+		<div class="panel-heading">
+			<ul class="nav nav-tabs nav-justified" id="tabs">
+				<li class="nav-item px-0" id="tab1"><a href="#tabone"
+					class="active nav-link" data-toggle="tab" data-target="#tabone"
+					role="presentation">내 후기글</a></li>
+				<li class="nav-item px-0" id="tab2"><a href="#tabtwo"
+					class="nav-link" data-toggle="tab" data-target="#tabtwo"
+					role="presentation">내 계획</a></li>
+				<li class="nav-item px-0" id="tab3"><a href="#tabthree"
+					class="nav-link" data-toggle="tab" data-target="#tabthree"
+					role="presentation">좋아요 누른 글</a></li>
+			</ul>
+		</div>
+		
+		<div class="pannel-body">
+			<div class="row tab-content">
+				<!-- tabone -->
+				<div class="col tab-pane active" id="tabone" role="tabpanel">
+					<div class="row">
 
-
-
-
-
-
-
-				<div class="panel-heading">
-					<ul class="nav nav-tabs nav-justified" id="tabs">
-						<li class="nav-item px-0" id="tab1"><a href="#tabone"
-							class="active nav-link" data-toggle="tab" data-target="#tabone"
-							role="presentation">내후기글</a></li>
-						<li class="nav-item px-0" id="tab2"><a href="#tabtwo"
-							class="nav-link" data-toggle="tab" data-target="#tabtwo"
-							role="presentation">내계획</a></li>
-						<li class="nav-item px-0" id="tab3"><a href="#tabthree"
-							class="nav-link" data-toggle="tab" data-target="#tabthree"
-							role="presentation">내<i class="glyphicon glyphicon-heart"></i>글</a></li>
-					</ul>
-				</div>
-				<div class="pannel-body">
-
-			<div class="panel-heading">
-				<ul class="nav nav-tabs nav-justified" id="tabs">
-					<li class="nav-item px-0" id="tab1"><a href="#tabone"
-						class="active nav-link" data-toggle="tab" data-target="#tabone"
-						role="presentation">내후기글</a></li>
-					<li class="nav-item px-0" id="tab2"><a href="#tabtwo"
-						class="nav-link" data-toggle="tab" data-target="#tabtwo"
-						role="presentation">내계획</a></li>
-					<li class="nav-item px-0" id="tab3"><a href="#tabthree"
-						class="nav-link" data-toggle="tab" data-target="#tabthree"
-						role="presentation">좋아요누른글</a></li>
-				</ul>
-			</div>
-			<div class="pannel-body">
-
-				<div class="row tab-content">
-
-					<!-- tabone -->
-					<div class="col tab-pane active" id="tabone" role="tabpanel">
-						<div class="row">
-
-							<c:if test="${empty MyReviewResult}">
-								<div class="noArticle col-md-12 w-100 h-100 py-5">
-									<div style="height: 300px;">
-										<h3 style="margin: 50px;">표시할 내용이 없습니다</h3>
-										<small>당신의 후기글을 기다립니다</small>
-									</div>
+						<c:if test="${empty MyReviewResult}">
+							<div class="noArticle col-md-12 w-100 h-100 py-5">
+								<div style="height: 300px;">
+									<h3 style="margin: 50px;">표시할 내용이 없습니다</h3>
+									<small>당신의 후기글을 기다립니다</small>
 								</div>
-							</c:if>
-
-
-							<c:forEach var="mrr" items="${MyReviewResult}">
-								<div class="item col-md-3 col-sm-3 w-25">
-									<div class="card">
-										<div class="card-header">
-											<a href="reviewArticle.bo?review_seq=${mrr.review_seq}"
-												style="text-decoration: none; text-align: center; margin: 0 auto;">
-												<h6>${mrr.review_title}</h6>
-											</a>
-										</div>
-										<img class="card-img-top float-left rounded"
-											src="Charlie-Chaplin-PNG-Image-17681.png"
-											alt="Card image cap">
-										<div class="card-body">
-											<p>${mrr.review_viewcount}</p>
-											<h6 class="text-muted">${mrr.review_contents}</h6>
-											<p>${mrr.review_writedate}</p>
-										</div>
-									</div>
-								</div>
-							</c:forEach>
-						</div>
-					</div>
-
-					<!-- tabtwo -->
-
-
-					<div class="col tab-pane" id="tabtwo" role="tabpanel">
-						<div class="row">
-
-							<c:if test="${empty MyPlanResult}">
-								<div class="noArticle col-md-12 w-100 h-100 py-5">
-									<div style="height: 300px;">
-										<h3 style="margin: 50px;">표시할 내용이 없습니다</h3>
-										<small>당신의 여행계획을 기다립니다</small>
-									</div>
-								</div>
-							</c:if>
-
-							<c:forEach var="mpr" items="${MyPlanResult}">
-								<div class="item col-md-3 col-sm-3 w-25">
-									<div class="card">
-										<div class="card-header">
-											<a href="planArticle.plan?plan_seq=${mpr.plan_seq}"
-												style="text-decoration: none; text-align: center; margin: 0 auto;">
-												<h6>${mpr.plan_title}</h6>
-											</a>
-										</div>
-										<div class="card-body">
-											<p>${mpr.plan_viewcount}</p>
-											<h6 class="text-muted">${mpr.plan_startdate}~
-												${mpr.plan_enddate}</h6>
-										</div>
-									</div>
-								</div>
-							</c:forEach>
-
-
-						</div>
-					</div>
-
-					<!-- tabthree -->
-					<div class="col tab-pane" id="tabthree" role="tabpanel">
-						<div class="row mt-2 mx-0">
-
-							<c:if test="${empty flist}">
-								<div class="noArticle col-md-12 w-100 h-100 py-5">
-									<div style="height: 300px;">
-										<h3 style="margin: 50px;">표시할 내용이 없습니다</h3>
-										<small>좋아요를 눌러보세요...ㅜ</small>
-									</div>
-								</div>
-							</c:if>
-
-							<c:forEach var="item" items="${flist}">
-								<div class="item col-md-3 mb-3">
-									<div class="card text-center">
-										<div class="card-header"
-											style="max-height: 64px; overflow: hidden;">
-											<a href="planArticle.plan?plan_seq=${item.plan_seq}"
-												style="text-decoration: none; margin: 0px auto; text-align: center; max-height: 64px; overflow: hidden;">
-												${item.plan_title} </a>
-										</div>
-										<div class="card-body mt-1 text-center">
-											<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
-											<div class="btn-list d-inline">
-
-												<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span>
-												<i class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
-											</div>
-											<hr>
-											<p class="text-center">여기다 뭐넣을까여</p>
-										</div>
-									</div>
-								</div>
-							</c:forEach>
-
-
-
-						</div>
-					</div>
-
-					<!-- 검색  -->
-					<div class="row col-md-12">
-						<div class="input-group mt-2 col-md-12" id="inputSearch">
-							<input type="text"
-								class="form-control ml-auto col-4 justify-content-center"
-								aria-label="reply" aria-describedby="basic-addon2" id="search">
-							<div class="input-group-append">
-								<button class="btn btn-outline-primery mx-1" type="button"
-									id="searchbtn" name="searchbtn">검색</button>
 							</div>
+						</c:if>
+
+
+						<c:forEach var="mrr" items="${MyReviewResult}">
+							<div class="item col-md-3 col-sm-3 w-25">
+								<div class="card">
+									<div class="card-header">
+										<a href="reviewArticle.bo?review_seq=${mrr.review_seq}"
+											style="text-decoration: none; text-align: center; margin: 0 auto;">
+											<h6>${mrr.review_title}</h6>
+										</a>
+									</div>
+									<img class="card-img-top float-left rounded"
+										src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
+									<div class="card-body">
+										<p>${mrr.review_viewcount}</p>
+										<h6 class="text-muted">${mrr.review_contents}</h6>
+										<p>${mrr.review_writedate}</p>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+				</div>
+
+				<!-- tabtwo -->
+
+
+				<div class="col tab-pane" id="tabtwo" role="tabpanel">
+					<div class="row">
+
+						<c:if test="${empty MyPlanResult}">
+							<div class="noArticle col-md-12 w-100 h-100 py-5">
+								<div style="height: 300px;">
+									<h3 style="margin: 50px;">표시할 내용이 없습니다</h3>
+									<small>당신의 여행계획을 기다립니다</small>
+								</div>
+							</div>
+						</c:if>
+
+						<c:forEach var="mpr" items="${MyPlanResult}">
+							<div class="item col-md-3 col-sm-3 w-25">
+								<div class="card">
+									<div class="card-header">
+										<a href="planArticle.plan?plan_seq=${mpr.plan_seq}"
+											style="text-decoration: none; text-align: center; margin: 0 auto;">
+											<h6>${mpr.plan_title}</h6>
+										</a>
+									</div>
+									<div class="card-body">
+										<p>${mpr.plan_viewcount}</p>
+										<h6 class="text-muted">${mpr.plan_startdate}~
+											${mpr.plan_enddate}</h6>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+
+
+					</div>
+				</div>
+
+				<!-- tabthree -->
+				<div class="col tab-pane" id="tabthree" role="tabpanel">
+					<div class="row mt-2 mx-0">
+
+						<c:if test="${empty flist}">
+							<div class="noArticle col-md-12 w-100 h-100 py-5">
+								<div style="height: 300px;">
+									<h3 style="margin: 50px;">표시할 내용이 없습니다</h3>
+									<small>좋아요를 눌러보세요...ㅜ</small>
+								</div>
+							</div>
+						</c:if>
+
+						<c:forEach var="item" items="${flist}">
+							<div class="item col-md-3 mb-3">
+								<div class="card text-center">
+									<div class="card-header"
+										style="max-height: 64px; overflow: hidden;">
+										<a href="planArticle.plan?plan_seq=${item.plan_seq}"
+											style="text-decoration: none; margin: 0px auto; text-align: center; max-height: 64px; overflow: hidden;">
+											${item.plan_title} </a>
+									</div>
+									<div class="card-body mt-1 text-center">
+										<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
+										<div class="btn-list d-inline">
+
+											<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span>
+											<i class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
+										</div>
+										<hr>
+										<p class="text-center">여기다 뭐넣을까여</p>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+
+
+
+					</div>
+				</div>
+
+				<!-- 검색  -->
+				<div class="row col-md-12">
+					<div class="input-group mt-2 col-md-12" id="inputSearch">
+						<input type="text"
+							class="form-control ml-auto col-4 justify-content-center"
+							aria-label="reply" aria-describedby="basic-addon2" id="search">
+						<div class="input-group-append">
+							<button class="btn btn-outline-primery mx-1" type="button"
+								id="searchbtn" name="searchbtn">검색</button>
 						</div>
 					</div>
-
-					<!-- 페이징 -->
-					<div class="col-md-12 mt-2">
-						<nav aria-label="Page navigation">
-							<ul class="pagination justify-content-center">${MyReviewPageNavi}</ul>
-						</nav>
-					</div>
-
-
 				</div>
+
+				<!-- 페이징 -->
+				<div class="col-md-12 mt-2" id="pagenaviarea">
+					<nav aria-label="Page navigation">
+						<ul class="pagination justify-content-center">${MyReviewPageNavi}</ul>
+					</nav>
+				</div>
+
+
 			</div>
 		</div>
 	</div>
