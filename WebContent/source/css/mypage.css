@@ -63,7 +63,7 @@ body {
   font-weight: 200;
   line-height: 1.5;
   color: #333;
-  text-align: left;
+  text-align: left; 
   background-color: white; }
 
 [tabindex="-1"]:focus {
@@ -475,12 +475,7 @@ pre {
     .container {
       max-width: 1140px; } }
 
-.container-fluid {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto; }
+
 
 .row {
   display: flex;
@@ -2223,7 +2218,7 @@ tbody.collapse.show {
 .dropdown-menu.show {
   display: block; }
 
-.dropdown-header {
+.-header {
   display: block;
   padding: 0.5rem 1.5rem;
   margin-bottom: 0;
@@ -2619,7 +2614,7 @@ tbody.collapse.show {
     border-left: 1px solid #ced4da;
     border-radius: 0 1rem 1rem 0; }
 
-.nav {
+/* .nav {
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
@@ -2633,8 +2628,8 @@ tbody.collapse.show {
     text-decoration: none; }
   .nav-link.disabled {
     color: #6c757d; }
-
-.nav-tabs {
+ */
+/* .nav-tabs {
   border-bottom: 1px solid #dee2e6; }
   .nav-tabs .nav-item {
     margin-bottom: -1px; }
@@ -2674,14 +2669,14 @@ tbody.collapse.show {
   flex-basis: 0;
   flex-grow: 1;
   text-align: center; }
-
+ */
 .tab-content > .tab-pane {
   display: none; }
 
 .tab-content > .active {
   display: block; }
 
-.navbar {
+/*  .navbar {
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -2693,7 +2688,7 @@ tbody.collapse.show {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between; }
+    justify-content: space-between; } 
 
 .navbar-brand {
   display: inline-block;
@@ -2794,7 +2789,7 @@ tbody.collapse.show {
     justify-content: flex-start; }
     .navbar-expand-md .navbar-nav {
       flex-direction: row; }
-      .navbar-expand-md .navbar-nav .dropdown-menu {
+      .-expand-md .navbar-nav .dropdown-menu {
         position: absolute; }
       .navbar-expand-md .navbar-nav .dropdown-menu-right {
         right: 0;
@@ -2970,7 +2965,7 @@ tbody.collapse.show {
     color: #fff; }
     .navbar-dark .navbar-text a:hover, .navbar-dark .navbar-text a:focus {
       color: #fff; }
-
+ */
 .card {
   position: relative;
   display: flex;
@@ -6052,8 +6047,8 @@ a.text-dark:hover, a.text-dark:focus {
     min-width: 992px !important; }
   .container {
     min-width: 992px !important; }
-  .navbar {
-    display: none; }
+/*   .navbar {
+    display: none; } */
   .badge {
     border: 1px solid #000; }
   .table {

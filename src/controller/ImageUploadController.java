@@ -55,7 +55,6 @@ public class ImageUploadController extends HttpServlet {
 			}
 			
 			uploadPath = contextPath + "/files/" + sfileName;
-			System.out.println(uploadPath);
 			
 			// 생성된 경로를 JSON 형식으로 보내주기 위한 설정
 			JSONObject jobj = new JSONObject();

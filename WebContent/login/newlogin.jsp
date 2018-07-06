@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
-<script src="source/lib/materialize/js/materialize.js"></script>
+<title>로그인</title>
+<link rel="stylesheet" href="../source/lib/materialize/css/materialize.css">
+<script src="../source/lib/materialize/js/materialize.js"></script>
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -207,7 +207,7 @@ $("#user_idchek").keyup(function(){
 			<div id="loginarea">
 				<div class="card white hoverable" id="loginbox">
 					<div class="card-content black-text">
-						<div class="row card-title" id="card-title">
+						<div class="row card-title" id	="card-title">
 							<div class="col s6 left-align login-link active">
 								<span>Log in</span>
 							</div>
@@ -240,7 +240,7 @@ $("#user_idchek").keyup(function(){
 							<div class="row confirm-password-row">
 								<div class="input-field confirm-password-field col s12">
 									<input id="confirm-password" type="password" class="validate"
-										name="cpw" maxlength="45"> <label
+										name="pwcheck" maxlength="45"> <label
 										for="confirm-password" id="confirm-label">confirm
 										password</label>
 								</div>

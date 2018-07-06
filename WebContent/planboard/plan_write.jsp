@@ -47,13 +47,15 @@
 #plan-board {
 	margin-top: 20px;
 	width: 70%;
-	float: left;
+	/* float: left; 여기가 문제가 됨. */
 	margin-bottom: 50px;
 }
+/* 플랜보드가 문제됨 */
 
 #plan-div {
 	margin-top: 20px;
 }
+
 
 #end-bt:hover {
 	background-color: #e9e9e9;
@@ -74,7 +76,7 @@
 	box-sizing: border-box;
 	width: 10px;
 	margin-left: 24px;
-
+	float: left;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -136,7 +138,11 @@
  
  input[type="time"] {
  	display: inline;
- 	width: 130px;
+ 	width: 152px;
+ }
+ 
+ #savebtn {
+ 	margin: 0 3px;
  }
 </style>
 
@@ -145,11 +151,10 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<script>location.href="error.jsp"</script>
-			<%@include file="include/mainNavi_login.jsp"%>
+			<%@include file="../include/otherNavi_login.jsp"%>			
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>			
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
@@ -161,7 +166,10 @@
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
 				name="plantitle" value="${plan_title}" readonly>
-			<button type="button" class="btn btn-primary" id="endbtn">저장 후 나가기</button>
+			<c:if test="${plan_state eq false}">
+			<button type="button" class="btn btn-outline-primary" id="savebtn">임시 저장</button>
+			</c:if>
+			<button type="button" class="btn btn-primary" id="endbtn">등록</button>
 		</div>
 		<!-- 여기 몇일 여행인지 받아서 개수만큼 돌리기 -->
 		<div class="row col-md-12 days mt-0">
@@ -170,7 +178,7 @@
 					<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 						<li class="timeline-item">
 							<div class="timeline-badge">
-								<i class="dayCount"> ${day}</i>
+								<i class="dayCount">${day}</i>
 							</div>
 							<c:if test="${day eq param.day }">
 							<div class="timeline-panel">
@@ -438,11 +446,17 @@
         </div>
     </div>
     <div class="footer" style="height: 300px;">
-    <%@include file="footer1.jsp"%>
+    <%@include file="../footer1.jsp"%>
     </div>
 <script>
 $(document).ready(function() {
 	$("#endbtn").click(function() {
+		if(confirm("등록하시겠습니까?")) {
+			location.href = "savePlan.plan";
+		}
+	});
+	
+	$("#savebtn").click(function() {
 		if(confirm("입력된 일정을 저장하고 나가시겠습니까?")) {
 			location.href = "planboard.plan";
 		}
@@ -451,7 +465,7 @@ $(document).ready(function() {
 	budgetcount = 1;
 	$("#moneyaddbtn").click(function() {
 		budgetcount++;
-	 	$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'><input type='hidden' class='budget_seq'>"
+	 	$("#schedule-boarder>tbody>tr>.budget").append("<div class='input-group mb-1'><input type='text' class='form-control' placeholder='예) 입장료' id='ex"+budgetcount+"'><input type='text' class='form-control' placeholder='10000' id='money"+budgetcount+"'><input type='hidden' class='budget_seq' id='budget"+budgetcount+"'>"
 				+"<div class='input-group-prepend'><span class='input-group-text'>원</span><button style='border: none' type='button' class='btn btn-outline-danger' id='moneyxbtn"+budgetcount+"'><i class='far fa-times-circle'></i></button></div></div>");
 	});
 	

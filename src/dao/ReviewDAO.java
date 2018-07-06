@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBUtils.DBConnection;
-import dto.MemberDTO;
 import dto.ReviewCommentDTO;
 import dto.ReviewDTO;
+import dto.ReviewPhotoMainDTO;
 
 public class ReviewDAO {
 	private MemberDAO mdao = new MemberDAO();
@@ -65,17 +65,53 @@ public class ReviewDAO {
 		pstmt.setInt(3, writer);
 		
 		int result = pstmt.executeUpdate();
+		pstmt.close();
 		
-		sql = "UPDATE REVIEW_PHOTOS SET ARTICLE_NO = reviewboard_seq.currval WHERE SYSTEM_FILE_NAME = ?";
-		pstmt = conn.prepareStatement(sql);
-		for(int i = 0; i < array.length; i++) {
-			pstmt.setString(1, array[i]);
-			pstmt.addBatch();
+		if(array.length > 0) {
+			sql = "UPDATE REVIEW_PHOTOS SET ARTICLE_NO = reviewboard_seq.currval WHERE SYSTEM_FILE_NAME = ?";
+			PreparedStatement pstmt2 = conn.prepareStatement(sql);
+			for(int i = 0; i < array.length; i++) {
+				pstmt2.setString(1, array[i]);
+				pstmt2.addBatch();
+				pstmt2.clearParameters();
+			}
+			pstmt2.executeBatch();
+			pstmt2.close();
 		}
-		pstmt.executeBatch();
 		
 		conn.commit();
+		conn.close();
+		
+		return result;
+	}
+	
+	public int updateReview(String title, String contents, int writer, String[] array, int seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "update reviewboard_c set review_title = ?, review_contents = ? where review_writer = ? and review_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, title);
+		StringReader sr = new StringReader(contents);
+		pstmt.setCharacterStream(2, sr, contents.length());
+		pstmt.setInt(3, writer);
+		pstmt.setInt(4, seq);
+		
+		int result = pstmt.executeUpdate();
 		pstmt.close();
+		
+		if(array.length > 0) {
+			sql = "UPDATE REVIEW_PHOTOS SET ARTICLE_NO = ? WHERE SYSTEM_FILE_NAME = ?";
+			PreparedStatement pstmt2 = conn.prepareStatement(sql);
+			for(int i = 0; i < array.length; i++) {
+				pstmt2.setInt(1, seq);
+				pstmt2.setString(2, array[i]);
+				pstmt2.addBatch();
+				pstmt2.clearParameters();
+			}
+			pstmt2.executeBatch();
+			pstmt2.close();
+		}
+		
+		conn.commit();
 		conn.close();
 		
 		return result;
@@ -112,6 +148,7 @@ public class ReviewDAO {
 			tmp.setReview_writerN(mdao.getUserNickname(rs.getInt(4)));
 			tmp.setReview_writedate(rs.getString(5));
 			tmp.setReview_viewcount(rs.getInt(6));
+			tmp.setReview_thumbnail(getThumbnail(tmp.getReview_seq()));
 			reviewResult.add(tmp);
 		}
 
@@ -120,6 +157,34 @@ public class ReviewDAO {
 		rs.close();	
 		return reviewResult;
 	}
+	
+	public List<ReviewPhotoMainDTO> getNewReview() throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql = "select * from (select rownum, rp.review_photo_seq, rp.article_no, rp.original_file_name, rp.system_file_name, r.review_title, r.review_writer, r.review_writedate from review_photos rp, reviewboard_c r where rp.article_no = r.review_seq)where rownum between 1 and 4 order by review_photo_seq desc";
+		PreparedStatement pstmt = con.prepareStatement(sql);		
+		ResultSet rs = pstmt.executeQuery();
+		List<ReviewPhotoMainDTO> result = new ArrayList<>();
+
+		while(rs.next()) {		
+			String nick = mdao.getUserNickname(rs.getInt(7));
+			ReviewPhotoMainDTO tmp = new ReviewPhotoMainDTO();
+			tmp.setRownum(rs.getInt(1));
+			tmp.setReview_photo_seq(rs.getInt(2));
+			tmp.setArticle_no(rs.getInt(3));
+			tmp.setOriginal_file_name(rs.getString(4));
+			tmp.setSystem_file_name(rs.getString(5));
+			tmp.setReview_title(rs.getString(6));
+			tmp.setReview_writer(nick);
+			tmp.setReview_writedate(rs.getString(8));
+			result.add(tmp);
+		}
+		rs.close();
+		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	
 
 	//-------------------페이지 네비	
 	public String getPageNavi(int currentPage, String searchTerm) throws Exception {
@@ -127,18 +192,18 @@ public class ReviewDAO {
 		String sql;
 		PreparedStatement pstat;
 
-
 		if(searchTerm == null || searchTerm.equals("")) {
-			sql = "select count(*) totalCount from reviewboard";
+			sql = "select count(*) totalCount from reviewboard_c";
 			pstat = con.prepareStatement(sql);
 		} else {
-			sql = "select count(*) totalCount from reviewboard where review_title like ?";
+			sql = "select count(*) totalCount from reviewboard_c where review_title like ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, "%"+searchTerm+"%");
 		}
 
 		ResultSet rs= pstat.executeQuery();
-		if(rs.next());
+		rs.next();
+		
 		int recordTotalCount = rs.getInt("totalCount"); 
 		//System.out.println(recordTotalCount);
 		int recordCountPerPage = 12;  
@@ -186,7 +251,7 @@ public class ReviewDAO {
 		for(int i = startNavi; i <= endNavi; i++) {
 			if(currentPage == i) {
 				sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
-			} else {
+			}else {
 				sb.append("<li class='page-item'><a class='page-link' href='reviewboard.bo?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
 			}
 		}
@@ -204,7 +269,7 @@ public class ReviewDAO {
 
 	public int getArticleViewCount (int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select review_viewcount from reviewboard where review_seq = ?";
+		String sql = "select review_viewcount from reviewboard_c where review_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
 		ResultSet rs = pstmt.executeQuery();
@@ -235,17 +300,20 @@ public class ReviewDAO {
 			rdto.setReview_viewcount(rs.getInt("review_viewcount"));
 		}
 
+		rs.close();
+		pstmt.close();
+		con.close();
+		
 		return rdto;
 	}
 
 	public int insertReviewComment(String comment_text, int user, int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		System.out.println(comment_text + " : " + user + " : " + review_seq);
-		String sql = "insert into review_comment values(?,review_comment_seq.nextval,?,?,sysdate)";
+		String sql = "insert into review_comment values(review_comment_seq.nextval,?,?,sysdate,?)";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, review_seq);
-		pstmt.setString(2, comment_text);
-		pstmt.setInt(3, user);
+		pstmt.setString(1, comment_text);
+		pstmt.setInt(2, user);
+		pstmt.setInt(3, review_seq);
 		
 		int result = pstmt.executeUpdate();
 		con.commit();
@@ -256,7 +324,7 @@ public class ReviewDAO {
 
 	public List<ReviewCommentDTO> getReviewComment(int review_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from review_comment where review_seq=? order by comment_time desc";
+		String sql = "select * from review_comment where review_seq=? order by COMMENT_SEQ ASC";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
 		ResultSet rs = pstmt.executeQuery();
@@ -289,11 +357,13 @@ public class ReviewDAO {
 		return result;
 	}
 
-	public int deleteReview(int review_seq) throws Exception{
+	public int deleteReview(int review_seq, int writer) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "delete from reviewboard where review_seq=?";
+		String sql = "delete from reviewboard_c where review_seq=? and review_writer = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
+		pstmt.setInt(2, writer);
+		
 		int result = pstmt.executeUpdate();
 		con.commit();
 		pstmt.close();
@@ -331,7 +401,7 @@ public class ReviewDAO {
 		String sql;
 		PreparedStatement pstat = null;
 
-		if(searchTerm == null || searchTerm.equals("null")) {
+		if(searchTerm == null || searchTerm.equals("")) {
 			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard where review_writer=?) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1,seq);
@@ -366,21 +436,21 @@ public class ReviewDAO {
 		return myReviewResult;
 	}
 
-	public String getMyReviewPageNavi(int seq, int currentPage, String searchTerm) throws Exception {
+	public String getMyReviewPageNavi( int seq,int currentPage, String searchTerm) throws Exception {
 		Connection con = DBConnection.getConnection();		
 		String sql;
 		PreparedStatement pstat;
 		ResultSet rs;
 
 		if(searchTerm == null || searchTerm.equals("")) {
-			sql = "select count(*) totalCount from reviewboard where review_writer=?";
+			sql = "select count(*) totalCount from reviewboard where review_writer=?";		
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, seq);
 		} else {
 			sql = "select count(*) totalCount from reviewboard where review_writer=? and review_title || review_contents like ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, seq);
-			pstat.setString(2, "%"+searchTerm+"%");
+			pstat.setString(1, "%"+searchTerm+"%");
 		
 		}
 
@@ -460,12 +530,12 @@ public class ReviewDAO {
 		con.commit();
 		pstat.close();
 		con.close();
-		System.out.println(result);
 		return result;
 	}
+	
 	public int reViewCount(int review_seq) throws Exception {
 		Connection conn = DBConnection.getConnection();
-		String sql = "UPDATE reviewboard set review_viewcount = review_viewcount + 1 where review_seq = ?";
+		String sql = "UPDATE reviewboard_c set review_viewcount = review_viewcount + 1 where review_seq = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
 		
@@ -476,5 +546,43 @@ public class ReviewDAO {
 		conn.close();
 		return result;
 	}
-
+	
+	public int writerCheck(int seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "select review_writer from reviewboard_c where review_seq = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, seq);
+		ResultSet rs = pstmt.executeQuery();
+		int writer = 0;
+		
+		if(rs.next()) {
+			writer = rs.getInt(1);
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return writer;
+	}
+	
+	public String getThumbnail(int seq) throws Exception {
+		Connection conn = DBConnection.getConnection();
+		String sql = "select system_file_name from (select rp.* from review_photos rp, reviewboard_c rc where rp.article_no = rc.review_seq and rc.review_seq = ?) where rownum = 1";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, seq);
+		String fname = "";
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			fname = rs.getString(1);
+		}else {
+			fname = "Charlie-Chaplin-PNG-Image-17681.png";
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		return fname;
+	}
 }

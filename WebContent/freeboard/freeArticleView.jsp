@@ -51,7 +51,7 @@
 }
 
 .contents {
-   padding-top : 10px;
+   padding : 10px;
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
@@ -95,6 +95,9 @@ tr {
    border-bottom: 3px dotted #e9e9e9;
 }
 
+#reportbtn {
+	float: left;
+}
 </style>
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -152,7 +155,7 @@ $(document).ready(function(){
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.loginId !=null}">
-			<%@include file="../include/mainNavi_login.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:when>
 		<c:otherwise>
 			<%@include file="../include/mainNavi.jsp"%>
@@ -173,22 +176,21 @@ $(document).ready(function(){
          </div>
       </div>
       <div class="row function">
-          <div class="col-sm-4 offset-sm-4 text-center vote">
+         <div class="col-sm-4 offset-sm-4 text-center vote">
             <button type="button" class="btn btn-outline-danger" id="goodbtn">
                <i class="fas fa-heart"></i>${good}
             </button>
             <button type="button" class="btn btn-outline-primary" id="badbtn">
                <i class="far fa-frown"></i>${bad}
             </button>
-         </div> 
-         <div class="col-sm-4 offset-sm-8 text-right move">
-            <button type="button" class="btn btn-outline-secondary" id="goList">목록</button>
-            <!-- <button type="button" class="btn btn-outline-secondary">스크랩</button>
-            <button type="button" class="btn btn-outline-danger">신고</button> -->
+         </div>
+         <div class="col-sm-4 text-right move">
             <c:if test="${article.free_writer == sessionScope.user.seq}">
             	<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
             	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
             </c:if>
+            <button type="button" class="btn btn-outline-danger" id="report">신고</button>
+            <button type="button" class="btn btn-outline-secondary" id="goList">목록</button>
          </div>
       </div>
       <div class="comments">
@@ -255,26 +257,43 @@ $(document).ready(function(){
 					}
 				});
 
-				$("#procComment").click(function() {
-
+				$("#writeComment").click(function() {
+					var tmp = $("#comment").val().replace(/\s|　/gi, '');
+					
+					if(tmp == '') {
+						alert("댓글을 입력해주세요!")
+						return false;
+					}
 				});
 
 				$("#goList").click(function() {
 					location.href = "freeboard.bo";
 				})
+				
+				$("#report").click(function() {
+					$.ajax({
+						url : "freeReport.Ajax",
+						type: "post",
+						data : {value : ${article.free_seq}},
+						
+						success : function(response) {
+							if(response == 1) {
+								alert("신고는 한 번만 가능합니다.");
+							}else{
+								alert("신고가 접수되었습니다.");
+							}
+						}
+					})
+				})
 
 				<c:if test="${article.free_writer == sessionScope.user.seq}">
-				$("#delete")
-						.click(
-								function() {
-									location.href = "deleteCheck.bo?articlenum=${article.free_seq}";
-								})
-
-				$("#update")
-						.click(
-								function() {
-									location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
-								})
+					$("#delete").click(function() {
+						location.href = "deleteFreeCheck.bo?articlenum=${article.free_seq}";
+					})
+	
+					$("#update").click(function() {
+						location.href = "modifyFreeArticlePage.bo?articlenum=${article.free_seq}";
+					})
 				</c:if>
 			</script>
 </body>

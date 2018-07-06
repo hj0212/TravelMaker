@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="source/css/codepenNavi.css">
 <style>
 .container {
-	margin-top: 15%;
+	margin-top: 5%;
 }
 </style>
 </head>
@@ -42,7 +42,8 @@
 	<div class="container text-center">
 		<h1>글을 삭제하시겠습니까?</h1>
 		<button type="button" class="btn btn-light" id="delete" onclick="deleteContents(); this.disabled=true;">삭제</button>
-		<button type="button" class="btn btn-light" id="list" onclick="goList(); this.disabled=true;">게시글로가기</button>
+		<button type="button" class="btn btn-light" id="goArticle" onclick="goArticle(); this.disabled=true;">게시글로가기</button>
+		<button type="button" class="btn btn-light" id="list" onclick="goList(); this.disabled=true;">목록</button>
 	</div>
 </body>
 <script>
@@ -50,8 +51,12 @@
 		location.href = "deleteFreeArticle.bo?seq="+"${articlenum}";
 	}
 	
-	function goList() {
+	function goArticle() {
 		location.href = "viewFreeArticle.bo?seq="+"${articlenum}";
+	}
+	
+	function goList() {
+		location.href = "freeboard.bo";
 	}
 </script>
 </html>

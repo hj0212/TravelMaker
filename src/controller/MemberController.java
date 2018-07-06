@@ -19,8 +19,10 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import beans.SendMail;
 import dao.AdminDAO;
 import dao.MemberDAO;
+import dao.PlanDAO;
 import dao.ReviewDAO;
 import dto.MemberDTO;
+import dto.PlanDTO;
 import dto.ReviewDTO;
 
 
@@ -35,14 +37,17 @@ public class MemberController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("utf8");
 
+			PlanDAO pdao = new PlanDAO();
 			ReviewDAO rdao = new ReviewDAO();
 			MemberDAO mdao = new MemberDAO();
 			AdminDAO adao = new AdminDAO();
 
 			boolean isForward = true;
 			String dst = null;
+			System.out.println(command);
 
 			if(command.equals("/login.do")) {
+
 				MemberDTO dto = new MemberDTO();
 				dto.setUserid(request.getParameter("id"));
 				dto.setPassword(request.getParameter("pw"));
@@ -51,36 +56,39 @@ public class MemberController extends HttpServlet {
 				boolean result = false;
 				if(user.getSeq() > 0) {
 					result = true;
-				}
-				request.setAttribute("proc", "login");
-				request.setAttribute("loginResult", result);
-				request.getSession().setAttribute("part", "home");
-				request.getSession().setAttribute("user", user);
-				request.getSession().setAttribute("loginId", dto.getUserid());
 
-				String nickname = mdao.getUserNickname(user.getSeq());
-				request.getSession().setAttribute("nickname", nickname);
-				if(user.getBlock().equals("y")) {
-					isForward = true;
-					dst="errorBlock.jsp";
-				}
-				else if(user.getBlock().equals("n") || user.getBlock().equals("x")){
-					isForward = true;
-					dst="userResult.jsp";
-				}
+					request.setAttribute("proc", "login");
+					request.setAttribute("loginResult", result);
+					request.getSession().setAttribute("part", "home");
+					request.getSession().setAttribute("user", user);
+					request.getSession().setAttribute("loginId", dto.getUserid());
 
+					String nickname = mdao.getUserNickname(user.getSeq());
+					request.getSession().setAttribute("nickname", nickname);
+					if(user.getBlock().equals("y")) {
+						isForward = true;
+						dst="login/errorBlock.jsp";
+					}
+					else if(user.getBlock().equals("n") || user.getBlock().equals("x")){
+						isForward = true;
+						dst="main.bo";
+					}
+				} else {
+					isForward = false;
+					dst="login/newlogin.jsp";
+				}
 
 			} else if(command.equals("/join.do")) {
 				MemberDTO dto = new MemberDTO();
-				dto.setUserid(request.getParameter("id"));
-				dto.setPassword(request.getParameter("pw"));
+				dto.setUserid(request.getParameter("idcheck"));
+				dto.setPassword(request.getParameter("pwcheck"));
 				dto.setNickname(request.getParameter("nickname"));
 				dto.setEmail(request.getParameter("email"));
 				int result=mdao.addMember(dto);	
 				request.setAttribute("proc", "join");
 				request.setAttribute("joinResult", result);	
 				isForward = true;
-				dst="userResult.jsp";
+				dst="login/newlogin.jsp";
 
 			} else if(command.equals("/navlogin.do")) {				
 				String id = request.getParameter("id");
@@ -100,13 +108,13 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("part", "naver");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
-				
+
 				if(user.getBlock().equals("y")) {
 					isForward = true;
-					dst="errorBlock.jsp";
+					dst="login/errorBlock.jsp";
 				}else {
-					isForward = true;
-					dst="main.jsp";
+					isForward = false;
+					dst="main.bo";
 				}	
 
 			}else if(command.equals("/kakaologin.do")) {
@@ -129,12 +137,12 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("nickname", nickname);
 				if(user.getBlock().equals("y")) {
 					isForward = true;
-					dst="errorBlock.jsp";
+					dst="login/errorBlock.jsp";
 				}else {
 					isForward = true;
 					dst="main.jsp";
 				}
-					
+
 
 			}else if(command.equals("/admin.do")) {
 				String part = (String)request.getSession().getAttribute("part");
@@ -156,25 +164,26 @@ public class MemberController extends HttpServlet {
 				}
 
 				isForward = true;
-				dst="admin.jsp";
+				dst="admin/admin.jsp";
 			}else if(command.equals("/mypage.do")) {
+				try {
 				String part = (String)request.getSession().getAttribute("part");
-				String id = (String)request.getSession().getAttribute("loginId");			
+				String id = (String)request.getSession().getAttribute("loginId");	
 				MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
-				
 			
-				
+				/*프로필부분 출력*/
 				MemberDTO mdto = mdao.newMemberInfo(user.getSeq(), part);
 				System.out.println("seq :"+user.getSeq());
-				
+
 				System.out.println("mdto :"+mdto.getPhoto_system_file_name());
-				
+
 				/*mdto = mdao.getProfileInfo(part, id);*/
-				
+
 				/*String file_name = ((MemberDTO)request.getSession().getAttribute("user")).getPhoto_system_file_name();*/
-				 request.setAttribute("file_name", mdto.getPhoto_system_file_name());
-				 
+				request.setAttribute("file_name", mdto.getPhoto_system_file_name());
+				System.out.println(request.getAttribute("uploadPath"));
 				request.setAttribute("uploadPath", request.getAttribute("uploadPath"));
+				
 				if(part.equals("home")) {
 					request.setAttribute("nickname", mdto.getNickname());
 					request.setAttribute("email", mdto.getEmail());
@@ -189,7 +198,7 @@ public class MemberController extends HttpServlet {
 					request.setAttribute("file_name", mdto.getPhoto_system_file_name());
 				}
 				
-			
+			/*리뷰와 망가진 네비*/
 				
 				/*List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq());
 		        request.setAttribute("MyReviewResult", MyReviewResult);*/
@@ -210,8 +219,19 @@ public class MemberController extends HttpServlet {
 				String MyReviewPageNavi = rdao.getMyReviewPageNavi(user.getSeq(), currentPage, searchTerm);
 				request.setAttribute("MyReviewPageNavi", MyReviewPageNavi);
 
+				/*planList*/
+				
+				int seq = user.getSeq();
+				List<PlanDTO> list = new ArrayList<>();
+				list = pdao.getMyTmpPlan(seq);
+				request.setAttribute("planList", list);
+				
 				isForward = true;
 				dst="mypage.jsp";
+				}catch(Exception e) {
+					isForward = false;
+					dst="login.bo";
+				}
 			}else if(command.equals("/logout.do")) {
 				request.getSession().invalidate();
 
@@ -288,6 +308,7 @@ public class MemberController extends HttpServlet {
 				isForward = true;
 				dst="pwCheckView.jsp";
 			}else if(command.equals("/modiHomeMemInfo.do")) {
+				
 				String id = (String)request.getSession().getAttribute("loginId");
 				String email = request.getParameter("email");
 				String nickname = request.getParameter("nickname");
@@ -297,36 +318,38 @@ public class MemberController extends HttpServlet {
 
 				isForward = true;
 				dst = "editInfoView.jsp";
-			}else if(command.equals("/toPwTrueCheck.do")) {
-				isForward=true;
-				dst="pwTrueCheck.jsp";
-			}else if(command.equals("/pwTrueCheck.do")) {
-				String id = (String)request.getSession().getAttribute("loginId");
-				String pw = request.getParameter("pw");
-				boolean result = mdao.isHomeMemberPW(id, pw);
-				request.setAttribute("result", result);		
-				isForward = true;
-				dst="pwTrueCheckView.jsp";
-			}else if(command.equals("/toModiPw.do")) {			
-				isForward=true;
-				dst="modiPw.jsp";
-			}else if(command.equals("/modiPw.do")) {
-				String id = (String)request.getSession().getAttribute("loginId");
-				String pw = request.getParameter("pw");
-				String repw = request.getParameter("repw");
-				if(pw.equals(repw)) {
-					int result = mdao.updatePw(id, repw);
-					request.setAttribute("result", result);
-					isForward = true;
-					dst="modiPwView.jsp";
-				}else {
-					isForward = false;
+			}else if(command.equals("/editInfoNK.do")){
+				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+				String part = user.getPart();
+				
+				if(part.equals("naver")) {
+					request.setAttribute("id", user.getNaver_id());
+					request.setAttribute("nickname", user.getNaver_nickname());
+					request.setAttribute("email", user.getNaver_email());
+				}else if(part.equals("kakao")) {
+					request.setAttribute("id", user.getKakao_id());
+					request.setAttribute("nickname", user.getKakao_nickname());
+					request.setAttribute("email", user.getKakao_email());
 				}
-			}else if(command.equals("/toLogin.do")) {
 				isForward=true;
-				dst="newlogin.jsp";
+				dst="editInfoNK.jsp";
 
-
+			}else if(command.equals("/modiNKMemInfo.do")) {
+				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+				String part = user.getPart();
+				int seq = user.getSeq();
+				String id = request.getParameter("id");
+				String nickname = request.getParameter("nickname");
+				String email = request.getParameter("email");
+				int result  = mdao.updateNKMemberInfo(id, nickname, email, seq, part);
+				request.setAttribute("result", result);
+				
+				isForward= true;
+				dst = "editInfoNKView.jsp";
+			}else if(command.equals("/toEditInfoNK.do")) {
+				
+				isForward=true;
+				dst="toEditInfoNK.jsp";
 				//////////////비밀번호 찾기 기능 ->입력받은 이메일 확인
 			}else if(command.equals("/checkEmail.do")){
 				String id=request.getParameter("id");
@@ -362,17 +385,17 @@ public class MemberController extends HttpServlet {
 				// 이미지를 업로드할 경로
 				String uploadPath = request.getServletContext().getRealPath("file");
 				int size = 10 * 1024 * 1024;	// 업로드 사이즈 10M 이하,
-				System.out.println(uploadPath);
+
 				// 경로가 없을 경우 결로 생성
 				File f = new File(uploadPath);
 				if(!f.exists()) {
 					f.mkdir();
 				}
-				
+
 				// 원래 파일명, 시스템에 저장되는 파일명
 				String ofileName ="";
 				String sfileName ="";
-				
+
 				try {
 					// 파일 업로드 및 업로드 후 파일명을 가져옴
 					MultipartRequest mr = new MultipartRequest(request, uploadPath, size, "utf-8", new DefaultFileRenamePolicy());
@@ -380,20 +403,13 @@ public class MemberController extends HttpServlet {
 					String file = files.nextElement();
 					ofileName = mr.getOriginalFileName(file);
 					sfileName = mr.getFilesystemName(file);
-				
+
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
-				
+
 				uploadPath = contextPath +"/file/"+ sfileName;
-				
-		/*		// 생성된 경로를 JSON 형식으로 보내주기 위한 설정
-				JSONObject jobj = new JSONObject();
-				jobj.put("url", uploadPath);
-				
-				response.setContentType("application/json");
-				response.getWriter().print(jobj.toJSONString());*/
-				
+
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 				int user_seq = user.getSeq();
 				System.out.println("user_seq :"+user_seq);
@@ -404,50 +420,34 @@ public class MemberController extends HttpServlet {
 				user = mdao.newMemberInfo(user_seq, part);
 				request.setAttribute("file_name",file_name);
 				request.setAttribute("user_seq", user_seq);
-				
-				System.out.println("file_name :"+user.getPhoto_system_file_name());
-				System.out.println("fileUpload결과 : "+result);
-				System.out.println(uploadPath);
-			
+
 				request.setAttribute("uploadPath", uploadPath);
-		
-				
-			isForward=true;
-			dst = "mypage.do";
+
+
+				isForward=true;
+				dst = "mypage.do";
 			}
-			
+
 			//-----------------------admin.jsp > 모든 회원 리스트보기
 			else if(command.equals("/showMembers.do")) {
 				List<MemberDTO> mlist = new ArrayList<>(); 
 				mlist=adao.getAllMembers();
 				request.setAttribute("memberList", mlist);
-				
+
 				isForward = true;
 				dst = "admin/admin.jsp";
 			}
-			
+
 			//-----------------------admin.jsp > 회원계정 차단
 			else if(command.equals("/blockMember.do")) {
 				int seq = Integer.parseInt(request.getParameter("sequence"));
 				String isBlocked = adao.checkBlock(seq);
-				
+
 				int result = adao.changeBlock(seq,isBlocked);
 				request.setAttribute("blockResult", result);
 				isForward = true;
 				dst = "admin/admin.jsp";
 			}
-			
-			
-
-
-
-				
-				
-				
-				
-				
-				
-				
 			
 
 			if(isForward) {

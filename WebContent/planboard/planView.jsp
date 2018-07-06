@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <head>
 <title>일정 확인</title>
 
@@ -16,14 +15,18 @@
 	type="text/javascript"></script>
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
 	rel="stylesheet" type="text/css" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>       
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script src="source/js/jquery.roadmap.min.js"></script>
 <link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
 <script src="source/js/createplan.js"></script>
-<link rel="stylesheet" href="source/css/createplan.css"/>
+<link rel="stylesheet" href="source/css/createplan.css" />
 <%@ page session="true"%>
 <meta charset="utf-8">
 
@@ -31,7 +34,6 @@
 * {
 	padding: 0;
 	margin: 0;
-	text-align: center;
 }
 
 .container {
@@ -41,9 +43,12 @@
 
 .wrapper {
 	margin: 13px 0 10px;
-	height: 400px;
+	height: 100%;;
 }
 
+.schedule {
+	margin-top: 10px;
+}
 .col-md-12, .col-lg-6 {
 	padding-right: 0;
 	padding-left: 0;
@@ -51,15 +56,27 @@
 
 .left_half {
 	padding-right: 5px;
-	height: 100%;
+	padding-left: 5px;
+	height: 400px;
+	float: left;
+}
+
+#timeline {
+	margin: 0;
+	width: 100%;
 }
 
 .right_half {
 	padding-left: 5px;
+	padding-right: 5px;
+	float: right;
+	height: 400px;
 }
-.event__date, .event__content{
+
+.event__date, .event__content {
 	height: 30px;
 }
+
 .wrapper .right_half div {
 	height: 100%;
 }
@@ -93,7 +110,6 @@
 #planinfoarea {
 	text-align: left;
 	height: 36px;
-	line-height: 36px;
 }
 
 #planinfoarea p {
@@ -113,110 +129,102 @@
 .mapsinfo {
 	position: absolute;
 	font-weight: bold;
-	background-color:white;
+	background-color: white;
 	line-height: 30px;
-	top:-50px;
+	top: -50px;
 	border-left: 1px solid black;
 	border-right: 1px solid black;
 	border-top: 1px solid black;
 }
+
+#schedule-table .select {
+	background-color: #eee;
+}
+
+#timeline li .select {
+	font-weight: bold;
+}
+
+#totalbudgetarea {
+	float:right;
+}
+
+#totalbudgetarea, #budgetarea {
+	width: 220px;
+}
+
+#budgetarea>input, #totalbudgetarea>input {
+	background-color: white;
+}
+
+#budgetarea input, #budgetarea span, #totalbudgetarea input, #totalbudgetarea span {
+	font-size: medium;
+	height: 35px;
+	line-height: 19px;
+}
+
+.schedule>.nav-tabs {
+	width: 700px;
+	float: left;
+	border: none;
+	padding-bottom: 6px;
+}
 </style>
 
 <script>
+	$(document).ready(function() {
 
+		$("#goodbtn").click(function() {
 
+			var article = "${plan_seq}";
 
-$(document).ready(function(){
+			$.ajax({
+				type : 'POST',
+				url : "plangood.btns",
+				data : {
+					article : article
+				},
+				success : function(good) {
+					console.log("asdasd");
+					$("#goodbtn").html("");
+					$("#goodbtn").html('<i class="fas fa-heart"></i>' + good);
+				}
+			});
 
-	$("#goodbtn").click(function(){
-
-	var article ="${plan_seq}";
-
-	$.ajax({
-		  type:'POST',
-		  url:"plangood.btns",
-		  data: {article:article},
-		  success:function(good){
-			  console.log("asdasd");
-				 $("#goodbtn").html(""); 
-				 $("#goodbtn").html('<i class="fas fa-heart"></i>'+good);
-		  }
-	});
-			
-	});
-	$("#badbtn").click(function(){	
-	var article ="${plan_seq}";	
-
-	$.ajax({
-		  type:'POST',
-		  url:"planbad.btns",
-		  data: {article:article},
-		  success:function(bad){
-			  console.log("asdasd");
-				 $("#badbtn").html(""); 
-				 $("#badbtn").html('<i class="far fa-frown"></i>'+bad);
-		  }
 		});
-			
-	});
-	
-	
-});
+		$("#badbtn").click(function() {
+			var article = "${plan_seq}";
 
+			$.ajax({
+				type : 'POST',
+				url : "planbad.btns",
+				data : {
+					article : article
+				},
+				success : function(bad) {
+					console.log("asdasd");
+					$("#badbtn").html("");
+					$("#badbtn").html('<i class="far fa-frown"></i>' + bad);
+				}
+			});
+
+		});
+
+	});
 </script>
 </head>
 <body>
 	<c:choose>
 		<c:when test="${empty sessionScope.user.seq}">
-		<script>location.href="error.jsp"</script>
+			<script>
+				location.href = "error.jsp"
+			</script>
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
-			role="dialog" aria-labelledby="exampleModalCenterTitle"
-			aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<form method="post" id="plan-form">
-						<div class="modal-header">
-							<div class="h1" style="margin: 0 auto;">나의 여행계획 세우기</div>
-						</div>
-						<div class="modal-body">
-							<div class="mobile-title">
-								<input type="text" id="plan_title" name="plan_title"
-									class="from-contol" maxlength=400 placeholder="여행 제목을 입력해주세요">
-							</div>
-							<div id="picker-div">
-								<div id="picker_wrap">
-									<div class="picker-pic">
-										여행 시작 날짜<input id="datepicker" name="plan_startdate" readonly
-											width="170" style="background-color: white;" />
-									</div>
-									<div class="picker-pic" id="datepicker_endarea">
-										여행 종료 날짜<input id="datepicker-end" name="plan_enddate"
-											readonly width="170" style="background-color: white;" />
-									</div>
-								</div>
-							</div>
-							<div id="start-plan">
-								<p id="dayday" style="font-size: 13px; font-style: italic;">여행
-									일수</p>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button id="start-btn" type="button" class="btn btn-primary">여행
-								계획 시작하기</button>
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
 
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		
 	<div class="container text-center">
 		<div class="input-group input-group-lg" id="plantitle">
 			<div class="input-group-prepend">
@@ -242,8 +250,8 @@ $(document).ready(function(){
 				<button class="btn btn-outline-secondary" id="listbtn">목록</button>
 			</div>
 		</div>
-
-		<div class="wrapper row">
+		<c:if test="${!empty scheduleList }">
+		<div id="view" class="wrapper row">
 			<div class="left_half col-sm-12 col-lg-6">
 				<div id="timeline" style="border: 1px solid gray;"></div>
 			</div>
@@ -251,27 +259,33 @@ $(document).ready(function(){
 				<div id="map" style="border: 1px solid gray;"></div>
 			</div>
 		</div>
-
+		</c:if>
 		<div class="schedule">
 			<ul class="nav nav-tabs" role="tablist">
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
-					<li class="nav-item"><a class='nav-link'
-						href='#Day${day}' role='tab' data-toggle='tab'>Day${day}</a></li>
+					<li class="nav-item"><a class='nav-link' href='#Day${day}'
+						role='tab' data-toggle='tab'>Day${day}</a></li>
 				</c:forEach>
 			</ul>
-			
+			<div class="input-group input-group-lg budgetarea" id="totalbudgetarea">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="inputGroup-sizing-lg">총 예산</span>
+				</div>
+				<input type="text" class="form-control" aria-label="Large"
+					aria-describedby="inputGroup-sizing-sm" value="${totalBudget}원"
+					readonly>
+			</div>
 			<div class="tab-content">
-			<c:set var="isFirst" value="true" />
+				<c:set var="isFirst" value="true" />
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
-					<input type="hidden" id="plan_seq" value="${plan_seq }">
-					<div role="tabpanel" class="tab-pane fade show"
-						id="Day${day}">
-						<table class="table table-hover" id="schedule-table">
+					<input type="hidden" id="plan_seq" value="${plan_seq}">
+					<div role="tabpanel" class="tab-pane fade show" id="Day${day}">
+						<table class="table" id="schedule-table">
 							<c:if test="${isFirst }">
 								<thead>
 									<tr>
 										<th scope="col" style="width: 160px;">시간</th>
-										<th scope="col" style="width: 170px;">장소</th>
+										<th scope="col" style="width: 190px;">장소</th>
 										<th scope="col">일정</th>
 										<th scope="col">예산</th>
 										<th scope="col">참고</th>
@@ -283,6 +297,7 @@ $(document).ready(function(){
 								<tbody id="schedule-tbody"
 									style="table-layout: fixed; word-break: break-all;">
 									<c:forEach var="item" items="${scheduleList}">
+
 										<c:if test="${item.day_seq eq day }">
 											<tr class="clickable-row">
 												<th scope="row" style="height: 50px;">${item.schedule_starttime}~${item.schedule_endtime}</th>
@@ -303,19 +318,18 @@ $(document).ready(function(){
 																			<div>
 																				<div class="budget_plan">${bitem.budget_plan}:</div>
 																				<div class="budget_amount">${bitem.budget_amount}</div>
-																			</div>
-																			<br> <c:set var="count" value="2" />
+																			</div> <c:set var="count" value="2" />
 																	</c:when>
 																	<c:otherwise>
 																		<div>
 																			<div class="budget_plan">${bitem.budget_plan}:</div>
 																			<div class="budget_amount">${bitem.budget_amount}</div>
 																		</div>
-																		<br>
 																	</c:otherwise>
 																</c:choose>
 															</c:if>
-															<c:if test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
+															<c:if
+																test="${index.last && count == 1 && item.schedule_seq != bitem.schedule_seq}">
 																<td name="money"></td>
 																<c:set var="loop_flag" value="true" />
 															</c:if>
@@ -329,7 +343,23 @@ $(document).ready(function(){
 											</tr>
 										</c:if>
 									</c:forEach>
-
+									<c:forEach var="bud" items="${daytotalBudget}"
+										varStatus="status">
+										<c:if test="${status.count eq day}">
+											<tr>
+												<td colspan=5>
+													<div class="input-group input-group-lg .budgetarea" id="budgetarea">
+														<div class="input-group-prepend">
+															<span class="input-group-text" id="inputGroup-sizing-lg">일별
+																예산</span>
+														</div>
+														<input type="text" class="form-control" aria-label="Large"
+															aria-describedby="inputGroup-sizing-sm" value="${bud}원"
+															readonly>
+													</div>
+											</tr>
+										</c:if>
+									</c:forEach>
 								</tbody>
 							</c:if>
 						</table>
@@ -346,27 +376,28 @@ $(document).ready(function(){
 			<button type="button" class="btn btn-outline-primary" id="badbtn">
 				<i class="far fa-frown"></i>${bad}
 			</button>
-			<button type="button" class="btn btn-outline-success"
+			<!-- <button type="button" class="btn btn-outline-success"
 					data-toggle="modal" data-target="#exampleModalCenter" id="getmyplanbtn">내 일정으로 가져가기</button>
+			 -->
 			<button class="btn btn-default" style="float: right;">신고</button>
 		</div>
 
 		<div class="comments">
-			<form action="insertPlanComment.plan?plan_seq=${plan_seq}"
-				method="post" id="planCommentForm" name="planCommentForm">
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" placeholder="reply"
-						aria-label="reply" aria-describedby="basic-addon2"
-						id="comment_text" name="comment_text">
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="button"
-							id="commentbtn" name="commentbtn">댓글작성</button>
-					</div>
-				</div>
-			</form>
-			<button type="button"
-				style="border: none; background-color: white; cursor: pointer;"
-				id="comment-bnt">댓글보기▼</button>
+		 <button type="button" style="border: none; background-color: white;"
+            id="comment-bnt">댓글보기▼</button>
+		 <form method="post"  action="insertPlanComment.plan?plan_seq=${plan_seq}" id="planCommentForm" name="planCommentForm" >
+	         <div style="width: 100%; margin: 0px;">
+	            <div style="width: 80%">
+	               <textarea class="form-control" rows="3" id="comment" style="resize: none; width: 100%; margin: 0px; float: left;" maxlength="65" name="comment_text" id="comment_text"></textarea>
+	               <input type="text" readonly value="" name="articlenum" style="display:none">
+	            </div>
+	            <div
+	               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
+	               <button style="width: 100%; height: 86px;background-color: white" id="commentbtn" name="commentbtn" >
+	               <i class="fa fa-comments">댓글 작성</i></button>
+	            </div>
+	         </div>
+		 </form>
 			<div id="planCommentList">
 				<table class="table" id="comment-table">
 					<thead id="comment-thead">
@@ -388,7 +419,8 @@ $(document).ready(function(){
 									<c:if test="${pc.comment_writer eq sessionScope.user.seq}">
 										<button type="button" class="close" aria-label="Close"
 											id="deleteComment">
-											<a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
+											<a
+												href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
 												<span aria-hidden="true">&times;</span>
 											</a>
 										</button>
@@ -402,7 +434,7 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
-	<script>
+<script>
 	$(".schedule ul li:first").addClass('active');
 	$("div[id='Day1']").addClass('active');
    /*댓글관련 버튼들*/
@@ -442,8 +474,33 @@ $(document).ready(function(){
 	$("#listbtn").click(function() {	
 			location.href = "planboard.plan?currentPage=${currentPage}";
 	});
+	
+	$("#schedule-table").on('click','.clickable-row',function(event) {
+		$(this).addClass('select').siblings().removeClass('select');
+		var index = $(event.currentTarget).closest("tr").index();
+		map.panTo(new naver.maps.Point(markerlocation[index].location_x,markerlocation[index].location_y));
+	});
+	
+	$("#timeline").on('click','.event',function(event) {
+		$(this).addClass('select').parent().siblings().children('.event').removeClass('select');
+		var index = $(event.currentTarget).closest("li").index();
+		map.panTo(new naver.maps.Point(markerlocation[index].location_x,markerlocation[index].location_y));
+	});
+	
 	plan_seq = $("input[id='plan_seq']").val();
-	markerlocation = []
+	markerlocation = [];
+	
+	map = new naver.maps.Map('map', {
+	    center: new naver.maps.Point(37.3595704, 127.105399),
+	    zoom: 5,
+	    mapTypeId: 'normal',
+	    mapTypes: new naver.maps.MapTypeRegistry({
+	        'normal': naver.maps.NaverMapTypeOption.getNormalMap({
+	            projection: naver.maps.TM128Coord
+	        }),
+	    })
+	});
+	
 	$.ajax({
 		url:"planviewlist.Ajax",
 		type:"post",
@@ -468,7 +525,7 @@ $(document).ready(function(){
 		    var jsonArray = obj.jLocationList;
 		    timelineArray = obj.jTimeLine;
 
-		    for (var i = 0; i < jsonArray.length; i++) {
+		    for (var i = jsonArray.length-1; i >=0 ; i--) {
 		        let markerObj = {
 		            location_name: jsonArray[i].location_name,
 		            location_x: jsonArray[i].location_x,
@@ -488,7 +545,7 @@ $(document).ready(function(){
 		makeMarkerArray();
 
 		// 네이버 지도 생성
-		var map = new naver.maps.Map('map', {
+		map = new naver.maps.Map('map', {
 		    center: new naver.maps.Point(markerlocation[0].location_x, markerlocation[0].location_y),
 		    zoom: 9,
 		    mapTypeId: 'normal',
@@ -570,7 +627,7 @@ $(document).ready(function(){
 		    return function (e) {
 		        var marker = markers[seq],
 		            infoWindow = infoWindows[seq];
-
+				
 		        if (infoWindow.getMap()) {
 		            infoWindow.close();
 		        } else {
@@ -585,13 +642,7 @@ $(document).ready(function(){
 		}
 		
 		
-	});
-	
-	/* $.getJSON("planviewlist.Ajax", function(data) {
-		// 마커에 입력할 배열과 타임라인 정보를 입력할 배열
-		
-	}) */
-	
+	});	
  
    </script>
 </body>
