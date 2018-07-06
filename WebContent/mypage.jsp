@@ -322,15 +322,17 @@ background-color:primary;
 		<!--임시저장-->
 		<div>
 			<h1 class="divLine">작성중인Plan</h1>
-			<hr />
-			<c:if test="${commentResult.size() == 0 }">
-				<tr>
-					<td colspan="3">표시할 댓글이 없습니다</td>
-				</tr>
+			<div class="col-md-12 align-items-center">
+			<c:if test="${planList.size() == 0 }">
+				<fieldset class="border p-4 w-50" style="text-align:center;">
+				<legend class="w-auto">표시할 내용이 없습니다</legend>
+				당신의 Plan을 만들어보세요!
+				</fieldset>
 			</c:if>
-			<hr />
+			</div>
 			<div class="row mt-2 mx-0">
 				<c:forEach var="item" items="${planList}">
+					<hr/>
 					<div class="item col-md-3 mb-3">
 						<div class="card text-center">
 							<a
