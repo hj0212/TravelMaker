@@ -290,7 +290,12 @@ public class PlanController extends HttpServlet {
 
 				String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);
-
+				if(request.getSession().getAttribute("user") != null) {
+				MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+	        	String part = (String)request.getSession().getAttribute("part");								
+				MemberDTO mdto = mdao.newMemberInfo(user.getSeq(), part);
+				request.setAttribute("file_name", mdto.getPhoto_system_file_name());
+				}
 				isForward = true;
 				dst="planboard/share_plan.jsp";
 			}else if(command.equals("/planArticle.plan")) {
@@ -339,11 +344,14 @@ public class PlanController extends HttpServlet {
 				System.out.println(totalBudget);
 				String plan_title = pdao.getPlantitle(plan_seq);
 				request.setAttribute("plan_title", plan_title);
+				
+				
 
 				if(dto == null) {
 					isForward=false;
 					dst="login.bo";
 				}else {
+								
 					isForward=true;
 					dst="planboard/planView.jsp?plan_seq="+plan_seq+"&currentPage="+currentPage;
 				}

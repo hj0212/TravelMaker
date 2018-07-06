@@ -24,6 +24,8 @@
 <link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
 <script src="source/js/createplan.js"></script>
 <link rel="stylesheet" href="source/css/createplan.css" />
+
+
 <%@ page session="true"%>
 <meta charset="utf-8">
 
@@ -389,7 +391,7 @@
 		<div class="comments">
 		 <button type="button" style="border: none; background-color: white;"
             id="comment-bnt">댓글보기▼</button>
-		 <form method="post"  action="insertPlanComment.plan?plan_seq=${plan_seq}" id="planCommentForm" name="planCommentForm" >
+		 <form method="post" <%-- action="insertPlanComment.plan?plan_seq=${plan_seq}" --%>  id="planCommentForm" name="planCommentForm" >
 	         <div style="width: 100%; margin: 0px;">
 	            <div style="width: 80%">
 	               <textarea class="form-control" rows="3" id="comment" style="resize: none; width: 100%; margin: 0px; float: left;" maxlength="65" name="comment_text" id="comment_text"></textarea>
@@ -397,7 +399,7 @@
 	            </div>
 	            <div
 	               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-	               <button style="width: 100%; height: 86px;background-color: white" id="commentbtn" name="commentbtn" >
+	               <button style="width: 100%; height: 86px;background-color: white" id="commentbtn" name="commentbtn" type="button" >
 	               <i class="fa fa-comments">댓글 작성</i></button>
 	            </div>
 	         </div>
@@ -455,14 +457,16 @@
 	$("div[id='Day1']").addClass('active');
    /*댓글관련 버튼들*/
    /*댓글 작성*/
-   $('#commentbtn').click(function() {
-	   var comment_text = $("#comment_text").val(); 
-	   if(comment_text != null){
-       $('#planCommentForm').submit();
-	   }else{
-		  alert("내용을 입력해주세요");
+   
+   $("#commentbtn").click(function() {
+	   var tmp = $("#comment").val().replace(/\s|　/gi, '');;
+	   if(tmp==''){
+		   alert("내용을 입력해주세요");		  
+	   }else{		
+		   $('#planCommentForm').attr('action','insertPlanComment.plan?plan_seq=${plan_seq}').submit();
 	   }
     });
+   
     /*댓글보기*/
       var commentBntCount = 2;
       $("#comment-bnt").click(function() {
@@ -471,7 +475,7 @@
             $("#comment-bnt").text("댓글감추기▲");
             $("#comment-table").show();
             commentBntCount++;
-         } else {
+         }else {
             $("#comment-bnt").text("댓글보기▼");
             $("#comment-table").hide();
             commentBntCount--;
