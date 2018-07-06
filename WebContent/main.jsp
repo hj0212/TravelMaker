@@ -63,7 +63,10 @@ div {
 #bestImage {
 	margin-bottom: 15px;
 }
-
+.divLine a{
+	text-decoration: none;
+	color: black;
+}
 </style>
 
 </head>
@@ -80,7 +83,7 @@ div {
 	</c:choose>
 	<div class="container"  style="margin-top:-90px;">
 
-		<h1 class="divLine">BEST PLAN</h1>
+		<h1 class="divLine"><a href="planboard.plan">BEST PLAN</a></h1>
 		<hr />
 		<div class="row" id="bestPlanRow">
 			<div class="col-md-12" id="bestPlan">
