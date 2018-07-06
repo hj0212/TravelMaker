@@ -389,7 +389,7 @@ text-align:center;
 							role="presentation">내계획</a></li>
 						<li class="nav-item px-0" id="tab3"><a href="#tabthree"
 							class="nav-link" data-toggle="tab" data-target="#tabthree"
-							role="presentation">내<i class="glyphicon glyphicon-heart"></i>글</a></li>
+							role="presentation">내좋아요글</a></li>
 					</ul>
 				</div>
 				<div class="pannel-body">
