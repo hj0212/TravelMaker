@@ -69,11 +69,11 @@ div {
 
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/mainNavi_login.jsp"%>
+			<%@include file="../include/mainNavi_login.jsp"%>
 
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
+			<%@include file="../include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
 	<div class="container"  style="margin-top:-90px;">
