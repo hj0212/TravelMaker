@@ -67,7 +67,7 @@ public class FrontController extends HttpServlet {
 					String searchTerm = request.getParameter("search");
 					
 					ArrayList<FreeboardDTO> list = fbdao.selectBoard(currentPage*10-9, currentPage*10, searchTerm);
-					
+				
 //					String[] nickname = new String[list.size()];
 //					for(int i = 0; i < list.size(); i++) {
 //						int writerNumber = Integer.parseInt(list.get(i).getFree_writer());
@@ -77,6 +77,7 @@ public class FrontController extends HttpServlet {
 //					
 //					request.setAttribute("writer", nickname);
 					request.setAttribute("freeboardlist", list);
+				
 					
 					//------------------------------------------------------
 								
@@ -526,7 +527,12 @@ public class FrontController extends HttpServlet {
 	        		  isForward = false;
 	        		  dst = "reviewError.bo";
 	        	  }
+	          // 마지막에 주소 에러 방지
+	          }else {
+	        	  dst = "main.bo";
+	        	  isForward = false;
 	          }
+			
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);

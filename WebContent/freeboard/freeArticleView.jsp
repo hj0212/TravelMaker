@@ -189,7 +189,7 @@ $(document).ready(function(){
             	<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
             	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
             </c:if>
-            <button type="button" class="btn btn-outline-danger">신고</button>
+            <button type="button" class="btn btn-outline-danger" id="report">신고</button>
             <button type="button" class="btn btn-outline-secondary" id="goList">목록</button>
          </div>
       </div>
@@ -204,7 +204,7 @@ $(document).ready(function(){
 	            </div>
 	            <div
 	               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-	               <button style="width: 100%; height: 86px;background-color: white" id="writeComment"  class=""btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
+	               <button style="width: 100%; height: 86px;background-color: white" id="writeComment" ><i class="fa fa-comments"></i>댓글 작성</button>
 	            </div>
 	         </div>
 		 </form>
@@ -273,6 +273,22 @@ $(document).ready(function(){
 
 				$("#goList").click(function() {
 					location.href = "freeboard.bo";
+				})
+				
+				$("#report").click(function() {
+					$.ajax({
+						url : "freeReport.Ajax",
+						type: "post",
+						data : {value : ${article.free_seq}},
+						
+						success : function(response) {
+							if(response == 1) {
+								alert("신고는 한 번만 가능합니다.");
+							}else{
+								alert("신고가 접수되었습니다.");
+							}
+						}
+					})
 				})
 
 				<c:if test="${article.free_writer == sessionScope.user.seq}">

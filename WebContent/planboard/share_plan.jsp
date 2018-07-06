@@ -12,16 +12,14 @@
 	type="text/javascript"></script>
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
 	rel="stylesheet" type="text/css" />
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="source/js/createplan.js"></script>
 <link rel="stylesheet" href="source/css/createplan.css">
 <!-- 폰트어썸 CDN -->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <style>
 
 body {
@@ -88,10 +86,10 @@ div {
 	<!-- 네비  -->
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/otherNavi.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/otherNavi_login.jsp"%>
+			<%@include file="../include/otherNavi_login.jsp"%>
 		</c:otherwise>
 	</c:choose>
 	<div class="container" id="contId">
@@ -164,7 +162,7 @@ div {
 				<div class="item col-md-3 mb-3">
 					<div class="card text-center">
 		<a href="planArticle.plan?currentPage=${currentPage}&plan_seq=${item.plan_seq}" style="text-decoration:none;">
-						<div class="card-header planTitle" style="line-height:35px;height:55px; overflow:hidden;">${item.plan_title}</div>
+						<div class="card-header planTitle" style="line-height:37px;height:55px; overflow:hidden;">${item.plan_title}</div>
 		</a>
 						<div class="card-body mt-1 text-center">
 							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
@@ -193,7 +191,7 @@ div {
 
 
 	</div>
-	<%@include file="footer1.jsp"%>
+	<%@include file="../footer1.jsp"%>
 
 	<script>
 		$("#searchbtn").click(function() {
@@ -203,7 +201,7 @@ div {
 </body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/multiChat.jsp"%>
+			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
 	</c:choose>
 </html>

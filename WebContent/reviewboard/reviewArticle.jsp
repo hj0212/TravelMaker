@@ -169,7 +169,7 @@ $(document).ready(function(){
             	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
             </c:if>
             <c:if test="${!(sessionScope.user.seq eq dto.review_writer)}">
-	            <button type="button" class="btn btn-outline-danger">신고</button>
+	            <button type="button" class="btn btn-outline-danger" id="report">신고</button>
             </c:if>
             <button type="button" class="btn btn-outline-secondary" id="reviewboard-bt">목록</button>
          </div>
@@ -277,6 +277,22 @@ $(document).ready(function(){
       
       $("#reviewboard-bt").click(function() {
     	  location.href = "reviewboard.bo";
+      })
+      
+      $("#report").click(function(){
+    	  $.ajax({
+    		  url: "reviewReport.Ajax",
+    		  type: "post",
+    		  data : {value : ${review_seq}},
+    		  
+    		  success: function(response) {
+    			  if(response == 1){
+    				  alert("신고는 한 번만 가능합니다.");
+    			  }else{
+    				  alert("신고가 접수되었습니다.");
+    			  }
+    		  },
+    	  })
       })
       
      <c:if test="${sessionScope.user.seq eq dto.review_writer}">

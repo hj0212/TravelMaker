@@ -15,12 +15,9 @@
 	type="text/javascript"></script>
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
 	rel="stylesheet" type="text/css" />
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script src="source/js/jquery.roadmap.min.js"></script>
@@ -46,6 +43,9 @@
 	height: 100%;;
 }
 
+.schedule {
+	margin-top: 10px;
+}
 .col-md-12, .col-lg-6 {
 	padding-right: 0;
 	padding-left: 0;
@@ -218,7 +218,7 @@
 			</script>
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/otherNavi.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
 
@@ -247,8 +247,9 @@
 				<button class="btn btn-outline-secondary" id="listbtn">목록</button>
 			</div>
 		</div>
-
-		<div class="wrapper row">
+		<script>console.log("${!empty scheduleList}")</script>
+		<c:if test="${!empty scheduleList }">
+		<div id="view" class="wrapper row">
 			<div class="left_half col-sm-12 col-lg-6">
 				<div id="timeline" style="border: 1px solid gray;"></div>
 			</div>
@@ -256,7 +257,7 @@
 				<div id="map" style="border: 1px solid gray;"></div>
 			</div>
 		</div>
-
+		</c:if>
 		<div class="schedule">
 			<ul class="nav nav-tabs" role="tablist">
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
@@ -380,21 +381,21 @@
 		</div>
 
 		<div class="comments">
-			<form action="insertPlanComment.plan?plan_seq=${plan_seq}"
-				method="post" id="planCommentForm" name="planCommentForm">
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" placeholder="reply"
-						aria-label="reply" aria-describedby="basic-addon2"
-						id="comment_text" name="comment_text">
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="button"
-							id="commentbtn" name="commentbtn">댓글작성</button>
-					</div>
-				</div>
-			</form>
-			<button type="button"
-				style="border: none; background-color: white; cursor: pointer;"
-				id="comment-bnt">댓글보기▼</button>
+		 <button type="button" style="border: none; background-color: white;"
+            id="comment-bnt">댓글보기▼</button>
+		 <form method="post"  action="insertPlanComment.plan?plan_seq=${plan_seq}" id="planCommentForm" name="planCommentForm" >
+	         <div style="width: 100%; margin: 0px;">
+	            <div style="width: 80%">
+	               <textarea class="form-control" rows="3" id="comment" style="resize: none; width: 100%; margin: 0px; float: left;" maxlength="65" name="comment_text" id="comment_text"></textarea>
+	               <input type="text" readonly value="" name="articlenum" style="display:none">
+	            </div>
+	            <div
+	               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
+	               <button style="width: 100%; height: 86px;background-color: white" id="commentbtn" name="commentbtn" >
+	               <i class="fa fa-comments">댓글 작성</i></button>
+	            </div>
+	         </div>
+		 </form>
 			<div id="planCommentList">
 				<table class="table" id="comment-table">
 					<thead id="comment-thead">
@@ -421,8 +422,7 @@
 									<c:if test="${pc.comment_writer eq sessionScope.user.seq}">
 										<button type="button" class="close" aria-label="Close"
 											id="deleteComment">
-											<a
-												href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
+											<a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
 												<span aria-hidden="true">&times;</span>
 											</a>
 										</button>
@@ -439,12 +439,6 @@
 <script>
 	$(".schedule ul li:first").addClass('active');
 	$("div[id='Day1']").addClass('active');
-	
-	$(".schedule>ul>li").click(function() {
-		var rowCount = 
-		console.log(rowCount);
-	})
-	
    /*댓글관련 버튼들*/
    /*댓글 작성*/
    $('#commentbtn').click(function() {
