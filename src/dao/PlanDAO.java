@@ -257,7 +257,7 @@ public class PlanDAO {
 		pstmt.close();
 		return result;
 	}
-	
+
 	public boolean budgetseqcheck(BudgetDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql ="select * from budget where budget_seq=? and budget_plan=? and budget_amount=?";
@@ -503,25 +503,25 @@ public class PlanDAO {
 		return result;
 	}
 
-//	private boolean locationcheck(LocationDTO dto) throws Exception {
-//		Connection con = DBConnection.getConnection();
-//		String sql = "select * from location where location_name=? and location_x=? and location_y=?";
-//		PreparedStatement pstmt = con.prepareStatement(sql);
-//		pstmt.setString(1, dto.getLocation_name());
-//		pstmt.setInt(2, dto.getLocation_x());
-//		pstmt.setInt(3, dto.getLocation_y());
-//		ResultSet rs = pstmt.executeQuery();
-//		boolean result = true;
-//		if(rs.next()) {
-//			result = false;
-//		}
-//
-//		rs.close();
-//		pstmt.close();
-//		con.close();
-//
-//		return result;
-//	}
+	//	private boolean locationcheck(LocationDTO dto) throws Exception {
+	//		Connection con = DBConnection.getConnection();
+	//		String sql = "select * from location where location_name=? and location_x=? and location_y=?";
+	//		PreparedStatement pstmt = con.prepareStatement(sql);
+	//		pstmt.setString(1, dto.getLocation_name());
+	//		pstmt.setInt(2, dto.getLocation_x());
+	//		pstmt.setInt(3, dto.getLocation_y());
+	//		ResultSet rs = pstmt.executeQuery();
+	//		boolean result = true;
+	//		if(rs.next()) {
+	//			result = false;
+	//		}
+	//
+	//		rs.close();
+	//		pstmt.close();
+	//		con.close();
+	//
+	//		return result;
+	//	}
 
 	private boolean locationcheck(LocationDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
@@ -891,25 +891,16 @@ public class PlanDAO {
 		return result;
 	}
 
-	public List<PlanDTO> getMyPlans (int seq, int startNum, int endNum, String searchTerm) throws Exception{
+	public List<PlanDTO> getMyPlans (int seq, int startNum, int endNum) throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql;
 		PreparedStatement pstat = null;
 
-		if(searchTerm == null || searchTerm.equals("null")) {
-			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate,'YYYY/MM/DD'), to_char(plan_enddate,'YYYY/MM/DD'), row_number() over(order by plan_seq desc) as num from plan where plan_writer=?) where num between ? and ?";
-			pstat = con.prepareStatement(sql);
-			pstat.setInt(1, seq);
-			pstat.setInt(2, startNum);
-			pstat.setInt(3, endNum);
-		} else {
-			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate,'YYYY/MM/DD'), to_char(plan_enddate,'YYYY/MM/DD'), row_number() over(order by plan_seq desc) as num from plan where plan_writer=? and plan_title like ?) where num between ? and ?";
-			pstat = con.prepareStatement(sql);
-			pstat.setInt(1, seq);
-			pstat.setString(2, "%"+searchTerm+"%");
-			pstat.setInt(3, startNum);
-			pstat.setInt(4, endNum);
-		}
+		sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate,'YYYY/MM/DD'), to_char(plan_enddate,'YYYY/MM/DD'), row_number() over(order by plan_seq desc) as num from plan where plan_writer=?) where num between ? and ?";
+		pstat = con.prepareStatement(sql);
+		pstat.setInt(1, seq);
+		pstat.setInt(2, startNum);
+		pstat.setInt(3, endNum);
 		ResultSet rs = pstat.executeQuery();
 		List<PlanDTO> result = new ArrayList<>();
 
@@ -932,22 +923,15 @@ public class PlanDAO {
 		return result;
 	}
 	//--------------------------페이지 네비게이터	
-	public String getMyPlanPageNavi(int seq, int currentPage, String searchTerm) throws Exception {
+	public String getMyPlanPageNavi(int seq, int currentPage) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql;
 		PreparedStatement pstat;
 		ResultSet rs;
 
-		if(searchTerm == null || searchTerm.equals("")) {
 			sql = "select count(*) totalCount from plan where plan_writer=?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, seq);
-		} else {
-			sql = "select count(*) totalCount from plan where plan_writer=? and plan_title like ?";
-			pstat = con.prepareStatement(sql);
-			pstat.setInt(1, seq);
-			pstat.setString(2, "%"+searchTerm+"%");
-		}
 
 		rs = pstat.executeQuery();
 		rs.next();
@@ -992,19 +976,19 @@ public class PlanDAO {
 		StringBuilder sb = new StringBuilder();
 
 		if(needPrev) {
-			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Previous'><span aria-hidden=\"true\">&laquo;</span><span class=\"sr-only\">Previous</span></a></li>");
+			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"' aria-label='Previous'><span aria-hidden=\"true\">&laquo;</span><span class=\"sr-only\">Previous</span></a></li>");
 		}
 
 		for(int i = startNavi; i <= endNavi; i++) {
 			if(currentPage == i) {
-				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"'>"+i+"</a></li>");
 			} else {
-				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"'> "+i+"</a></li>");
 			}
 		}
 
 		if(needNext) {
-			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span><span class='sr-only'>Next</span></a></li>");
+			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span><span class='sr-only'>Next</span></a></li>");
 		}
 
 		con.close();
@@ -1063,41 +1047,41 @@ public class PlanDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan_seq);
 		int result = pstmt.executeUpdate();
-		
+
 		pstmt.close();
 		con.close();
 		return result;
 	}
-	
+
 	public List<PlanDTO> getMyTmpPlan (int seq) throws Exception{
 		Connection con = DBConnection.getConnection();
 		List<PlanDTO> result = new ArrayList<>();
-		String sql = "select * from plan where plan_writer = ? and plan_check= 'n' order by 1 desc";
+		String sql = "select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate, 'YYYY/MM/DD') plan_startdate,to_char(plan_enddate, 'YYYY/MM/DD') plan_enddate from plan where plan_writer = ? and plan_check= 'n' order by 1 desc";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, seq);
 		ResultSet rs = pstat.executeQuery();
 
 		while(rs.next()) {
-				PlanDTO pdto = new PlanDTO();
-				pdto.setPlan_seq(rs.getInt("plan_seq"));
-				pdto.setPlan_writerN(mdao.getUserNickname(rs.getInt("plan_writer")));
-				pdto.setPlan_writer(rs.getInt("plan_writer"));
-				pdto.setPlan_title(rs.getString("plan_title"));
-				pdto.setPlan_good(rs.getInt("plan_good"));
-				pdto.setPlan_viewcount(rs.getInt("plan_viewcount"));
-				pdto.setPlan_startdate(rs.getString("plan_startdate"));
-				pdto.setPlan_enddate(rs.getString("plan_enddate"));
-				pdto.setPlan_check(rs.getString("plan_check"));
-				result.add(pdto);
-			}
+			PlanDTO pdto = new PlanDTO();
+			pdto.setPlan_seq(rs.getInt("plan_seq"));
+			pdto.setPlan_writerN(mdao.getUserNickname(rs.getInt("plan_writer")));
+			pdto.setPlan_writer(rs.getInt("plan_writer"));
+			pdto.setPlan_title(rs.getString("plan_title"));
+			pdto.setPlan_good(rs.getInt("plan_good"));
+			pdto.setPlan_viewcount(rs.getInt("plan_viewcount"));
+			pdto.setPlan_startdate(rs.getString("plan_startdate"));
+			pdto.setPlan_enddate(rs.getString("plan_enddate"));
+			pdto.setPlan_check(rs.getString("plan_check"));
+			result.add(pdto);
+		}
 
-		
+
 		con.close();
 		pstat.close();
 		rs.close();
 		return result;
 	}
-	
+
 	public boolean getPlanState(int plan_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select plan_check from plan where plan_seq = ?";
@@ -1110,7 +1094,7 @@ public class PlanDAO {
 				result = true;
 			}
 		}
-		
+
 		con.close();
 		pstat.close();
 		rs.close();

@@ -189,10 +189,10 @@ background-color:primary;
 
 #con {
 	height: 100%;
-	margin: 0;
-	display: inline;
+	margin: 0; display : inline;
 	float: left;
 	text-align: center;
+	display: inline;
 }
 
 /*input file*/
@@ -244,28 +244,26 @@ background-color:primary;
 }
 </style>
 <script>
-	$(document).ready(
-			function() {
-				$("#profile_img").attr('src',
-						"/TravelMaker/file/${file_name}");
-				$("#img_button").click(function() {
-					var img_file = $("#img_file").trigger("click");
-					if (img_file) {
+	$(document).ready(function() {
+		$("#profile_img").attr('src', "/TravelMaker/file/${file_name}");
+		$("#img_button").click(function() {
+			var img_file = $("#img_file").trigger("click");
+			if (img_file) {
 
-						var selected = $("#profile").text("프로필 사진 등록");
+				var selected = $("#profile").text("프로필 사진 등록");
 
-						if (selected) {
-							$("#profile").click(function() {
-								$("#profileImgForm").submit();
-							})
-						} else {
-							alert("파일을 선택해주세요");
-						}
-					} else {
-						$("#profile").text("");
-					}
-				});
-			});
+				if (selected) {
+					$("#profile").click(function() {
+						$("#profileImgForm").submit();
+					})
+				} else {
+					alert("파일을 선택해주세요");
+				}
+			} else {
+				$("#profile").text("");
+			}
+		});
+	});
 </script>
 </head>
 
@@ -279,7 +277,8 @@ background-color:primary;
 			<div class="container py-5">
 				<div class="row">
 					<!-- <div class="col-sm-8 col-md-3 col-lg-3"> -->
-					<div class="w-100 h-100 py-3 px-1 align-items-center" id="profile-container">
+					<div class="w-100 h-100 py-3 px-1 align-items-center"
+						id="profile-container">
 						<!-- <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap"> -->
 						<!--프로필 이미지 업로드-->
 						<div class="col-sm-12 col-lg-5 py-3 ml-3 align-center"
@@ -346,7 +345,7 @@ background-color:primary;
 			</c:if>
 		</div>
 		<c:forEach var="item" items="${planList}">
-			<h1 class="divLine">작성중인Plan</h1>
+			<h1 class="divLine">작성중인 Plan</h1>
 			<hr />
 			<div class="row mt-2" id="tempplanarea">
 				<div class="item col-md-3 mb-3">
@@ -359,12 +358,10 @@ background-color:primary;
 						<div class="card-body mt-1 text-center">
 							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
 							<div class="btn-list d-inline">
-
 								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
 									class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
 							</div>
-							<hr>
-							<p class="text-center">여기다 뭐넣을까여</p>
+							<h6 class="text-muted">${item.plan_startdate}~ ${item.plan_enddate}</h6>
 						</div>
 					</div>
 				</div>
@@ -373,22 +370,22 @@ background-color:primary;
 
 		<div class="panel-heading">
 			<ul class="nav nav-tabs nav-justified" id="tabs">
-				<li class="nav-item px-0" id="tab1"><a href="#tabone"
-					class="active nav-link" data-toggle="tab" data-target="#tabone"
-					role="presentation">내 후기글</a></li>
 				<li class="nav-item px-0" id="tab2"><a href="#tabtwo"
-					class="nav-link" data-toggle="tab" data-target="#tabtwo"
+					class="active nav-link" data-toggle="tab" data-target="#tabtwo"
 					role="presentation">내 계획</a></li>
+				<li class="nav-item px-0" id="tab1"><a href="#tabone"
+					class="nav-link" data-toggle="tab" data-target="#tabone"
+					role="presentation">내 후기글</a></li>
 				<li class="nav-item px-0" id="tab3"><a href="#tabthree"
 					class="nav-link" data-toggle="tab" data-target="#tabthree"
 					role="presentation">좋아요 누른 글</a></li>
 			</ul>
 		</div>
-		
+
 		<div class="pannel-body">
 			<div class="row tab-content">
 				<!-- tabone -->
-				<div class="col tab-pane active" id="tabone" role="tabpanel">
+				<div class="col tab-pane" id="tabone" role="tabpanel">
 					<div class="row">
 
 						<c:if test="${empty MyReviewResult}">
@@ -420,13 +417,19 @@ background-color:primary;
 								</div>
 							</div>
 						</c:forEach>
+						<!-- 페이징 -->
+				<div class="col-md-12 mt-2" id="pagenaviarea">
+					<nav aria-label="Page navigation">
+						<ul class="pagination justify-content-center">${MyReviewPageNavi}</ul>
+					</nav>
+				</div>
 					</div>
 				</div>
 
 				<!-- tabtwo -->
 
 
-				<div class="col tab-pane" id="tabtwo" role="tabpanel">
+				<div class="col tab-pane active" id="tabtwo" role="tabpanel">
 					<div class="row">
 
 						<c:if test="${empty MyPlanResult}">
@@ -448,15 +451,19 @@ background-color:primary;
 										</a>
 									</div>
 									<div class="card-body">
-										<p>${mpr.plan_viewcount}</p>
+										<p><i class="far fa-eye"></i> ${mpr.plan_viewcount}</p>
 										<h6 class="text-muted">${mpr.plan_startdate}~
 											${mpr.plan_enddate}</h6>
 									</div>
 								</div>
 							</div>
 						</c:forEach>
-
-
+								<!-- 페이징 -->
+				<div class="col-md-12 mt-2" id="pagenaviarea">
+					<nav aria-label="Page navigation">
+						<ul class="pagination justify-content-center">${MyPlanPageNavi}</ul>
+					</nav>
+				</div>
 					</div>
 				</div>
 
@@ -514,12 +521,7 @@ background-color:primary;
 					</div>
 				</div>
 
-				<!-- 페이징 -->
-				<div class="col-md-12 mt-2" id="pagenaviarea">
-					<nav aria-label="Page navigation">
-						<ul class="pagination justify-content-center">${MyReviewPageNavi}</ul>
-					</nav>
-				</div>
+				
 
 
 			</div>
