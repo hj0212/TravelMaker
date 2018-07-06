@@ -195,7 +195,7 @@ div {
 			</nav>
 		</div>
 	</div>
-
+	
 	<%@include file="../footer1.jsp"%>
 
 	<script>

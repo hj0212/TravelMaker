@@ -25,7 +25,6 @@
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav ml-auto ">
 				<li class="nav-item active"><a class="nav-link" href="planboard.plan">Plans
-						<span class="sr-only">(current)</span>
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="reviewboard.bo">Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
@@ -35,5 +34,9 @@
 			</ul>
 		</div>
 	</nav>
-
+	<script>
+	$("#navbarNavDropdown li").on('click','li',function() {
+		$(this).addClass('active').siblings().removeClass('active');
+	});
+	</script>
 </header>
