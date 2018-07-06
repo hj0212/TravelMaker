@@ -39,9 +39,34 @@ public class AdminDAO {
 		conn.close();
 		return list;
 	}
+	
+	//----------------------------------신고 글 별로 개수 확인(정렬)
+		public List<ReportFreeDTO> getReportAlign_f() throws Exception{
+			Connection conn = DBConnection.getConnection();
+			List<ReportFreeDTO> list = new ArrayList<>();
+			String sql = "select f.free_seq, f.free_title,f.free_writer,f.free_writedate, f.free_viewcount,c.fcount from freeboard_c f,(select free_seq, count(*) fcount from report_free group by free_seq order by fcount desc)c where f.free_seq = c.free_seq";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ReportFreeDTO tmp = new ReportFreeDTO();
+				tmp.setFree_seq(rs.getInt("free_seq"));
+				tmp.setFree_title(rs.getString("free_title"));
+				MemberDAO mdao = new MemberDAO();		
+				tmp.setFree_writer(mdao.getUserNickname(rs.getInt("free_writer")));
+				tmp.setFree_writedate(rs.getString("free_writedate"));
+				tmp.setReport_count(rs.getInt("fcount"));
+				list.add(tmp);
+			}
+		/*	System.out.println(list.size());*/
+			rs.close();
+			pstmt.close();
+			conn.close();
+			return list;
+		}
+	
 
 	//-------------------------------------------------계획 공유게시판 관리
-	
 	//----------------------------------신고 글 전부 보기	
 	public List<ReportFreeDTO> getAllReport_p() throws Exception{
 		Connection conn = DBConnection.getConnection();
@@ -79,7 +104,7 @@ public class AdminDAO {
 	
 	public List<MemberDTO> getAllMembers() throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select seq, userid,email,nickname,naver_nickname,naver_email,kakao_nickname,kakao_email,to_char(create_date,'YY/MM/DD')create_date,part,block from users where seq!=33333 order by seq desc";
+		String sql = "select seq, userid,email,nickname,naver_nickname,naver_email,kakao_nickname,kakao_email,to_char(create_date,'YY/MM/DD')create_date,part,block from users where seq!='admin' order by seq desc";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		List<MemberDTO> result = new ArrayList<>();
