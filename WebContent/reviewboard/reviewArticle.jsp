@@ -235,7 +235,7 @@ $(document).ready(function(){
          </table>
       </div>
    </div>
-  
+  <%@include file="../footer1.jsp"%>
  
    <script>
 /*       $("#comment-write-bnt").click(
@@ -306,4 +306,9 @@ $(document).ready(function(){
      </c:if>
    </script>
 </body>
+<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>	
 </html>

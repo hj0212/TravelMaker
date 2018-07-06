@@ -17,7 +17,7 @@
 	rel="stylesheet" type="text/css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=jib8ljMTCWAk29WWx1Xm&submodules=geocoder"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script src="source/js/jquery.roadmap.min.js"></script>
@@ -290,7 +290,7 @@
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 					<input type="hidden" id="plan_seq" value="${plan_seq}">
 					<div role="tabpanel" class="tab-pane fade show" id="Day${day}">
-						<table class="table" id="schedule-table">
+						<table class="table schedule" id="schedule-table">
 							<c:if test="${isFirst }">
 								<thead>
 									<tr>
@@ -495,7 +495,7 @@
 			location.href = "planboard.plan?currentPage=${currentPage}";
 	});
 	
-	$("#schedule-table").on('click','.clickable-row',function(event) {
+	$("table.schedule").on('click','.clickable-row',function(event) {
 		$(this).addClass('select').siblings().removeClass('select');
 		var index = $(event.currentTarget).closest("tr").index();
 		map.panTo(new naver.maps.Point(markerlocation[index].location_x,markerlocation[index].location_y));
@@ -666,4 +666,9 @@
  
    </script>
 </body>
+<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>	
 </html>

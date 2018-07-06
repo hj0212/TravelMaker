@@ -1,15 +1,13 @@
 $(document).ready(function() {
-	$("#endbtn").click(function() {
-		if(confirm("등록하시겠습니까?")) {
-			location.href = "savePlan.plan?plan=${param.plan}";
-		}
-	});
+	
 
 	$("#savebtn").click(function() {
 		if(confirm("입력된 일정을 저장하고 나가시겠습니까?")) {
 			location.href = "planboard.plan";
 		}
 	});
+	
+	
 
 	budgetcount = 1;
 	$("#moneyaddbtn").click(function() {

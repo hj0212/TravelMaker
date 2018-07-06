@@ -58,6 +58,10 @@ a {
 	font-size: 15pt;
 	font-family: menufont;
 }
+
+#navbarNavDropdown .active {
+	font-weight: bold;
+}
 </style>
 
 	<ul class="rslides">
@@ -83,8 +87,7 @@ a {
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav ml-auto ">
 				<li class="nav-item active"><a class="nav-link"
-					href="planboard.plan">Plans <span class="sr-only">(current)</span>
-				</a></li>
+					href="planboard.plan">Plans</a></li>
 				<li class="nav-item"><a class="nav-link" href="reviewboard.bo">Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
 				<li class="nav-item dropdown" style="min-width: 150px;"><a
@@ -112,7 +115,7 @@ a {
 			</ul>
 		</div>
 	</nav>
-
+	
 	<script>
 		$(function() {
 			$(".rslides").responsiveSlides();
@@ -124,6 +127,9 @@ a {
 						$nav.toggleClass('scrolled', $(this).scrollTop() > $nav
 								.height());
 					});
+		});
+		$("#navbarNavDropdown li").on('click','li',function() {
+			$(this).addClass('active').siblings().removeClass('active');
 		});
 	</script>
 </header>
