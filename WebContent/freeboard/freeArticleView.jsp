@@ -247,6 +247,7 @@ $(document).ready(function(){
 
       </div>
    </div>
+   <%@include file="../footer1.jsp"%>
    <script>
 				var commentBntCount = 2;
 				$("#comment-bnt").click(function() {
@@ -289,7 +290,7 @@ $(document).ready(function(){
 							}
 						}
 					})
-				})
+				});
 
 				<c:if test="${article.free_writer == sessionScope.user.seq}">
 					$("#delete").click(function() {
@@ -302,4 +303,9 @@ $(document).ready(function(){
 				</c:if>
 			</script>
 </body>
+	<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>	
 </html>

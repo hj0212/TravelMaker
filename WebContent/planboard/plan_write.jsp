@@ -213,6 +213,12 @@
 				console.log(day);
 				$(location).attr('href',"selectSchedule.plan?plan=${param.plan}&day="+day+"&create=f");
 			})
+			
+			$("#endbtn").click(function() {
+				if(confirm("작성 완료 하시겠습니까?")) {
+					location.href = "savePlan.plan?plan=${param.plan}";
+				}
+			});
 		</script>
 
 		<!-- 일차 페이징 끝 -->
@@ -449,4 +455,9 @@
     <%@include file="../footer1.jsp"%>
     </div>
 </body>
+<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>	
 </html>
