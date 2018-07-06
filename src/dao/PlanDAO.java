@@ -1071,7 +1071,7 @@ public class PlanDAO {
 	public List<PlanDTO> getMyTmpPlan (int seq) throws Exception{
 		Connection con = DBConnection.getConnection();
 		List<PlanDTO> result = new ArrayList<>();
-		String sql = "select * from plan where plan_writer = ? and plan_check= 'y'";
+		String sql = "select * from plan where plan_writer = ? and plan_check='y'";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, seq);
 		ResultSet rs = pstat.executeQuery();
