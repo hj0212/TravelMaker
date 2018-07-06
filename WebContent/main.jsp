@@ -7,24 +7,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>TravelMaker</title>
 <!-- 부트 스트랩 코드-->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="source/css/mainPage.css">
-
 <link rel="stylesheet" type="text/css" href="source/lib/slick/slick.css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css"
-	href="source/lib/slick/slick-theme.css" /> 
-	<script src="include/slider/responsiveslides.min.js"></script>	
+  <link rel="stylesheet" type="text/css" href="source/lib/slick/slick-theme.css" /> 
+<script src="include/slider/responsiveslides.min.js"></script>	
 	
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <style>
 div {
 	box-sizing: border-box;
@@ -65,7 +58,10 @@ div {
 #bestImage {
 	margin-bottom: 15px;
 }
-
+.divLine a{
+	text-decoration: none;
+	color: black;
+}
 </style>
 
 </head>
@@ -82,7 +78,7 @@ div {
 	</c:choose>
 	<div class="container"  style="margin-top:-90px;">
 
-		<h1 class="divLine">BEST PLAN</h1>
+		<h1 class="divLine"><a href="planboard.plan">BEST PLAN</a></h1>
 		<hr />
 		<div class="row" id="bestPlanRow">
 			<div class="col-md-12" id="bestPlan">

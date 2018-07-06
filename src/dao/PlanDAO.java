@@ -404,7 +404,7 @@ public class PlanDAO {
 	public int startPlanInsertData(PlanDTO dto)throws Exception{
 		if(plancheck(dto)) {
 			Connection con = DBConnection.getConnection();
-			String sql ="insert into plan values(plan_seq.nextval,?,?,?,?,0,0,0,0)";
+			String sql ="insert into plan values(plan_seq.nextval,?,?,?,?,0,0,0,'n')";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPlan_writer());
 			pstmt.setString(2,dto.getPlan_startdate());
@@ -462,7 +462,7 @@ public class PlanDAO {
 	}
 
 	public int addLocation(LocationDTO dto) throws Exception {
-		if(locationcheck(dto.getLocation_id())) {
+		if(locationcheck(dto)) {
 			Connection con = DBConnection.getConnection();
 			String sql = "insert into location VALUES (location_seq.nextval, ?, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -523,11 +523,12 @@ public class PlanDAO {
 //		return result;
 //	}
 
-	private boolean locationcheck(int location_id) throws Exception {
+	private boolean locationcheck(LocationDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from location where location_id=?";
+		String sql = "select * from location where location_x=? and location_y=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, location_id);
+		pstmt.setInt(1, dto.getLocation_x());
+		pstmt.setInt(2, dto.getLocation_y());
 		ResultSet rs = pstmt.executeQuery();
 		boolean result = true;
 		if(rs.next()) {
@@ -675,12 +676,12 @@ public class PlanDAO {
 		PreparedStatement pstat = null;
 
 		if(searchTerm == null || searchTerm.equals("null")) {
-			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan) where num between ? and ?";
+			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan where plan_check = 'y') where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, startNum);
 			pstat.setInt(2, endNum);
 		} else {
-			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan where plan_title like ?) where num between ? and ?";
+			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan where plan_check = 'y' and plan_title like ?) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, "%"+searchTerm+"%");
 			pstat.setInt(2, startNum);
@@ -790,7 +791,7 @@ public class PlanDAO {
 
 	public List<PlanCommentDTO> getAllPlanComments (int plan_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from plan_comment where plan_seq =?";
+		String sql = "select * from plan_comment where plan_seq =? order by comment_seq desc";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, plan_seq);
 		ResultSet rs = pstat.executeQuery();
@@ -1071,7 +1072,7 @@ public class PlanDAO {
 	public List<PlanDTO> getMyTmpPlan (int seq) throws Exception{
 		Connection con = DBConnection.getConnection();
 		List<PlanDTO> result = new ArrayList<>();
-		String sql = "select * from plan where plan_writer = ? and plan_check= 'y'";
+		String sql = "select * from plan where plan_writer = ? and plan_check= 'n' order by 1 desc";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, seq);
 		ResultSet rs = pstat.executeQuery();
@@ -1090,6 +1091,25 @@ public class PlanDAO {
 				result.add(pdto);
 			}
 
+		
+		con.close();
+		pstat.close();
+		rs.close();
+		return result;
+	}
+	
+	public boolean getPlanState(int plan_seq) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select plan_check from plan where plan_seq = ?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, plan_seq);
+		ResultSet rs = pstat.executeQuery();
+		boolean result = false;
+		if(rs.next()) {
+			if(rs.getString(1).equals("y")) {
+				result = true;
+			}
+		}
 		
 		con.close();
 		pstat.close();

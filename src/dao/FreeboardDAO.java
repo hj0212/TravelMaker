@@ -54,6 +54,25 @@ public class FreeboardDAO {
 		return result;
 	}
 	
+	public int recentArticle(int writer) throws Exception {
+		int result = 0;
+		Connection conn = DBConnection.getConnection();
+		String sql = "select free_seq from (select free_seq from freeboard_c where free_writer = ? ORDER BY free_seq DESC) where rownum = 1";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, writer);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		return result;
+	}
+	
 	public int updateArticle(String title, String contents, int articlenum) throws Exception {
 		Connection conn = DBConnection.getConnection();
 		String sql = "UPDATE freeboard_c set free_title = ?, free_contents = ? WHERE free_seq = ?";
@@ -137,6 +156,28 @@ public class FreeboardDAO {
 		conn.close();
 		
 		return writer;
+	}
+	//관리자 아이디에 맞는 게시물 추출
+	public List<FreeboardDTO> SelectAdminData()throws Exception{
+		Connection con = DBConnection.getConnection();
+		String sql ="select * from freeboard_c where writer=3333";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		List<FreeboardDTO> result = new ArrayList<>();
+		while(rs.next()) {
+			FreeboardDTO tmp = new FreeboardDTO();
+			tmp.setFree_seq(rs.getInt(1));
+			tmp.setFree_title(rs.getString(2));
+			tmp.setFree_contents(rs.getString(3));
+			tmp.setFree_writer(rs.getString(4));
+			tmp.setFree_writedate(rs.getString(5));
+			tmp.setFree_viewcount(rs.getInt(6));
+			result.add(tmp);		
+		}
+		con.close();
+		rs.close();
+		pstmt.close();
+		return result;
 	}
 	
 	public int addViewCount(int articleseq) throws Exception {

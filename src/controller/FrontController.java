@@ -67,7 +67,7 @@ public class FrontController extends HttpServlet {
 					String searchTerm = request.getParameter("search");
 					
 					ArrayList<FreeboardDTO> list = fbdao.selectBoard(currentPage*10-9, currentPage*10, searchTerm);
-					
+				
 //					String[] nickname = new String[list.size()];
 //					for(int i = 0; i < list.size(); i++) {
 //						int writerNumber = Integer.parseInt(list.get(i).getFree_writer());
@@ -77,6 +77,7 @@ public class FrontController extends HttpServlet {
 //					
 //					request.setAttribute("writer", nickname);
 					request.setAttribute("freeboardlist", list);
+				
 					
 					//------------------------------------------------------
 								
@@ -96,30 +97,51 @@ public class FrontController extends HttpServlet {
 				isForward = true;
 				dst = "freeboard/freeArticleWrite.jsp";
 			} else if(command.equals("/writeArticlefree.bo")) {
-				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+				try {
+					MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+					
+					if(dto == null) {
+						isForward = false;
+						dst = "login.bo";
+					}else {
+						int writer = dto.getSeq();
+						String title = request.getParameter("title");
+						String contents = request.getParameter("contents");
 				
-				if(dto == null) {
-					isForward = false;
-					dst = "login.bo";
-				}else {
-					int writer = dto.getSeq();
-					String title = request.getParameter("title");
-					String contents = request.getParameter("contents");
-			
-					if((title == null || title == "") && (contents == null || contents == "")) {
-						title = "제목없음";
-					}else if(contents == null || contents == "" ) {
-						contents = "내용없음";
-					}else if(title == null || title == "") {
-						title = "제목없음";
-						contents = "내용없음";
+						if((title == null || title == "") && (contents == null || contents == "")) {
+							title = "제목없음";
+						}else if(contents == null || contents == "" ) {
+							contents = "내용없음";
+						}else if(title == null || title == "") {
+							title = "제목없음";
+							contents = "내용없음";
+						}
+						
+						int result = fbdao.insertArticle(writer, title, contents);
+						
+						dst = "writeArticleProc.bo";
+						// sdaf
 					}
-					
-					int result = fbdao.insertArticle(writer, title, contents);
-					
-					dst = "freeboard.bo";
+				}catch(NumberFormatException e) {
+					dst = "freeNumberError.bo";
+					isForward = false;
+				}catch(Exception e) {
+					isForward = false;
+					dst = "freeboardError.bo";
 				}
-			} else if(command.equals("/viewFreeArticle.bo")) {
+			}else if(command.equals("/writeArticleProc.bo")) {
+				try {
+					MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+					int writer = dto.getSeq();
+					int number = fbdao.recentArticle(writer);
+					
+					isForward = false;
+					dst = "viewFreeArticle.bo?seq="+number;
+				}catch(Exception e) {
+					isForward = false;
+					dst = "freeboardError.bo";
+				}
+			}else if(command.equals("/viewFreeArticle.bo")) {
 				try {
 					int seq = Integer.parseInt(request.getParameter("seq"));
 					String currentPage = request.getParameter("currentPage");
@@ -251,8 +273,8 @@ public class FrontController extends HttpServlet {
 		        		  dst = "freeboard.bo";
 		        	  }else {
 		        		  dst = "freenotWriter.bo";
-		        		  isForward = false;
 		        	  }
+		        	  isForward = false;
 	        	  }catch(NumberFormatException e) {
 	        		  isForward = false;
 	        		  dst = "freeNumberError.bo";
