@@ -451,7 +451,7 @@
 $(document).ready(function() {
 	$("#endbtn").click(function() {
 		if(confirm("등록하시겠습니까?")) {
-			location.href = "savePlan.plan";
+			location.href = "savePlan.plan?plan=${param.plan}";
 		}
 	});
 	
