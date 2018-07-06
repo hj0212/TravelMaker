@@ -325,32 +325,32 @@ background-color:primary;
 		<!--임시저장-->
 		<div>
 			<c:if test="${empty planList}">
-				<div class="row-md-12">
-					<div class="col-md-12">
-						<fieldset class="border p-4" style="text-align: center;">
-							<legend class="w-auto">
-								<h1>작성중인 Plan이 없습니다</h1>
-							</legend>
-							<h5>당신의 Plan을 만들어보세요!</h5>
-						</fieldset>
-					</div>
-				</div>
+			<div class="row-md-12">
+			<div class="col-md-12 col-sm-4">
+				<fieldset class="border p-4" style="text-align:center;">
+				<legend class="w-auto"><h1>작성중인 Plan이 없습니다</h1></legend>
+				<h5>당신의 Plan을 만들어보세요!</h5>
+				</fieldset>
+			</div>
+			</div>
 			</c:if>
 		</div>
 		<c:forEach var="item" items="${planList}">
 			<h1 class="divLine">작성중인Plan</h1>
-			<div class="row mt-2 mx-0">
-				<hr />
-				<div class="item col-md-3 mb-3">
-					<div class="card text-center">
-						<a href="selectSchedule.plan?plan=${item.plan_seq}&day=1&create=f"
-							style="text-decoration: none;">
-							<div class="card-header planTitle"
-								style="line-height: 35px; height: 55px; overflow: hidden;">${item.plan_title}</div>
-						</a>
-						<div class="card-body mt-1 text-center">
-							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
-							<div class="btn-list d-inline">
+			<hr/>
+			<div class="row mt-2">
+					
+					<div class="item col-md-3 mb-3">
+						<div class="card text-center">
+							<a
+								href="selectSchedule.plan?plan=${item.plan_seq}&day=1&create=f"
+								style="text-decoration: none;">
+								<div class="card-header planTitle"
+									style="line-height: 35px; height: 55px; overflow: hidden;">${item.plan_title}</div>
+							</a>
+							<div class="card-body mt-1 text-center">
+								<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
+								<div class="btn-list d-inline">
 
 								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
 									class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
@@ -370,9 +370,20 @@ background-color:primary;
 
 
 
-	<!--tab부분-->
-	<div class="py-5 mt-10">
-		<div class="container">
+				<div class="panel-heading">
+					<ul class="nav nav-tabs nav-justified" id="tabs">
+						<li class="nav-item px-0" id="tab1"><a href="#tabone"
+							class="active nav-link" data-toggle="tab" data-target="#tabone"
+							role="presentation">내후기글</a></li>
+						<li class="nav-item px-0" id="tab2"><a href="#tabtwo"
+							class="nav-link" data-toggle="tab" data-target="#tabtwo"
+							role="presentation">내계획</a></li>
+						<li class="nav-item px-0" id="tab3"><a href="#tabthree"
+							class="nav-link" data-toggle="tab" data-target="#tabthree"
+							role="presentation">내<i class="glyphicon glyphicon-heart"></i>글</a></li>
+					</ul>
+				</div>
+				<div class="pannel-body">
 
 			<div class="panel-heading">
 				<ul class="nav nav-tabs nav-justified" id="tabs">
