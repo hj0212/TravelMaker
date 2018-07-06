@@ -188,7 +188,6 @@ background-color:primary;
 }
 
 #con {
-	width: 50%;
 	height: 100%;
 	display: inline;
 	float: left;
@@ -223,6 +222,10 @@ background-color:primary;
 .card-header {
 	background-color: #eee;
 }
+
+.navbar-nav {
+	border: none;
+}
 </style>
 <script>
 	$(document).ready(
@@ -252,14 +255,7 @@ background-color:primary;
 
 
 <body>
-	<c:choose>
-		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/mainNavi_login.jsp"%>
-		</c:when>
-		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
-		</c:otherwise>
-	</c:choose>
+	<%@include file="../include/otherNavi.jsp"%>
 
 	<div id="wrapper">
 		<!--profile부분-->
@@ -271,7 +267,7 @@ background-color:primary;
 						id="profile-container">
 						<!-- <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap"> -->
 						<!--프로필 이미지 업로드-->
-						<div class="col-sm py-3 ml-3 align-center" id="profile-con"
+						<div class="col-sm-12 col-lg-5 py-3 ml-3 align-center" id="profile-con"
 							style="width: 344.59px; box-sizing: border-box;">
 							<form action="profileImg.do" method="post"
 								enctype="multipart/form-data" id="profileImgForm">
@@ -291,7 +287,7 @@ background-color:primary;
 							</form>
 						</div>
 						<!--기본 프로필-->
-						<div class="col-sm d-inline py-5 my-5" id="con">
+						<div class="col-sm-12 col-lg-7 d-inline py-5 my-5" id="con">
 							<h4 class="my-2">${nickname}</h4>
 							<c:choose>
 								<c:when test="${email eq null}">

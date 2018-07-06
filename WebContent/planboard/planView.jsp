@@ -152,6 +152,7 @@
 
 #budgetarea>input, #totalbudgetarea>input {
 	background-color: white;
+	text-align: right;
 }
 
 #budgetarea input, #budgetarea span, #totalbudgetarea input, #totalbudgetarea span {
@@ -165,6 +166,15 @@
 	float: left;
 	border: none;
 	padding-bottom: 6px;
+}
+
+#planCommentList {
+	min-height:	150px;
+
+}
+
+#comment-table {
+	margin-bottom: 50px;
 }
 </style>
 
@@ -374,10 +384,6 @@
 			<button type="button" class="btn btn-outline-primary" id="badbtn">
 				<i class="far fa-frown"></i>${bad}
 			</button>
-			<!-- <button type="button" class="btn btn-outline-success"
-					data-toggle="modal" data-target="#exampleModalCenter" id="getmyplanbtn">내 일정으로 가져가기</button>
-			 -->
-			<button class="btn btn-default" style="float: right;">신고</button>
 		</div>
 
 		<div class="comments">
@@ -436,6 +442,14 @@
 			</div>
 		</div>
 	</div>
+	<div id="footer">
+		<%@include file="../footer1.jsp"%>
+	</div>
+	<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>
 <script>
 	$(".schedule ul li:first").addClass('active');
 	$("div[id='Day1']").addClass('active');

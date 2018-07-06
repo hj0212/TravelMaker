@@ -462,7 +462,7 @@ public class PlanDAO {
 	}
 
 	public int addLocation(LocationDTO dto) throws Exception {
-		if(locationcheck(dto.getLocation_id())) {
+		if(locationcheck(dto)) {
 			Connection con = DBConnection.getConnection();
 			String sql = "insert into location VALUES (location_seq.nextval, ?, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -523,11 +523,12 @@ public class PlanDAO {
 //		return result;
 //	}
 
-	private boolean locationcheck(int location_id) throws Exception {
+	private boolean locationcheck(LocationDTO dto) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from location where location_id=?";
+		String sql = "select * from location where location_x=? and location_y=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, location_id);
+		pstmt.setInt(1, dto.getLocation_x());
+		pstmt.setInt(2, dto.getLocation_y());
 		ResultSet rs = pstmt.executeQuery();
 		boolean result = true;
 		if(rs.next()) {
