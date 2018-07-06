@@ -4,60 +4,31 @@
 
 
 <div id="live-chat">
-
 	<header class="clearfix">
-
 		<a href="#" class="chat-close">x</a>
-
 		<h4 class="live4">${sessionScope.nickname}</h4>
-
-		<span class="chat-message-counter">!</span>
-
 	</header>
-
 	<div class="chat" id="chatchat">
-		
 		<div class="chat-history" id="livechathistory"></div>
-
 		<!-- end chat-history -->
-
 		<p class="chat-feedback">Messages</p>
-
-
-
 		<fieldset>
-
 			<input type="text" placeholder="Type your message…" class="liveinput"
 				id="livemsg"> <input type="hidden" class="liveinput">
-
 		</fieldset>
-
-
-
 	</div>
-	
-	<script>
-	$(document).ready(function(){
-		
-	});
-
-	</script>
+</div>	
 	<script>
 		(function() {
-
 			$('#live-chat header').on('click', function() {
-
 				$('.chat').slideToggle(300, 'swing');
 				$('.chat-message-counter').fadeToggle(300, 'swing');
-
 			});
 
 			$('.chat-close').on('click', function(e) {
-
 				e.preventDefault();
 				$('#live-chat').html().fadeOut(300);						
 			});
-
 		})();
 	</script>
 	<script>
@@ -91,7 +62,6 @@
 
 			ws.onmessage = function(msg) {
 				var obj = JSON.parse(msg.data);
-				console.log(obj.nickname + ":" + obj.msg  + ":" +obj.file);
 				var chat = "<hr class=livehr><div class=chat-message clearfix><img src='/TravelMaker/file/"+obj.file+"' alt='' width='32' height='32'><div class=chat-message-content clearfix><h5 class=live5>"
 						+ obj.nickname
 						+ "</h5><p class=livep>"
@@ -101,10 +71,8 @@
 				$("#livechathistory").scrollTop($("#livechathistory")[0].scrollHeight);			 
 			};
 			
-					
 			ws.onclose = function() {
 
 			};
-			
 		}
 	</script>

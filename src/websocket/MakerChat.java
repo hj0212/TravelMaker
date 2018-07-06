@@ -19,17 +19,17 @@ import com.google.gson.JsonParser;
 @ServerEndpoint("/websocket")
 public class MakerChat {
 	public static Set<Session> clients = Collections.synchronizedSet(new HashSet<>());
-	
+
 	private static int connectorCount=1;
-	
+
 	@OnOpen  //클라이언트가 접속했을때 실행되는 매서드
 	public void handleOpen(Session session) {
-		
+
 		System.out.println(connectorCount++ +"사용자가 접속 했습니다");
 		clients.add(session); //연결되어온 세션값을 저장하겠다 
 	}
-	
-	
+
+
 	@OnMessage
 	public void handleMessage(String message)throws Exception{
 		System.out.println(message);
@@ -38,20 +38,18 @@ public class MakerChat {
 		String nickname = element.getAsJsonObject().get("nickname").getAsString();
 		String msg = element.getAsJsonObject().get("msg").getAsString();
 		String file = element.getAsJsonObject().get("file").getAsString();
-	
-		System.out.println(nickname + " : " + msg+ " : " +file);
+
 		for(Session tmp : clients) {
-			
-		tmp.getBasicRemote().sendText(message);
+			tmp.getBasicRemote().sendText(message);
 		}
-		
+
 	}
-	
+
 	@OnClose
 	public void handleClose(Session session) {
 		clients.remove(session); //누군가 연결을 끊으면 그 세션값을 지우겠다 
 	}
-	
+
 	public void handleError(Throwable t) {//뒤에 able이 붙으면 인터페이스일경우가 대부분이다 
 		t.printStackTrace();
 	}
