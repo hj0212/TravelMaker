@@ -247,7 +247,7 @@ background-color:primary;
 </style>
 <script>
 	$(document).ready(function() {
-		$("#profile_img").attr('src', "/TravelMaker/file/${file_name}");
+		$("#profile_img").attr('src', "/WEB_06_18/file/${file_name}");
 		$("#img_button").click(function() {
 			var img_file = $("#img_file").trigger("click");
 			if (img_file) {
