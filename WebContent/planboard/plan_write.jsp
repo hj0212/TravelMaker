@@ -29,8 +29,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0/css/tempusdominus-bootstrap-4.min.css" />
 <script
 	src="source/lib/lightswitch05-table-to-json/jquery.tabletojson.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="../source/css/plan_writeNavi.css">
+<link rel="stylesheet" type="text/css" href="source/css/plan_writeNavi.css">
 <style>
 #title-board {
 	font-size: 15px;

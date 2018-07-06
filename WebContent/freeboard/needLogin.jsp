@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title></title>
 <!-- 부트 스트랩 코드-->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -23,7 +23,6 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
 	integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="../source/css/codepenNavi.css">
 <style>
 	.container {
 		margin-top : 15%;
@@ -48,7 +47,7 @@
 	
 	<script>
 		$("#goLogin").click(function(){
-			location.href = "../login/newlogin.jsp";
+			location.href = "login/newlogin.jsp";
 		});
 		
 		$("#goList").click(function(){

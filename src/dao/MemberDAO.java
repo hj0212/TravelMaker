@@ -25,7 +25,8 @@ public class MemberDAO {
 			tmp.setPassword(rs.getString(3));
 			tmp.setEmail(rs.getString(4));
 			tmp.setNickname(rs.getString(5));
-			tmp.setBlock(rs.getString("block"));
+			tmp.setBlock(rs.getString(15));
+			tmp.setPhoto_system_file_name(rs.getString(16));
 		}
 		
 		con.close();
@@ -83,6 +84,8 @@ public class MemberDAO {
 			tmp.setNaver_id(rs.getString(6));
 			tmp.setNaver_nickname(rs.getString(7));
 			tmp.setNaver_email(rs.getString(8));
+			tmp.setBlock(rs.getString("block"));
+			tmp.setPhoto_system_file_name(rs.getString(16));
 		}
 
 		con.close();
@@ -120,6 +123,7 @@ public class MemberDAO {
 			tmp.setNaver_nickname(rs.getString(10));
 			tmp.setNaver_email(rs.getString(11));
 			tmp.setBlock(rs.getString("block"));
+			tmp.setPhoto_system_file_name(rs.getString(16));
 		}
 
 		con.close();

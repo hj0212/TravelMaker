@@ -111,7 +111,7 @@
 	  $(".btn-login").click(function() {
 		  if($(".btn-login").text()=="Log in") {
 			  console.log("로그인");
-			  $("#userform").attr('action','login.do').submit();
+			  $("#userform").attr('action','../login.do').submit();
 		  } else if($(".btn-login").text()=="Sign up"){
 			  console.log("사인업");
 			  var id = $("#user_idcheck").val();
@@ -138,7 +138,7 @@
 			  }else if(conpw != pw){
 				  alert("패스워드가 일치 하지않습니다");
 			  }else{
-				  $("#userform").attr('action','join.do').submit();
+				  $("#userform").attr('action','../join.do').submit();
 			  }		  
 			  
 			  
@@ -280,17 +280,17 @@ $("#user_idchek").keyup(function(){
 								    	            $.ajax({
 								    	            	type:"post",
 								    	            	dataType:"json",
-								    	            	url:"kakaologin.do",
+								    	            	url:"../kakaologin.do",
 								    	            	data:{
 								    	            		id:res.id,
 								    	            		name:res.properties.nickname,
 								    	            		email:res.kaccount_email
 								    	             	},
 								    	            	success:function(data) {
-								    	            		location.href = "main.jsp";
+								    	            		location.href = "../main.jsp";
 								    	            	},
 								    	            	error:function(data) {
-								    	            		location.href = "main.jsp";
+								    	            		location.href = "../main.jsp";
 								    	            	}
 													})
 												},
