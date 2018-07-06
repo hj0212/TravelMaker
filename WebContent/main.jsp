@@ -314,7 +314,7 @@ div {
 
 
 	<p
-		style="font-size: 50pt; color: white; font-family: 'Nanum Pen Script', cursive; text-align: center; background-color: rgb(241, 243, 245);">
+		style="font-size: 50pt; color: white; font-family: 'Nanum Pen Script', cursive; text-align: center; background-color: gray;">
 		지금 당신의 TRAVELMAKER를 시작해보세요!!</p>
 
 
