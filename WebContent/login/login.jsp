@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>로그인</title>
-<link rel="stylesheet" href="../source/lib/materialize/css/materialize.css">
-<script src="../source/lib/materialize/js/materialize.js"></script>
+<link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
+<script src="source/lib/materialize/js/materialize.js"></script>
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -187,7 +187,7 @@ $("#user_idcheck").keyup(function(){
 </script>
 
 
-<script type="text/javascript" src="../source/js/login.js"></script>
+<script type="text/javascript" src="source/js/login.js"></script>
 
 
 </head>
