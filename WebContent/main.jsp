@@ -236,7 +236,7 @@ console.log(${sessionScope.user.seq !=null});</script>
 				<hr style="color: gray">
 
 				<div class="col">
-					<a href="#"><img src="source/img/TRAVEL/wonju.jpg"
+					<a href="http://itempage3.auction.co.kr/detailview.aspx?itemno=B501498782&keyword=%bf%f8%c1%d6%b9%c2%c1%f6%be%f6%bb%ea"><img src="source/img/TRAVEL/wonju.jpg"
 						class="rounded-circle go" alt="원주 뮤지엄산" title="원주 뮤지엄산"></a><br>
 					<b>원주 뮤지엄산</b><br>
 					<p style="font-size: 10pt">
@@ -244,7 +244,7 @@ console.log(${sessionScope.user.seq !=null});</script>
 					</p>
 				</div>
 				<div class="col">
-					<a href="#"><img src="source/img/TRAVEL/iksan.jpg"
+					<a href="http://travel.coupang.com/np/products/3013818348?q=%EC%9D%B5%EC%82%B0%EC%97%AC%ED%96%89&itemsCount=6&searchId=99158a87a5ef49cbad39672b7d93c214&rank=5"><img src="source/img/TRAVEL/iksan.jpg"
 						class="rounded-circle go" alt="미륵사지석탑" title="익산 미륵사지석탑"></a><br>
 					<b>익산 미륵사지석탑</b><br>
 					<p style="font-size: 10pt">
@@ -252,7 +252,7 @@ console.log(${sessionScope.user.seq !=null});</script>
 					</p>
 				</div>
 				<div class="col">
-					<a href="#"><img src="source/img/TRAVEL/damyang.jpg"
+					<a href="http://www.lotteimall.com/goods/viewGoodsDetail.lotte?goods_no=1328267958&NaPm=ct=jjb08wvk|ci=defc9848123acd933295fcfaf6ccf8b2742a9e72|tr=sls|sn=8|hk=73eaf00eebf61154cafd26f09b486a3d881d1250&chl_dtl_no=2540914&chl_no=141370"><img src="source/img/TRAVEL/damyang.jpg"
 						class="rounded-circle go" alt="기차여행" title="남도 명소 .별미"></a><br>
 					<b>남도 명소 .별미</b><br>
 					<p style="font-size: 10pt">
@@ -261,14 +261,14 @@ console.log(${sessionScope.user.seq !=null});</script>
 				</div>
 
 				<div class="col">
-					<a href="#"><img src="source/img/TRAVEL/haesu.jpg"
+					<a href="http://www.coupang.com/np/products/3013820968"><img src="source/img/TRAVEL/haesu.jpg"
 						class="rounded-circle go" alt="해수욕장" title="전국 유명 해수욕장"></a><br>
 					<b>전국 유명 해수욕장</b><br>
 					<p style="font-size: 10pt">왕복 셔틀 버스로 교통비 절약 해수욕장 당일 여행!</p>
 				</div>
 
 				<div class="col">
-					<a href="#"><img src="source/img/TRAVEL/bosung.jpg"
+					<a href="http://gtour.gmarket.co.kr/TourVIP/VipItem?goodscode=354472329&pos_shop_cd=GE&pos_class_cd=300025404&pos_class_kind=S&selDateS=&selDateE="><img src="source/img/TRAVEL/bosung.jpg"
 						class="rounded-circle go" alt="보성 녹차" title="보성 녹차"></a> <br>
 					<b>보성 녹차</b><br>
 					<p style="font-size: 10pt">
@@ -276,7 +276,7 @@ console.log(${sessionScope.user.seq !=null});</script>
 					</p>
 				</div>
 				<div class="col">
-					<a href="#"><img src="source/img/TRAVEL/jeonju.jpg"
+					<a href="http://www.wemakeprice.com/deal/adeal/3732382/?utm_source=naver_ep&utm_medium=PRICE_af&utm_campaign=3732382&src=text&kw=02413D"><img src="source/img/TRAVEL/jeonju.jpg"
 						class="rounded-circle go" alt="맛있는 전주" title="맛있는 전주"></a><br>
 					<b>맛있는 전주</b><br>
 					<p style="font-size: 10pt">
@@ -295,19 +295,19 @@ console.log(${sessionScope.user.seq !=null});</script>
 			추천하는 재밌는 여행</h1>
 		<hr>
 		<div class="container-fluid">
-			<a href="#" style="text-decoration: none;">
+			<a href="http://korean.visitkorea.or.kr/kor/bz15/where/course/area_course.jsp?cid=2381373" style="text-decoration: none;">
 				<div class="travelgo"
 					style="width: 100%; height: 300px; background-image: url(source/img/TRAVEL/irez.png);">
 					<h5 class="travelch" style="text-shadow: 1px 1px 8px #000000;">
-						당산 투어</h5>
+						서울 투어</h5>
 				</div>
-			</a> <br> <a href="#" style="text-decoration: none;">
+			</a> <br> <a href="http://korean.visitkorea.or.kr/kor/bz15/where/course/area_course.jsp?cid=1960567" style="text-decoration: none;">
 				<div class="travelgo"
 					style="width: 100%; height: 300px; background-image: url(source/img/TRAVEL/sheepz.png);">
 					<h5 class="travelch" style="text-shadow: 1px 1px 8px #000000;">
 						강원도 투어</h5>
 				</div>
-			</a> <br> <a href="#" style="text-decoration: none;">
+			</a> <br> <a href="http://www.daejeoncitytour.co.kr/icons/app/cms/?html=/home/sub_tour1.html&shell=/index.shell:47" style="text-decoration: none;">
 				<div class="travelgo"
 					style="width: 100%; height: 300px; background-image: url(source/img/TRAVEL/daejeonz.png);">
 					<h5 class="travelch" style="text-shadow: 1px 1px 8px #000000;">
