@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -45,9 +46,8 @@ public class AjaxController extends HttpServlet {
 				String userid = request.getParameter("userid");
 				boolean idcheck = mdao.check(userid);
 				PrintWriter pw = response.getWriter();
-
+				System.out.println(idcheck);
 				if(userid.equals("")) {
-					System.out.println(userid);
 					pw.println("id");
 					return;
 				}

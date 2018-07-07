@@ -60,6 +60,10 @@
     .card a {
         text-decoration: none;
     }
+    
+.container h1, .container  h6 {
+	display: inline;
+}
 </style>
 </head>
 <body>
@@ -75,7 +79,7 @@
 
 
 	<div class="container">
-		<h1 class="divLine">Review</h1>
+		<h1 class="divLine">Review</h1><h6> : 여행 후기를 공유해요</h6>
 		<hr />
 
 		<div class="row" id="cardArea">

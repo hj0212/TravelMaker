@@ -77,6 +77,10 @@ div {
 .divLine {
 	margin-top: 30px;
 }
+
+.container h1, .container  h6 {
+	display: inline;
+}
 </style>
 </head>
 <body>
@@ -160,7 +164,7 @@ div {
 		</div>
 
 		<!-- plan 리스트  -->
-		<h1 class="divLine">Plan</h1>
+		<h1 class="divLine">Plan</h1> <h6> : 여행 계획을 공유해요</h6>
 		<hr/>
 
 		<div class="row mt-2 mx-0" id="planlistarea">

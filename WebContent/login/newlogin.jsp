@@ -83,6 +83,9 @@
 	height: 49px;
 }
 
+#title img {
+	width: 400px;
+}
 
 </style>
 <script>
@@ -175,18 +178,16 @@ $(document).ready(function(){
 
 $("#user_idcheck").keyup(function(){
 	var userid = $("#user_idcheck").val();
-
-	$.ajax({
-		url:"idcheck.Ajax",
-		type:"post",
-		data:{userid:userid},
-		success:function(data){		
- 				$("#label-text").html(data); 				   							 			
-		}
-	});
-});	
+		$.ajax({
+			url:"idcheck.Ajax",
+			type:"post",
+			data:{userid:userid},
+			success:function(data){		
+	 			$("#label-text").html(data); 				   							 			
+			}
+		});
+	});	
 });
-
 </script>
 
 
@@ -200,7 +201,7 @@ $("#user_idcheck").keyup(function(){
 	<div id="container">
 		<div class="row">
 			<h1 id="title" class="center col s12">
-				<a href="../main.jsp">TRAVEL MAKER</a>
+				<a href="../main.jsp"><img src="../source/img/travellogo2.png"></a>
 			</h1>
 		</div>
 		<div class="row">
@@ -329,5 +330,6 @@ $("#user_idcheck").keyup(function(){
 				</div>
 			</div>
 		</div>
+	</div>
 </body>
 </html>

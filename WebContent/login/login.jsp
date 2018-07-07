@@ -325,5 +325,6 @@ $("#user_idcheck").keyup(function(){
 				</div>
 			</div>
 		</div>
+	</div>
 </body>
 </html>
