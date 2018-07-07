@@ -290,9 +290,18 @@ background-color:primary;
 								<button id="img_button" type="button" class="d-inline"
 									title="여기를 누르면 이미지를 변경할 수 있습니다."
 									style="max-height: 250px; height: 250px; width: 300px; max-width: 344.59px">
-									<img for="img_file" id="profile_img"
-										src="/TravelMaker/file/${file_name }"
+									<c:choose>
+										<c:when test="${sessionScope.part eq 'kakao'}">
+											<img for="img_file" id="profile_img"
+										src="${sessionScope.img }"
 										alt="여기를 눌러 프로필 사진을 등록해보세요!" style="width: 100%; height: 100%">
+										</c:when>
+										<c:otherwise>
+											<img for="img_file" id="profile_img" src="/TravelMaker/file/${sessionScope.file_name}"
+										alt="여기를 눌러 프로필 사진을 등록해보세요!" style="width: 100%; height: 100%">
+										</c:otherwise>
+									</c:choose>
+									
 								</button>
 								<div class="align-items-center">
 									<input type="file" id="img_file" name="file"

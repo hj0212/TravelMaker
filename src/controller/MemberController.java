@@ -196,6 +196,7 @@ public class MemberController extends HttpServlet {
 					request.setAttribute("email", mdto.getKakao_email());
 				}
 				request.getSession().setAttribute("file_name", mdto.getPhoto_system_file_name());
+				System.out.println(mdto.getPhoto_system_file_name());
 			/*리뷰와 망가진 네비*/
 				
 				/*List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq());
