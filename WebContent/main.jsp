@@ -37,7 +37,8 @@ div {
 }
 
 #bestPlan {
-	height: 300px;
+	height: 400px;
+	margin-bottom: 0;
 }
 
 #bests {
@@ -46,14 +47,6 @@ div {
 
 #foot {
 	height: 100px;
-}
-
-.data, .data div {
-	height: 400px;
-}
-
-.item {
-	width: 300px;
 }
 
 .hls_sol_data {
@@ -69,13 +62,18 @@ div {
 	bottom: 10px;
 }
 
-#bestImage {
-	margin-bottom: 15px;
+.pic {
+	display: inline;
+}
+
+#bestImage, #newimagearea {
+	margin-bottom: 35px;
 }
 
 .divLine a {
 	text-decoration: none;
 	color: black;
+	margin-top: 30px;
 }
 
 .container-fulid {
@@ -128,12 +126,174 @@ div {
 .sang {
 	font-family: sang;
 }
+
+.card-container {
+	-moz-perspective: 800px;
+	-webkit-perspective: 800px;
+	perspective: 800px;
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	margin-bottom: 30px;
+	width: 100%;
+	height: 350px;
+}
+
+
+.card {
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-transition: -moz-transform 1s
+		cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-o-transition: -o-transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-webkit-transition: -webkit-transform 1s
+		cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	position: relative;
+	background: none repeat scroll 0 0 #fff;
+	color: #444444;
+	max-width: 320px;
+	margin: 0 auto;
+}
+
+.card .cover {
+	-moz-border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px;
+	border-radius: 4px 4px 0 0;
+	height: 105px;
+	overflow: hidden;
+	z-index: -2;
+}
+
+.card .cover img {
+	width: 100%;
+}
+
+.card .profileimg {
+	position: relative;
+	background: #fff;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	display: block;
+	height: 120px;
+	margin: -55px auto 0;
+	width: 120px;
+	text-align: center;
+}
+
+.card .profileimg img {
+	width: 120px;
+	height: 120px;
+}
+
+.card .content {
+	background-color: transparent;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	padding: 10px 20px 20px;
+}
+
+div.card-body {
+	height: 180px;
+	color: black;
+	text-align: center;
+}
+
+div.card-body h6 {
+	margin-bottom:10px;
+}
+
+.card .content .main {
+	min-height: 140px;
+}
+
+.card .use-for {
+	font-size: 22px;
+	text-align: center;
+}
+
+.card h5 {
+	margin: 5px 0;
+	font-weight: 400;
+	line-height: 20px;
+}
+
+.card .footer {
+	color: #999;
+	padding: 10px 0 0;
+	text-align: center;
+}
+
+.card .footer .btn-simple {
+	margin-top: -6px;
+}
+
+.card .header {
+	padding: 15px 20px;
+	height: 90px;
+}
+
+.front {
+	-moz-backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-moz-transition: -moz-transform 1s
+		cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-o-transition: -o-transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-webkit-transition: -webkit-transform 1s
+		cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-moz-transform: rotateY(0deg);
+	-ms-transform: rotateY(0deg);
+	-webkit-transform: rotateY(0deg);
+	transform: rotateY(0deg);
+	-moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+	-webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	position: absolute;
+	background-color: #fff;
+	width: 100%;
+	height: 350px;
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
+
+
+.qr canvas {
+	-moz-backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	margin: 0 auto;
+}
+
+.title {
+	color: #506a85;
+	text-align: center;
+	font-weight: 300;
+	font-size: 44px;
+	margin-bottom: 90px;
+	line-height: 90%;
+}
 </style>
 
 </head>
 <body>
-	<script>console.log(${sessionScope.user.seq});
-console.log(${sessionScope.user.seq !=null});</script>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
@@ -144,7 +304,7 @@ console.log(${sessionScope.user.seq !=null});</script>
 		</c:otherwise>
 	</c:choose>
 
-	<div class="mainintro" style="margon-top: -100px;">
+	<div class="mainintro" style="margin-top: 10px;">
 		<!--  background-color: rgb(241,243,245); -->
 		<p class="sang"
 			style="text-align: center; font-size: 40pt; font-family: 'Nanum Pen Script', cursive;">TRAVELMAKER로
@@ -155,7 +315,7 @@ console.log(${sessionScope.user.seq !=null});</script>
 
 		<!-- 메인  트래블메이커 안내 div 시작-->
 		<div class="container-fluid text-center"
-			style="height: 300px; background-color: #F2F2F2; padding: 40px; margin-top: -140px;">
+			style="height: 300px; background-color: #F2F2F2; padding: 40px; margin-top: -140px;  margin-bottom: 15px;">
 			<div class="d-flex">
 				<div class="p-2 flex-fill">
 					<i class="fas fa-map fa-7x" style="color: gray"></i>
@@ -176,7 +336,7 @@ console.log(${sessionScope.user.seq !=null});</script>
 		</div>
 		<!-- 메인  트래블메이커 안내 div 종료-->
 
-		<h1 class="divLine">
+		<h1 class="divLine" style="font-family: 'Black Han Sans', sans-serif; margin-top: 35px;">
 			<a href="planboard.plan">BEST PLAN</a>
 		</h1>
 		<hr />
@@ -184,41 +344,44 @@ console.log(${sessionScope.user.seq !=null});</script>
 			<div class="col-md-12" id="bestPlan">
 				<div class="data"
 					data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'
-					style="max-height: 250px; min-height: 250px; height: 250px;">
+					style="height: 350px;">
 
-					<c:forEach var="tmp" items="${main}">
+					<c:forEach var="tmp" items="${main}" varStatus="Status">
 						<div class="item"
-							style="width: 400px; max-width: 400px; min-width: 400px; max-height: 250px; min-height: 250px; height: 250px; padding: 5px;">
+							style="width: 300px; max-width: 300px; min-width: 300px; max-height: 330px; min-height: 330px; height: 330px; padding: 5px;">
 							<div class="card col-md-12 col-sm-12 w-100"
 								style="height: 100%; padding: 0px;">
-								<div class="card-header" style="background-colog:#FAFAFA;">사진</div>
+								<div class="front">
+								<div class="cover">
+									<img src="source/img/back${Status.count }.png" />
+								</div>
+								<div class="profileimg">
+									<span class="fa"><img src="/TravelMaker/file/${sessionScope.file_name}"></span>
+								</div>
 								<div class="card-body">
-									<a href="planArticle.plan?plan_seq=${tmp.plan_seq}"
-										style="text-decoration: none; padding: 0px;"><h4
-											style="max-height: 29px; overflow: hidden;">${tmp.plan_title }</h4></a>
-									<h6 class="text-muted">${tmp.plan_writerN}</h6>
-									<div class="btn-list d-inline">
-
+									<h4 style="max-height: 29px; overflow: hidden;">${tmp.plan_title }</h4>
+									<h6 class="text-muted">${tmp.plan_writerN}
 										<i class="far fa-eye"></i> <span>${tmp.plan_viewcount}</span>
 										<i class="fas fa-hand-holding-heart"></i> <span>${tmp.plan_good}</span>
-
-									</div>
+									</h6>
+									<a href="planArticle.plan?plan_seq=${tmp.plan_seq}" style="text-decoration: none; padding: 0px;">
+									<button type="button" class="btn btn-outline-primary" >게시글 보러가기</button></a>
+								</div>
 								</div>
 							</div>
-						</div>
+						</div> 
 					</c:forEach>
-
 				</div>
 			</div>
 		</div>
 
-		<h1 class="divLine">NEW IMAGE</h1>
+		<h1 class="divLine" style="font-family: 'Black Han Sans', sans-serif;">NEW IMAGE</h1>
 		<hr />
-		<div class="row col-md-12 mx-0" id="bestImage">
+		<div class="row" id="newimagearea">
 			<!-- 카드 시작 -->
 			<c:set var="i" value="1" />
 			<c:forEach var="item" items="${photoList}">
-				<div class="col-md-3 hls_sol px-1">
+				<div class="col-md-3 hls_sol px-1 pic">
 					<img
 						src="${pageContext.request.contextPath}/files/${item.system_file_name}"
 						alt="">
