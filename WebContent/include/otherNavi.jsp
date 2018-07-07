@@ -11,6 +11,9 @@
 	white-space: nowrap;
 	overflow: hidden;
 }
+.dropdown-item{
+	color:  rgb(52, 52, 52);
+}
 </style>
 
 	<nav
@@ -43,10 +46,10 @@
 						</c:choose> <span class="caret"></span></a>
 					<ul class="dropdown-menu mt-1 "
 						aria-labelledby="navbarDropdownMenuLink">
-						<li><a class="dropdown-item text-white" href="mypage.do">My Page</a></li>
-						<li><a class="dropdown-item text-white" href="traveldiary.html">My Plans</a></li>
-						<li><a class="dropdown-item text-white" href="#">Message</a></li>
-						<li><a class="dropdown-item text-white" href="logout.do">Log Out</a></li>
+						<li><a class="dropdown-item" href="mypage.do">My Page</a></li>
+						<li><a class="dropdown-item" href="traveldiary.html">My Plans</a></li>
+						<li><a class="dropdown-item" href="#">Message</a></li>
+						<li><a class="dropdown-item" href="logout.do">Log Out</a></li>
 					</ul></li>
 			</ul>
 		</div>

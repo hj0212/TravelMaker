@@ -63,6 +63,11 @@ a {
 	color: #6d6d6d;
 	text-decoration: none;
 }
+
+.container h1, .container  h6 {
+	display: inline;
+}
+
 </style>
 <script>
 	$(document).ready(function() {
@@ -83,7 +88,7 @@ a {
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
-	<h1 class="divLine">FreeTalk</h1>
+	<h1 class="divLine">FreeTalk</h1><h6> : 여행에 관한 이야기를 자유롭게 나눠요</h6>
 		<hr/>
 	
 		<div class="row">

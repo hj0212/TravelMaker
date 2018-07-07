@@ -47,6 +47,7 @@ body {
 	padding-left: 15px;
 	padding-right: 15px;
 	width: 970px;
+	margin-top : -130px;
 }
 
 .team {
@@ -125,7 +126,7 @@ h5, .h5{
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	<div class="container" style="padding-top: 145px; margin-bottom: 48px;">
+	<div class="container" style="margin-bottom: 48px;">
 		<h1 class="big-text">
 			Travel Maker<small class="smallintro">를 소개합니다!</small>
 		</h1>

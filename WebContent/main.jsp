@@ -119,6 +119,15 @@ div {
 	align-items: center;
 	justify-content: center;
 }
+
+@font-face {
+	font-family: sang;
+	src: url('SangSangFlowerRoad.otf');
+}
+
+.sang {
+	font-family: sang;
+}
 </style>
 
 </head>
@@ -137,7 +146,7 @@ console.log(${sessionScope.user.seq !=null});</script>
 
 	<div class="mainintro" style="margon-top: -100px;">
 		<!--  background-color: rgb(241,243,245); -->
-		<p
+		<p class="sang"
 			style="text-align: center; font-size: 40pt; font-family: 'Nanum Pen Script', cursive;">TRAVELMAKER로
 			상상속 여행을 현실로 만들어보세요!</p>
 	</div>
@@ -236,49 +245,54 @@ console.log(${sessionScope.user.seq !=null});</script>
 				<hr style="color: gray">
 
 				<div class="col">
-					<a href="http://itempage3.auction.co.kr/detailview.aspx?itemno=B501498782&keyword=%bf%f8%c1%d6%b9%c2%c1%f6%be%f6%bb%ea"><img src="source/img/TRAVEL/wonju.jpg"
-						class="rounded-circle go" alt="원주 뮤지엄산" title="원주 뮤지엄산"></a><br>
-					<b>원주 뮤지엄산</b><br>
+					<a
+						href="http://itempage3.auction.co.kr/detailview.aspx?itemno=B501498782&keyword=%bf%f8%c1%d6%b9%c2%c1%f6%be%f6%bb%ea"><img
+						src="source/img/TRAVEL/wonju.jpg" class="rounded-circle go"
+						alt="원주 뮤지엄산" title="원주 뮤지엄산"></a><br> <b>원주 뮤지엄산</b><br>
 					<p style="font-size: 10pt">
 						세계적인 건축가 <br> 안도 타다오가 설계한<br> 전원형 뮤지엄 여행
 					</p>
 				</div>
 				<div class="col">
-					<a href="http://travel.coupang.com/np/products/3013818348?q=%EC%9D%B5%EC%82%B0%EC%97%AC%ED%96%89&itemsCount=6&searchId=99158a87a5ef49cbad39672b7d93c214&rank=5"><img src="source/img/TRAVEL/iksan.jpg"
-						class="rounded-circle go" alt="미륵사지석탑" title="익산 미륵사지석탑"></a><br>
-					<b>익산 미륵사지석탑</b><br>
+					<a
+						href="http://travel.coupang.com/np/products/3013818348?q=%EC%9D%B5%EC%82%B0%EC%97%AC%ED%96%89&itemsCount=6&searchId=99158a87a5ef49cbad39672b7d93c214&rank=5"><img
+						src="source/img/TRAVEL/iksan.jpg" class="rounded-circle go"
+						alt="미륵사지석탑" title="익산 미륵사지석탑"></a><br> <b>익산 미륵사지석탑</b><br>
 					<p style="font-size: 10pt">
 						복원을 끝낸<br> 익산 미륵사지 석탑여행
 					</p>
 				</div>
 				<div class="col">
-					<a href="http://www.lotteimall.com/goods/viewGoodsDetail.lotte?goods_no=1328267958&NaPm=ct=jjb08wvk|ci=defc9848123acd933295fcfaf6ccf8b2742a9e72|tr=sls|sn=8|hk=73eaf00eebf61154cafd26f09b486a3d881d1250&chl_dtl_no=2540914&chl_no=141370"><img src="source/img/TRAVEL/damyang.jpg"
-						class="rounded-circle go" alt="기차여행" title="남도 명소 .별미"></a><br>
-					<b>남도 명소 .별미</b><br>
+					<a
+						href="http://www.lotteimall.com/goods/viewGoodsDetail.lotte?goods_no=1328267958&NaPm=ct=jjb08wvk|ci=defc9848123acd933295fcfaf6ccf8b2742a9e72|tr=sls|sn=8|hk=73eaf00eebf61154cafd26f09b486a3d881d1250&chl_dtl_no=2540914&chl_no=141370"><img
+						src="source/img/TRAVEL/damyang.jpg" class="rounded-circle go"
+						alt="기차여행" title="남도 명소 .별미"></a><br> <b>남도 명소 .별미</b><br>
 					<p style="font-size: 10pt">
 						1박2일<br> KTX/SRT 기차여행
 					</p>
 				</div>
 
 				<div class="col">
-					<a href="http://www.coupang.com/np/products/3013820968"><img src="source/img/TRAVEL/haesu.jpg"
-						class="rounded-circle go" alt="해수욕장" title="전국 유명 해수욕장"></a><br>
-					<b>전국 유명 해수욕장</b><br>
+					<a href="http://www.coupang.com/np/products/3013820968"><img
+						src="source/img/TRAVEL/haesu.jpg" class="rounded-circle go"
+						alt="해수욕장" title="전국 유명 해수욕장"></a><br> <b>전국 유명 해수욕장</b><br>
 					<p style="font-size: 10pt">왕복 셔틀 버스로 교통비 절약 해수욕장 당일 여행!</p>
 				</div>
 
 				<div class="col">
-					<a href="http://gtour.gmarket.co.kr/TourVIP/VipItem?goodscode=354472329&pos_shop_cd=GE&pos_class_cd=300025404&pos_class_kind=S&selDateS=&selDateE="><img src="source/img/TRAVEL/bosung.jpg"
-						class="rounded-circle go" alt="보성 녹차" title="보성 녹차"></a> <br>
-					<b>보성 녹차</b><br>
+					<a
+						href="http://gtour.gmarket.co.kr/TourVIP/VipItem?goodscode=354472329&pos_shop_cd=GE&pos_class_cd=300025404&pos_class_kind=S&selDateS=&selDateE="><img
+						src="source/img/TRAVEL/bosung.jpg" class="rounded-circle go"
+						alt="보성 녹차" title="보성 녹차"></a> <br> <b>보성 녹차</b><br>
 					<p style="font-size: 10pt">
 						바베큐코스가 포함된<br> 녹차 투어 패키지
 					</p>
 				</div>
 				<div class="col">
-					<a href="http://www.wemakeprice.com/deal/adeal/3732382/?utm_source=naver_ep&utm_medium=PRICE_af&utm_campaign=3732382&src=text&kw=02413D"><img src="source/img/TRAVEL/jeonju.jpg"
-						class="rounded-circle go" alt="맛있는 전주" title="맛있는 전주"></a><br>
-					<b>맛있는 전주</b><br>
+					<a
+						href="http://www.wemakeprice.com/deal/adeal/3732382/?utm_source=naver_ep&utm_medium=PRICE_af&utm_campaign=3732382&src=text&kw=02413D"><img
+						src="source/img/TRAVEL/jeonju.jpg" class="rounded-circle go"
+						alt="맛있는 전주" title="맛있는 전주"></a><br> <b>맛있는 전주</b><br>
 					<p style="font-size: 10pt">
 						먹으러가자!<br> 유명 맛집투어 패키지!
 					</p>
@@ -295,19 +309,25 @@ console.log(${sessionScope.user.seq !=null});</script>
 			추천하는 재밌는 여행</h1>
 		<hr>
 		<div class="container-fluid">
-			<a href="http://korean.visitkorea.or.kr/kor/bz15/where/course/area_course.jsp?cid=2381373" style="text-decoration: none;">
+			<a
+				href="http://korean.visitkorea.or.kr/kor/bz15/where/course/area_course.jsp?cid=2381373"
+				style="text-decoration: none;">
 				<div class="travelgo"
 					style="width: 100%; height: 300px; background-image: url(source/img/TRAVEL/irez.png);">
 					<h5 class="travelch" style="text-shadow: 1px 1px 8px #000000;">
 						서울 투어</h5>
 				</div>
-			</a> <br> <a href="http://korean.visitkorea.or.kr/kor/bz15/where/course/area_course.jsp?cid=1960567" style="text-decoration: none;">
+			</a> <br> <a
+				href="http://korean.visitkorea.or.kr/kor/bz15/where/course/area_course.jsp?cid=1960567"
+				style="text-decoration: none;">
 				<div class="travelgo"
 					style="width: 100%; height: 300px; background-image: url(source/img/TRAVEL/sheepz.png);">
 					<h5 class="travelch" style="text-shadow: 1px 1px 8px #000000;">
 						강원도 투어</h5>
 				</div>
-			</a> <br> <a href="http://www.daejeoncitytour.co.kr/icons/app/cms/?html=/home/sub_tour1.html&shell=/index.shell:47" style="text-decoration: none;">
+			</a> <br> <a
+				href="http://www.daejeoncitytour.co.kr/icons/app/cms/?html=/home/sub_tour1.html&shell=/index.shell:47"
+				style="text-decoration: none;">
 				<div class="travelgo"
 					style="width: 100%; height: 300px; background-image: url(source/img/TRAVEL/daejeonz.png);">
 					<h5 class="travelch" style="text-shadow: 1px 1px 8px #000000;">
@@ -336,10 +356,13 @@ console.log(${sessionScope.user.seq !=null});</script>
 		<h1 class="divLine" style="font-family: 'Black Han Sans', sans-serif;">TRAVELMAKER에서
 			추천하는 이달의 여행</h1>
 	</div>
-	<div class="container-fluid" style="height: 300px;">
+	<div class="container-fluid"
+		style="height: 300px; background-img: url(source/img/TRAVEL/daejeonz.png);">
 		<div class="row" style="width: 970px; margin: auto;">
-			<div class="col" style="text-align: right;">
-				<h5 style="">7월, 여행을 떠나세요!!!</h5>
+			<div class="col" style="text-align: right; margin: auto;">
+				<h5 class='sang' style="text-align: right; font-size: 42pt;">
+					여름의 보통날<br> 여행으로 특별하게<br> 만들어보세요!
+				</h5>
 			</div>
 			<div class="col" style="">
 				<iframe width="560" height="315"

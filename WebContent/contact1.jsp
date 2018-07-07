@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -40,6 +40,7 @@ body {
 	/*color: #858585;*/
 	overflow-x: hidden;
 }
+
 a {
 	color: #6d6d6d;
 	text-decoration: none;
@@ -56,7 +57,7 @@ a:focus, .btn:focus {
 
 .img-responsive {
 	border: 1px solid #ddd;
-	color : gray;
+	color: gray;
 }
 
 /*-----------------------
@@ -99,7 +100,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .bg-color2 {
 	color: #fff;
-	background: #cce6ff;
+	background: gray;
 }
 
 .bg-color3 {
@@ -108,11 +109,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .border-bottom-color2 {
-	border-bottom: 7px solid #cce6ff;
+	border-bottom: 7px solid gray;
 }
 
 .border-top-color2 {
-	border-top: 7px solid #cce6ff;
+	border-top: 7px solid gray;
 }
 
 .color1 .service-icon, .color1.service-item ul li:nth-child(2):before {
@@ -124,11 +125,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .color2 .service-icon, .color2.service-item ul li:nth-child(2):before {
-	background: #cce6ff;
+	background: gray;
 }
 
 .color2 .service-icon:after {
-	border: 3px solid #cce6ff;
+	border: 3px solid gray;
 }
 
 .color3 .service-icon, .color3.service-item ul li:nth-child(2):before {
@@ -147,7 +148,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	color: #fff;
 	font-size: 21px;
 	font-weight: 300;
-	background: #cce6ff;
+	background: gray;
 	outline: none !important;
 	border-radius: 0;
 	transition: opacity .2s ease-out;
@@ -174,7 +175,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 /*----------------------
 ----- Contact Styles ----
 ------------------------*/
-#contact {	
+#contact {
 	background-repeat: no-repeat;
 	background-position: 0 100%;
 	background-color: #fff;
@@ -255,7 +256,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 #contact-form .form-control:focus {
 	background: #fff;
-	border-bottom: 3px solid #cce6ff;
+	border-bottom: 3px solid gray;
 	outline: none;
 	box-snhadow: none;
 	-webkit-transition: border-color .3s ease-in;
@@ -279,6 +280,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	line-height: 21px;
 	margin-right: 5px;
 }
+
+.contactp {
+	font-size: 15pt;
+}
 </style>
 </head>
 <body>
@@ -297,20 +302,24 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 		=============================================== -->
 		<section id="contact">
 
-		<div class="container text-center" >
+		<div class="container text-center">
 
-			<div class="row" style="margin-top : -120px;">
+			<div class="row" style="margin-top: -120px;">
 
 				<div class="col-sm-6 col-md-5 text-right scrollimation fade-up d1">
 
 					<h1 class="big-text">Contact Message</h1>
 
 					<p class="lead">
-					<p>기능에 대한 안내나 기술 지원이 필요하신가요?</p>
-					
+					<p class="contactp">기능에 대한 안내나 기술 지원이<br> 필요하신가요?</p>
 
-					<p>홈페이지를 사용하시는데 궁금하신 점이나, 불편 사항을 적어주세요.</p>
-					<p>문의주신 사항은 24시간 이내에 순차적으로 처리됩니다.</p>
+
+					<p class="contactp">
+						홈페이지를 사용하시는데<br> 궁금하신 점이나, <br> 불편 사항을 적어주세요.
+					</p>
+					<p class="contactp">
+						문의주신 사항은 24시간 이내에<br> 순차적으로 처리됩니다.
+					</p>
 
 
 				</div>
@@ -325,10 +334,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 					<div class="form-group">
 						<label class="control-label" for="contact-name">이름</label>
 						<div class="controls">
-							<input id="contact-name" name="contactName"
-								placeholder="Name" class="form-control requiredField"
-								data-new-placeholder="Name" type="text"
-								data-error-empty="이름을 적어주세요."> <i class="fa fa-user"></i>
+							<input id="contact-name" name="contactName" placeholder="Name"
+								class="form-control requiredField" data-new-placeholder="Name"
+								type="text" data-error-empty="이름을 적어주세요."> <i
+								class="fa fa-user"></i>
 						</div>
 					</div>
 					<!-- End name input -->
@@ -337,9 +346,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 						<label class="control-label" for="contact-mail">이메일</label>
 						<div class=" controls">
 							<input id="contact-mail" name="email" placeholder="Email"
-								class="form-control requiredField"
-								data-new-placeholder="Email" type="email"
-								data-error-empty="이메일을 적어주세요."
+								class="form-control requiredField" data-new-placeholder="Email"
+								type="email" data-error-empty="이메일을 적어주세요."
 								data-error-invalid="이메일 형식이 유효하지 않습니다."> <i
 								class="fa fa-envelope"></i>
 						</div>
@@ -376,10 +384,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 		</section>
 	</div>
-	
+
 	<div id="footer">
-	<%@include file="footer1.jsp" %>
-</div>
+		<%@include file="footer1.jsp"%>
+	</div>
 
 	<script>
 		$(document)
