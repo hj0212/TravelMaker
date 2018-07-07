@@ -1099,4 +1099,19 @@ public class PlanDAO {
 		rs.close();
 		return result;
 	}
+	
+	public int updateTitle(int plan, String title) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "update plan set plan_title=? where plan_seq = ?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setString(1, title);
+		pstat.setInt(2, plan);
+		
+		int result = pstat.executeUpdate();
+		
+		con.commit();
+		pstat.close();
+		con.close();
+		return result;
+	}
 }

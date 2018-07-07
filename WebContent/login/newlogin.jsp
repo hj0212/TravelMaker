@@ -89,9 +89,6 @@
 	  $(".confirm-password-row").hide();
 	  $(".btn-login").text("Log in");
 	  
-	  
-	  
-	  
 	  $(document).keydown(function(key) {	
 		  if (key.keyCode == 13) {
 			  var userid = $("#userid").val();
@@ -104,8 +101,7 @@
 				  alert("Password를 입력해주세요")
 			  }
 		  }
-
-		  });
+	  });
 	  
 	  
 	  $(".btn-login").click(function() {

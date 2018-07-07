@@ -46,6 +46,14 @@ public class PlanController extends HttpServlet {
 			String dst = null;
 
 			if(command.equals("/addSchedule.plan")) {
+				int plan = Integer.parseInt(request.getParameter("plan"));
+				int day = Integer.parseInt(request.getParameter("day"));
+				
+				String title = request.getParameter("title");
+				if(!title.equals("")) {
+					System.out.println("타이틀 변경");
+					pdao.updateTitle(plan, title);
+				}
 				LocationDTO ldto = new LocationDTO();
 				ldto.setLocation_name(request.getParameter("place"));
 				ldto.setLocation_x(Integer.parseInt(request.getParameter("mapx")));
@@ -54,8 +62,7 @@ public class PlanController extends HttpServlet {
 				int location_id = pdao.addLocation(ldto);
 
 				ScheduleDTO tmp = new ScheduleDTO();
-				int plan = Integer.parseInt(request.getParameter("plan"));
-				int day = Integer.parseInt(request.getParameter("day"));
+				
 				tmp.setPlan_seq(plan);
 				tmp.setDay_seq(day);
 				tmp.setSchedule_starttime(request.getParameter("starttime"));
@@ -100,6 +107,14 @@ public class PlanController extends HttpServlet {
 				isForward = false;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/modiSchedule.plan")) {
+				int plan = Integer.parseInt(request.getParameter("plan"));
+				int day = Integer.parseInt(request.getParameter("day"));
+				
+				String title = request.getParameter("title");
+				if(title != "") {
+					System.out.println("타이틀 변경");
+					pdao.updateTitle(plan, title);
+				}
 				//				세 값 다 넘어옵니다.
 				LocationDTO ldto = new LocationDTO();
 				System.out.println("place:"+request.getParameter("place"));
@@ -110,8 +125,7 @@ public class PlanController extends HttpServlet {
 				int location_id = pdao.addLocation(ldto);
 
 				ScheduleDTO tmp = new ScheduleDTO();
-				int plan = Integer.parseInt(request.getParameter("plan"));
-				int day = Integer.parseInt(request.getParameter("day"));
+				
 				tmp.setPlan_seq(plan);
 				tmp.setDay_seq(day);
 				tmp.setSchedule_starttime(request.getParameter("starttime"));
