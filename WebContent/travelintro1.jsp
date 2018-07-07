@@ -50,6 +50,7 @@ a:hover, a:focus {
 	padding-left: 15px;
 	padding-right: 15px;
 	width: 970px;
+	padding-top : -135px !important;
 }
 
 .big-text {
@@ -59,6 +60,7 @@ a:hover, a:focus {
 	letter-spacing: 0.01em;
 	word-spacing: 0.15em;
 	text-transform: uppercase;
+	color:rgb(52, 52, 52) !important;
 }
 
 .smallintro {
@@ -86,7 +88,7 @@ a:hover, a:focus {
 		</c:otherwise>
 	</c:choose>
 
-	<div class="container" style="padding-top: 140px; margin-bottom: 48px;">
+	<div class="container" style="margin-bottom: 48px;">
 		<h1 class="big-text">
 			Travel Maker<small class="smallintro"><small
 				style="font-size: 30px">에</small>서 <a href="teamprofile1.jsp"

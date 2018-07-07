@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>로그인</title>
-<link rel="stylesheet" href="../source/lib/materialize/css/materialize.css">
+<link rel="stylesheet"
+	href="../source/lib/materialize/css/materialize.css">
 <script src="../source/lib/materialize/js/materialize.js"></script>
 
 <script type="text/javascript"
@@ -24,9 +25,9 @@
 }
 
 #loginbox {
-   width: 400px;
-   height: 560px;
-   margin: 20px auto;
+	width: 400px;
+	height: 560px;
+	margin: 20px auto;
 }
 
 #loginbtn {
@@ -81,6 +82,8 @@
 #kakao_btn_changed {
 	height: 49px;
 }
+
+
 </style>
 <script>
 	$(document).ready(() => {
@@ -192,6 +195,7 @@ $("#user_idcheck").keyup(function(){
 
 </head>
 <body>
+	
 
 	<div id="container">
 		<div class="row">
@@ -203,7 +207,7 @@ $("#user_idcheck").keyup(function(){
 			<div id="loginarea">
 				<div class="card white hoverable" id="loginbox">
 					<div class="card-content black-text">
-						<div class="row card-title" id	="card-title">
+						<div class="row card-title" id="card-title">
 							<div class="col s6 left-align login-link active">
 								<span>Log in</span>
 							</div>
