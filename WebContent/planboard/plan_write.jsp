@@ -178,7 +178,7 @@
 					<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 						<li class="timeline-item">
 							<div class="timeline-badge">
-								<i class="dayCount">${day}</i>
+								<i class="dayCount">${day}일차</i>
 							</div>
 							<c:if test="${day eq param.day }">
 							<div class="timeline-panel">
@@ -461,22 +461,18 @@
 		</c:when>
 	</c:choose>	
 <script>
-	$("#schedule-boarder").on('keypress', 'input[id^=money]', function() {
-		console.log("입력");
-		
-		
-		/* var str = $(this).val();
-		console.log(str);
-		if(numcheck(str)) {
-			var regex = /^[0-9]/g;
-			$(this).val($(this).val().replace(regex, ""));
-		}
-		
-		function numcheck(str) {
-			var regex = /^[0-9]/g;
-			return regex.test(str);
-		} */
-		
-	})
+$("#schedule-boarder").on('keydown','input[id^=money]',function() {
+	var str = $(this).val();
+	
+	if(numcheck(str)) {
+		var regex = /[^0-9]/g;
+		$(this).val($(this).val().replace(regex,""));
+	}
+	
+	function numcheck(str) {
+		var regex = /[^0-9]/g;
+		return regex.test(str);
+	}
+}) 
 </script>	
 </html>
