@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBUtils.DBConnection;
-import dto.FreeboardDTO;
 import dto.MemberDTO;
 import dto.ReportFreeDTO;
+import dto.ReportReviewDTO;
 
 public class AdminDAO {
 //--------------------------------------------------자유게시판 관리
@@ -55,6 +55,7 @@ public class AdminDAO {
 				MemberDAO mdao = new MemberDAO();		
 				tmp.setFree_writer(mdao.getUserNickname(rs.getInt("free_writer")));
 				tmp.setFree_writedate(rs.getString("free_writedate"));
+				tmp.setFree_viewcount(rs.getInt("free_viewcount"));
 				tmp.setReport_count(rs.getInt("fcount"));
 				list.add(tmp);
 			}
@@ -66,22 +67,22 @@ public class AdminDAO {
 		}
 	
 
-	//-------------------------------------------------계획 공유게시판 관리
-	//----------------------------------신고 글 전부 보기	
-	public List<ReportFreeDTO> getAllReport_p() throws Exception{
+	//-------------------------------------------------후기 공유게시판 관리
+	//----------------------------------후기신고 글 전부 보기	
+	public List<ReportReviewDTO> getAllReport_p() throws Exception{
 		Connection conn = DBConnection.getConnection();
-		List<ReportFreeDTO> list = new ArrayList<>();
-		String sql = "select r.reportfree_seq, r.free_seq, f.free_title, f.free_writer, r.report_user, to_char(r.report_date,'yy/MM/dd') report_date from freeboard_c f, report_free r where r.free_seq = f.free_seq order by reportfree_seq desc";
+		List<ReportReviewDTO> list = new ArrayList<>();
+		String sql = "select rp.report_seq, r.review_seq, r.review_title, r.review_writer, rp.report_user, to_char(rp.report_date,'yy/MM/dd') report_date from reviewboard_c r, report rp where r.review_seq = rp.review_seq order by report_seq desc";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			ReportFreeDTO tmp = new ReportFreeDTO();
-			tmp.setReportfree_seq(rs.getInt("reportfree_seq"));
-			tmp.setFree_seq(rs.getInt("free_seq"));
-			tmp.setFree_title(rs.getString("free_title"));
+			ReportReviewDTO tmp = new ReportReviewDTO();
+			tmp.setReport_seq(rs.getInt(1));
+			tmp.setReview_seq(rs.getInt(2));
+			tmp.setReview_title(rs.getString(3));
 			MemberDAO mdao = new MemberDAO();		
-			tmp.setFree_writer(mdao.getUserNickname(rs.getInt("free_writer")));
+			tmp.setReview_writer(mdao.getUserNickname(rs.getInt(4)));
 			tmp.setReport_user(mdao.getUserNickname(rs.getInt("report_user")));
 			tmp.setReport_date(rs.getString("report_date"));
 			list.add(tmp);
@@ -93,7 +94,32 @@ public class AdminDAO {
 		return list;
 	}
 	
-	
+	//----------------------------------신고 글 별로 개수 확인(정렬)
+			public List<ReportReviewDTO> getReportAlign_r() throws Exception{
+				Connection conn = DBConnection.getConnection();
+				List<ReportReviewDTO> list = new ArrayList<>();
+				String sql = "select r.review_seq, r.review_title,r.review_writer,r.review_writedate, r.review_viewcount, rp.pcount from reviewboard_c r,(select review_seq, count(*) pcount from report rp group by review_seq order by pcount desc)rp where r.review_seq = rp.review_seq";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					ReportReviewDTO tmp = new ReportReviewDTO();
+					tmp.setReview_seq(rs.getInt(1));
+					tmp.setReview_title(rs.getString(2));
+					MemberDAO mdao = new MemberDAO();		
+					tmp.setReview_writer(mdao.getUserNickname(rs.getInt(3)));
+					tmp.setReview_writedate(rs.getString(4));
+					tmp.setReview_viewcount(rs.getInt("review_viewcount"));
+					tmp.setReport_count(rs.getInt("pcount"));
+					list.add(tmp);
+				}
+			/*	System.out.println(list.size());*/
+				rs.close();
+				pstmt.close();
+				conn.close();
+				return list;
+			}
+		
 	
 	
 	
@@ -104,7 +130,7 @@ public class AdminDAO {
 	
 	public List<MemberDTO> getAllMembers() throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select seq, userid,email,nickname,naver_nickname,naver_email,kakao_nickname,kakao_email,to_char(create_date,'YY/MM/DD') create_date,part,block from users where userid!='admin' order by seq desc";
+		String sql = "select seq, userid,email,nickname,naver_nickname,naver_email,kakao_nickname,kakao_email,to_char(create_date,'YY/MM/DD')create_date,part,block from users where userid!='admin' order by seq desc";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		List<MemberDTO> result = new ArrayList<>();
