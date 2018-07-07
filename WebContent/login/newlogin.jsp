@@ -139,9 +139,7 @@
 				  alert("패스워드가 일치 하지않습니다");
 			  }else{
 				  $("#userform").attr('action','../join.do').submit();
-			  }		  
-			  
-			  
+			  }		  			  
 		  }
 	  });
 	  
@@ -172,10 +170,9 @@
 <script>
 $(document).ready(function(){	
 
-
-$("#user_idchek").keyup(function(){
+$("#user_idcheck").keyup(function(){
 	
-	var userid = $("#user_idchek").val();
+	var userid = $("#user_idcheck").val();
 
 	$.ajax({
 		url:"idcheck.Ajax",
@@ -224,9 +221,9 @@ $("#user_idchek").keyup(function(){
 							</div>
 							<div class="row confirm-password-row" id="idcheck-div">
 								<div class="input-field col s12">
-									<input id="user_idchek" type="text" class="validate"
+									<input id="user_idcheck" type="text" class="validate"
 										name="idcheck" maxlength="45"> <label
-										for="user_idchek" id="label-text">id</label>
+										for="user_idcheck" id="label-text">id</label>
 								</div>
 							</div>
 

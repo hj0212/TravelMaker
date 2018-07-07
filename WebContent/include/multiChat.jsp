@@ -43,7 +43,6 @@
 					if($("#livemsg").val() == ""){
 						
 					}else{
-						
 						if("${sessionScope.img}" !=""){
 							file="${sessionScope.img}";
 						}else {		

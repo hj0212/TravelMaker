@@ -12,12 +12,10 @@
 	white-space: nowrap;
 	overflow: hidden;
 }
-
 a {
 	color: #6d6d6d;
 	text-decoration: none;
 }
-
 .rslides {
 	position: relative;
 	list-style: none;
@@ -26,7 +24,6 @@ a {
 	padding: 0;
 	margin: 0;
 }
-
 .rslides li {
 	-webkit-backface-visibility: hidden;
 	position: absolute;
@@ -35,13 +32,11 @@ a {
 	left: 0;
 	top: 0;
 }
-
 .rslides li:first-child {
 	position: relative;
 	display: block;
 	float: left;
 }
-
 .rslides img {
 	display: block;
 	height: 550px;
@@ -49,12 +44,10 @@ a {
 	width: 100%;
 	border: 0;
 }
-
 .navbar-fixed-top.scrolled {
 	background-color: #fff !important;
 	transition: background-color 200ms linear;
 }
-
 .nav-link {
 	font-size: 15pt;
 	font-family: menufont;
@@ -71,8 +64,7 @@ a {
 		<li><img src="source/img/TRAVEL/travel16.png" alt=""></li>
 	</ul>
 
-	<nav
-		class="navbar fixed-top navbar-expand-lg navbar-fixed-top navbar-light"
+	<nav class="navbar fixed-top navbar-expand-lg navbar-fixed-top navbar-light"
 		style="height: 100px;" id="naviId">
 
 		<a class="navbar-brand" href="main.jsp" style="font-size: 30px">

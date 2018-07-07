@@ -127,11 +127,10 @@ div {
 console.log(${sessionScope.user.seq !=null});</script>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<script>console.log("저기")</script>
 			<%@include file="include/mainNavi_login.jsp"%>
+
 		</c:when>
 		<c:otherwise>
-			<script>console.log("여기")</script>
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
