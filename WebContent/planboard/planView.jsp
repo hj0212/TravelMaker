@@ -17,13 +17,15 @@
 	rel="stylesheet" type="text/css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=h6OAt0uXG7GgMxCgzJWa&submodules=geocoder"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=jib8ljMTCWAk29WWx1Xm&submodules=geocoder"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script src="source/js/jquery.roadmap.min.js"></script>
 <link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
 <script src="source/js/createplan.js"></script>
 <link rel="stylesheet" href="source/css/createplan.css" />
+
+
 <%@ page session="true"%>
 <meta charset="utf-8">
 
@@ -152,6 +154,7 @@
 
 #budgetarea>input, #totalbudgetarea>input {
 	background-color: white;
+	text-align: right;
 }
 
 #budgetarea input, #budgetarea span, #totalbudgetarea input, #totalbudgetarea span {
@@ -165,6 +168,15 @@
 	float: left;
 	border: none;
 	padding-bottom: 6px;
+}
+
+#planCommentList {
+	min-height:	150px;
+
+}
+
+#comment-table {
+	margin-bottom: 50px;
 }
 </style>
 
@@ -278,7 +290,7 @@
 				<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 					<input type="hidden" id="plan_seq" value="${plan_seq}">
 					<div role="tabpanel" class="tab-pane fade show" id="Day${day}">
-						<table class="table" id="schedule-table">
+						<table class="table schedule" id="schedule-table">
 							<c:if test="${isFirst }">
 								<thead>
 									<tr>
@@ -374,24 +386,20 @@
 			<button type="button" class="btn btn-outline-primary" id="badbtn">
 				<i class="far fa-frown"></i>${bad}
 			</button>
-			<!-- <button type="button" class="btn btn-outline-success"
-					data-toggle="modal" data-target="#exampleModalCenter" id="getmyplanbtn">내 일정으로 가져가기</button>
-			 -->
-			<button class="btn btn-default" style="float: right;">신고</button>
 		</div>
 
 		<div class="comments">
 		 <button type="button" style="border: none; background-color: white;"
             id="comment-bnt">댓글보기▼</button>
-		 <form method="post"  action="insertPlanComment.plan?plan_seq=${plan_seq}" id="planCommentForm" name="planCommentForm" >
+		 <form method="post" <%-- action="insertPlanComment.plan?plan_seq=${plan_seq}" --%>  id="planCommentForm" name="planCommentForm" >
 	         <div style="width: 100%; margin: 0px;">
 	            <div style="width: 80%">
-	               <textarea class="form-control" rows="3" id="comment" style="resize: none; width: 100%; margin: 0px; float: left;" maxlength="65" name="comment_text" id="comment_text"></textarea>
+	               <textarea class="form-control" rows="3" style="resize: none; width: 100%; margin: 0px; float: left;" maxlength="65" name="comment_text" id="comment_text"></textarea>
 	               <input type="text" readonly value="" name="articlenum" style="display:none">
 	            </div>
 	            <div
 	               style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
-	               <button style="width: 100%; height: 86px;background-color: white" id="commentbtn" name="commentbtn" >
+	               <button style="width: 100%; height: 86px;background-color: white" id="commentbtn" name="commentbtn" type="button" >
 	               <i class="fa fa-comments">댓글 작성</i></button>
 	            </div>
 	         </div>
@@ -436,19 +444,29 @@
 			</div>
 		</div>
 	</div>
+	<div id="footer">
+		<%@include file="../footer1.jsp"%>
+	</div>
+	<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>
 <script>
 	$(".schedule ul li:first").addClass('active');
 	$("div[id='Day1']").addClass('active');
    /*댓글관련 버튼들*/
    /*댓글 작성*/
-   $('#commentbtn').click(function() {
-	   var comment_text = $("#comment_text").val(); 
-	   if(comment_text != null){
-       $('#planCommentForm').submit();
-	   }else{
-		  alert("내용을 입력해주세요");
+   
+   $("#commentbtn").click(function() {
+	   var tmp = $("#comment_text").val().replace(/\s|　/gi, '');
+	   if(tmp==''){
+		   alert("내용을 입력해주세요");		  
+	   }else{		
+		   $('#planCommentForm').attr('action','insertPlanComment.plan?plan_seq=${plan_seq}').submit();
 	   }
     });
+   
     /*댓글보기*/
       var commentBntCount = 2;
       $("#comment-bnt").click(function() {
@@ -457,7 +475,7 @@
             $("#comment-bnt").text("댓글감추기▲");
             $("#comment-table").show();
             commentBntCount++;
-         } else {
+         }else {
             $("#comment-bnt").text("댓글보기▼");
             $("#comment-table").hide();
             commentBntCount--;
@@ -477,7 +495,7 @@
 			location.href = "planboard.plan?currentPage=${currentPage}";
 	});
 	
-	$("#schedule-table").on('click','.clickable-row',function(event) {
+	$("table.schedule").on('click','.clickable-row',function(event) {
 		$(this).addClass('select').siblings().removeClass('select');
 		var index = $(event.currentTarget).closest("tr").index();
 		map.panTo(new naver.maps.Point(markerlocation[index].location_x,markerlocation[index].location_y));
@@ -648,4 +666,9 @@
  
    </script>
 </body>
+<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>	
 </html>

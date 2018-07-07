@@ -32,7 +32,7 @@ font-weight: 100;
 	<script>
 		//setTimeout(함수,시간); 시간후 함수를 실행한다.
 		setTimeout(function() {
-			location.href = "toLogin.do";
+			location.href = "main.bo";
 		}, 3000);
 	</script>
 </body>

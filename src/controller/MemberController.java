@@ -58,7 +58,8 @@ public class MemberController extends HttpServlet {
 				boolean result = false;
 				if(user.getSeq() > 0) {
 					result = true;
-
+					request.getSession().setMaxInactiveInterval(60*60) ;
+					
 					request.setAttribute("proc", "login");
 					request.setAttribute("loginResult", result);
 					request.getSession().setAttribute("part", "home");
@@ -124,6 +125,7 @@ public class MemberController extends HttpServlet {
 				String id = request.getParameter("id");
 				String name = request.getParameter("name");
 				String email = request.getParameter("email");
+				String img = request.getParameter("img");
 				MemberDTO dto = new MemberDTO();
 				dto.setKakao_id(id);
 				dto.setKakao_nickname(name);
@@ -135,6 +137,7 @@ public class MemberController extends HttpServlet {
 				request.getSession().setAttribute("part", "kakao");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
+				request.getSession().setAttribute("img",img );
 
 				String nickname=mdao.getUserNickname(user.getSeq());
 				request.getSession().setAttribute("nickname", nickname);
@@ -180,22 +183,19 @@ public class MemberController extends HttpServlet {
 				/*mdto = mdao.getProfileInfo(part, id);*/
 
 				/*String file_name = ((MemberDTO)request.getSession().getAttribute("user")).getPhoto_system_file_name();*/
-				request.setAttribute("file_name", mdto.getPhoto_system_file_name());
+			/*	System.out.println(file_name);*/
 				
 				if(part.equals("home")) {
 					request.setAttribute("nickname", mdto.getNickname());
 					request.setAttribute("email", mdto.getEmail());
-					request.setAttribute("file_name", mdto.getPhoto_system_file_name());
 				}else if(part.equals("naver")) {
 					request.setAttribute("nickname", mdto.getNaver_nickname());
 					request.setAttribute("email", mdto.getNaver_email());
-					request.setAttribute("file_name", mdto.getPhoto_system_file_name());
 				}else if(part.equals("kakao")) {
 					request.setAttribute("nickname", mdto.getKakao_nickname());
 					request.setAttribute("email", mdto.getKakao_email());
-					request.setAttribute("file_name", mdto.getPhoto_system_file_name());
 				}
-				
+				request.getSession().setAttribute("file_name", mdto.getPhoto_system_file_name());
 			/*리뷰와 망가진 네비*/
 				
 				/*List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq());
@@ -210,12 +210,17 @@ public class MemberController extends HttpServlet {
 					currentPage = Integer.parseInt(currentPageString);
 				}
 
-				String searchTerm = request.getParameter("search");
-				List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq(), currentPage*12-11, currentPage*12, searchTerm);
+				List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq(), currentPage*12-11, currentPage*12);
 				request.setAttribute("MyReviewResult", MyReviewResult);
 
-				String MyReviewPageNavi = rdao.getMyReviewPageNavi(user.getSeq(), currentPage, searchTerm);
+				String MyReviewPageNavi = rdao.getMyReviewPageNavi(user.getSeq(), currentPage);
 				request.setAttribute("MyReviewPageNavi", MyReviewPageNavi);
+				
+				List<PlanDTO> MyPlanResult = pdao.getMyPlans(user.getSeq(), currentPage*12-11, currentPage*12);
+				request.setAttribute("MyPlanResult", MyPlanResult);
+
+				String MyPlanPageNavi = pdao.getMyPlanPageNavi(user.getSeq(), currentPage);
+				request.setAttribute("MyPlanPageNavi", MyPlanPageNavi);
 
 				/*planList*/
 				
@@ -223,7 +228,6 @@ public class MemberController extends HttpServlet {
 				List<PlanDTO> list = new ArrayList<>();
 				list = pdao.getMyTmpPlan(seq);
 				request.setAttribute("planList", list);
-				
 				
 				
 				/*좋아요누른글*/
@@ -386,6 +390,7 @@ public class MemberController extends HttpServlet {
 			}else if(command.equals("/profileImg.do")) {
 				// 이미지를 업로드할 경로
 				String uploadPath = request.getServletContext().getRealPath("file");
+				
 				int size = 10 * 1024 * 1024;	// 업로드 사이즈 10M 이하,
 
 				// 경로가 없을 경우 결로 생성
@@ -411,7 +416,7 @@ public class MemberController extends HttpServlet {
 				}
 
 				uploadPath = contextPath +"/file/"+ sfileName;
-
+				System.out.println(uploadPath);
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 				int user_seq = user.getSeq();
 				System.out.println("user_seq :"+user_seq);
@@ -420,7 +425,7 @@ public class MemberController extends HttpServlet {
 				String file_name =user.getPhoto_system_file_name();
 				String part = user.getPart();
 				user = mdao.newMemberInfo(user_seq, part);
-				request.setAttribute("file_name",file_name);
+				request.getSession().setAttribute("file_name",file_name);
 				request.setAttribute("user_seq", user_seq);
 
 				request.setAttribute("uploadPath", uploadPath);

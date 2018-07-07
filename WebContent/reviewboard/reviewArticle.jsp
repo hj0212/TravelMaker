@@ -190,7 +190,7 @@ $(document).ready(function(){
                <div
                   style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
                   <button style="width: 100%; height: 86px;background-color: white" id="commentbnt"
-                     class="btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
+                     ><i class="fa fa-comments"></i>댓글 작성</button>
                </div>
             </div>
          </form>
@@ -235,7 +235,7 @@ $(document).ready(function(){
          </table>
       </div>
    </div>
-  
+  <%@include file="../footer1.jsp"%>
  
    <script>
 /*       $("#comment-write-bnt").click(
@@ -267,7 +267,7 @@ $(document).ready(function(){
       });
       
       $('#commentbtn').click(function() {
-   	   var comment_text = $("#comment_text").val(); 
+   	   var comment_text = $("#comment_text").val().replace(/\s|　/gi, ''); 
    	   if(comment_text != null){
           $('#reveiwCommentForm').submit();
    	   }else{
@@ -306,4 +306,9 @@ $(document).ready(function(){
      </c:if>
    </script>
 </body>
+<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>	
 </html>

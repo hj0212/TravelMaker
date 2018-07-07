@@ -41,7 +41,7 @@ pageEncoding="UTF-8"%>
 		<c:choose>
 			<c:when test="${sessionScope.user.seq eq null}">
 				<script>
-					location.href = "login.bo";
+					location.href = "freelogin.bo";
 				</script>
 			</c:when>
 			<c:otherwise>

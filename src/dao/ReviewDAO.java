@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBUtils.DBConnection;
+import dto.PlanDTO;
 import dto.ReviewCommentDTO;
 import dto.ReviewDTO;
 import dto.ReviewPhotoMainDTO;
@@ -42,7 +43,7 @@ public class ReviewDAO {
 		con.close();
 		return result;
 	}
-	
+
 	private String clobToString(Clob clob) throws Exception{
 		StringBuffer sb = new StringBuffer();
 		BufferedReader br = new BufferedReader(clob.getCharacterStream());
@@ -50,11 +51,11 @@ public class ReviewDAO {
 		while((ts=br.readLine()) != null) {
 			sb.append(ts);
 		}
-		
+
 		br.close();
 		return sb.toString();
 	}
-	
+
 	public int insertReview(String title, String contents, int writer, String[] array) throws Exception{
 		Connection conn = DBConnection.getConnection();
 		String sql = "INSERT INTO reviewboard_c values(reviewboard_seq.nextval,?,?,?,sysdate,0)";
@@ -63,10 +64,10 @@ public class ReviewDAO {
 		StringReader sr = new StringReader(contents);
 		pstmt.setCharacterStream(2, sr, contents.length());
 		pstmt.setInt(3, writer);
-		
+
 		int result = pstmt.executeUpdate();
 		pstmt.close();
-		
+
 		if(array.length > 0) {
 			sql = "UPDATE REVIEW_PHOTOS SET ARTICLE_NO = reviewboard_seq.currval WHERE SYSTEM_FILE_NAME = ?";
 			PreparedStatement pstmt2 = conn.prepareStatement(sql);
@@ -78,10 +79,29 @@ public class ReviewDAO {
 			pstmt2.executeBatch();
 			pstmt2.close();
 		}
-		
+
 		conn.commit();
 		conn.close();
+
+		return result;
+	}
+	
+	public int recentArticle(int writer) throws Exception {
+		int result = 0;
+		Connection conn = DBConnection.getConnection();
+		String sql = "select review_seq from (select review_seq from reviewboard_c where review_writer = ? ORDER BY review_seq DESC) where rownum = 1";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, writer);
 		
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
 		return result;
 	}
 	
@@ -94,10 +114,10 @@ public class ReviewDAO {
 		pstmt.setCharacterStream(2, sr, contents.length());
 		pstmt.setInt(3, writer);
 		pstmt.setInt(4, seq);
-		
+
 		int result = pstmt.executeUpdate();
 		pstmt.close();
-		
+
 		if(array.length > 0) {
 			sql = "UPDATE REVIEW_PHOTOS SET ARTICLE_NO = ? WHERE SYSTEM_FILE_NAME = ?";
 			PreparedStatement pstmt2 = conn.prepareStatement(sql);
@@ -110,10 +130,10 @@ public class ReviewDAO {
 			pstmt2.executeBatch();
 			pstmt2.close();
 		}
-		
+
 		conn.commit();
 		conn.close();
-		
+
 		return result;
 	}
 
@@ -157,7 +177,7 @@ public class ReviewDAO {
 		rs.close();	
 		return reviewResult;
 	}
-	
+
 	public List<ReviewPhotoMainDTO> getNewReview() throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from (select rownum, rp.review_photo_seq, rp.article_no, rp.original_file_name, rp.system_file_name, r.review_title, r.review_writer, r.review_writedate from review_photos rp, reviewboard_c r where rp.article_no = r.review_seq)where rownum between 1 and 4 order by review_photo_seq desc";
@@ -183,8 +203,8 @@ public class ReviewDAO {
 		con.close();
 		return result;
 	}
-	
-	
+
+
 
 	//-------------------페이지 네비	
 	public String getPageNavi(int currentPage, String searchTerm) throws Exception {
@@ -203,7 +223,7 @@ public class ReviewDAO {
 
 		ResultSet rs= pstat.executeQuery();
 		rs.next();
-		
+
 		int recordTotalCount = rs.getInt("totalCount"); 
 		//System.out.println(recordTotalCount);
 		int recordCountPerPage = 12;  
@@ -303,7 +323,7 @@ public class ReviewDAO {
 		rs.close();
 		pstmt.close();
 		con.close();
-		
+
 		return rdto;
 	}
 
@@ -314,7 +334,7 @@ public class ReviewDAO {
 		pstmt.setString(1, comment_text);
 		pstmt.setInt(2, user);
 		pstmt.setInt(3, review_seq);
-		
+
 		int result = pstmt.executeUpdate();
 		con.commit();
 		pstmt.close();
@@ -363,7 +383,7 @@ public class ReviewDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
 		pstmt.setInt(2, writer);
-		
+
 		int result = pstmt.executeUpdate();
 		con.commit();
 		pstmt.close();
@@ -395,26 +415,17 @@ public class ReviewDAO {
 		return result;
 	}*/
 
-	public List<ReviewDTO> getMyReview(int seq, int startNum, int endNum, String searchTerm) throws Exception {
+	public List<ReviewDTO> getMyReview(int seq, int startNum, int endNum) throws Exception {
 		Connection con = DBConnection.getConnection();
 
 		String sql;
 		PreparedStatement pstat = null;
 
-		if(searchTerm == null || searchTerm.equals("")) {
-			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard where review_writer=?) where num between ? and ?";
-			pstat = con.prepareStatement(sql);
-			pstat.setInt(1,seq);
-			pstat.setInt(2, startNum);
-			pstat.setInt(3, endNum);
-		} else {
-			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard where review_writer=? and review_title || review_contents like ?) where num between ? and ?";
-			pstat = con.prepareStatement(sql);
-			pstat.setInt(1,seq);
-			pstat.setString(2, "%"+searchTerm+"%");
-			pstat.setInt(3, startNum);
-			pstat.setInt(4, endNum);
-		}
+		sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard_c where review_writer=?) where num between ? and ?";
+		pstat = con.prepareStatement(sql);
+		pstat.setInt(1,seq);
+		pstat.setInt(2, startNum);
+		pstat.setInt(3, endNum);
 		ResultSet rs = pstat.executeQuery();
 
 		List<ReviewDTO> myReviewResult = new ArrayList<>();
@@ -436,23 +447,15 @@ public class ReviewDAO {
 		return myReviewResult;
 	}
 
-	public String getMyReviewPageNavi( int seq,int currentPage, String searchTerm) throws Exception {
+	public String getMyReviewPageNavi( int seq,int currentPage) throws Exception {
 		Connection con = DBConnection.getConnection();		
 		String sql;
 		PreparedStatement pstat;
 		ResultSet rs;
 
-		if(searchTerm == null || searchTerm.equals("")) {
-			sql = "select count(*) totalCount from reviewboard where review_writer=?";		
-			pstat = con.prepareStatement(sql);
-			pstat.setInt(1, seq);
-		} else {
-			sql = "select count(*) totalCount from reviewboard where review_writer=? and review_title || review_contents like ?";
-			pstat = con.prepareStatement(sql);
-			pstat.setInt(1, seq);
-			pstat.setString(1, "%"+searchTerm+"%");
-		
-		}
+		sql = "select count(*) totalCount from reviewboard_c where review_writer=?";		
+		pstat = con.prepareStatement(sql);
+		pstat.setInt(1, seq);
 
 		rs = pstat.executeQuery();
 		rs.next();
@@ -498,19 +501,19 @@ public class ReviewDAO {
 		StringBuilder sb = new StringBuilder();
 
 		if(needPrev) {
-			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Previous'><span aria-hidden=\"true\">&laquo;</span><span class=\"sr-only\">Previous</span></a></li>");
+			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"' aria-label='Previous'><span aria-hidden=\"true\">&laquo;</span><span class=\"sr-only\">Previous</span></a></li>");
 		}
 
 		for(int i = startNavi; i <= endNavi; i++) {
 			if(currentPage == i) {
-				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"'>"+i+"</a></li>");
 			} else {
-				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+i+"'> "+i+"</a></li>");
 			}
 		}
 
 		if(needNext) {
-			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"&search="+searchTerm+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span><span class='sr-only'>Next</span></a></li>");
+			sb.append("<li class='page-item'><a class='page-link' href='mypage.do?currentPage="+(startNavi-1)+"' aria-label='Next'><span aria-hidden='true'>&raquo;</span><span class='sr-only'>Next</span></a></li>");
 		}
 
 		con.close();
@@ -532,21 +535,21 @@ public class ReviewDAO {
 		con.close();
 		return result;
 	}
-	
+
 	public int reViewCount(int review_seq) throws Exception {
 		Connection conn = DBConnection.getConnection();
 		String sql = "UPDATE reviewboard_c set review_viewcount = review_viewcount + 1 where review_seq = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, review_seq);
-		
+
 		int result = pstmt.executeUpdate();
-		
+
 		conn.commit();
 		pstmt.close();
 		conn.close();
 		return result;
 	}
-	
+
 	public int writerCheck(int seq) throws Exception {
 		Connection conn = DBConnection.getConnection();
 		String sql = "select review_writer from reviewboard_c where review_seq = ?";
@@ -554,32 +557,32 @@ public class ReviewDAO {
 		pstmt.setInt(1, seq);
 		ResultSet rs = pstmt.executeQuery();
 		int writer = 0;
-		
+
 		if(rs.next()) {
 			writer = rs.getInt(1);
 		}
 		rs.close();
 		pstmt.close();
 		conn.close();
-		
+
 		return writer;
 	}
-	
+
 	public String getThumbnail(int seq) throws Exception {
 		Connection conn = DBConnection.getConnection();
 		String sql = "select system_file_name from (select rp.* from review_photos rp, reviewboard_c rc where rp.article_no = rc.review_seq and rc.review_seq = ?) where rownum = 1";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, seq);
 		String fname = "";
-		
+
 		ResultSet rs = pstmt.executeQuery();
-		
+
 		if(rs.next()) {
 			fname = rs.getString(1);
 		}else {
 			fname = "Charlie-Chaplin-PNG-Image-17681.png";
 		}
-		
+
 		rs.close();
 		pstmt.close();
 		conn.close();

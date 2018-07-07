@@ -112,7 +112,6 @@ public class PlanController extends HttpServlet {
 				tmp.setSchedule_plan(request.getParameter("schedule"));
 				tmp.setSchedule_ref(request.getParameter("reference"));
 				int schedule_seq = Integer.parseInt(request.getParameter("schedule_seq"));
-				System.out.println("schedule_Seq:" + schedule_seq);
 				int result = 0;
 				List<BudgetDTO> remolist = new ArrayList<>();
 				List<BudgetDTO> modilist = new ArrayList<>();
@@ -129,71 +128,73 @@ public class PlanController extends HttpServlet {
 				String[] budget_amount = request.getParameter("budget_amount").split("/");
 				String[] del_budget_seq = request.getParameter("delbudseq").split("/");
 
-				if(!delbudseqstr.equals("")) {	// 삭제
-					for(int i = 0; i < del_budget_seq.length; i++) {
-						BudgetDTO btmp = new BudgetDTO();
-						btmp.setBudget_seq(Integer.parseInt(del_budget_seq[i]));
-						remolist.add(btmp);
+				if(!budgetplanstr.equals("")) {
+
+					if(!delbudseqstr.equals("")) {	// 삭제
+						for(int i = 0; i < del_budget_seq.length; i++) {
+							BudgetDTO btmp = new BudgetDTO();
+							btmp.setBudget_seq(Integer.parseInt(del_budget_seq[i]));
+							remolist.add(btmp);
+						}
+						result = pdao.deleteBudget(remolist);
+						if(result > 0) {
+							System.out.println("삭제성공");
+						} else {
+							System.out.println("삭제실패");
+						}
 					}
-					result = pdao.deleteBudget(remolist);
+
+					int count = budget_plan.length - budget_seq.length;
+					if(budgetseqstr.equals("")) {
+						for(int i = 0; i < budget_seq.length; i++) {	//추가
+							BudgetDTO btmp = new BudgetDTO();
+							btmp.setPlan_seq(plan);
+							btmp.setDay_seq(day);
+							System.out.println("저기:"+schedule_seq);
+							btmp.setSchedule_seq(schedule_seq);
+							btmp.setBudget_plan(budget_plan[i]);
+							btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
+							addlist.add(btmp);
+						}
+					} else if(!budgetseqstr.equals("")) {	//수정
+						for(int i = 0; i < budget_seq.length; i++) {
+							BudgetDTO btmp = new BudgetDTO();
+							btmp.setBudget_seq(Integer.parseInt(budget_seq[i]));
+							btmp.setPlan_seq(plan);
+							btmp.setDay_seq(day);
+							System.out.println("여기:" + btmp.getBudget_seq());
+							btmp.setSchedule_seq(schedule_seq);
+							btmp.setBudget_plan(budget_plan[i]);
+							btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
+							modilist.add(btmp);
+						}
+						result = pdao.modiBudget(modilist);
+						if(result > 0) {
+							System.out.println("수정성공");
+						} else {
+							System.out.println("수정실패");
+						}
+					}
+
+					if(count > 0) {
+						for(int j = budget_seq.length-1; j<budget_plan.length; j++) {
+							BudgetDTO btmp = new BudgetDTO();
+							btmp.setPlan_seq(plan);
+							btmp.setDay_seq(day);
+							System.out.println("추가:"+schedule_seq);
+							btmp.setSchedule_seq(schedule_seq);
+							btmp.setBudget_plan(budget_plan[j]);
+							btmp.setBudget_amount(Integer.parseInt(budget_amount[j]));
+							addlist.add(btmp);
+						}
+					}
+					result = pdao.addBudget(addlist);
 					if(result > 0) {
-						System.out.println("삭제성공");
+						System.out.println("추가성공");
 					} else {
-						System.out.println("삭제실패");
+						System.out.println("추가실패");
 					}
 				}
-
-				int count = budget_plan.length - budget_seq.length;
-				if(budgetseqstr.equals("")) {
-					for(int i = 0; i < budget_seq.length; i++) {	//추가
-						BudgetDTO btmp = new BudgetDTO();
-						btmp.setPlan_seq(plan);
-						btmp.setDay_seq(day);
-						System.out.println("저기:"+schedule_seq);
-						btmp.setSchedule_seq(schedule_seq);
-						btmp.setBudget_plan(budget_plan[i]);
-						btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
-						addlist.add(btmp);
-					}
-				} else if(!budgetseqstr.equals("")) {	//수정
-					for(int i = 0; i < budget_seq.length; i++) {
-						BudgetDTO btmp = new BudgetDTO();
-						btmp.setBudget_seq(Integer.parseInt(budget_seq[i]));
-						btmp.setPlan_seq(plan);
-						btmp.setDay_seq(day);
-						System.out.println("여기:" + btmp.getBudget_seq());
-						btmp.setSchedule_seq(schedule_seq);
-						btmp.setBudget_plan(budget_plan[i]);
-						btmp.setBudget_amount(Integer.parseInt(budget_amount[i]));
-						modilist.add(btmp);
-					}
-					result = pdao.modiBudget(modilist);
-					if(result > 0) {
-						System.out.println("수정성공");
-					} else {
-						System.out.println("수정실패");
-					}
-				}
-
-				if(count > 0) {
-					for(int j = budget_seq.length-1; j<budget_plan.length; j++) {
-						BudgetDTO btmp = new BudgetDTO();
-						btmp.setPlan_seq(plan);
-						btmp.setDay_seq(day);
-						System.out.println("추가:"+schedule_seq);
-						btmp.setSchedule_seq(schedule_seq);
-						btmp.setBudget_plan(budget_plan[j]);
-						btmp.setBudget_amount(Integer.parseInt(budget_amount[j]));
-						addlist.add(btmp);
-					}
-				}
-				result = pdao.addBudget(addlist);
-				if(result > 0) {
-					System.out.println("추가성공");
-				} else {
-					System.out.println("추가실패");
-				}
-
 				tmp.setSchedule_seq(schedule_seq);
 				result = pdao.updateSchedule(tmp);
 
@@ -267,7 +268,7 @@ public class PlanController extends HttpServlet {
 				}
 				request.setAttribute("plan_period", plan_period);
 				request.setAttribute("plan_state", false);
-				
+
 				isForward=true;
 				dst="selectSchedule.plan?plan="+plan_seq+"&day=1&create=t";
 			}
@@ -289,7 +290,12 @@ public class PlanController extends HttpServlet {
 
 				String pageNavi = pdao.getPageNavi(currentPage, searchTerm);
 				request.setAttribute("pageNavi", pageNavi);
-
+				if(request.getSession().getAttribute("user") != null) {
+				MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+	        	String part = (String)request.getSession().getAttribute("part");								
+				MemberDTO mdto = mdao.newMemberInfo(user.getSeq(), part);
+				request.setAttribute("file_name", mdto.getPhoto_system_file_name());
+				}
 				isForward = true;
 				dst="planboard/share_plan.jsp";
 			}else if(command.equals("/planArticle.plan")) {
@@ -338,11 +344,14 @@ public class PlanController extends HttpServlet {
 				System.out.println(totalBudget);
 				String plan_title = pdao.getPlantitle(plan_seq);
 				request.setAttribute("plan_title", plan_title);
+				
+				
 
 				if(dto == null) {
 					isForward=false;
 					dst="login.bo";
 				}else {
+								
 					isForward=true;
 					dst="planboard/planView.jsp?plan_seq="+plan_seq+"&currentPage="+currentPage;
 				}

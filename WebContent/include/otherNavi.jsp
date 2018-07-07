@@ -24,9 +24,7 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav ml-auto ">
-				<li class="nav-item active"><a class="nav-link" href="planboard.plan">Plans
-						<span class="sr-only">(current)</span>
-				</a></li>
+				<li class="nav-item active"><a class="nav-link" href="planboard.plan">Plans</a></li>
 				<li class="nav-item"><a class="nav-link" href="reviewboard.bo">Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
 				<li class="nav-item dropdown" style="min-width: 150px;"><a
@@ -46,13 +44,16 @@
 					<ul class="dropdown-menu mt-1 "
 						aria-labelledby="navbarDropdownMenuLink">
 						<li><a class="dropdown-item" href="mypage.do">My Page</a></li>
-						<li><a class="dropdown-item" href="traveldiary.html">My
-								Plans</a></li>
+						<li><a class="dropdown-item" href="traveldiary.html">My Plans</a></li>
 						<li><a class="dropdown-item" href="#">Message</a></li>
 						<li><a class="dropdown-item" href="logout.do">Log Out</a></li>
 					</ul></li>
 			</ul>
 		</div>
 	</nav>
-
+	<script>
+	$("#navbarNavDropdown>ul").on('click','li',function() {
+		$(this).addClass('active').siblings().removeClass('active');
+	});
+	</script>
 </header>

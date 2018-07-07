@@ -248,6 +248,9 @@ $(document).ready(function(){
 
 			</table>
 
+      </div>
+   </div>
+   <%@include file="../footer1.jsp"%>
 		</div>
 	</div>
 	<!--  ------------------modal 창입니다----------------------------------  -->
@@ -373,4 +376,9 @@ $(document).ready(function(){
 				</c:if>
 			</script>
 </body>
+	<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>	
 </html>
