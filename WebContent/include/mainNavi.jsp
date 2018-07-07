@@ -99,6 +99,9 @@ a {
 								.height());
 					});
 		});
+		$("#navbarNavDropdown>ul").on('click','li',function() {
+			$(this).addClass('active').siblings().removeClass('active');
+		});
 	</script>
 
 </header>

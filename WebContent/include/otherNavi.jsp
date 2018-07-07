@@ -52,8 +52,7 @@
 		</div>
 	</nav>
 	<script>
-	$("#navbarNavDropdown li").on('click','li',function() {
-		console.log("클릭");
+	$("#navbarNavDropdown>ul").on('click','li',function() {
 		$(this).addClass('active').siblings().removeClass('active');
 	});
 	</script>

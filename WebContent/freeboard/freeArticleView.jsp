@@ -248,6 +248,9 @@ $(document).ready(function(){
 
 			</table>
 
+      </div>
+   </div>
+   <%@include file="../footer1.jsp"%>
 		</div>
 	</div>
 	<!--  ------------------modal 창입니다----------------------------------  -->

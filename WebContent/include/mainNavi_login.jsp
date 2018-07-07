@@ -64,9 +64,19 @@ a {
 }
 </style>
 
-	<div
-		class="navbar fixed-top collapse navbar-collapse navbar-expand-lg navbar-light shadow-sm "
-		style="background-color: white; height: 100px" id="navId">
+	<ul class="rslides">
+		<li><img src="source/img/TRAVEL/travel10.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel11.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel12.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel13.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel14.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel15.png" alt=""></li>
+		<li><img src="source/img/TRAVEL/travel16.png" alt=""></li>
+	</ul>
+
+	<nav
+		class="navbar fixed-top navbar-right navbar-expand-lg navbar-fixed-top navbar-light"
+		style="height: 100px" id="naviId">
 		<a class="navbar-brand" href="main.jsp" style="font-size: 30px"><h1
 				class="logo">Logo</h1></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -76,7 +86,7 @@ a {
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav ml-auto ">
-				<li class="nav-item active"><a class="nav-link"
+				<li class="nav-item"><a class="nav-link"
 					href="planboard.plan">Plans</a></li>
 				<li class="nav-item"><a class="nav-link" href="reviewboard.bo">Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
@@ -101,13 +111,9 @@ a {
 								Plans</a></li>
 						<li><a class="dropdown-item" href="#">Message</a></li>
 						<li><a class="dropdown-item" href="logout.do">Log Out</a></li>
-					</ul>
-				</li>
+					</ul></li>
 			</ul>
-
 		</div>
-	</div>
-
 	</nav>
 	
 	<script>
@@ -122,7 +128,7 @@ a {
 								.height());
 					});
 		});
-		$("#navbarNavDropdown li").on('click','li',function() {
+		$("#navbarNavDropdown>ul").on('click','li',function() {
 			$(this).addClass('active').siblings().removeClass('active');
 		});
 	</script>

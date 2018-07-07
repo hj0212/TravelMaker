@@ -7,17 +7,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>TravelMaker</title>
 <!-- 부트 스트랩 코드-->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="source/css/mainPage.css">
 <link rel="stylesheet" type="text/css" href="source/lib/slick/slick.css" />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="source/lib/slick/slick-theme.css" /> 
-<script src="include/slider/responsiveslides.min.js"></script>	
-	
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="source/lib/slick/slick-theme.css" />
+<script src="include/slider/responsiveslides.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
 <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans"
 	rel="stylesheet">
@@ -62,10 +68,12 @@ div {
 .hls_sol .btn {
 	bottom: 10px;
 }
+
 #bestImage {
 	margin-bottom: 15px;
 }
-.divLine a{
+
+.divLine a {
 	text-decoration: none;
 	color: black;
 }
@@ -111,12 +119,12 @@ div {
 	align-items: center;
 	justify-content: center;
 }
-
 </style>
 
 </head>
 <body>
-
+	<script>console.log(${sessionScope.user.seq});
+console.log(${sessionScope.user.seq !=null});</script>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
@@ -126,8 +134,7 @@ div {
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	
-	
+
 	<div class="mainintro" style="margon-top: -100px;">
 		<!--  background-color: rgb(241,243,245); -->
 		<p
@@ -160,7 +167,9 @@ div {
 		</div>
 		<!-- 메인  트래블메이커 안내 div 종료-->
 
-		<h1 class="divLine"><a href="planboard.plan">BEST PLAN</a></h1>
+		<h1 class="divLine">
+			<a href="planboard.plan">BEST PLAN</a>
+		</h1>
 		<hr />
 		<div class="row" id="bestPlanRow">
 			<div class="col-md-12" id="bestPlan">
@@ -174,9 +183,10 @@ div {
 							<div class="card col-md-12 col-sm-12 w-100"
 								style="height: 100%; padding: 0px;">
 								<div class="card-header">사진</div>
-								<div class="card-body"> 
+								<div class="card-body">
 									<a href="planArticle.plan?plan_seq=${tmp.plan_seq}"
-										style="text-decoration: none; padding: 0px;"><h4 style=" max-height:29px; overflow:hidden;">${tmp.plan_title }</h4></a>
+										style="text-decoration: none; padding: 0px;"><h4
+											style="max-height: 29px; overflow: hidden;">${tmp.plan_title }</h4></a>
 									<h6 class="text-muted">${tmp.plan_writerN}</h6>
 									<div class="btn-list d-inline">
 
@@ -196,24 +206,27 @@ div {
 		<h1 class="divLine">NEW IMAGE</h1>
 		<hr />
 		<div class="row col-md-12 mx-0" id="bestImage">
-<!-- 카드 시작 -->				
-			<c:set var="i" value="1"/>
-			<c:forEach var="item" items="${photoList}">		
+			<!-- 카드 시작 -->
+			<c:set var="i" value="1" />
+			<c:forEach var="item" items="${photoList}">
 				<div class="col-md-3 hls_sol px-1">
-				<img src="${pageContext.request.contextPath}/files/${item.system_file_name}" alt="">
-				<div class="hls_sol_data">
-					<h1>${i}</h1>
-					<div class="hls_data">
-						<a href="" target="" class="hls_title">${item.review_title}</a> 
-						<a href="reviewArticle.bo?review_seq=${item.article_no}" class="btn btn-pro">여행계획보기</a>
+					<img
+						src="${pageContext.request.contextPath}/files/${item.system_file_name}"
+						alt="">
+					<div class="hls_sol_data">
+						<h1>${i}</h1>
+						<div class="hls_data">
+							<a href="" target="" class="hls_title">${item.review_title}</a> <a
+								href="reviewArticle.bo?review_seq=${item.article_no}"
+								class="btn btn-pro">여행계획보기</a>
+						</div>
 					</div>
 				</div>
-			</div>
-			<c:set var="i" value="${i+1}"/>
+				<c:set var="i" value="${i+1}" />
 			</c:forEach>
 		</div>
 		<!--bestImage 영역 끝 -->
-		
+
 		<!--  트레블메이커 광고 여행 시작 -->
 		<h1 class="divLine" style="font-family: 'Black Han Sans', sans-serif;">TRAVELMAKER에서
 			보장하는 재밌는 여행</h1>
@@ -343,8 +356,8 @@ div {
 	</div>
 	<!-- 트레블 메이커 추천 여행 종료  -->
 
-		
-		
+
+
 	<div id="footer">
 		<%@include file="footer1.jsp"%>
 	</div>
