@@ -34,6 +34,9 @@
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
 <style>
+body {
+	background-color:#fafafa;
+}
 * {
 	color: black;
 }
@@ -243,7 +246,11 @@ background-color:primary;
 	margin-bottom: 60px;
 }
 
-
+.card-body-contents{
+width:100%;
+height:200px;
+overflow:hidden;
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -389,6 +396,7 @@ background-color:primary;
 
 		<div class="pannel-body">
 			<div class="row tab-content">
+			
 				<!-- tabone -->
 				<div class="col tab-pane" id="tabone" role="tabpanel">
 					<div class="row">
@@ -412,12 +420,11 @@ background-color:primary;
 											<h6>${mrr.review_title}</h6>
 										</a>
 									</div>
-									<img class="card-img-top float-left rounded"
-										src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
 									<div class="card-body">
-										<p>${mrr.review_viewcount}</p>
-										<h6 class="text-muted">${mrr.review_contents}</h6>
-										<p>${mrr.review_writedate}</p>
+										<h6 class="card-body-contents text-muted">${mrr.review_contents}</h6>
+										<hr/>
+									<div style="text-align:right"><i class="far fa-eye"></i><span>${mrr.review_viewcount}</span></div>
+										<div>${mrr.review_writedate}</div>
 									</div>
 								</div>
 							</div>
@@ -432,9 +439,7 @@ background-color:primary;
 				</div>
 
 				<!-- tabtwo -->
-
-
-				<div class="col tab-pane active" id="tabtwo" role="tabpanel">
+					<div class="col tab-pane active" id="tabtwo" role="tabpanel">
 					<div class="row">
 
 						<c:if test="${empty MyPlanResult}">
@@ -479,7 +484,7 @@ background-color:primary;
 							<div class="noArticle col-md-12 w-100 h-100 py-5">
 								<div style="height: 300px;">
 									<h3 style="margin: 50px;">표시할 내용이 없습니다</h3>
-									<small>좋아요를 눌러보세요...ㅜ</small>
+									<small>좋아요를 눌러주세요...ㅜ</small>
 								</div>
 							</div>
 						</c:if>

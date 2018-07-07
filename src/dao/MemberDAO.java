@@ -133,7 +133,7 @@ public class MemberDAO {
 		return tmp;
 	}
 
-	public static boolean check(String id) throws Exception {
+	public boolean check(String id) throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql = "select * from users where userid=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);

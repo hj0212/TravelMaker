@@ -65,7 +65,7 @@ public class MemberController extends HttpServlet {
 					request.getSession().setAttribute("part", "home");
 					request.getSession().setAttribute("user", user);
 					request.getSession().setAttribute("loginId", dto.getUserid());
-
+					request.getSession().setAttribute("file_name", user.getPhoto_system_file_name());
 					String nickname = mdao.getUserNickname(user.getSeq());
 					request.getSession().setAttribute("nickname", nickname);
 					if(user.getBlock().equals("y")) {
@@ -78,7 +78,7 @@ public class MemberController extends HttpServlet {
 					}
 				} else {
 					isForward = false;
-					dst="login/newlogin.jsp";
+					dst="login/login.jsp";
 				}
 
 			} else if(command.equals("/join.do")) {
@@ -107,7 +107,7 @@ public class MemberController extends HttpServlet {
 
 				String nickname=mdao.getUserNickname(user.getSeq());
 				request.getSession().setAttribute("nickname", nickname);
-
+				request.getSession().setAttribute("file_name", user.getPhoto_system_file_name());
 				request.getSession().setAttribute("part", "naver");
 				request.getSession().setAttribute("user", user);
 				request.getSession().setAttribute("loginId", user.getUserid());
@@ -195,7 +195,7 @@ public class MemberController extends HttpServlet {
 					request.setAttribute("nickname", mdto.getKakao_nickname());
 					request.setAttribute("email", mdto.getKakao_email());
 				}
-				request.getSession().setAttribute("file_name", "/TravelMaker/file/"+mdto.getPhoto_system_file_name());
+				/*request.getSession().setAttribute("file_name", "/TravelMaker/file/"+mdto.getPhoto_system_file_name());*/
 				System.out.println(request.getSession().getAttribute("file_name"));
 			/*리뷰와 망가진 네비*/
 				

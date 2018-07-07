@@ -56,7 +56,6 @@
 						nickname : nickname,
 						msg : msg,
 						file : file
-						
 					}));
 					$("#livemsg").val("");
 					};
