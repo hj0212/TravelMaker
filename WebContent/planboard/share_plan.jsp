@@ -12,16 +12,14 @@
 	type="text/javascript"></script>
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css"
 	rel="stylesheet" type="text/css" />
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="source/js/createplan.js"></script>
 <link rel="stylesheet" href="source/css/createplan.css">
 <!-- 폰트어썸 CDN -->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <style>
 
 body {
@@ -47,8 +45,14 @@ div {
 	text-align: justify;
 	padding: 0px;
 }
-#search_area[type="button"] {
-	align: right;
+#search_area{
+	margin:0 auto;
+	text-align: center;
+		
+}
+
+#user-plan{
+	float:right;
 }
 .item {
 	display: inline-block;
@@ -70,13 +74,22 @@ div {
 </style>
 </head>
 <body>
+	<c:choose>
+	<c:when test="${user==null}">
+	<script>
+		$(document).ready(function(){
+			$("#user-plan").prop('hidden',true);
+		});
+	</script>
+	</c:when>
+	</c:choose>
 	<!-- 네비  -->
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/mainNavi_login.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@include file="include/mainNavi.jsp"%>
+			<%@include file="../include/otherNavi_login.jsp"%>
 		</c:otherwise>
 	</c:choose>
 	<div class="container" id="contId">
@@ -125,9 +138,9 @@ div {
 
 		<!-- 검색/ 글쓰기 버튼  -->
 		<div class="row col-md-12">
-			<div class="input-group mt-2 col-md-12" id="search_area">
+			<div class="input-group " id="search_area">
 				<input type="text"
-					class="form-control ml-auto col-4 justify-content-center"
+					class=" form-control ml-auto col-4 justify-content-center"
 					placeholder="제목 검색" aria-label="reply"
 					aria-describedby="basic-addon2" id="search">
 				<div class="input-group-append">
@@ -135,7 +148,7 @@ div {
 						id="searchbtn" name="searchbtn">검색</button>
 				</div>
 				<button type="button" class="btn btn-primary ml-auto"
-					data-toggle="modal" data-target="#exampleModalCenter">나의
+					data-toggle="modal" data-target="#exampleModalCenter" id="user-plan">나의
 					여행 계획 세우기</button>
 			</div>
 		</div>
@@ -149,7 +162,7 @@ div {
 				<div class="item col-md-3 mb-3">
 					<div class="card text-center">
 		<a href="planArticle.plan?currentPage=${currentPage}&plan_seq=${item.plan_seq}" style="text-decoration:none;">
-						<div class="card-header planTitle" style="line-height:35px;height:55px; overflow:hidden;">${item.plan_title}</div>
+						<div class="card-header planTitle" style="line-height:37px;height:55px; overflow:hidden;">${item.plan_title}</div>
 		</a>
 						<div class="card-body mt-1 text-center">
 							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
@@ -178,7 +191,7 @@ div {
 
 
 	</div>
-	<%@include file="footer1.jsp"%>
+	<%@include file="../footer1.jsp"%>
 
 	<script>
 		$("#searchbtn").click(function() {
@@ -188,7 +201,7 @@ div {
 </body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="include/multiChat.jsp"%>
+			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
 	</c:choose>
 </html>

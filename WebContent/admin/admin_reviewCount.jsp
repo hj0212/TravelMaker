@@ -43,7 +43,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li class="dropdown-header">신고 확인</li>
 								<li><a href="admin_free.ad">FreeBoard</a></li>
-								<li><a href="admin_plan.ad">Share_Plan</a></li>
+								<li><a href="admin_review.ad">Share_Review</a></li>
 							</ul></li>
 						<li><a href="#">Contact</a></li>
 					</ul>
@@ -62,28 +62,28 @@
 									<table class="table col-md-12">
 										<thead>
 											<tr>
-												<th colspan=8 class="text-center"  style="font-size:20px;">자유게시판 신고 관리 <button type="button"  href ="admin_free.ad"class="btn btn-outline-light pull-right" id="alignReport2">전체 신고글 확인</button></th>		
+												<th colspan=8 class="text-center"  style="font-size:20px;">후기게시판 신고 관리 <button type="button"  href ="admin_free.ad"class="btn btn-outline-light pull-right" id="alignReport2">전체 신고글 확인</button></th>		
 											</tr>
 										</thead>
 										<tbody class="text-center">
 											<tr>
-												<th style="width:10%">글 번호</th>
-												<th class="text-center" style="width:30%;">글 제목</th>
+												<th style="width:10%">후기 번호</th>
+												<th class="text-center" style="width:30%;">후기 제목</th>
 												<th class="text-center" style="width:20%;">작성자</th>											
 												<th class="text-center" style="width:10%;">작성 날짜</th>
 												<th class="text-center" style="width:15%;">조회 수</th>
 												<th class="text-center" style="width:15%;">신고 수</th>
 											</tr>
 
-											<c:forEach var="fc" items="${freecountreport}" varStatus="status">
+											<c:forEach var="rc" items="${reviewcountreport}" varStatus="status">
 												<tr>
-													<th>${fc.free_seq}</th>
-													<td>${fc.free_title}</td>
+													<th>${rc.review_seq}</th>
+													<td>${rc.review_title}</td>
 												<%-- 	<fmt:parseNumber var="seq" type="number" integerOnly="true" value="${f.free_seq}"/> --%>
-													<td>${fc.free_writer}</td>
-													<td>${fc.free_writedate}</td>
-													<td>${fc.free_viewcount}</td>
-													<td>${fc.report_count}</td>									
+													<td>${rc.review_writer}</td>
+													<td>${rc.review_writedate}</td>
+													<td>${rc.review_viewcount}</td>
+													<td>${rc.report_count}</td>									
 													<%-- <td><a href="viewFreeArticle.bo?seq=${seq}" id="linkId">확인</a></td>		 --%>									
 												</tr>
 											</c:forEach>

@@ -8,25 +8,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Document</title>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-   integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
-   crossorigin="anonymous">
-<link rel="stylesheet"
-   href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-   integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
-   crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-   crossorigin="anonymous"></script>
+   href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script
-   src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-   integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-   crossorigin="anonymous"></script>
-<script
-   src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
-   integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-   crossorigin="anonymous"></script>
+   src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <style>
 * {
    box-sizing: border-box;
@@ -45,12 +33,15 @@
    padding: 0px;
 }
 .contents {
+   padding : 10px;
    border: 1px solid #e9e9e9;
    margin-top: 20px;
    border-radius: 10px;
    min-height: 100px;
    word-wrap: break-word;
 }
+
+
 /* 편법임... */
 .contents p {
    margin: 0 0 0.0001pt;
@@ -92,7 +83,7 @@ $(document).ready(function(){
 
 	$("#goodbtn").click(function(){
 
-	var article =$("#review_seq").text();
+	var article ="${review_seq}";
 	
 	console.log(goodbtn);
 
@@ -110,7 +101,7 @@ $(document).ready(function(){
 		});
 	});
 	$("#badbtn").click(function(){	
-	var article =$("#review_seq").text();	
+	var article ="${review_seq}";	
 
 	$.ajax({
 		  type:'POST',
@@ -145,7 +136,7 @@ $(document).ready(function(){
    %>
    <c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="../include/mainNavi_login.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:when>
 		<c:otherwise>
 			<%@include file="../include/mainNavi.jsp"%>
@@ -177,10 +168,10 @@ $(document).ready(function(){
             	<button type="button" class="btn btn-outline-secondary" id="update">수정</button>
             	<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
             </c:if>
-            <button type="button" class="btn btn-outline-secondary" id="reviewboard-bt">목록</button>
             <c:if test="${!(sessionScope.user.seq eq dto.review_writer)}">
-	            <button type="button" class="btn btn-outline-danger">신고</button>
+	            <button type="button" class="btn btn-outline-danger" id="report">신고</button>
             </c:if>
+            <button type="button" class="btn btn-outline-secondary" id="reviewboard-bt">목록</button>
          </div>
       </div>
       <div class="comments">
@@ -212,9 +203,13 @@ $(document).ready(function(){
                   <th scope="col" style="width: 15%;">Last</th>
                </tr>
             </thead>
+            <c:if test="${commentResult.size() == 0 }">
+               <tr>
+               <td colspan="3">표시할 댓글이 없습니다</td>
+               </tr>
+            </c:if>
             <tbody>
-
-               <c:forEach var="comment" items="${commentResult}">
+               <c:forEach var="comment" items="${commentResult}">               
                   <tr>
                      <th scope="row"
                         style="width: 15%; max-width: 15%; max-height: 51px;"
@@ -232,12 +227,15 @@ $(document).ready(function(){
                      
                      </td>
                   </tr>
+                  
                </c:forEach>
+          
+         
             </tbody>
          </table>
       </div>
    </div>
-   </div>
+  
  
    <script>
 /*       $("#comment-write-bnt").click(
@@ -281,9 +279,29 @@ $(document).ready(function(){
     	  location.href = "reviewboard.bo";
       })
       
+      $("#report").click(function(){
+    	  $.ajax({
+    		  url: "reviewReport.Ajax",
+    		  type: "post",
+    		  data : {value : ${review_seq}},
+    		  
+    		  success: function(response) {
+    			  if(response == 1){
+    				  alert("신고는 한 번만 가능합니다.");
+    			  }else{
+    				  alert("신고가 접수되었습니다.");
+    			  }
+    		  },
+    	  })
+      })
+      
      <c:if test="${sessionScope.user.seq eq dto.review_writer}">
      	$("#delete").click(function() {
      		location.href = "deleteReviewCheck.bo?reviewnum=${review_seq}";
+     	})
+     	
+     	$("#update").click(function() {
+     		location.href = "modifyReviewArticlePage.bo?reviewnum=${review_seq}";
      	})
      </c:if>
    </script>

@@ -87,14 +87,17 @@ a {
 </head>
 <body>
 	<c:choose>
-		<c:when test="${sessionScope.loginId !=null}">
-			<%@include file="../include/mainNavi_login.jsp"%>
+		<c:when test="${empty sessionScope.user.seq}">
+			<%@include file="../include/otherNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@include file="../include/mainNavi.jsp"%>
+			<%@include file="../include/otherNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
+	<h1 class="divLine">FreeTalk</h1>
+		<hr/>
+	
 		<div class="row">
 			<div class="col-md-12" id="bestPlan">
 				<table class="table table-light">
@@ -108,7 +111,9 @@ a {
 						</tr>
 					</thead>
 					<tbody>
-						<c:choose>
+						
+
+						<c:choose>						
 							<c:when test="${freeboardlist[0] != null}">
 								<c:forEach var="item" items="${freeboardlist}">
 									<tr>
@@ -120,6 +125,8 @@ a {
 										<td align="center">${item.free_writedate}</td>
 										<td align="center">${item.free_viewcount}</td>
 									</tr>
+								
+								
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
@@ -131,15 +138,15 @@ a {
 						<tr>
 							<td colspan="5">
 								<nav aria-label="Page navigation example">
-									<ul class="pagination">${pageNavi}
+									<ul class="pagination justify-content-center">${pageNavi}
 									</ul>
 								</nav>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="5" id="input_area">
-								<button type="button" class="btn btn-primary " id="writebtn">글쓰기</button>
-								<div class="input-group mb-3" id="search_area">
+								<button type="button" class="btn btn-primary" id="writebtn">글쓰기</button>
+								<div class="input-group col-md-4 offset-md-4" id="search_area">
 									<input type="text" class="form-control" placeholder="제목 검색"
 										aria-label="reply" aria-describedby="basic-addon2" id="search">
 									<div class="input-group-append">

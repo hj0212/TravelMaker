@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="source/lib/materialize/css/materialize.css">
-<script src="source/lib/materialize/js/materialize.js"></script>
+<title>로그인</title>
+<link rel="stylesheet" href="../source/lib/materialize/css/materialize.css">
+<script src="../source/lib/materialize/js/materialize.js"></script>
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -97,7 +97,7 @@
 			  var userid = $("#userid").val();
 			  var password = $("#password").val();
 			  if($(".btn-login").text()=="Log in") {
-				  $("#userform").attr('action','login.do').submit();
+				  $("#userform").attr('action','../login.do').submit();
 			  }else if(userid==""){
 				  alert("ID를 입력해주세요");
 			  }else if(password==""){
@@ -111,7 +111,7 @@
 	  $(".btn-login").click(function() {
 		  if($(".btn-login").text()=="Log in") {
 			  console.log("로그인");
-			  $("#userform").attr('action','login.do').submit();
+			  $("#userform").attr('action','../login.do').submit();
 		  } else if($(".btn-login").text()=="Sign up"){
 			  console.log("사인업");
 			  var id = $("#user_idcheck").val();
@@ -138,7 +138,7 @@
 			  }else if(conpw != pw){
 				  alert("패스워드가 일치 하지않습니다");
 			  }else{
-				  $("#userform").attr('action','join.do').submit();
+				  $("#userform").attr('action','../join.do').submit();
 			  }		  
 			  
 			  
@@ -191,7 +191,7 @@ $("#user_idchek").keyup(function(){
 </script>
 
 
-<script type="text/javascript" src="source/js/login.js"></script>
+<script type="text/javascript" src="../source/js/login.js"></script>
 
 
 </head>
@@ -200,14 +200,14 @@ $("#user_idchek").keyup(function(){
 	<div id="container">
 		<div class="row">
 			<h1 id="title" class="center col s12">
-				<a href="main.jsp">TRAVEL MAKER</a>
+				<a href="../main.jsp">TRAVEL MAKER</a>
 			</h1>
 		</div>
 		<div class="row">
 			<div id="loginarea">
 				<div class="card white hoverable" id="loginbox">
 					<div class="card-content black-text">
-						<div class="row card-title" id="card-title">
+						<div class="row card-title" id	="card-title">
 							<div class="col s6 left-align login-link active">
 								<span>Log in</span>
 							</div>
@@ -280,17 +280,17 @@ $("#user_idchek").keyup(function(){
 								    	            $.ajax({
 								    	            	type:"post",
 								    	            	dataType:"json",
-								    	            	url:"kakaologin.do",
+								    	            	url:"../kakaologin.do",
 								    	            	data:{
 								    	            		id:res.id,
 								    	            		name:res.properties.nickname,
 								    	            		email:res.kaccount_email
 								    	             	},
 								    	            	success:function(data) {
-								    	            		location.href = "main.jsp";
+								    	            		location.href = "../main.jsp";
 								    	            	},
 								    	            	error:function(data) {
-								    	            		location.href = "main.jsp";
+								    	            		location.href = "../main.jsp";
 								    	            	}
 													})
 												},
@@ -307,7 +307,7 @@ $("#user_idchek").keyup(function(){
 							<div class="row_margin forgot-password-row">
 								<div id="naver_id_login"></div>
 								<script type="text/javascript">
-								  	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://59.10.249.73/TravelMaker/loginProc.html");
+								  	var naver_id_login = new naver_id_login("3HRTY3M8Ze8wGofvMNTi", "http://59.10.249.73/TravelMaker/login/loginProc.html");
 								  	var state = naver_id_login.getUniqState();
 								  	naver_id_login.setButton("green", 3, 48);
 								  	naver_id_login.setDomain("http://59.10.249.73/");
@@ -317,7 +317,7 @@ $("#user_idchek").keyup(function(){
 							</div>
 							<div class="row forgot-password-row">
 								<span class="blue-text text-lighten-1 waves-effect"> <a
-									href="findPw.jsp" style="margin-right: 0px">Forgot
+									href="../findPw.jsp" style="margin-right: 0px">Forgot
 										Password?</a></span>
 							</div>
 						</div>

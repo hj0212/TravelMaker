@@ -21,7 +21,7 @@ public class PlanDAO {
 	private MemberDAO mdao = new MemberDAO();
 	public PlanDTO getPlandata(int plan_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "select plan_seq, plan_writer,to_char(plan_startdate, 'YYYY/MM/DD') plan_startdate,to_char(plan_enddate, 'YYYY/MM/DD') plan_enddate,plan_title,plan_viewcount,plan_reportcount  from plan where plan_seq = ?";
+		String sql = "select plan_seq, plan_writer,to_char(plan_startdate, 'YYYY/MM/DD') plan_startdate,to_char(plan_enddate, 'YYYY/MM/DD') plan_enddate,plan_title,plan_viewcount from plan where plan_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, plan_seq);
 		ResultSet rs = pstmt.executeQuery();
@@ -35,7 +35,6 @@ public class PlanDAO {
 			dto.setPlan_enddate(rs.getString(4));
 			dto.setPlan_title(rs.getString(5));
 			dto.setPlan_viewcount(rs.getInt(6));
-			dto.setPlan_reportcount(rs.getInt(7));
 		}
 
 		rs.close();
@@ -405,7 +404,7 @@ public class PlanDAO {
 	public int startPlanInsertData(PlanDTO dto)throws Exception{
 		if(plancheck(dto)) {
 			Connection con = DBConnection.getConnection();
-			String sql ="insert into plan values(plan_seq.nextval,?,?,?,?,0,0,0,0)";
+			String sql ="insert into plan values(plan_seq.nextval,?,?,?,?,0,0,0,'n')";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getPlan_writer());
 			pstmt.setString(2,dto.getPlan_startdate());
@@ -676,12 +675,12 @@ public class PlanDAO {
 		PreparedStatement pstat = null;
 
 		if(searchTerm == null || searchTerm.equals("null")) {
-			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan) where num between ? and ?";
+			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan where plan_check = 'y') where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, startNum);
 			pstat.setInt(2, endNum);
 		} else {
-			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan where plan_title like ?) where num between ? and ?";
+			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan where plan_check = 'y' and plan_title like ?) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, "%"+searchTerm+"%");
 			pstat.setInt(2, startNum);
@@ -771,8 +770,10 @@ public class PlanDAO {
 		for(int i = startNavi; i <= endNavi; i++) {
 			if(currentPage == i) {
 				sb.append("<li class='page-item'><a class='page-link' href='planboard.plan?currentPage="+i+"&search="+searchTerm+"'>"+i+"</a></li>");
+				System.out.println("1번임");
 			} else {
 				sb.append("<li class='page-item'><a class='page-link' href='planboard.plan?currentPage="+i+"&search="+searchTerm+"'> "+i+"</a></li>");
+				System.out.println("2번임");
 			}
 		}
 
@@ -789,7 +790,7 @@ public class PlanDAO {
 
 	public List<PlanCommentDTO> getAllPlanComments (int plan_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from plan_comment where plan_seq =?";
+		String sql = "select * from plan_comment where plan_seq =? order by comment_seq desc";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, plan_seq);
 		ResultSet rs = pstat.executeQuery();
@@ -1055,24 +1056,63 @@ public class PlanDAO {
 		return result;
 	}
 
-	public int insertAllSchedule(List<ScheduleDTO> list) throws Exception {
+	public int savePlan(int plan_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "insert into schedule VALUES (?,?,schedule_seq.nextval, ?, ?, ?, ?, ?)";
+		String sql = "update plan set plan_check = 'y' where plan_seq = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		int result = 0;
-		for(ScheduleDTO dto: list) {
-			pstmt.setInt(1, dto.getPlan_seq());
-			pstmt.setInt(2, dto.getDay_seq());
-			pstmt.setString(3, dto.getSchedule_starttime());
-			pstmt.setString(4, dto.getSchedule_endtime());
-			pstmt.setInt(5, dto.getLocation_id());
-			pstmt.setString(6, dto.getSchedule_plan());
-			pstmt.setString(7, dto.getSchedule_ref());			
-			result = pstmt.executeUpdate();
-			con.commit();
-		}
+		pstmt.setInt(1, plan_seq);
+		int result = pstmt.executeUpdate();
+		
 		pstmt.close();
 		con.close();
+		return result;
+	}
+	
+	public List<PlanDTO> getMyTmpPlan (int seq) throws Exception{
+		Connection con = DBConnection.getConnection();
+		List<PlanDTO> result = new ArrayList<>();
+		String sql = "select * from plan where plan_writer = ? and plan_check= 'n' order by 1 desc";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, seq);
+		ResultSet rs = pstat.executeQuery();
+
+		while(rs.next()) {
+				PlanDTO pdto = new PlanDTO();
+				pdto.setPlan_seq(rs.getInt("plan_seq"));
+				pdto.setPlan_writerN(mdao.getUserNickname(rs.getInt("plan_writer")));
+				pdto.setPlan_writer(rs.getInt("plan_writer"));
+				pdto.setPlan_title(rs.getString("plan_title"));
+				pdto.setPlan_good(rs.getInt("plan_good"));
+				pdto.setPlan_viewcount(rs.getInt("plan_viewcount"));
+				pdto.setPlan_startdate(rs.getString("plan_startdate"));
+				pdto.setPlan_enddate(rs.getString("plan_enddate"));
+				pdto.setPlan_check(rs.getString("plan_check"));
+				result.add(pdto);
+			}
+
+		
+		con.close();
+		pstat.close();
+		rs.close();
+		return result;
+	}
+	
+	public boolean getPlanState(int plan_seq) throws Exception {
+		Connection con = DBConnection.getConnection();
+		String sql = "select plan_check from plan where plan_seq = ?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, plan_seq);
+		ResultSet rs = pstat.executeQuery();
+		boolean result = false;
+		if(rs.next()) {
+			if(rs.getString(1).equals("y")) {
+				result = true;
+			}
+		}
+		
+		con.close();
+		pstat.close();
+		rs.close();
 		return result;
 	}
 }

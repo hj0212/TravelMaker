@@ -88,12 +88,10 @@ a {
 				<li class="nav-item active"><a class="nav-link"
 					href="planboard.plan">Plans <span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="selectSchedule.plan?plan=1&day=1&create=f">Schedules</a></li>
 				<li class="nav-item"><a class="nav-link" href="reviewboard.bo">Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
-				<li class="nav-item"><a class="nav-link" href="newlogin.jsp">Login</a></li>
-				<li class="nav-item"><a class="nav-link" href="join.do">Join</a></li>
+				<li class="nav-item"><a class="nav-link" href="login/newlogin.jsp">Login</a></li>
+				<li class="nav-item"><a class="nav-link" href="login/newlogin.jsp">Join</a></li>
 
 			</ul>
 		</div>

@@ -25,7 +25,8 @@ public class MemberDAO {
 			tmp.setPassword(rs.getString(3));
 			tmp.setEmail(rs.getString(4));
 			tmp.setNickname(rs.getString(5));
-			tmp.setBlock(rs.getString("block"));
+			tmp.setBlock(rs.getString(15));
+			tmp.setPhoto_system_file_name(rs.getString(16));
 		}
 		
 		con.close();
@@ -37,7 +38,6 @@ public class MemberDAO {
 
 	public int addMember(MemberDTO dto) throws Exception {
 		if(!check(dto.getUserid())) {
-
 			Connection con = DBConnection.getConnection();
 			String sql = "insert into users (seq, userid, password, nickname, email, modify_date,create_date) VALUES (users_seq.nextval, ?, ?, ?, ?,sysdate,sysdate)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -53,7 +53,7 @@ public class MemberDAO {
 
 			return result;
 		}
-
+		System.out.println("여기");
 		return -1;
 	}
 
@@ -84,6 +84,8 @@ public class MemberDAO {
 			tmp.setNaver_id(rs.getString(6));
 			tmp.setNaver_nickname(rs.getString(7));
 			tmp.setNaver_email(rs.getString(8));
+			tmp.setBlock(rs.getString("block"));
+			tmp.setPhoto_system_file_name(rs.getString(16));
 		}
 
 		con.close();
@@ -121,6 +123,7 @@ public class MemberDAO {
 			tmp.setNaver_nickname(rs.getString(10));
 			tmp.setNaver_email(rs.getString(11));
 			tmp.setBlock(rs.getString("block"));
+			tmp.setPhoto_system_file_name(rs.getString(16));
 		}
 
 		con.close();
@@ -136,12 +139,10 @@ public class MemberDAO {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setString(1, id);
 		ResultSet rs = pstmt.executeQuery();
-		boolean result;
+		boolean result = false;
 		if(rs.next()) {
 			result = true;
-		} else {
-			result = false;
-		}
+		} 
 
 		rs.close();
 		con.close();
@@ -401,7 +402,7 @@ public class MemberDAO {
 
 	public int updateHomeMemberInfo(String id, String pw, String email, String nickname) throws Exception{
 		Connection con = DBConnection.getConnection();
-		String sql = "update users set password=?, nickname=?, email=? where userid=?";
+		String sql = "update users set password=?, nickname=?, email=?, modify_date= to_char(sysdate,'YYYY/MM/DD') where userid=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setString(1, pw);
 		pstmt.setString(2, nickname);
@@ -410,6 +411,34 @@ public class MemberDAO {
 		int result = pstmt.executeUpdate();
 		con.commit();
 		pstmt.close();
+		con.close();
+		return result;
+	}
+	
+	public int updateNKMemberInfo(String id, String nickname, String email, int seq, String part) throws Exception{
+		Connection con = DBConnection.getConnection();
+		PreparedStatement pstat = null;
+		int result =0;
+		if(part.equals("naver")) {
+			String sql = "update users set naver_id=?, naver_nickname=?, naver_email=?, modify_date= to_char(sysdate,'YYYY/MM/DD') where seq=?";
+			pstat = con.prepareStatement(sql);
+			pstat.setString(1, id);
+			pstat.setString(2, nickname);
+			pstat.setString(3, email);
+			pstat.setInt(4, seq);
+			result = pstat.executeUpdate();
+		}else if (part.equals("kakao")) {
+			String sql = "update users set kakao_id=?, kakao_nickname=?, kakao_email=?, modify_date= to_char(sysdate,'YYYY/MM/DD') where seq=?";			
+			pstat = con.prepareStatement(sql);
+			pstat.setString(1, id);
+			pstat.setString(2, nickname);
+			pstat.setString(3, email);
+			pstat.setInt(4, seq);
+			result = pstat.executeUpdate();
+
+		}
+		con.commit();
+		pstat.close();
 		con.close();
 		return result;
 	}

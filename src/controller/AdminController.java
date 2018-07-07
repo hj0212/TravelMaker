@@ -16,6 +16,7 @@ import dao.MemberDAO;
 import dao.ReviewDAO;
 import dto.MemberDTO;
 import dto.ReportFreeDTO;
+import dto.ReportReviewDTO;
 
 
 @WebServlet("*.ad")
@@ -59,7 +60,7 @@ public class AdminController extends HttpServlet {
 			
 			//--------------------------admin_free > 신고당한 자유게시판 글 보기
 			else if(command.equals("/admin_free.ad")) {
-				System.out.println("신고글확인ctrl들어옴");
+				/*System.out.println("신고글확인ctrl들어옴");*/
 				List<ReportFreeDTO> flist = new ArrayList<>();
 				flist = adao.getAllReport_f();
 				request.setAttribute("freereport", flist);
@@ -71,13 +72,37 @@ public class AdminController extends HttpServlet {
 			//---------------------------admin_free >정렬 바꾸기
 			else if(command.equals("/admin_free_count.ad")) {
 				List<ReportFreeDTO> flist = new ArrayList<>();
-				flist = adao.getAllReport_f();
+				flist = adao.getReportAlign_f();
 				request.setAttribute("freecountreport", flist);
 	
 				isForward = true;
-				dst = "admin/admin_freeCount.jsp";
+				dst = "admin/admin_freeCount.jsp";			
+			}
+			
+			//---------------------------admin_review >신고당한 후기게시판 글 보기
+			else if(command.equals("/admin_review.ad")) {
+				List<ReportReviewDTO> rlist = new ArrayList<>();
+				rlist = adao.getAllReport_p();
+				request.setAttribute("reviewreport", rlist);
+				System.out.println(rlist.size());
+				isForward = true;
+				dst = "admin/admin_review.jsp";
+			}
+			
+			//---------------------------admin_review > 정렬 바꾸기
+			else if(command.equals("/admin_review_count.ad")) {
+				List<ReportReviewDTO> rlist = new ArrayList<>();
+				rlist = adao.getReportAlign_r();
+				request.setAttribute("reviewcountreport", rlist);
+	
+				isForward = true;
+				dst = "admin/admin_reviewCount.jsp";
 				
 			}
+			
+			
+			
+			
 			
 
 			if(isForward) {

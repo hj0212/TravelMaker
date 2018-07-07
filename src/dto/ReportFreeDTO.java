@@ -9,14 +9,14 @@ public class ReportFreeDTO {
 	private String report_user;
 	private String report_date;
 	private String report_link;
+	private int report_count;
+	private String free_writedate;
+	private int free_viewcount;
 	
 	public ReportFreeDTO(){}
-	
-
-
 
 	public ReportFreeDTO(int reportfree_seq, int free_seq, String free_title, String free_writer, String report_user,
-			String report_date, String report_count, String report_link) {
+			String report_date, String report_link, int report_count, String free_writedate, int free_viewcount) {
 		super();
 		this.reportfree_seq = reportfree_seq;
 		this.free_seq = free_seq;
@@ -25,10 +25,10 @@ public class ReportFreeDTO {
 		this.report_user = report_user;
 		this.report_date = report_date;
 		this.report_link = report_link;
+		this.report_count = report_count;
+		this.free_writedate = free_writedate;
+		this.free_viewcount = free_viewcount;
 	}
-
-
-
 
 	public int getReportfree_seq() {
 		return reportfree_seq;
@@ -76,7 +76,32 @@ public class ReportFreeDTO {
 	public void setReport_link(String report_link) {
 		this.report_link = report_link;
 	}
-	
+
+	public int getReport_count() {
+		return report_count;
+	}
+
+	public void setReport_count(int report_count) {
+		this.report_count = report_count;
+	}
+
+	public String getFree_writedate() {
+		return free_writedate;
+	}
+
+	public void setFree_writedate(String free_writedate) {
+		this.free_writedate = free_writedate;
+	}
+
+	public int getFree_viewcount() {
+		return free_viewcount;
+	}
+
+	public void setFree_viewcount(int free_viewcount) {
+		this.free_viewcount = free_viewcount;
+	}
+
+
 
 	
 }

@@ -13,7 +13,7 @@ import dto.PlanDTO;
 
 public class GoodBadDAO {
 	private MemberDAO mdao = new MemberDAO();
-	//review좋아요 등록
+	//review醫뗭븘�슂 �벑濡�
 	public int reviewGoodInsertData(int article,int user_seq) throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql = "insert into good_review values(good_review_seq.nextval,?,?)";
@@ -27,7 +27,7 @@ public class GoodBadDAO {
 		pstmt.close();
 		return result;
 	}
-	//review좋아요 카운트 
+	//review醫뗭븘�슂 移댁슫�듃 
 	public int reviewGoodSelectData(int article)throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql ="select count(*) from good_review where article_no = ?";
@@ -42,7 +42,7 @@ public class GoodBadDAO {
 	  	
 	  	return count;	
 	}
-	//review좋아요 체크
+	//review醫뗭븘�슂 泥댄겕
 	public boolean reviewGoodBtnCheck(int article,int user_seq)throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql ="select * from good_review where article_no=? and user_seq =?";
@@ -58,7 +58,7 @@ public class GoodBadDAO {
 		return check;
 		
 	}
-	//review싫어요 입력
+	//review�떕�뼱�슂 �엯�젰
 	public int reviewBadInsertData(int article, int user_seq)throws Exception {
 		Connection con = DBConnection.getConnection();
 		String sql ="insert into hate_review values(hate_review_seq.nextval,?,?)";
@@ -72,7 +72,7 @@ public class GoodBadDAO {
 		return result;
 			
 	}
-	//review싫어요 카운트
+	//review�떕�뼱�슂 移댁슫�듃
 	public int reviewBadSelectData(int article)throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql="select count(*) from hate_review where article_no=?";
@@ -87,7 +87,7 @@ public class GoodBadDAO {
 		
 		return count;	
 	}
-	//review싫어요 중복 체크
+	//review�떕�뼱�슂 以묐났 泥댄겕
 	public boolean reviewBadCheck(int article,int user_seq)throws Exception{
 		Connection con = DBConnection.getConnection();
 		String sql ="select * from hate_review where article_no =? and user_seq =?";
@@ -103,7 +103,7 @@ public class GoodBadDAO {
 		return check;		
 	}
 	
-	//free좋아요 등록
+	//free醫뗭븘�슂 �벑濡�
 		public int freeGoodInsertData(int article,int user_seq) throws Exception{
 			Connection con = DBConnection.getConnection();
 			String sql = "insert into good_free values(good_free_seq.nextval,?,?)";
@@ -117,7 +117,7 @@ public class GoodBadDAO {
 			pstmt.close();
 			return result;
 		}
-		//free좋아요 카운트 
+		//free醫뗭븘�슂 移댁슫�듃 
 		public int freeGoodSelectData(int article)throws Exception{
 			Connection con = DBConnection.getConnection();
 			String sql ="select count(*) from good_free where article_no = ?";
@@ -132,7 +132,7 @@ public class GoodBadDAO {
 		  	
 		  	return count;	
 		}
-		//free좋아요 체크
+		//free醫뗭븘�슂 泥댄겕
 		public boolean freeGoodBtnCheck(int article,int user_seq)throws Exception{
 			Connection con = DBConnection.getConnection();
 			String sql ="select * from good_free where article_no=? and user_seq =?";
@@ -148,7 +148,7 @@ public class GoodBadDAO {
 			return check;
 			
 		}
-		//free싫어요 입력
+		//free�떕�뼱�슂 �엯�젰
 		public int freeBadInsertData(int article, int user_seq)throws Exception {
 			Connection con = DBConnection.getConnection();
 			String sql ="insert into hate_free values(hate_free_seq.nextval,?,?)";
@@ -162,7 +162,7 @@ public class GoodBadDAO {
 			return result;
 				
 		}
-		//free싫어요 카운트
+		//free�떕�뼱�슂 移댁슫�듃
 		public int freeBadSelectData(int article)throws Exception{
 			Connection con = DBConnection.getConnection();
 			String sql="select count(*) from hate_free where article_no=?";
@@ -177,7 +177,7 @@ public class GoodBadDAO {
 			
 			return count;	
 		}
-		//free싫어요 중복 체크
+		//free�떕�뼱�슂 以묐났 泥댄겕
 		public boolean freeBadCheck(int article,int user_seq)throws Exception{
 			Connection con = DBConnection.getConnection();
 			String sql ="select * from hate_free where article_no =? and user_seq =?";
@@ -194,7 +194,7 @@ public class GoodBadDAO {
 		}
 		
 		
-		//plan좋아요 등록
+		//plan醫뗭븘�슂 �벑濡�
 		public int planGoodInsertData(int article,int user_seq) throws Exception{
 			Connection con = DBConnection.getConnection();
 			String sql = "insert into good_plan values(good_plan_seq.nextval,?,?)";
@@ -208,7 +208,7 @@ public class GoodBadDAO {
 			pstmt.close();
 			return result;
 		}
-		//plan좋아요 카운트 
+		//plan醫뗭븘�슂 移댁슫�듃 
 		public int planGoodSelectData(int article)throws Exception{
 			Connection con = DBConnection.getConnection();
 			String sql ="select count(*) from good_plan where article_no = ?";
@@ -223,7 +223,7 @@ public class GoodBadDAO {
 		  	
 		  	return count;	
 		}
-		//plan좋아요 체크
+		//plan醫뗭븘�슂 泥댄겕
 		public boolean planGoodBtnCheck(int article,int user_seq)throws Exception{
 			Connection con = DBConnection.getConnection();
 			String sql ="select * from good_plan where article_no=? and user_seq =?";
@@ -239,7 +239,7 @@ public class GoodBadDAO {
 			return check;
 			
 		}
-		//plan싫어요 입력
+		//plan�떕�뼱�슂 �엯�젰
 		public int planBadInsertData(int article, int user_seq)throws Exception {
 			Connection con = DBConnection.getConnection();
 			String sql ="insert into hate_plan values(hate_plan_seq.nextval,?,?)";
@@ -253,7 +253,7 @@ public class GoodBadDAO {
 			return result;
 				
 		}
-		//plan싫어요 카운트
+		//plan�떕�뼱�슂 移댁슫�듃
 		public int planBadSelectData(int article)throws Exception{
 			Connection con = DBConnection.getConnection();
 			String sql="select count(*) from hate_plan where article_no=?";
@@ -268,7 +268,7 @@ public class GoodBadDAO {
 			
 			return count;	
 		}
-		//plan싫어요 중복 체크
+		//plan�떕�뼱�슂 以묐났 泥댄겕
 		public boolean planBadCheck(int article,int user_seq)throws Exception{
 			Connection con = DBConnection.getConnection();
 			String sql ="select * from hate_plan where article_no =? and user_seq =?";
@@ -283,7 +283,7 @@ public class GoodBadDAO {
 			
 			return check;		
 		}
-		//내가 좋아요한 plan 게시물 아티클 번호들 
+		//�궡媛� 醫뗭븘�슂�븳 plan 寃뚯떆臾� �븘�떚�겢 踰덊샇�뱾 
 		public List<PlanDTO> favoriteData(int goodId)throws Exception {
 			Connection con = DBConnection.getConnection();
 			String sql ="select * from plan, (select article_no from good_plan, users where seq=user_seq and seq = ? order by good_plan_seq desc) where plan_seq = article_no ";
@@ -305,10 +305,10 @@ public class GoodBadDAO {
 			pstmt.close();
 			return result;			
 		}
-		//좋아요수가 많은 게시물 뿌리기
+		//醫뗭븘�슂�닔媛� 留롮� 寃뚯떆臾� 肉뚮━湲�
 		public List<PlanDTO> bestPlanData()throws Exception{
 			Connection con = DBConnection.getConnection();
-			String sql ="select * from plan p, (select article_no, count from (select article_no,count(*) count from good_plan group by article_no order by count desc) where rownum <= 4) s where p.plan_seq = s.article_no order by plan_good desc";
+			String sql ="select * from plan p, (select article_no, count from (select article_no,count(*) count from good_plan group by article_no order by count desc)) s where p.plan_seq = s.article_no and rownum <= 4  and plan_check='y' order by plan_good desc";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			List<PlanDTO> result = new ArrayList<>();
@@ -326,7 +326,7 @@ public class GoodBadDAO {
 			pstmt.close();
 			return result;	
 		}
-		//plan good에 좋아요 업데이트
+		//plan good�뿉 醫뗭븘�슂 �뾽�뜲�씠�듃
 		public int plangoodUpdate(int article_no)throws Exception{
 			Connection con = DBConnection.getConnection();
 			String sql ="update plan set plan_good = plan_good+1 where plan_seq = ?";

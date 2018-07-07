@@ -11,7 +11,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 	type="text/css">
-<!--  <link rel="stylesheet" href="source/css/mypage.css" type="text/css"> 헤더 푸터 에러남 -->
+<!-- <link rel="stylesheet" href="source/css/mypage.css" type="text/css"> -->
 
 
 <link rel="stylesheet"
@@ -34,18 +34,26 @@
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
 <style>
-#box-container {
+*{
+color:black;
+}
+a{
+text-decoration: none ! important;
+}
+/* #box-container {
 	margin: 0px auto;
-	float: right;
-	/* background : rgba(0, 0, 0, 0.3); */
+	float: left;
+	 background : rgba(0, 0, 0, 0.3); 
 	background: white;
 	border: 1px solid #777777;
-	width: 70%;
-	position: absolute;
+	width: 15%;
+	position: relative;
+	left:320px;
+	top:50px;
 	border-radius: 5px;
 	padding: 5px;
 	z-index: 300;
-	filter: alpha(opacity : '' 80 '');
+	filter: alpha(opacity : '' 30 '');
 }
 
 #box-container:after {
@@ -57,17 +65,22 @@
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-	/* border-bottom-color: rgba(0, 0, 0, 0.3); */
+	 border-bottom-color: rgba(0, 0, 0, 0.3);
 	background: white;
 	border-bottom: 1px solid #777777;
 	border-width: 8px;
 	margin-left: -8px;
 	z-index: 300;
-	filter: alpha(opacity : '' 80 '');
-}
+	filter: alpha(opacity : '' 30 '');
+} */
 
-ul {li { display:inline;
-	padding-left: 20px; a { color : #777777;
+/* #box-container{
+padding:0 auto;
+}
+ */
+ul {li 
+{ display:inline;
+	 a { color : #777777;
 	text-decoration: none;
 	&:
 	hover
@@ -77,13 +90,35 @@ ul {li { display:inline;
 	white;
 }
 
-
-.clearfix:after {
+}
+}
+}
+/* .clearfix:after {
 	content: "";
 	display: table;
 	clear: both;
-}
+} */
 
+ul li:before{
+border-top: 1px solid #777777;
+}
+#tabs,#tab1,#tab2,#tab3,#tab4{
+border:1px solid transparent;
+border-top-left-radius: .25em;
+border-top-right-radius: .25em;
+}
+#tab1,#tab2,#tab3,#tab4{
+display:block;
+padding: .5rem 1rem;
+}
+ul{
+border-bottom: 1px solid #ddd;
+-webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
 #box-container li a {
 	color: #777777 !important;
 	text-decoration: none !important;
@@ -93,10 +128,34 @@ ul {li { display:inline;
 	list-style: none !important;
 }
 
+/* #cf-box{
+text-align:center;
+float: left;
+display: inline;
+width:120px;
+height:100%;
+background: white;
+border: 1px solid #777777;
+&::a{
+color:#ddd;
+}
+} */
+
+/* #cf-box div a{
+::hover{
+background-color:primary;
+}
+} */
+
+ #cf-box button{
+/* border:1px solid transparent; */
+border-radius: 10px;
+} 
+
 #wrapper {
 	width: 970px;
 	box-sizing: border-box;
-	margin: 0px auto;
+	margin: 100px auto;
 }
 
 .data, .data div {
@@ -107,7 +166,34 @@ ul {li { display:inline;
 	width: 300px;
 	padding: 0;
 }
-/*input file*/
+
+#profile-cont{
+box-sizing: border-box;
+/* border:1px solid #777777; */
+border-radius: 10px;
+}
+
+#profile-container{
+box-sizing: border-box;
+/* border:1px solid #777777; */
+border-radius: 10px;
+}
+
+#profile-con{
+width:30%;
+display:inline;
+box-sizing: border-box;
+float:left;
+}
+#con{
+width:50%;
+height:100%;
+display:inline;
+float: left;
+text-align:center;
+}
+
+/*input file*/ 
 
 #profileImgForm input {             /*input tag 공통 스타일*/
   width: 200px;
@@ -127,17 +213,23 @@ ul {li { display:inline;
 }
 #img_button{
 	cursor: pointer;
+	 opacity: 3;
+	 background-color: #777777;
+	border: transparent;
 }
 
+.card-header{
+background-color:#eee;
+}
  </style>
  <script>
  $(document).ready(function(){
-	/*  $("#profile_img").attr('src',${file_name}); */
+	 $("#profile_img").attr('src',"/Git_Practice_Message/file/${file_name}");
 	 $("#img_button").click(function(){
 		 var img_file = $("#img_file").trigger("click");	 
 		 if(img_file){ 
 			 
-		 var selected = $("#profile").text("완료");
+		 var selected = $("#profile").text("프로필 사진 등록");
 	 
 		 if(selected ){
 			 $("#profile").click(function(){
@@ -157,133 +249,120 @@ ul {li { display:inline;
 
 
 <body>
-<div id="wrapper">
-<%-- <c:choose>
-		<c:when test="${sessionScope.loginId != null}">
+<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="include/mainNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
-	</c:choose> --%>
+	</c:choose>
 	
+<div id="wrapper">
 	<!--profile부분-->
-  <div class="py-5 text-center w-100 h-75 text-lowercase text-primary">
-    <div class="container w-100 h-100 py-0">
+  <div class="py-5 text-center w-100 h-100" id="profile-cont">
+    <div class="container py-5">
       <div class="row">
         <!-- <div class="col-sm-8 col-md-3 col-lg-3"> -->
-        <div class= "w-30 d-inline">
-          <div class="card w-100 h-100" id="profile-container">
+          <div class="w-100 h-100 py-3 px-1 align-items-center" id="profile-container">
             <!-- <img class="card-img-top float-left rounded-circle mt-5" src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap"> -->
-            
+            <!--프로필 이미지 업로드-->
+            <div class="col-sm py-3 ml-3 align-center" id="profile-con" style="width: 344.59px; box-sizing: border-box;">
             <form action="profileImg.do" method="post" enctype="multipart/form-data" id="profileImgForm">
-            <button id="img_button" type="button" class="circle" title="여기를 누르시면 이미지를 변경하실수있습니다." style="max-height: 238px;height: 238px;width: 344.59px;max-width: 344.59px"><img for="img_file" id="profile_img" src="/Git_Practice_Message/file/${file_name }" alt="Charlie-Chaplin-PNG-Image-17681.png" style="width: 100%;height: 100%"></button>
-            <div class="w-100 h-30 align-items-center" style="box-sizing: border-box;">
-            <input type="file" class="w-30" id="img_file" name="file" accept=".gif, .jpg, .png, .jpeg" value="이미지변경" hidden="true">
-            <button class="btn btn-primary w-100" type="button" id="profile">프로필이미지</button></div>
+            <button id="img_button" type="button" class="d-inline" title="여기를 누르시면 이미지를 변경하실수있습니다." style="max-height: 238px;height: 238px;width: 344.59px;max-width: 344.59px"><img for="img_file" id="profile_img" src="Charlie-Chaplin-PNG-Image-17681.png" alt="프로필 사진을 등록해보세요!" style="width: 100%;height: 100%"></button>
+            <div class="align-items-center">
+            <input type="file"id="img_file" name="file" accept=".gif, .jpg, .png, .jpeg" value="이미지변경" hidden="true">
+            <button class="btn btn-outline-primary" type="button" id="profile" style=" width: 344.59px;">프로필사진</button></div>
             </form>
-            
-            <div class="card-body h-100 py-4 my-5">
-              <h4 class="card-title my-4">${nickname}</h4>
+            </div>
+            <!--기본 프로필-->
+            <div class="col-sm d-inline py-5 my-5" id="con">
+              <h4 class="my-2">${nickname}</h4>
               <c:choose>
               <c:when test="${email eq null}">
-              <h4 class="my-4">이메일을 입력해주세요</h4>
+              <h4 class="my-2">이메일을 입력해주세요</h4>
               </c:when>
               <c:otherwise>
                <h4 class="my-4">${email}</h4>
               </c:otherwise>
               </c:choose>
-         <a href="#"  id="editlink" >정보수정</a>
-  		<ul id="box-container">
+       
+         <!--회원정보 수정-->
+         <div id="cf-box" class="col-sm d-inline py-3 my-5">
   		<c:choose>
   		<c:when test="${sessionScope.part eq 'home'}">
-  		<li class="clearfix"><a  href="#" id="editInfo">회원정보</a></li>
-  		<li class="clearfix"><a  href="#" id="editPw">비밀번호</a></li>
-  		<li class="clearfix"><a  href="#" id="updateEmail">이메일</a></li>
+  		<button id="editInfo" class="btn btn-outline-primary">정보수정</button>  		
   		</c:when>
   		<c:otherwise>
-  		<li class="clearfix"><a href="#" id="updateEmail">이메일</a></li>
+  		<button id="editInfoNK" class="btn btn-outline-primary">정보수정</button> 
   		</c:otherwise>
   		</c:choose>
-  		
-  		</ul>
-            </div>
-          </div>
-        </div>
-        <!-- <div class="col-sm-12 col-md-6 col-lg-9 col-12 col-xl-9 w-100 h-100 align-items-center mt-5"> -->
-        <div class="w-70 d-inline mx-5">
-          <div id="tb" class="py-5 my-5">
-            <table class="table col-mt-5 col-md-5 col-sm-12 text-center">
-              <thead>
-                <tr>
-                  <th scope="col" class="text-center">게시글</th>
-                  <th scope="col" class="text-center">스크랩</th>
-                  <th scope="col" class="text-center">좋아요</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="basicBox"> num1
-                      <svg width="130" height="65" viewBox="0 0 130 65" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="0" fill="none" width="130" height="65"></rect>
-                      </svg>
-											</div>
-										</td>
-										<td>
-											<div class="basicBox">
-												num2
-												<svg width="130" height="65" viewBox="0 0 130 65"
-													xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="0" fill="none" width="130"
-														height="65"></rect>
-                      </svg>
-											</div>
-										</td>
-										<td class="">
-											<div class="basicBox">
-												num3
-												<svg width="130" height="65" viewBox="0 0 130 65"
-													xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="0" fill="none" width="130"
-														height="65"></rect>
-                      </svg>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
+  		</div>
+      </div>
 				</div>
 			</div>
 		</div>
+     </div>
+     
+     <!--임시저장-->
+     <div>
+     <h1 class="divLine">작성중인Plan</h1>
+		<hr/>
 
+		<div class="row mt-2 mx-0">
+			<c:forEach var="item" items="${planList}">
+				<div class="item col-md-3 mb-3">
+					<div class="card text-center">
+		<a href="selectSchedule.plan?plan=${item.plan_seq}&day=1&create=f" style="text-decoration:none;">
+						<div class="card-header planTitle" style="line-height:35px;height:55px; overflow:hidden;">${item.plan_title}</div>
+		</a>
+						<div class="card-body mt-1 text-center">
+							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
+							<div class="btn-list d-inline">
+
+								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
+									class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
+							</div>
+							<hr>
+							<p class="text-center">여기다 뭐넣을까여</p>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+
+		</div>
+     
+     
+     
+     
+     </div>
+     
+     
 		<!--tab부분-->
 		<div class="py-5 mt-10">
 			<div class="container">
 
 				<div class="panel-heading">
-					<ul class="nav nav-tabs nav-justified">
-						<li class="nav-item"><a href="#tabone"
+					<ul class="nav nav-tabs nav-justified" id="tabs">
+						<li class="nav-item px-0" id="tab1"><a href="#tabone"
 							class="active nav-link" data-toggle="tab" data-target="#tabone"
 							role="presentation">내후기글</a></li>
-						<li class="nav-item"><a href="#tabtwo" data-toggle="tab"
+						<li class="nav-item px-0" id="tab2"><a href="#tabtwo" class="nav-link" data-toggle="tab"
 							data-target="#tabtwo" role="presentation">내계획</a></li>
-						<li class="nav-item"><a href="#tabthree" data-toggle="tab"
-							data-target="#tabthree" role="presentation">Tab 3</a></li>
-						<li class="nav-item"><a href="#tabfour" data-toggle="tab"
+						<li class="nav-item px-0" id="tab3"><a href="#tabthree" class="nav-link" data-toggle="tab"
+							data-target="#tabthree" role="presentation">좋아요누른글</a></li>
+						<li class="nav-item px-0" id="tab4"><a href="#tabfour" class="nav-link" data-toggle="tab"
 							data-target="#tabfour" role="presentation">Tab 4</a></li>
 					</ul>
 				</div>
 				<div class="pannel-body">
 
 					<div class="row tab-content ">
-
+				
 						<!-- tabone -->
 						<div class="col tab-pane active" id="tabone" role="tabpanel">
 							<div class="row">
-								<c:forEach var="mrr" items="${MyReviewResult}">
+								<c:forEach var="mrr" items="${MyReviewResult}">				
 									<div class="item col-md-3 col-sm-3 w-25">
 										<div class="card">
 											<div class="card-header">
@@ -303,15 +382,13 @@ ul {li { display:inline;
 										</div>
 									</div>
 								</c:forEach>
-
-
 							</div>
 						</div>
 
 						<!-- tabtwo -->
 
 
-						<div class="col tab-pane fade" id="tabtwo" role="tabpanel">
+						<div class="col tab-pane" id="tabtwo" role="tabpanel">
 							<div class="row">
 
 								<c:forEach var="mpr" items="${MyPlanResult}">
@@ -337,7 +414,7 @@ ul {li { display:inline;
 						</div>
 
 						<!-- tabthree -->
-						<div class="col tab-pane fade" id="tabthree" role="tabpanel">
+						<div class="col tab-pane" id="tabthree" role="tabpanel">
 							<div class="row mt-2 mx-0">
 
 								<c:forEach var="item" items="${flist}">
@@ -370,7 +447,7 @@ ul {li { display:inline;
 
 
 						<!-- tabfour -->
-						<div class="col tab-pane fade" id="tabfour" role="tabpanel">
+						<div class="col tab-pane" id="tabfour" role="tabpanel">
 							<div class="row">
 
 
@@ -463,63 +540,7 @@ ul {li { display:inline;
 		$("#searchbtn").click(function() {
 			location.href = "mypage.do?search=" + $("#search").val();
 		})
-		/*슬라이드*/
-		/* $('.item').slick({
-		 dots: true,
-		 infinite: true,
-		 autoplay: true,
-		 variableWidth : true,
-		 autoplaySpeed: 1000,
-		 speed: 300,
-		 slidesToShow: 3,
-		 slidesToScroll : 1,
-		 adaptiveHeight: true
-		 }); */
 
-		/* 	$('.item').slick({
-		 dots: true,
-		 infinite: false,
-		 speed: 300,
-		 slidesToShow: 4,
-		 slidesToScroll: 4,
-		 responsive: [
-		 {
-		 breakpoint: 1024,
-		 settings: {
-		 slidesToShow: 3,
-		 slidesToScroll: 3,
-		 infinite: true,
-		 dots: true
-		 }
-		 },
-		 {
-		 breakpoint: 600,
-		 settings: {
-		 slidesToShow: 2,
-		 slidesToScroll: 2
-		 }
-		 },
-		 {
-		 breakpoint: 480,
-		 settings: {
-		 slidesToShow: 1,
-		 slidesToScroll: 1
-		 }
-		 }
-		 // You can unslick at a given breakpoint now by adding:
-		 // settings: "unslick"
-		 // instead of a settings object
-		 ]
-		 }); */
-
-		/* 정보수정버튼 */
-		$(function() {
-			$("#box-container").hide();
-			$("#editlink").on("click", function() {
-				$("#box-container").toggle("fast");
-			});
-
-		})
 		      $(function() {
 		            $("#img_file").on('change', function(){
 		            	var fileName =$("#img_file").val();
@@ -529,7 +550,7 @@ ul {li { display:inline;
 				        if (extFile=="jpg" || extFile=="jpeg" || extFile=="png"){
 		            	readURL(this);
 				        }else{
-				            alert("프로필 사진은 이미지만 입력 가능합니다");
+				            alert("프로필 사진은 이미지 파일만 입력 가능합니다");
 				        } 
 		            	
 		            });
@@ -552,19 +573,14 @@ ul {li { display:inline;
 				function() {
 					/* location.href="toPwCheck.do"; */
 					window.open("toPwCheck.do", "_blank",
-							"width=500, height=300, scrollbars=no");
+							"width=500, height=300, scrollbars=no, left=500, top=300");
 				})
-		$("#updateEmail").click(
-				function() {
-					/* location.href="toUpdateEmail.do"; */
-					window.open("toUpdateEmail.do", "_blank",
-							"width=500, height=300, scrollbars=no");
-				})
-		$("#editPw").click(
-				function() {
-					window.open("toPwTrueCheck.do", "_blank",
-							"width=500, height=300, scrollbars=no");
-				})
+
+				$("#editInfoNK").click(
+			function(){
+				window.open("toEditInfoNK.do","_blank","width=1000, height=800, scrollbars=no, left=500, top=100");
+			})
+		
 	</script>
 </body>
 

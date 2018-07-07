@@ -34,7 +34,7 @@
 				</script>
 			</c:if>
 
-			<div class="container center-align col-md-12">
+			<div class="container center-align col-md-11">
 				<div class="row" id="wrapper">
 					<div class="overlay"></div>
 					<!-- Sidebar -->
@@ -49,7 +49,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li class="dropdown-header">Pages</li>
 								<li><a href="admin_free.ad">FreeBoard</a></li>
-								<li><a href="admin_review.ad">Share_Review</a></li>
+								<li><a href="admin_plan.ad">Share_Plan</a></li>
 							</ul></li>
 						<li><a href="javascript:msg()">Contact</a></li>
 					</ul>
@@ -64,7 +64,7 @@
 
 						<div class="container">
 							<div class="row">
-								<div class="input-group mt-2 col-md-6 col-md-offset-4 "
+								<div class="input-group mt-2 col-md-6 col-md-offset-3 "
 									id="search_area">
 									<input type="text" class="form-control" placeholder="회원 닉네임 검색"
 										aria-label="reply" aria-describedby="basic-addon2" id="search">
@@ -78,54 +78,54 @@
 								
 							</div>
 
-							<table class="table col-md-12 col-md-offset-1 mt-2" id="members">
+							<table class="table col-md-12" id="members">
 								<thead>
 									<tr>
-										<th class="col-md-12 text-center" style="font-size:20px;" colspan=7>회원 관리</th>
+										<th class="text-center col-md-12">회원 관리</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr class="text-center">
-										<th style="width: 7%" class="">번호</th>
+								<tbody class="text-center col-md-12">
+									<tr>
+										<th style="width: 5%" class="text-center">번호</th>
 										<th style="width: 20%" class="text-center">아이디</th>
 										<th style="width: 20%" class="text-center">닉네임</th>
-										<th style="width: 26%" class="text-center">이메일</th>
+										<th style="width: 27%" class="text-center">이메일</th>
 										<th style="width: 10%" class="text-center">가입경로</th>
 										<th style="width: 10%" class="text-center">가입날짜</th>
-										<th style="width: 7%" class="text-center">차단여부</th>
+										<th style="width: 8%" class="text-center">차단여부</th>
 									</tr>
 
 									<c:forEach var="m" items="${memberList}" varStatus="status">
 										<tr>
 											<th name="here">${m.seq}</th>
-											<td class="text-center">${m.userid}</td>
+											<td>${m.userid}</td>
 											<c:choose>
 												<c:when test="${m.part eq 'home'}">
-													<td class="text-center">${m.nickname}</td>
+													<td>${m.nickname}</td>
 												</c:when>
 												<c:when test="${m.part eq 'naver'}">
-													<td class="text-center">${m.naver_nickname}</td>
+													<td>${m.naver_nickname}</td>
 												</c:when>
 												<c:when test="${m.part eq 'kakao'}">
-													<td class="text-center">${m.kakao_nickname}</td>
+													<td>${m.kakao_nickname}</td>
 												</c:when>
 											</c:choose>
 
 											<c:choose>
 												<c:when test="${m.part eq 'home'}">
-													<td class="text-center">${m.email}</td>
+													<td>${m.email}</td>
 												</c:when>
 												<c:when test="${m.part eq 'naver'}">
-													<td class="text-center">${m.naver_email}</td>
+													<td>${m.naver_email}</td>
 												</c:when>
 												<c:when test="${m.part eq 'kakao'}">
-													<td class="text-center">${m.kakao_email}</td>
+													<td>${m.kakao_email}</td>
 												</c:when>
 											</c:choose>
 
-											<td class="text-center">${m.part}</td>
-											<td class="text-center">${m.create_date}</td>
-											<td class="vertical-align-middle text-center"><c:choose>
+											<td>${m.part}</td>
+											<td>${m.create_date}</td>
+											<td class="vertical-align-middle"><c:choose>
 													<c:when test="${m.block =='n' || m.block == 'x'}">
 														<div class="TriSea-technologies-Switch">
 															<input id="TriSeaDanger${status.index}" name="TriSea1" type="checkbox" /> 
