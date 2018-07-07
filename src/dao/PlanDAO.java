@@ -537,7 +537,7 @@ public class PlanDAO {
 		rs.close();
 		pstmt.close();
 		con.close();
-
+		System.out.println(result);
 		return result;
 	}
 
@@ -896,7 +896,7 @@ public class PlanDAO {
 		String sql;
 		PreparedStatement pstat = null;
 
-		sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate,'YYYY/MM/DD'), to_char(plan_enddate,'YYYY/MM/DD'), row_number() over(order by plan_seq desc) as num from plan where plan_writer=?) where num between ? and ?";
+		sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate,'YYYY/MM/DD'), to_char(plan_enddate,'YYYY/MM/DD'), row_number() over(order by plan_seq desc) as num from plan where plan_writer=? and plan_check='y') where num between ? and ?";
 		pstat = con.prepareStatement(sql);
 		pstat.setInt(1, seq);
 		pstat.setInt(2, startNum);

@@ -165,19 +165,25 @@
 
 .schedule>.nav-tabs {
 	width: 700px;
+	height: 47px;
+	max-height: 100px;
+	overflow: scroll_y;
 	float: left;
 	border: none;
 	padding-bottom: 6px;
 }
 
+
+
 #planCommentList {
 	min-height:	150px;
-
 }
 
 #comment-table {
 	margin-bottom: 50px;
 }
+
+
 </style>
 
 <script>

@@ -1,12 +1,12 @@
 
 $(document).ready(function(){
 	
-	$("#user_idchek").keydown(function(){
+	$("#user_idcheck").keydown(function(){
 		var str = $("#user_idchek").val();
 	
 		if(blankid(str)){
 			var regex = /\s/g;
-			document.getElementById("user_idchek").value =document.getElementById("user_idchek").value.replace(regex,"");
+			document.getElementById("user_idcheck").value =document.getElementById("user_idcheck").value.replace(regex,"");
 		};
 		
 		function blankid(str){
@@ -17,10 +17,10 @@ $(document).ready(function(){
 	
 	
 	
-	document.getElementById("user_idchek").onblur= function(){
-		var str = document.getElementById("user_idchek").value;
+	document.getElementById("user_idcheck").onblur= function(){
+		var str = document.getElementById("user_idcheck").value;
 		if(!idcheck(str)){
-			document.getElementById("user_idchek").value ="";
+			document.getElementById("user_idcheck").value ="";
 			$("#label-text").html("id 형식이  맞지않습니다");								
 		};		
 		

@@ -178,7 +178,7 @@
 					<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 						<li class="timeline-item">
 							<div class="timeline-badge">
-								<i class="dayCount">${day}</i>
+								<i class="dayCount">${day}일차</i>
 							</div>
 							<c:if test="${day eq param.day }">
 							<div class="timeline-panel">
@@ -460,4 +460,19 @@
 			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
 	</c:choose>	
+<script>
+$("#schedule-boarder").on('keydown','input[id^=money]',function() {
+	var str = $(this).val();
+	
+	if(numcheck(str)) {
+		var regex = /[^0-9]/g;
+		$(this).val($(this).val().replace(regex,""));
+	}
+	
+	function numcheck(str) {
+		var regex = /[^0-9]/g;
+		return regex.test(str);
+	}
+}) 
+</script>	
 </html>

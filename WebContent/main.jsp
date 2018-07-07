@@ -155,7 +155,7 @@ console.log(${sessionScope.user.seq !=null});</script>
 
 		<!-- 메인  트래블메이커 안내 div 시작-->
 		<div class="container-fluid text-center"
-			style="height: 300px; background-color: rgb(241, 243, 245); padding: 40px; margin-top: -140px;">
+			style="height: 300px; background-color: #F2F2F2; padding: 40px; margin-top: -140px;">
 			<div class="d-flex">
 				<div class="p-2 flex-fill">
 					<i class="fas fa-map fa-7x" style="color: gray"></i>
@@ -191,7 +191,7 @@ console.log(${sessionScope.user.seq !=null});</script>
 							style="width: 400px; max-width: 400px; min-width: 400px; max-height: 250px; min-height: 250px; height: 250px; padding: 5px;">
 							<div class="card col-md-12 col-sm-12 w-100"
 								style="height: 100%; padding: 0px;">
-								<div class="card-header">사진</div>
+								<div class="card-header" style="background-colog:#FAFAFA;">사진</div>
 								<div class="card-body">
 									<a href="planArticle.plan?plan_seq=${tmp.plan_seq}"
 										style="text-decoration: none; padding: 0px;"><h4

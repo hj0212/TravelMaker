@@ -5,21 +5,18 @@ $(document).ready(
 			var mm = minDate.getDate() - 1;
 			var dd = maxDate.getDate() + 62;
 			minDate.setDate(mm);
-			maxDate.setDate(dd);
 			$("#datepicker").datepicker({
 				uiLibrary : 'bootstrap4',
 				format : 'yyyy-mm-dd',
 				language : "ko",
-				minDate : minDate,
-				maxDate : maxDate,
+				minDate : minDate
 			});
 			$("#datepicker-end").datepicker({
 				uiLibrary : 'bootstrap4',
 				format : 'yyyy-mm-dd',
 				language : "ko",
 				constrainInput : true,
-				minDate : minDate,
-				maxDate : maxDate,
+				minDate : minDate
 			});
 			var todate = "";
 			var enddate = "";
