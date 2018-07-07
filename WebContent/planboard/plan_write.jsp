@@ -473,6 +473,11 @@ $("#schedule-boarder").on('keydown','input[id^=money]',function() {
 		var regex = /[^0-9]/g;
 		return regex.test(str);
 	}
-}) 
+});
+$("#searchlocation").keydown(function(key) {	
+	$("#searchbtn").trigger('click');
+});
+
+
 </script>	
 </html>

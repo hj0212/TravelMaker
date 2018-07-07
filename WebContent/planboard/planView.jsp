@@ -167,7 +167,7 @@
 	width: 700px;
 	height: 47px;
 	max-height: 100px;
-	overflow: scroll_y;
+	overflow: auto;
 	float: left;
 	border: none;
 	padding-bottom: 6px;

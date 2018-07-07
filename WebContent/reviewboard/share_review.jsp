@@ -125,11 +125,9 @@
 			</div>
 		</div>
 	</div>
-	<c:choose>
-		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="../include/multiChat.jsp"%>
-		</c:when>
-	</c:choose>
+	
+	<%@include file="../footer1.jsp"%>
+	
 	<script>
 		$("#searchbtn").click(function() {
 			location.href = "reviewboard.bo?search=" + $("#search").val();
@@ -140,4 +138,9 @@
 		})
 	</script>
 </body>
+<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>
 </html>
