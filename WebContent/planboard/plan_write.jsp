@@ -460,4 +460,23 @@
 			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
 	</c:choose>	
+<script>
+	$("#schedule-boarder").on('keypress', 'input[id^=money]', function() {
+		console.log("입력");
+		
+		
+		/* var str = $(this).val();
+		console.log(str);
+		if(numcheck(str)) {
+			var regex = /^[0-9]/g;
+			$(this).val($(this).val().replace(regex, ""));
+		}
+		
+		function numcheck(str) {
+			var regex = /^[0-9]/g;
+			return regex.test(str);
+		} */
+		
+	})
+</script>	
 </html>

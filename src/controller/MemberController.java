@@ -195,8 +195,8 @@ public class MemberController extends HttpServlet {
 					request.setAttribute("nickname", mdto.getKakao_nickname());
 					request.setAttribute("email", mdto.getKakao_email());
 				}
-				request.getSession().setAttribute("file_name", mdto.getPhoto_system_file_name());
-				System.out.println(mdto.getPhoto_system_file_name());
+				request.getSession().setAttribute("file_name", "/TravelMaker/file/"+mdto.getPhoto_system_file_name());
+				System.out.println(request.getSession().getAttribute("file_name"));
 			/*리뷰와 망가진 네비*/
 				
 				/*List<ReviewDTO> MyReviewResult = rdao.getMyReview(user.getSeq());
@@ -426,7 +426,7 @@ public class MemberController extends HttpServlet {
 				String file_name =user.getPhoto_system_file_name();
 				String part = user.getPart();
 				user = mdao.newMemberInfo(user_seq, part);
-				request.getSession().setAttribute("file_name",file_name);
+				request.getSession().setAttribute("file_name",uploadPath);
 				request.setAttribute("user_seq", user_seq);
 
 				request.setAttribute("uploadPath", uploadPath);
