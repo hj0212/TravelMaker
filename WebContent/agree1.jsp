@@ -28,11 +28,9 @@ text-align:center;
 }
 
 .container {
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 15px;
-	padding-right: 15px;
+	margin: auto;
 	width: 970px;	
+	margin-top:-140px;
 }
 textarea {
 	width: 600px;
@@ -67,7 +65,7 @@ h5, .h5{
 		</c:otherwise>
 	</c:choose>
 
-	<div class="container" style="padding-top : 140px;">
+	<div class="container">
 
 		<h3 class="titletypho">이용약관</h3>		
 		<textarea style="resize: none;" readonly> 제1조(목적) 

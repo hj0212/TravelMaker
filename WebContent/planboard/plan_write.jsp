@@ -165,7 +165,7 @@
 			</div>
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
-				name="plantitle" value="${plan_title}" readonly>
+				name="plantitle" value="${plan_title}">
 			<c:if test="${plan_state eq false}">
 			<button type="button" class="btn btn-outline-primary" id="savebtn">임시 저장</button>
 			</c:if>
@@ -178,7 +178,7 @@
 					<c:forEach var="day" begin="1" end="${plan_period}" step="1">
 						<li class="timeline-item">
 							<div class="timeline-badge">
-								<i class="dayCount">${day}</i>
+								<i class="dayCount">${day}일차</i>
 							</div>
 							<c:if test="${day eq param.day }">
 							<div class="timeline-panel">
@@ -325,6 +325,7 @@
 				<input type="hidden" name="schedule_seq" value="">
 				<input type="hidden" name="delseq" value="">
 				<input type="hidden" name="delbudseq" value="">
+				<input type="hidden" name="title" value="">
 				<table class="table table-bordered" id="schedule-boarder">
 					<thead>
 					</thead>
@@ -384,7 +385,7 @@
 								<div class="input-group mb-1">
 									<input type="text" class="form-control" id="ex1"
 										placeholder="예) 입장료"> <input type="text"
-										class="form-control" id="money1" placeholder="10000">
+										class="form-control" id="money1" placeholder="예) 10000">
 										<input type="hidden" class="budget_seq">
 									<div class="input-group-prepend">
 										<span class="input-group-text" >원</span>
@@ -460,4 +461,133 @@
 			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
 	</c:choose>	
+<script>
+$("#schedule-boarder").on('keydown','input[id^=money]',function() {
+	var str = $(this).val();
+	
+	if(numcheck(str)) {
+		var regex = /[^0-9]/g;
+		$(this).val($(this).val().replace(regex,""));
+	}
+	
+	function numcheck(str) {
+		var regex = /[^0-9]/g;
+		return regex.test(str);
+	}
+});
+$("#searchlocation").keydown(function(key) {
+	if (key.keyCode == 13) {
+		$("#searchbtn").trigger('click');
+	}
+});
+
+timecheck = true;
+$("#schedule-boarder").on('blur','#end-time',function() {
+	starttime = $("#start-time").val().split(":");
+	endtime = $("#end-time").val().split(":");
+	
+	if(starttime[0] > endtime[0]) {
+		alert("역시작시간이 종료시간보다 늦을 수 없습니다.");
+		$("#start-time").val("");
+		timecheck = false;
+	} else if(starttime[0] == endtime[0]) {
+		if(starttime[1] > endtime[1]) {
+			$("#start-time").val("");
+			alert("시작시간이 종료시간보다 늦을 수 없습니다.");
+			timecheck = false;
+		}
+	}
+})
+
+var schedulecount = 1;
+$("#success-primary").click(function() {
+	con = "";
+	if ($("#schedule-plan>tbody>.active>th").html() != "") {
+		con = "일정을 수정하시겠습니까?";
+		$("#scheduleform").attr("action","modiSchedule.plan");
+
+	} else {
+		con = "일정을 추가하시겠습니까?";
+		$("#scheduleform").attr("action","addSchedule.plan");
+	}
+
+	starttime = $("#start-time").val();
+	endtime = $("#end-time").val();
+	place = $("#place").val();
+	mapx = $("#mapx").val();
+	mapy = $("#mapy").val()
+	schedule = $("#schedule").val();
+
+	var budgetn = $("#schedule-boarder>tbody>tr>td.budget>div.input-group").length;
+	budget_seq = "";
+	budget_plan = "";
+	budget_amount = "";
+	budgetcheck = true;
+	for(var i = 0; i < budgetn; i++) {
+		if($("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input[id^='ex']").val() != "" && $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input[id^='money']").val()!="") {
+		budget_seq += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input[id^='budget']").val()
+		budget_seq += "/";
+		budget_plan += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input[id^='ex']").val();
+		budget_plan += "/";
+		budget_amount += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input[id^='money']").val();
+		budget_amount += "/";
+		} else {
+			alert("예산명과 금액을 모두 입력해 주세요.");
+			budgetcheck = false;
+			break;
+		}
+	}
+	/*console.log("seq:"+budget_seq+",plan:"+budget_plan+",amount:"+budget_amount);*/
+	$("#schedule-boarder>tbody>tr>.budget>input[name='budget_seq']").val(budget_seq);
+	$("#schedule-boarder>tbody>tr>.budget>input[name='budget_plan']").val(budget_plan);
+	$("#schedule-boarder>tbody>tr>.budget>input[name='budget_amount']").val(budget_amount);
+
+	reference = $("#reference").val();
+	
+	title = $("#title-board").val();
+	if("${plan_title}" != title) {
+		$("input[name='title']").val(title);
+	}
+	
+	if (budgetcheck) { 
+	if ((starttime == "" || endtime == "") && timecheck) {
+		alert("시간을정해주세요");
+	} else if (place == "") {
+		alert("장소를정해주세요");
+	} else if (schedule == "") {
+		alert("일정을적어주세요");
+	} else if (confirm(con)) {
+	
+		$("#scheduleform").submit(); 
+		var contents = '';
+		contents += '<tr class="clickable-row new active"><th style="height:50px;"></th><td name="place"></td><td name="schedule"></td>';
+		contents += '<td name="money"></td>';
+		contents += '<td name="reference"></td>';
+		contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button><input type="hidden" name="schedule_seq" value="0"></td>';
+		contents += '</tr>';
+
+		if ($("#schedule-plan>tbody>.active>th").length == 0) { // 빈칸 = 마지막줄
+			$("#schedule-plan>tbody>tr").removeClass('new');
+			$("#schedule-plan>tbody>tr").removeClass('active');
+			$("#schedule-plan>tbody:last").append(contents);
+			$("#schedule-plan td:last-child").hide();
+
+		} else { // 빈칸x = 마지막줄x
+			var cursor = "#schedule-plan>tbody>.active";
+			$("#schedule-plan>tbody>tr").removeClass('active');
+			$("#schedule-plan>tbody>.new").addClass('active');
+		}
+
+		$("#start-time").val("");
+		$("#end-time").val("");
+		$("#place").val("");
+		$("#schedule").val("");
+		$("#money").val("");
+		$("#reference").val("");
+	}	
+	}
+});
+
+
+</script>	
 </html>

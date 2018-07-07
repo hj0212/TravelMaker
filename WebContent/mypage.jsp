@@ -34,6 +34,9 @@
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
 <style>
+body {
+	background-color:#fafafa;
+}
 * {
 	color: black;
 }
@@ -243,7 +246,11 @@ background-color:primary;
 	margin-bottom: 60px;
 }
 
-
+.card-body-contents{
+width:100%;
+height:200px;
+overflow:hidden;
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -285,14 +292,15 @@ background-color:primary;
 						<!--프로필 이미지 업로드-->
 						<div class="col-sm-12 col-lg-5 py-3 ml-3 align-center"
 							id="profile-con" style="width: 344.59px; box-sizing: border-box;">
-							<form action="profileImg.do" method="post"
-								enctype="multipart/form-data" id="profileImgForm">
+							<form action="profileImg.do" method="post" enctype="multipart/form-data" id="profileImgForm">
+								<script>console.log("${sessionScope.part} : ${sessionScope.file_name}")</script>
+								
 								<button id="img_button" type="button" class="d-inline"
 									title="여기를 누르면 이미지를 변경할 수 있습니다."
 									style="max-height: 250px; height: 250px; width: 300px; max-width: 344.59px">
-									<img for="img_file" id="profile_img"
-										src="/TravelMaker/file/${file_name }"
+											<img for="img_file" id="profile_img" src="${sessionScope.file_name}"
 										alt="여기를 눌러 프로필 사진을 등록해보세요!" style="width: 100%; height: 100%">
+									
 								</button>
 								<div class="align-items-center">
 									<input type="file" id="img_file" name="file"
@@ -346,10 +354,11 @@ background-color:primary;
 				</div>
 			</c:if>
 		</div>
-		<c:forEach var="item" items="${planList}">
+		
 			<h1 class="divLine">작성중인 Plan</h1>
 			<hr />
 			<div class="row mt-2" id="tempplanarea">
+			<c:forEach var="item" items="${planList}">
 				<div class="item col-md-3 mb-3">
 					<div class="card text-center">
 						<a href="selectSchedule.plan?plan=${item.plan_seq}&day=1&create=f"
@@ -367,8 +376,9 @@ background-color:primary;
 						</div>
 					</div>
 				</div>
+				</c:forEach>
 			</div>
-		</c:forEach>
+		
 
 		<div class="panel-heading">
 			<ul class="nav nav-tabs nav-justified" id="tabs">
@@ -386,6 +396,7 @@ background-color:primary;
 
 		<div class="pannel-body">
 			<div class="row tab-content">
+			
 				<!-- tabone -->
 				<div class="col tab-pane" id="tabone" role="tabpanel">
 					<div class="row">
@@ -409,12 +420,11 @@ background-color:primary;
 											<h6>${mrr.review_title}</h6>
 										</a>
 									</div>
-									<img class="card-img-top float-left rounded"
-										src="Charlie-Chaplin-PNG-Image-17681.png" alt="Card image cap">
 									<div class="card-body">
-										<p>${mrr.review_viewcount}</p>
-										<h6 class="text-muted">${mrr.review_contents}</h6>
-										<p>${mrr.review_writedate}</p>
+										<h6 class="card-body-contents text-muted">${mrr.review_contents}</h6>
+										<hr/>
+									<div style="text-align:right"><i class="far fa-eye"></i><span>${mrr.review_viewcount}</span></div>
+										<div>${mrr.review_writedate}</div>
 									</div>
 								</div>
 							</div>
@@ -429,9 +439,7 @@ background-color:primary;
 				</div>
 
 				<!-- tabtwo -->
-
-
-				<div class="col tab-pane active" id="tabtwo" role="tabpanel">
+					<div class="col tab-pane active" id="tabtwo" role="tabpanel">
 					<div class="row">
 
 						<c:if test="${empty MyPlanResult}">
@@ -476,7 +484,7 @@ background-color:primary;
 							<div class="noArticle col-md-12 w-100 h-100 py-5">
 								<div style="height: 300px;">
 									<h3 style="margin: 50px;">표시할 내용이 없습니다</h3>
-									<small>좋아요를 눌러보세요...ㅜ</small>
+									<small>좋아요를 눌러주세요...ㅜ</small>
 								</div>
 							</div>
 						</c:if>

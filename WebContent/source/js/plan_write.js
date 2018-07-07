@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	
 
 	$("#savebtn").click(function() {
 		if(confirm("입력된 일정을 저장하고 나가시겠습니까?")) {
@@ -23,7 +22,6 @@ $(document).ready(function() {
 		} else {
 			$("#scheduleform>input[name='delbudseq']").val(delbudseq + $(this).siblings(".budget_seq").val() + "/");
 		}
-		console.log($("#scheduleform>input[name='delbudseq']").val());
 		$(this).parent().parent().remove();
 	}));
 
@@ -61,81 +59,7 @@ $(document).ready(function() {
 		location.href = "deleteSchedule.plan?plan=${param.plan}&day=${param.day}&delseq=" + $(this).siblings().val();
 	});		
 
-	var schedulecount = 1;
-	$("#success-primary").click(function() {
-		console.log("active:"+ $("#schedule-plan>tbody>.active>th").html());
-		con = "";
-		if ($("#schedule-plan>tbody>.active>th").html() != "") {
-			con = "일정을 수정하시겠습니까?";
-			$("#scheduleform").attr("action","modiSchedule.plan");
-
-		} else {
-			con = "일정을 추가하시겠습니까?";
-			$("#scheduleform").attr("action","addSchedule.plan");
-		}
-
-		starttime = $("#start-time").val();
-		endtime = $("#end-time").val();
-		place = $("#place").val();
-		mapx = $("#mapx").val();
-		mapy = $("#mapy").val()
-		schedule = $("#schedule").val();
-
-		var budgetn = $("#schedule-boarder>tbody>tr>td.budget>div.input-group").length;
-		console.log("등록 예산 갯수" + budgetn);
-		budget_seq = "";
-		budget_plan = "";
-		budget_amount = "";
-		for(var i = 0; i < budgetn; i++) {
-			budget_seq += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input[id^='budget']").val()
-			budget_seq += "/";
-			budget_plan += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input[id^='ex']").val();
-			budget_plan += "/";
-			budget_amount += $("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(i+1)+") input[id^='money']").val();
-			budget_amount += "/";
-		}
-		console.log("seq:"+budget_seq+",plan:"+budget_plan+",amount:"+budget_amount);
-		$("#schedule-boarder>tbody>tr>.budget>input[name='budget_seq']").val(budget_seq);
-		$("#schedule-boarder>tbody>tr>.budget>input[name='budget_plan']").val(budget_plan);
-		$("#schedule-boarder>tbody>tr>.budget>input[name='budget_amount']").val(budget_amount);
-
-		reference = $("#reference").val();
-
-		if (starttime == "" || endtime == "") {
-			alert("시간을정해주세요");
-		} else if (place == "") {
-			alert("장소를정해주세요");
-		} else if (schedule == "") {
-			alert("일정을적어주세요");
-		} else if (confirm(con)) {
-			$("#scheduleform").submit(); 
-			var contents = '';
-			contents += '<tr class="clickable-row new active"><th style="height:50px;"></th><td name="place"></td><td name="schedule"></td>';
-			contents += '<td name="money"></td>';
-			contents += '<td name="reference"></td>';
-			contents += '<td><button style="float:left;border:none"type="button"class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button><input type="hidden" name="schedule_seq" value="0"></td>';
-			contents += '</tr>';
-
-			if ($("#schedule-plan>tbody>.active>th").length == 0) { // 빈칸 = 마지막줄
-				$("#schedule-plan>tbody>tr").removeClass('new');
-				$("#schedule-plan>tbody>tr").removeClass('active');
-				$("#schedule-plan>tbody:last").append(contents);
-				$("#schedule-plan td:last-child").hide();
-
-			} else { // 빈칸x = 마지막줄x
-				var cursor = "#schedule-plan>tbody>.active";
-				$("#schedule-plan>tbody>tr").removeClass('active');
-				$("#schedule-plan>tbody>.new").addClass('active');
-			}
-
-			$("#start-time").val("");
-			$("#end-time").val("");
-			$("#place").val("");
-			$("#schedule").val("");
-			$("#money").val("");
-			$("#reference").val("");
-		}				
-	});
+	
 
 	isFirst = true;
 	$("#schedule-plan").on('click','.clickable-row',function(event) {
@@ -166,7 +90,6 @@ $(document).ready(function() {
 			var budget_seq = $("#schedule-plan>tbody>.active>td[name='money']>div:nth-of-type("+(j+1)+")>input").val();
 			var budget_plan = $("#schedule-plan>tbody>.active>td[name='money']>div:nth-of-type("+(j+1)+")>div.budget_plan").html().split(":")[0];
 			var budget_amount = $("#schedule-plan>tbody>.active>td[name='money']>div:nth-of-type("+(j+1)+")>div.budget_amount").html();
-			console.log(budget_seq);
 			$("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(j+1)+") input[id^='budget']").val(budget_seq);
 			$("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(j+1)+") input[id^='ex']").val(budget_plan);
 			$("#schedule-boarder>tbody>tr>.budget div:nth-of-type("+(j+1)+") input[id^='money']").val(budget_amount);	

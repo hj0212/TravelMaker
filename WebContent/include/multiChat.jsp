@@ -43,7 +43,6 @@
 					if($("#livemsg").val() == ""){
 						
 					}else{
-						
 						if("${sessionScope.img}" !=""){
 							file="${sessionScope.img}";
 						}else {		
@@ -57,7 +56,6 @@
 						nickname : nickname,
 						msg : msg,
 						file : file
-						
 					}));
 					$("#livemsg").val("");
 					};

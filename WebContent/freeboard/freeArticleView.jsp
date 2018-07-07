@@ -89,6 +89,12 @@ tr {
 #reportbtn {
 	float: left;
 }
+#commentList {
+	min-height:	150px;
+}
+#comment-table {
+	margin-bottom: 50px;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
@@ -208,7 +214,7 @@ $(document).ready(function(){
 				</div>
 			</form>
 
-
+			<div id="commentList">
 			<table class="table" id="comment-table">
 				<thead id="comment-thead">
 					<tr>
@@ -247,7 +253,7 @@ $(document).ready(function(){
 				</tbody>
 
 			</table>
-
+		</div>
       </div>
    </div>
    <%@include file="../footer1.jsp"%>
