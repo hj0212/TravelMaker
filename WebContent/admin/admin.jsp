@@ -49,7 +49,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li class="dropdown-header">Pages</li>
 								<li><a href="admin_free.ad">FreeBoard</a></li>
-								<li><a href="admin_plan.ad">Share_Plan</a></li>
+								<li><a href="admin_review.ad">Share_Review</a></li>
 							</ul></li>
 						<li><a href="javascript:msg()">Contact</a></li>
 					</ul>
