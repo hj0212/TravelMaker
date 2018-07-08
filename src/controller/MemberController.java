@@ -394,6 +394,7 @@ public class MemberController extends HttpServlet {
 				isForward = true;
 				dst = "sendtmpPwResult";
 			}else if(command.equals("/profileImg.do")) {
+				try {
 				// 이미지를 업로드할 경로
 				String uploadPath = request.getServletContext().getRealPath("file");
 				
@@ -422,7 +423,6 @@ public class MemberController extends HttpServlet {
 				}
 
 				uploadPath = contextPath +"/file/"+ sfileName;
-				System.out.println(uploadPath);
 				MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 				int user_seq = user.getSeq();
 				System.out.println("user_seq :"+user_seq);
@@ -431,7 +431,7 @@ public class MemberController extends HttpServlet {
 				String file_name =user.getPhoto_system_file_name();
 				String part = user.getPart();
 				user = mdao.newMemberInfo(user_seq, part);
-				request.getSession().setAttribute("file_name",uploadPath);
+				request.getSession().setAttribute("file_name",sfileName);
 				request.setAttribute("user_seq", user_seq);
 
 				request.setAttribute("uploadPath", uploadPath);
@@ -439,6 +439,10 @@ public class MemberController extends HttpServlet {
 
 				isForward=true;
 				dst = "mypage.do";
+				} catch(NullPointerException e) {
+					isForward = false;
+					dst="login/newlogin.jsp";
+				}
 			}
 
 			//-----------------------admin.jsp > 모든 회원 리스트보기

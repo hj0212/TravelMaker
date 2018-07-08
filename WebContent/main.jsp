@@ -191,6 +191,9 @@ div {
 .card .profileimg img {
 	width: 120px;
 	height: 120px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
 }
 
 .card .content {

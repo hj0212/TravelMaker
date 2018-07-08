@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <style>
 #container {
-	max-width: 960px;
+	max-width: 940px;
 	margin: 0 auto;
 	margin-top: 150px;
 }
@@ -120,6 +120,9 @@
 .card .profileimg img {
 	width: 120px;
 	height: 120px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
 }
 
 .card .content {
@@ -203,6 +206,27 @@ div.card-body h6 {
 }
 </style>
 <script>
+  $(document).ready(function() {
+    $("#profile_img").attr('src',"/TravelMaker/file/${file_name}");
+    $("#img_button").click(function() {
+      var img_file = $("#img_file").trigger("click");
+      if (img_file) {
+        var selected = $("#profile").text("프로필 사진 등록");
+        if (selected) {
+          $("#profile").click(function() {
+            $("#profileImgForm").submit();
+          });
+        } else {
+          alert("파일을 선택해주세요");
+        };
+      } else {
+        $("#profile").text("");
+      }
+    });
+  });
+ 
+</script>
+ 
 
 	$(document).ready(function() {
 	
