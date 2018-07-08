@@ -78,7 +78,7 @@ public class MemberController extends HttpServlet {
 					}
 				} else {
 					isForward = false;
-					dst="login/login.jsp";
+					dst="login/newlogin.jsp";
 				}
 
 			} else if(command.equals("/join.do")) {
