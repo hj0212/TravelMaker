@@ -88,7 +88,7 @@ a {
 		</c:otherwise>
 	</c:choose>
 	<div class="container">
-	<h1 class="divLine">FreeTalk</h1><h6> : 여행에 관한 이야기를 자유롭게 나눠요</h6>
+	<h1 class="divLine">FreeTalk</h1><h6> : 여행에 관한 이야기를 자유롭게 나눠주세요</h6>
 		<hr/>
 	
 		<div class="row">
