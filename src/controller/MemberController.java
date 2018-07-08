@@ -172,6 +172,7 @@ public class MemberController extends HttpServlet {
 				isForward = true;
 				dst="admin/admin.jsp";
 			}else if(command.equals("/mypage.do")) {
+				try {
 				String part = (String)request.getSession().getAttribute("part");
 				String id = (String)request.getSession().getAttribute("loginId");	
 				MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
@@ -238,7 +239,11 @@ public class MemberController extends HttpServlet {
 				
 				
 				isForward = true;
-				dst="mypage.jsp";
+				dst="newmypage.jsp";
+				} catch(NullPointerException e) {
+					isForward = false;
+					dst="login.do";
+				}
 			}else if(command.equals("/logout.do")) {
 				request.getSession().invalidate();
 
