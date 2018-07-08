@@ -150,7 +150,7 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="../include/otherNavi_login.jsp"%>			
+			<script>location.href = "login.do";</script>		
 		</c:when>
 		<c:otherwise>
 			<%@include file="../include/otherNavi.jsp"%>			

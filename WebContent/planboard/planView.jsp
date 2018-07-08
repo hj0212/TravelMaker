@@ -231,9 +231,7 @@
 <body>
 	<c:choose>
 		<c:when test="${empty sessionScope.user.seq}">
-			<script>
-				location.href = "error.jsp"
-			</script>
+			<script>location.href = "login.do";</script>
 		</c:when>
 		<c:otherwise>
 			<%@include file="../include/otherNavi.jsp"%>

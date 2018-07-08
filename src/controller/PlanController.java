@@ -428,7 +428,7 @@ public class PlanController extends HttpServlet {
 				response.sendRedirect(dst);
 			}
 		}catch(NullPointerException e1) {
-			response.sendRedirect("login/newlogin.jsp");
+			response.sendRedirect("login.do");
 		}catch(Exception e) {e.printStackTrace();}
 
 
