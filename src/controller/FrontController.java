@@ -245,17 +245,22 @@ public class FrontController extends HttpServlet {
 	        		 dst = "numberError.bo";
 	        	 }
 	          }else if(command.equals("/addReviewComment.bo")) {
-	             String comment_text = request.getParameter("comment_text");
-	             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
-	             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-	             int user = dto.getSeq();
-	             
-	             int result = rdao.insertReviewComment(comment_text,user,review_seq);
-	             request.setAttribute("result", result);
-	             request.setAttribute("review_seq", review_seq);
-	  
-	             isForward = true;
-	             dst= "reviewboard/reviewCommentView.jsp";
+	        	  try {
+	 	             String comment_text = request.getParameter("comment_text");
+		             MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+		             int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+		             int user = dto.getSeq();
+		             
+		             int result = rdao.insertReviewComment(comment_text,user,review_seq);
+		             request.setAttribute("result", result);
+		             request.setAttribute("review_seq", review_seq);
+		  
+		             isForward = true;
+		             dst= "reviewboard/reviewCommentView.jsp";
+	        	  }catch(Exception e) {
+	        		  isForward = false;
+	        		  dst = "reviewError.bo";
+	        	  }
 	          }else if(command.equals("/deleteFreeCheck.bo")) {
 	        	  request.setAttribute("articlenum", request.getParameter("articlenum"));
 	        	  dst = "freeboard/deleteCheck.jsp";
@@ -340,6 +345,7 @@ public class FrontController extends HttpServlet {
 	        		  dst = "freeboardError.bo";
 	        	  }
 	          }else if(command.equals("/procFreeComment.bo")) {
+	        	  try {
 		        	  int aritcleseq = Integer.parseInt(request.getParameter("articlenum"));
 		        	  String comment = request.getParameter("comment");
 		        	  MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
@@ -347,6 +353,10 @@ public class FrontController extends HttpServlet {
 		        	  
 		        	  int result = fcdao.insertComment(aritcleseq,comment,writer);
 		        	  dst = "viewFreeArticle.bo?seq="+aritcleseq;
+	        	  }catch(Exception e) {
+	        		  isForward = false;
+	        		  dst = "freeboardError.bo";
+	        	  }
 	          }else if(command.equals("/deleteFreeComment.bo")) {
 	        	  try {
 		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
@@ -367,18 +377,23 @@ public class FrontController extends HttpServlet {
 	        		  isForward = false;
 	        	  }
 	          }else if(command.equals("/deleteReviewComment.bo")) {
-	        	  int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
-	        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
-	        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
-	        	  
-	        	  int comment_writer_seq = user.getSeq();
-	        	  
-	        	  int result = rdao.deleteReviewComment(comment_seq, comment_writer_seq);
-	        	  request.setAttribute("result", result);
-	        	  request.setAttribute("review_seq", review_seq);
-	        	  
-	        	  isForward=true;
-	        	  dst="deleteReviewCommentView.jsp";
+	        	  try {
+		        	  int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
+		        	  int review_seq = Integer.parseInt(request.getParameter("review_seq"));
+		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        	  
+		        	  int comment_writer_seq = user.getSeq();
+		        	  
+		        	  int result = rdao.deleteReviewComment(comment_seq, comment_writer_seq);
+		        	  request.setAttribute("result", result);
+		        	  request.setAttribute("review_seq", review_seq);
+		        	  
+		        	  isForward=true;
+		        	  dst="deleteReviewCommentView.jsp";
+	        	  }catch(Exception e) {
+	        		  dst = "reviewError.bo";
+	        		  isForward = false;
+	        	  }
 	          }else if(command.equals("/writeReview.bo")) {
 	        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
 	        	  
@@ -389,41 +404,46 @@ public class FrontController extends HttpServlet {
 	        		  dst = "reviewboard/writeReviewArticle.jsp";
 	        	  }
 	          }else if(command.equals("/writeReviewArticle.bo")) {
-	        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
-	        	  String title = request.getParameter("title");
-	        	  String contents = request.getParameter("contents");
-	        	  String list = request.getParameter("imageList");
-	        	  String[] imageList = null;
-	        	  
-	        	  if(user == null) {
+	        	  try {
+		        	  MemberDTO user = (MemberDTO)request.getSession().getAttribute("user");
+		        	  String title = request.getParameter("title");
+		        	  String contents = request.getParameter("contents");
+		        	  String list = request.getParameter("imageList");
+		        	  String[] imageList = null;
+		        	  
+		        	  if(user == null) {
+		        		  isForward = false;
+		        		  dst = "reviewlogin.bo";
+		        	  }else {
+		        		  if(contents.length() > 65535) {
+		        			  isForward = false;
+		        			  dst = "reviewboard.bo";
+		        		  }else {
+			  				if((title == null || title == "") && (contents == null || contents == "")) {
+								title = "제목없음";
+							}else if(contents == null || contents == "" ) {
+								contents = "내용없음";
+							}else if(title == null || title == "") {
+								title = "제목없음";
+								contents = "내용없음";
+							}
+			  				
+			  				JSONArray array = (JSONArray)new JSONParser().parse(list);
+			  				
+			  				imageList = new String[array.size()];
+			  				
+			  				for(int i = 0; i < array.size(); i++) {
+			  					imageList[i] = (String)array.get(i);
+			  				}
+			  				
+			  				int result = rdao.insertReview(title, contents, user.getSeq(), imageList);
+			  				
+			  				dst = "reviewProc.bo";
+		        		  }
+		        	  }
+	        	  }catch(Exception e) {
+	        		  dst = "reviewError.bo";
 	        		  isForward = false;
-	        		  dst = "reviewlogin.bo";
-	        	  }else {
-	        		  if(contents.length() > 65535) {
-	        			  isForward = false;
-	        			  dst = "reviewboard.bo";
-	        		  }else {
-		  				if((title == null || title == "") && (contents == null || contents == "")) {
-							title = "제목없음";
-						}else if(contents == null || contents == "" ) {
-							contents = "내용없음";
-						}else if(title == null || title == "") {
-							title = "제목없음";
-							contents = "내용없음";
-						}
-		  				
-		  				JSONArray array = (JSONArray)new JSONParser().parse(list);
-		  				
-		  				imageList = new String[array.size()];
-		  				
-		  				for(int i = 0; i < array.size(); i++) {
-		  					imageList[i] = (String)array.get(i);
-		  				}
-		  				
-		  				int result = rdao.insertReview(title, contents, user.getSeq(), imageList);
-		  				
-		  				dst = "reviewProc.bo";
-	        		  }
 	        	  }
 	          }else if(command.equals("/reviewProc.bo")){
 				try {
