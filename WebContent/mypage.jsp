@@ -482,7 +482,7 @@ overflow:hidden;
 								<div style="height: 300px;">
 									<h3 style="margin: 50px;">표시할 내용이 없습니다</h3>
 									<small>좋아요를 눌러주세요...ㅜ</small>
-								</div>
+								</div>rew
 							</div>
 						</c:if>
 
