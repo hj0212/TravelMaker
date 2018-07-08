@@ -91,7 +91,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("proc", "join");
 				request.setAttribute("joinResult", result);	
 				isForward = true;
-				dst="login/newlogin.jsp";
+				dst="login/login.jsp";
 
 			} else if(command.equals("/navlogin.do")) {				
 				String id = request.getParameter("id");
@@ -130,6 +130,7 @@ public class MemberController extends HttpServlet {
 				dto.setKakao_id(id);
 				dto.setKakao_nickname(name);
 				dto.setKakao_email(email);
+				dto.setPhoto_system_file_name(img);
 
 				MemberDTO user = mdao.addKakaoMember(dto);
 				user.setPart("kakao");
@@ -236,7 +237,6 @@ public class MemberController extends HttpServlet {
 				List<PlanDTO> flist = new ArrayList<>();
 				flist = gdao.favoriteData(seq);
 				request.setAttribute("flist", flist);
-				
 				
 				isForward = true;
 				dst="newmypage.jsp";
@@ -473,7 +473,9 @@ public class MemberController extends HttpServlet {
 			} else {
 				response.sendRedirect(dst);
 			}
-		}catch(Exception e) {e.printStackTrace();}		
+		}catch(NullPointerException e1) {
+			response.sendRedirect("login/newlogin.jsp");
+		}catch(Exception e) {e.printStackTrace();}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

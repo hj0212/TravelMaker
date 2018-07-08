@@ -358,7 +358,14 @@ div.card-body h6 {
 									<img src="source/img/back${Status.count }.png" />
 								</div>
 								<div class="profileimg">
-									<span class="fa"><img src="/TravelMaker/file/${tmp.file_name}"></span>
+									<c:choose>
+										<c:when test="${tmp.part eq 'kakao'}">
+											<span><img src="${tmp.file_name}"></span>
+										</c:when>
+										<c:otherwise>
+											<span><img src="/TravelMaker/file/${tmp.file_name}"></span>
+										</c:otherwise>
+									</c:choose>
 								</div>
 								<div class="card-body">
 									<h4 style="max-height: 29px; overflow: hidden;">${tmp.plan_title }</h4>

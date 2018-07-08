@@ -27,9 +27,9 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link text-white"  href="planboard.plan">Plans</a></li>
+				<li class="nav-item"><a class="nav-link text-white"  href="planboard.plan">Plan</a></li>
 				<li class="nav-item"><a class="nav-link text-white" href="reviewboard.bo">Review</a></li>
-				<li class="nav-item"><a class="nav-link text-white" href="freeboard.bo">Board</a></li>
+				<li class="nav-item"><a class="nav-link text-white" href="freeboard.bo">Free</a></li>
 				<li class="nav-item dropdown" style="min-width: 150px;"><a
 					class="nav-link dropdown-toggle text-white" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"

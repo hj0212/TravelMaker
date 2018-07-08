@@ -207,7 +207,7 @@ div.card-body h6 {
 </style>
 <script>
   $(document).ready(function() {
-    $("#profile_img").attr('src',"/TravelMaker/file/${file_name}");
+    /* $("#profile_img").attr('src',"/TravelMaker/file/${file_name}"); */
     $("#img_button").click(function() {
       var img_file = $("#img_file").trigger("click");
       if (img_file) {
@@ -228,28 +228,6 @@ div.card-body h6 {
 </script>
  
 
-	$(document).ready(function() {
-	
-		$("#profile_img").attr('src',"/WEB_06_18/file/${file_name}");
-		$("#img_button").click(function() {
-			
-			var img_file = $("#img_file").trigger("click");
-			if (img_file) {
-				var selected = $("#profile").text("프로필 사진 등록");
-
-				if (selected) {
-					$("#profile").click(function() {
-						$("#profileImgForm").submit();
-					});
-				} else {
-					alert("파일을 선택해주세요");
-				};
-			} else {
-				$("#profile").text("");
-			}
-		});
-	});
-</script>
 </head>
 <body>
 	<%@include file="../include/otherNavi.jsp"%>
@@ -261,9 +239,19 @@ div.card-body h6 {
 					<button id="img_button" type="button" class="d-inline"
 						title="여기를 누르면 이미지를 변경할 수 있습니다."
 						style="max-height: 250px; height: 250px; width: 280px; max-width: 280px">
-						<img for="img_file" id="profile_img"
+						<script>console.log("${sessionScope.part eq 'kakao'}")</script>
+						<c:choose>
+							<c:when test="${sessionScope.part eq 'kakao'}">
+								<img for="img_file" id="profile_img"
+							src="${sessionScope.file_name}"
+							alt="여기를 눌러 프로필 사진을 등록해보세요!" style="width: 100%; height: 100%">
+							</c:when>
+							<c:otherwise>
+								<img for="img_file" id="profile_img"
 							src="/TravelMaker/file/${sessionScope.file_name}"
 							alt="여기를 눌러 프로필 사진을 등록해보세요!" style="width: 100%; height: 100%">
+							</c:otherwise>
+						</c:choose>
 					</button>
 					<div class="align-items-center">
 						<input type="file" id="img_file" name="file"
@@ -324,7 +312,15 @@ div.card-body h6 {
 									<img src="source/img/back1.png" />
 								</div>
 								<div class="profileimg">
-									<span class="fa"><img src="/TravelMaker/file/${sessionScope.file_name}"></span>
+									<script>console.log("${item.part eq 'kakao'}")</script>
+									<c:choose>
+										<c:when test="${sessionScope.part eq 'kakao'}">
+											<span><img src="${sessionScope.file_name}"></span>
+										</c:when>
+										<c:otherwise>
+											<span><img src="/TravelMaker/file/${sessionScope.file_name}"></span>
+										</c:otherwise>
+									</c:choose>
 								</div>
 								<div class="card-body">
 									<h4 style="max-height: 29px; overflow: hidden;"><a
@@ -384,16 +380,23 @@ div.card-body h6 {
 								style="height: 100%; padding: 0px;">
 								<div class="front">
 								<div class="cover">
-									<img src="source/img/back1.png" />
+									<img src="source/img/back2.png" />
 								</div>
 								<div class="profileimg">
-									<span class="fa"><img src="/TravelMaker/file/${sessionScope.file_name}"></span>
+									<c:choose>
+										<c:when test="${item.part eq 'kakao'}">
+											<span><img src="${item.file_name}"></span>
+										</c:when>
+										<c:otherwise>
+											<span><img src="/TravelMaker/file/${item.file_name}"></span>
+										</c:otherwise>
+									</c:choose>
 								</div>
 								<div class="card-body">
 									<h4 style="max-height: 29px; overflow: hidden;"><a
-										href="selectSchedule.plan?plan=${item.review_seq}&day=1&create=f"
+										href="reviewArticle.bo?review_seq=${item.review_seq}"
 										style="text-decoration: none;">${item.review_title}</a></h4>
-									<h6 class="text-muted">${item.plan_writerN}
+									<h6 class="text-muted">${item.review_writerN}
 										<i class="far fa-eye"></i> <span>${item.review_viewcount}</span>
 									</h6>
 									<h6 class="text-muted">${item.review_writedate}</h6>
@@ -434,7 +437,14 @@ div.card-body h6 {
 									<img src="source/img/back1.png" />
 								</div>
 								<div class="profileimg">
-									<span class="fa"><img src="/TravelMaker/file/${sessionScope.file_name}"></span>
+									<c:choose>
+										<c:when test="${sessionScope.part eq 'kakao'}">
+											<span><img src="${item.file_name}"></span>
+										</c:when>
+										<c:otherwise>
+											<span><img src="/TravelMaker/file/${item.file_name}"></span>
+										</c:otherwise>
+									</c:choose>
 								</div>
 								<div class="card-body">
 									<h4 style="max-height: 29px; overflow: hidden;"><a
@@ -483,11 +493,17 @@ div.card-body h6 {
 									<img src="source/img/back1.png" />
 								</div>
 								<div class="profileimg">
-									<span class="fa"><img src="/TravelMaker/file/${sessionScope.file_name}"></span>
+									<c:choose>
+										<c:when test="${item.part eq 'kakao'}">
+											<span><img src="${item.file_name}"></span>
+										</c:when>
+										<c:otherwise>
+											<span><img src="/TravelMaker/file/${tmp.file_name}"></span>
+										</c:otherwise>
+									</c:choose>
 								</div>
 								<div class="card-body">
 									<h4 style="max-height: 29px; overflow: hidden;"><a
-										href="selectSchedule.plan?plan=${item.plan_seq}&day=1&create=f"
 										style="text-decoration: none;">${item.plan_title}</a></h4>
 									<h6 class="text-muted">${item.plan_writerN}
 										<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span>
@@ -498,11 +514,6 @@ div.card-body h6 {
 							</div>
 						</div> 
 							</c:forEach>
-							<div class="col-md-12 mt-4" id="pagenaviarea">
-								<nav aria-label="Page navigation">
-									<ul class="pagination justify-content-center">${MyPlanPageNavi}</ul>
-								</nav>
-							</div>
 						</div>
 					</div>
 

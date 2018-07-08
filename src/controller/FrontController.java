@@ -587,9 +587,9 @@ public class FrontController extends HttpServlet {
 			} else {
 				response.sendRedirect(dst);
 			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}		
+		}catch(NullPointerException e1) {
+			response.sendRedirect("login/newlogin.jsp");
+		}catch(Exception e) {e.printStackTrace();}	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

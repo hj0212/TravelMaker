@@ -48,7 +48,7 @@ public class PlanController extends HttpServlet {
 			if(command.equals("/addSchedule.plan")) {
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
-				
+
 				String title = request.getParameter("title");
 				if(!title.equals("")) {
 					System.out.println("타이틀 변경");
@@ -62,7 +62,7 @@ public class PlanController extends HttpServlet {
 				int location_id = pdao.addLocation(ldto);
 
 				ScheduleDTO tmp = new ScheduleDTO();
-				
+
 				tmp.setPlan_seq(plan);
 				tmp.setDay_seq(day);
 				tmp.setSchedule_starttime(request.getParameter("starttime"));
@@ -77,9 +77,9 @@ public class PlanController extends HttpServlet {
 				String[] budget_plan = request.getParameter("budget_plan").split("/");
 				String[] budget_amount = request.getParameter("budget_amount").split("/");
 				List<BudgetDTO> list = new ArrayList<>();
-				
+
 				if(!budgetplanstr.equals("")) {
-					
+
 					for(int i = 0; i < budget_plan.length; i++) {
 						BudgetDTO btmp = new BudgetDTO();
 						btmp.setPlan_seq(plan);
@@ -103,13 +103,13 @@ public class PlanController extends HttpServlet {
 						System.out.println("등록실패");
 					}	
 				}
-				
+
 				isForward = false;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/modiSchedule.plan")) {
 				int plan = Integer.parseInt(request.getParameter("plan"));
 				int day = Integer.parseInt(request.getParameter("day"));
-				
+
 				String title = request.getParameter("title");
 				if(title != "") {
 					System.out.println("타이틀 변경");
@@ -125,7 +125,7 @@ public class PlanController extends HttpServlet {
 				int location_id = pdao.addLocation(ldto);
 
 				ScheduleDTO tmp = new ScheduleDTO();
-				
+
 				tmp.setPlan_seq(plan);
 				tmp.setDay_seq(day);
 				tmp.setSchedule_starttime(request.getParameter("starttime"));
@@ -165,7 +165,7 @@ public class PlanController extends HttpServlet {
 							System.out.println("삭제실패");
 						}
 					}
-					
+
 					int count = budget_plan.length - budget_seq.length;
 					if(budgetseqstr.equals("")) {
 						for(int i = 0; i < budget_seq.length; i++) {	//추가
@@ -371,16 +371,8 @@ public class PlanController extends HttpServlet {
 				String plan_title = pdao.getPlantitle(plan_seq);
 				request.setAttribute("plan_title", plan_title);
 
-
-
-				if(dto == null) {
-					isForward=false;
-					dst="login.bo";
-				}else {
-
-					isForward=true;
-					dst="planboard/planView.jsp?plan_seq="+plan_seq+"&currentPage="+currentPage;
-				}
+				isForward=true;
+				dst="planboard/planView.jsp?plan_seq="+plan_seq+"&currentPage="+currentPage;
 
 			}else if(command.equals("/insertPlanComment.plan")) {
 				String comment_text = request.getParameter("comment_text");
@@ -435,9 +427,9 @@ public class PlanController extends HttpServlet {
 			} else {
 				response.sendRedirect(dst);
 			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}	
+		}catch(NullPointerException e1) {
+			response.sendRedirect("login/newlogin.jsp");
+		}catch(Exception e) {e.printStackTrace();}
 
 
 	}

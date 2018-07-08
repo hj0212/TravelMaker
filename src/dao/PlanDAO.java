@@ -480,7 +480,8 @@ public class PlanDAO {
 
 			return location_id;
 		}
-		return dto.getLocation_id();
+		
+		return this.getLocationid(dto);
 	}
 
 	private int getLocationid(LocationDTO dto) throws Exception {
@@ -676,12 +677,12 @@ public class PlanDAO {
 		PreparedStatement pstat = null;
 
 		if(searchTerm == null || searchTerm.equals("null")) {
-			sql = "select * from (select plan_seq, plan_writer, photo_system_file_name, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan, users where plan_writer = seq and plan_check = 'y') where num between ? and ?";
+			sql = "select * from (select plan_seq, plan_writer, photo_system_file_name, plan_title, plan_good, plan_viewcount, part, row_number() over(order by plan_seq desc) as num from plan, users where plan_writer = seq and plan_check = 'y') where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, startNum);
 			pstat.setInt(2, endNum);
 		} else {
-			sql = "select * from (select plan_seq, plan_writer, photo_system_file_name, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan where plan_writer = seq and plan_check = 'y' and plan_title like ?) where num between ? and ?";
+			sql = "select * from (select plan_seq, plan_writer, photo_system_file_name, plan_title, plan_good, plan_viewcount, part, row_number() over(order by plan_seq desc) as num from plan, users where plan_writer = seq and plan_check = 'y' and plan_title like ?) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, "%"+searchTerm+"%");
 			pstat.setInt(2, startNum);
@@ -698,6 +699,7 @@ public class PlanDAO {
 			tmp.setPlan_good(rs.getInt(5));
 			tmp.setPlan_viewcount(rs.getInt(6));
 			tmp.setFile_name(rs.getString(3));
+			tmp.setPart(rs.getString("part"));
 
 			result.add(tmp);
 		}
@@ -897,7 +899,7 @@ public class PlanDAO {
 		String sql;
 		PreparedStatement pstat = null;
 
-		sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate,'YYYY/MM/DD'), to_char(plan_enddate,'YYYY/MM/DD'), row_number() over(order by plan_seq desc) as num from plan where plan_writer=? and plan_check='y') where num between ? and ?";
+		sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, to_char(plan_startdate,'YYYY/MM/DD'), to_char(plan_enddate,'YYYY/MM/DD'), part,photo_system_file_name, row_number() over(order by plan_seq desc) as num from plan p, users u where p.plan_writer = u.seq and plan_writer=? and plan_check='y') where num between ? and ?";
 		pstat = con.prepareStatement(sql);
 		pstat.setInt(1, seq);
 		pstat.setInt(2, startNum);
@@ -915,6 +917,8 @@ public class PlanDAO {
 			pdto.setPlan_viewcount(rs.getInt(5));
 			pdto.setPlan_startdate(rs.getString(6));
 			pdto.setPlan_enddate(rs.getString(7));
+			pdto.setPart(rs.getString("part"));
+			pdto.setFile_name(rs.getString("photo_system_file_name"));
 			result.add(pdto);
 		}
 
@@ -1115,4 +1119,5 @@ public class PlanDAO {
 		con.close();
 		return result;
 	}
+	
 }

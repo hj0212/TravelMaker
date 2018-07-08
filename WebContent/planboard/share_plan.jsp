@@ -45,6 +45,7 @@ div {
 .card-body {
 	text-align: justify;
 	padding: 0px;
+	padding-top: 30px;
 }
 
 #search_area{
@@ -325,7 +326,14 @@ div.card-body h6 {
 								<img src="source/img/back1.png" />
 							</div>
 							<div class="profileimg">
-								<span class="fa"><img src="/TravelMaker/file/${item.file_name}"></span>
+							<c:choose>
+								<c:when test="${item.part eq 'kakao'}">
+									<span ><img src="${item.file_name}"></span>
+								</c:when>
+								<c:otherwise>
+									<span ><img src="/TravelMaker/file/${item.file_name}"></span>
+								</c:otherwise>
+							</c:choose>
 							</div>
 							<div class="card-body">
 								<h4 style="max-height: 29px; overflow: hidden;">
