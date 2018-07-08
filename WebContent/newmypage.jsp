@@ -120,6 +120,9 @@
 .card .profileimg img {
 	width: 120px;
 	height: 120px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
 }
 
 .card .content {
@@ -202,6 +205,28 @@ div.card-body h6 {
 	z-index: 2;
 }
 </style>
+<script>
+  $(document).ready(function() {
+    $("#profile_img").attr('src',"/TravelMaker/file/${file_name}");
+    $("#img_button").click(function() {
+      var img_file = $("#img_file").trigger("click");
+      if (img_file) {
+        var selected = $("#profile").text("프로필 사진 등록");
+        if (selected) {
+          $("#profile").click(function() {
+            $("#profileImgForm").submit();
+          });
+        } else {
+          alert("파일을 선택해주세요");
+        };
+      } else {
+        $("#profile").text("");
+      }
+    });
+  });
+ 
+</script>
+ 
 
 </head>
 <body>
