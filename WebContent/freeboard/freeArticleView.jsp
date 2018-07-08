@@ -187,7 +187,9 @@ $(document).ready(function(){
 				<c:if test="${sessionScope.user.seq == 33333}">	
 					<button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
 				</c:if>
-				<button type="button" class="btn btn-outline-danger" id="report" data-toggle="modal" data-target="#reportModal">신고</button>
+				<c:if test="${!(article.free_writer == sessionScope.user.seq)}">	
+					<button type="button" class="btn btn-outline-danger" id="report" data-toggle="modal" data-target="#reportModal">신고</button>
+				</c:if>
 				<button type="button" class="btn btn-outline-secondary" id="goList">목록</button>
 			</div>
 		</div>
