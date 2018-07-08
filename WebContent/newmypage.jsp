@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <style>
 #container {
-	max-width: 960px;
+	max-width: 940px;
 	margin: 0 auto;
 	margin-top: 150px;
 }

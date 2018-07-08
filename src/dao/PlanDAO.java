@@ -714,10 +714,10 @@ public class PlanDAO {
 		ResultSet rs;
 
 		if(searchTerm == null || searchTerm.equals("null")) {
-			sql = "select count(*) totalCount from plan";
+			sql = "select count(*) totalCount from plan where plan_check='y'";
 			pstat = con.prepareStatement(sql);
 		} else {
-			sql = "select count(*) totalCount from plan where plan_title like ?";
+			sql = "select count(*) totalCount from plan where plan_check='y' and plan_title like ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, "%"+searchTerm+"%");
 		}
