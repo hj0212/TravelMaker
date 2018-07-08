@@ -81,6 +81,155 @@ div {
 .container h1, .container  h6 {
 	display: inline;
 }
+
+.card-container {
+	-moz-perspective: 800px;
+	-webkit-perspective: 800px;
+	perspective: 800px;
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	margin-bottom: 30px;
+	width: 100%;
+	height: 350px;
+}
+
+.card {
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-transition: -moz-transform 1s
+		cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-o-transition: -o-transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-webkit-transition: -webkit-transform 1s
+		cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	position: relative;
+	background: none repeat scroll 0 0 #fff;
+	color: #444444;
+	max-width: 320px;
+	margin: 0 auto;
+}
+
+.card .cover {
+	-moz-border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px;
+	border-radius: 4px 4px 0 0;
+	height: 105px;
+	overflow: hidden;
+	z-index: -2;
+}
+
+.card .cover img {
+	width: 100%;
+}
+
+.card .profileimg {
+	position: relative;
+	background: #fff;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	display: block;
+	height: 120px;
+	margin: -55px auto 0;
+	width: 120px;
+	text-align: center;
+}
+
+.card .profileimg img {
+	width: 120px;
+	height: 120px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+}
+
+.card .content {
+	background-color: transparent;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	padding: 10px 20px 20px;
+}
+
+div.card-body {
+	height: 100px;
+	color: black;
+	text-align: center;
+}
+
+div.card-body h6 {
+	margin-bottom:10px;
+}
+
+.card .content .main {
+	min-height: 140px;
+}
+
+.card .use-for {
+	font-size: 22px;
+	text-align: center;
+}
+
+.card h5 {
+	margin: 5px 0;
+	font-weight: 400;
+	line-height: 20px;
+}
+
+.card .footer {
+	color: #999;
+	padding: 10px 0 0;
+	text-align: center;
+}
+
+.card .footer .btn-simple {
+	margin-top: -6px;
+}
+
+.card .header {
+	padding: 15px 20px;
+	height: 90px;
+}
+
+.front {
+	-moz-backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-moz-transition: -moz-transform 1s
+		cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-o-transition: -o-transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-webkit-transition: -webkit-transform 1s
+		cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-moz-transform: rotateY(0deg);
+	-ms-transform: rotateY(0deg);
+	-webkit-transform: rotateY(0deg);
+	transform: rotateY(0deg);
+	-moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+	-webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	position: absolute;
+	background-color: #fff;
+	width: 100%;
+	height: 300px;
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
 </style>
 </head>
 <body>
@@ -169,25 +318,27 @@ div {
 
 		<div class="row mt-2 mx-0" id="planlistarea">
 			<c:forEach var="item" items="${planList}">
-				<div class="item col-md-3 mb-3">
-					<div class="card text-center">
-		<a href="planArticle.plan?currentPage=${currentPage}&plan_seq=${item.plan_seq}" style="text-decoration:none;">
-						<div class="card-header planTitle" style="line-height:37px;height:55px; overflow:hidden;">${item.plan_title}</div>
-		</a>
-						<div class="card-body mt-1 text-center">
-							<h6 class="text-muted d-inline mr-5" name="subTitle">${item.plan_writerN}</h6>
-							<div class="btn-list d-inline">
-
-								<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span> <i
-									class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
+				<div class="item col-sm-6 col-md-4 col-lg-3 mb-3" style="width: 300px; height: 300px; padding: 5px;">
+					<div class="card col-md-12 col-sm-12 w-100" style="height: 100%; padding: 0px;">
+						<div class="front">
+							<div class="cover">
+								<img src="source/img/back1.png" />
 							</div>
-							<hr>
-							<p class="text-center">여기다 뭐넣을까여</p>
+							<div class="profileimg">
+								<span class="fa"><img src="/TravelMaker/file/${item.file_name}"></span>
+							</div>
+							<div class="card-body">
+								<h4 style="max-height: 29px; overflow: hidden;">
+								<a href="planArticle.plan?currentPage=${currentPage}&plan_seq=${item.plan_seq}" style="text-decoration: none;">${item.plan_title}</a></h4>
+								<h6 class="text-muted">${item.plan_writerN}
+									<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span>
+									<i class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
+								</h6>
+							</div>
 						</div>
 					</div>
-				</div>
+				</div> 
 			</c:forEach>
-
 		</div>
 		<!--plan 카드 영역 row끝  -->
 

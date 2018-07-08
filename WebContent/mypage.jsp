@@ -32,11 +32,11 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
 <style>
-body {
-	background-color:#fafafa;
-}
 * {
 	color: black;
 }
@@ -253,32 +253,36 @@ overflow:hidden;
 }
 </style>
 <script>
+
 	$(document).ready(function() {
-		$("#profile_img").attr('src', "/WEB_06_18/file/${file_name}");
+	
+		$("#profile_img").attr('src',"/WEB_06_18/file/${file_name}");
 		$("#img_button").click(function() {
+			
 			var img_file = $("#img_file").trigger("click");
 			if (img_file) {
-
 				var selected = $("#profile").text("프로필 사진 등록");
 
 				if (selected) {
 					$("#profile").click(function() {
 						$("#profileImgForm").submit();
-					})
+					});
 				} else {
 					alert("파일을 선택해주세요");
-				}
+				};
 			} else {
 				$("#profile").text("");
 			}
 		});
 	});
 </script>
+
 </head>
 
 
 <body>
 	<%@include file="../include/otherNavi.jsp"%>
+
 
 	<div id="wrapper">
 		<!--profile부분-->
@@ -485,7 +489,7 @@ overflow:hidden;
 								<div style="height: 300px;">
 									<h3 style="margin: 50px;">표시할 내용이 없습니다</h3>
 									<small>좋아요를 눌러주세요...ㅜ</small>
-								</div>
+								</div>rew
 							</div>
 						</c:if>
 
@@ -524,12 +528,14 @@ overflow:hidden;
 	<div id="footer">
 		<%@include file="footer1.jsp"%>
 	</div>
+	
 
 	<script>
+
 		/*검색*/
 		$("#searchbtn").click(function() {
 			location.href = "mypage.do?search=" + $("#search").val();
-		})
+		});
 
 		$(function() {
 			$("#img_file").on(
@@ -561,7 +567,7 @@ overflow:hidden;
 
 				reader.readAsDataURL(input.files[0]);
 			}
-		}
+		};
 
 		$("#editInfo")
 				.click(
@@ -570,7 +576,7 @@ overflow:hidden;
 							window
 									.open("toPwCheck.do", "_blank",
 											"width=500, height=300, scrollbars=no, left=500, top=300");
-						})
+						});
 
 		$("#editInfoNK")
 				.click(
@@ -578,8 +584,10 @@ overflow:hidden;
 							window
 									.open("toEditInfoNK.do", "_blank",
 											"width=1000, height=800, scrollbars=no, left=500, top=100");
-						})
+						});
 	</script>
+	
+	
 </body>
 
 </html>

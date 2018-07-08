@@ -22,8 +22,7 @@
 	href="source/lib/slick/slick-theme.css" />
 <script src="include/slider/responsiveslides.min.js"></script>
 
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
 <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans"
 	rel="stylesheet">
@@ -192,6 +191,9 @@ div {
 .card .profileimg img {
 	width: 120px;
 	height: 120px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
 }
 
 .card .content {
@@ -356,7 +358,7 @@ div.card-body h6 {
 									<img src="source/img/back${Status.count }.png" />
 								</div>
 								<div class="profileimg">
-									<span class="fa"><img src="/TravelMaker/file/${sessionScope.file_name}"></span>
+									<span class="fa"><img src="/TravelMaker/file/${tmp.file_name}"></span>
 								</div>
 								<div class="card-body">
 									<h4 style="max-height: 29px; overflow: hidden;">${tmp.plan_title }</h4>
