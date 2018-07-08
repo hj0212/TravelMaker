@@ -35,6 +35,10 @@ div {
 	box-sizing: border-box;
 }
 
+.row {
+	margin-bottom: 45px;
+}
+
 #bestPlan {
 	height: 400px;
 	margin-bottom: 0;
@@ -66,7 +70,7 @@ div {
 }
 
 #bestImage, #newimagearea {
-	margin-bottom: 35px;
+	margin-bottom: 55px;
 }
 
 .divLine a {
@@ -342,7 +346,7 @@ div.card-body h6 {
 			<a href="planboard.plan">BEST PLAN</a>
 		</h1>
 		<hr />
-		<div class="row" id="bestPlanRow">
+		<div class="row" id="bestPlanRow" style="margin-bottom: 0;">
 			<div class="col-md-12" id="bestPlan">
 				<div class="data"
 					data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'
@@ -384,7 +388,7 @@ div.card-body h6 {
 			</div>
 		</div>
 
-		<h1 class="divLine" style="font-family: 'Black Han Sans', sans-serif;">NEW IMAGE</h1>
+		<h1 class="divLine" style="font-family: 'Black Han Sans', sans-serif; margin-top: 0;">NEW IMAGE</h1>
 		<hr />
 		<div class="row" id="newimagearea">
 			<!-- 카드 시작 -->
@@ -399,7 +403,7 @@ div.card-body h6 {
 						<div class="hls_data">
 							<a href="" target="" class="hls_title">${item.review_title}</a> <a
 								href="reviewArticle.bo?review_seq=${item.article_no}"
-								class="btn btn-pro">여행계획보기</a>
+								class="btn btn-pro">게시글 보러가기</a>
 						</div>
 					</div>
 				</div>

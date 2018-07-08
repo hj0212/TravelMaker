@@ -580,7 +580,7 @@ public class ReviewDAO {
 		if(rs.next()) {
 			fname = rs.getString(1);
 		}else {
-			fname = "Charlie-Chaplin-PNG-Image-17681.png";
+			fname = "back1.png";
 		}
 
 		rs.close();

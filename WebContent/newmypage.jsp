@@ -23,12 +23,14 @@
 
 #profileinfoarea {
 	text-align: center;
-	max-width: 680px;
+	max-width: 660px;
 	width: 100%;
+	padding-top: 25px;
 }
 
 .row {
-	margin-bottom: 80px;
+	margin-bottom: 60px;
+	width: 100%;
 }
 
 #img_file {
@@ -233,7 +235,7 @@ div.card-body h6 {
 	<%@include file="../include/otherNavi.jsp"%>
 	<div id="container">
 		<div class="row">
-			<div id="profileimgarea">
+			<div id="profileimgarea col-sm-12">
 				<form action="profileImg.do" method="post"
 					enctype="multipart/form-data" id="profileImgForm">
 					<button id="img_button" type="button" class="d-inline"
@@ -273,7 +275,7 @@ div.card-body h6 {
 				</c:choose>
 
 				<!--회원정보 수정-->
-				<div id="editinfo" class="">
+				<div id="editinfo" class="my-4">
 					<c:choose>
 						<c:when test="${sessionScope.part eq 'home'}">
 							<button id="editInfo" class="btn btn-outline-primary">정보수정</button>
@@ -286,20 +288,20 @@ div.card-body h6 {
 			</div>
 		</div>
 
-		<div class="row" style="margin-bottom: 15px;">
+		<div class="row">
 			<c:choose>
 				<c:when test="${empty planList}">
 					<div class="col-sm-12">
 						<fieldset class="border p-4" style="text-align: center;">
 							<legend class="w-auto">
-								<h1>작성중인 Plan이 없습니다</h1>
+								<h1>작성 중인 Plan이 없습니다</h1>
 							</legend>
 							<h5>당신의 Plan을 만들어보세요!</h5>
 						</fieldset>
 					</div>
 				</c:when>
 				<c:otherwise>
-					<h1 class="divLine">작성중인 Plan</h1>
+					<h1 class="divLine">작성 중인 Plan</h1><br>
 					<hr />
 					<div class="row col-sm-12" id="tempplanarea">
 						<c:forEach var="item" items="${planList}" varStatus="Status">
@@ -353,8 +355,8 @@ div.card-body h6 {
 				</ul>
 			</div>
 
-			<div class="pannel-body">
-				<div class="row tab-content">
+			<div class="pannel-body" style="width: 100%;">
+				<div class="row tab-content" >
 
 					<!-- tabone -->
 					<div class="col tab-pane" id="tabone" role="tabpanel">
@@ -371,7 +373,7 @@ div.card-body h6 {
 
 
 							<c:forEach var="item" items="${MyReviewResult}">
-								<div class="item col-sm-6 col-md-4 col-lg-3" style="width: 300px; height: 300px; padding: 5px;">
+								<div class="item col-sm-6 col-md-4 col-lg-3 mt-2" style="width: 300px; height: 300px; padding: 5px;">
 									<div class="card col-md-12 col-sm-12 w-100" style="height: 100%; padding: 0px;">
 										<div class="front">
 											<div class="cover">
@@ -379,11 +381,11 @@ div.card-body h6 {
 											</div>
 											<div class="profileimg">
 												<c:choose>
-													<c:when test="${item.part eq 'kakao'}">
-														<span><img src="${item.file_name}"></span>
+													<c:when test="${sessionScope.part eq 'kakao'}">
+														<span><img src="${sessionScope.file_name}"></span>
 													</c:when>
 													<c:otherwise>
-														<span><img src="/TravelMaker/file/${item.file_name}"></span>
+														<span><img src="/TravelMaker/file/${sessionScope.file_name}"></span>
 													</c:otherwise>
 												</c:choose>
 											</div>
@@ -423,7 +425,7 @@ div.card-body h6 {
 							</c:if>
 
 							<c:forEach var="item" items="${MyPlanResult}">
-								<div class="item col-sm-6 col-md-4 col-lg-3 mb-3" style="width: 300px; height: 300px; padding: 5px;">
+								<div class="item col-sm-6 col-md-4 col-lg-3 mb-3 mt-2" style="width: 300px; height: 300px; padding: 5px;">
 							<div class="card col-md-12 col-sm-12" style="height: 100%; padding: 0px;">
 								<div class="front">
 									<div class="cover">
@@ -484,12 +486,13 @@ div.card-body h6 {
 									<img src="source/img/back1.png" />
 								</div>
 								<div class="profileimg">
+									<script>console.log("${item.part} : ${item.file_name}")</script>
 									<c:choose>
 										<c:when test="${item.part eq 'kakao'}">
 											<span><img src="${item.file_name}"></span>
 										</c:when>
 										<c:otherwise>
-											<span><img src="/TravelMaker/file/${tmp.file_name}"></span>
+											<span><img src="/TravelMaker/file/${item.file_name}"></span>
 										</c:otherwise>
 									</c:choose>
 								</div>

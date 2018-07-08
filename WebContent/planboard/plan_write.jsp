@@ -150,7 +150,7 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope.user.seq !=null}">
-			<script>location.href = "login.do";</script>		
+			<%@include file="../include/otherNavi_login.jsp"%>
 		</c:when>
 		<c:otherwise>
 			<%@include file="../include/otherNavi.jsp"%>			
@@ -165,6 +165,7 @@
 			<input type="text" class="form-control" aria-label="Large"
 				aria-describedby="inputGroup-sizing-sm" id="title-board"
 				name="plantitle" value="${plan_title}">
+			<button type="button" class="btn btn-outline-primary" id="canclebtn">취소</button>
 			<c:if test="${plan_state eq false}">
 			<button type="button" class="btn btn-outline-primary" id="savebtn">임시 저장</button>
 			</c:if>
@@ -478,6 +479,10 @@ $("#searchlocation").keydown(function(key) {
 	if (key.keyCode == 13) {
 		$("#searchbtn").trigger('click');
 	}
+});
+
+$("#canclebtn").click(function() {
+	location.href = "planboard.plan";
 });
 
 timecheck = true;

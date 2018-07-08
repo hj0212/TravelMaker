@@ -286,7 +286,7 @@ public class GoodBadDAO {
 		//�궡媛� 醫뗭븘�슂�븳 plan 寃뚯떆臾� �븘�떚�겢 踰덊샇�뱾 
 		public List<PlanDTO> favoriteData(int goodId)throws Exception {
 			Connection con = DBConnection.getConnection();
-			String sql ="select * from plan, (select article_no from good_plan, users where seq=user_seq and seq = ? order by good_plan_seq desc) where plan_seq = article_no ";
+			String sql ="select * from plan, (select article_no from good_plan, users where seq=user_seq and seq = ? order by good_plan_seq desc) tmp, users u where plan_seq = article_no and plan_writer = seq";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1,goodId);
 			ResultSet rs = pstmt.executeQuery();
@@ -298,6 +298,8 @@ public class GoodBadDAO {
 				pdto.setPlan_writerN(mdao.getUserNickname(rs.getInt("PLAN_WRITER")));
 				pdto.setPlan_viewcount(rs.getInt("plan_viewcount"));
 				pdto.setPlan_good(rs.getInt("plan_good"));
+				pdto.setPart(rs.getString("part"));
+				pdto.setFile_name(rs.getString("photo_system_file_name"));
 				result.add(pdto);
 			}
 			con.close();
