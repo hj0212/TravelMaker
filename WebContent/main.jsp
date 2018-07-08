@@ -22,8 +22,7 @@
 	href="source/lib/slick/slick-theme.css" />
 <script src="include/slider/responsiveslides.min.js"></script>
 
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
 <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans"
 	rel="stylesheet">

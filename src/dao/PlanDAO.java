@@ -929,7 +929,7 @@ public class PlanDAO {
 		PreparedStatement pstat;
 		ResultSet rs;
 
-			sql = "select count(*) totalCount from plan where plan_writer=?";
+			sql = "select count(*) totalCount from plan where plan_writer=?  and plan_check='y'";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, seq);
 
