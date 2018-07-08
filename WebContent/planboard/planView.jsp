@@ -22,8 +22,6 @@
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script src="source/js/jquery.roadmap.min.js"></script>
 <link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
-<script src="source/js/createplan.js"></script>
-<link rel="stylesheet" href="source/css/createplan.css" />
 
 
 <%@ page session="true"%>
@@ -451,11 +449,6 @@
 	<div id="footer">
 		<%@include file="../footer1.jsp"%>
 	</div>
-	<c:choose>
-		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="../include/multiChat.jsp"%>
-		</c:when>
-	</c:choose>
 <script>
 	$(".schedule ul li:first").addClass('active');
 	$("div[id='Day1']").addClass('active');
@@ -674,5 +667,5 @@
 		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
-	</c:choose>	
+</c:choose>	
 </html>
