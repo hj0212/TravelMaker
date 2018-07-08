@@ -676,12 +676,12 @@ public class PlanDAO {
 		PreparedStatement pstat = null;
 
 		if(searchTerm == null || searchTerm.equals("null")) {
-			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan where plan_check = 'y') where num between ? and ?";
+			sql = "select * from (select plan_seq, plan_writer, photo_system_file_name, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan, users where plan_writer = seq and plan_check = 'y') where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, startNum);
 			pstat.setInt(2, endNum);
 		} else {
-			sql = "select * from (select plan_seq, plan_writer, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan where plan_check = 'y' and plan_title like ?) where num between ? and ?";
+			sql = "select * from (select plan_seq, plan_writer, photo_system_file_name, plan_title, plan_good, plan_viewcount, row_number() over(order by plan_seq desc) as num from plan where plan_writer = seq and plan_check = 'y' and plan_title like ?) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setString(1, "%"+searchTerm+"%");
 			pstat.setInt(2, startNum);
@@ -694,9 +694,10 @@ public class PlanDAO {
 			PlanDTO tmp = new PlanDTO();
 			tmp.setPlan_seq(rs.getInt(1));
 			tmp.setPlan_writerN(mdao.getUserNickname(rs.getInt(2)));
-			tmp.setPlan_title(rs.getString(3));
-			tmp.setPlan_good(rs.getInt(4));
-			tmp.setPlan_viewcount(rs.getInt(5));
+			tmp.setPlan_title(rs.getString(4));
+			tmp.setPlan_good(rs.getInt(5));
+			tmp.setPlan_viewcount(rs.getInt(6));
+			tmp.setFile_name(rs.getString(3));
 
 			result.add(tmp);
 		}

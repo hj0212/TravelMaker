@@ -377,7 +377,7 @@ div.card-body h6 {
 							</c:if>
 
 
-							<c:forEach var="mrr" items="${MyReviewResult}">
+							<c:forEach var="item" items="${MyReviewResult}">
 								<div class="item col-sm-6 col-md-4 col-lg-3"
 							style="width: 300px; height: 300px; padding: 5px;">
 							<div class="card col-md-12 col-sm-12 w-100"
@@ -391,12 +391,12 @@ div.card-body h6 {
 								</div>
 								<div class="card-body">
 									<h4 style="max-height: 29px; overflow: hidden;"><a
-										href="selectSchedule.plan?plan=${item.plan_seq}&day=1&create=f"
-										style="text-decoration: none;">${item.plan_title}</a></h4>
+										href="selectSchedule.plan?plan=${item.review_seq}&day=1&create=f"
+										style="text-decoration: none;">${item.review_title}</a></h4>
 									<h6 class="text-muted">${item.plan_writerN}
-										<i class="far fa-eye"></i> <span>${item.plan_viewcount}</span>
-										<i class="fas fa-hand-holding-heart"></i> <span>${item.plan_good}</span>
+										<i class="far fa-eye"></i> <span>${item.review_viewcount}</span>
 									</h6>
+									<h6 class="text-muted">${item.review_writedate}</h6>
 								</div>
 								</div>
 							</div>
@@ -438,7 +438,7 @@ div.card-body h6 {
 								</div>
 								<div class="card-body">
 									<h4 style="max-height: 29px; overflow: hidden;"><a
-										href="selectSchedule.plan?plan=${item.plan_seq}&day=1&create=f"
+										href="planArticle.plan?plan=${item.plan_seq}"
 										style="text-decoration: none;">${item.plan_title}</a></h4>
 									<h6 class="text-muted">${item.plan_writerN} 
 										<i class="far fa-eye"></i> <span> ${item.plan_viewcount}</span>
