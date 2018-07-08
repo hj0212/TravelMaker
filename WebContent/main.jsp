@@ -358,7 +358,7 @@ div.card-body h6 {
 									<img src="source/img/back${Status.count }.png" />
 								</div>
 								<div class="profileimg">
-									<span class="fa"><img src="/TravelMaker/file/${sessionScope.file_name}"></span>
+									<span class="fa"><img src="/TravelMaker/file/${tmp.file_name}"></span>
 								</div>
 								<div class="card-body">
 									<h4 style="max-height: 29px; overflow: hidden;">${tmp.plan_title }</h4>

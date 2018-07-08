@@ -473,8 +473,6 @@ public class FrontController extends HttpServlet {
 					
 					/*String file_name = ((MemberDTO)request.getSession().getAttribute("user")).getPhoto_system_file_name();*/
 					request.getSession().setAttribute("file_name", mdto.getPhoto_system_file_name());
-		        	
-		        	
 	        	}
 	        	request.setAttribute("main", main);
 	        	
