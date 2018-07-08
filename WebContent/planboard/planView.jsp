@@ -107,6 +107,7 @@
 #planinfoarea {
 	text-align: left;
 	height: 36px;
+	line-height: 36px;
 }
 
 #planinfoarea p {
@@ -430,8 +431,7 @@
 								<td style="width: 15%; font-size: 10px;">${pc.comment_time}
 
 									<c:if test="${pc.comment_writer eq sessionScope.user.seq}">
-										<button type="button" class="close" aria-label="Close"
-											id="deleteComment">
+										<button type="button" class="close" aria-label="Close" id="deleteComment">
 											<a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
 												<span aria-hidden="true">&times;</span>
 											</a>

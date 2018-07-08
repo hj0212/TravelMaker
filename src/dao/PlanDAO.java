@@ -806,6 +806,7 @@ public class PlanDAO {
 			pcdto.setComment_text(rs.getString("comment_text"));
 			pcdto.setComment_writer(rs.getInt("comment_writer"));
 			pcdto.setComment_writerN(mdao.getUserNickname(rs.getInt("comment_writer")));
+			pcdto.setComment_time(rs.getString("comment_time"));
 			result.add(pcdto);
 		}
 		rs.close();
