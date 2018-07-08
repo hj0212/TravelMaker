@@ -41,8 +41,8 @@ public class AjaxController extends HttpServlet {
 
 			MemberDAO mdao = new MemberDAO();
 			PlanDAO pdao = new PlanDAO();
-
-			if(command.equals("/idcheck.Ajax")) {				
+			System.out.println(command);
+			if(command.equals("/login/idcheck.Ajax")) {				
 				String userid = request.getParameter("userid");
 				boolean idcheck = mdao.check(userid);
 				PrintWriter pw = response.getWriter();
