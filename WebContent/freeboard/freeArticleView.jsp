@@ -273,6 +273,8 @@ $(document).ready(function(){
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
+	
+	
 				</div>
 				<div class="modal-body" id="modalresult">
 					<p>
