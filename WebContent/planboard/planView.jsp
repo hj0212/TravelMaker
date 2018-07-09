@@ -22,8 +22,6 @@
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <script src="source/js/jquery.roadmap.min.js"></script>
 <link rel="stylesheet" href="source/css/jquery.roadmap.min.css">
-<script src="source/js/createplan.js"></script>
-<link rel="stylesheet" href="source/css/createplan.css" />
 
 
 <%@ page session="true"%>
@@ -109,6 +107,7 @@
 #planinfoarea {
 	text-align: left;
 	height: 36px;
+	line-height: 36px;
 }
 
 #planinfoarea p {
@@ -231,9 +230,7 @@
 <body>
 	<c:choose>
 		<c:when test="${empty sessionScope.user.seq}">
-			<script>
-				location.href = "error.jsp"
-			</script>
+			<script>location.href = "login.do";</script>
 		</c:when>
 		<c:otherwise>
 			<%@include file="../include/otherNavi.jsp"%>
@@ -434,8 +431,7 @@
 								<td style="width: 15%; font-size: 10px;">${pc.comment_time}
 
 									<c:if test="${pc.comment_writer eq sessionScope.user.seq}">
-										<button type="button" class="close" aria-label="Close"
-											id="deleteComment">
+										<button type="button" class="close" aria-label="Close" id="deleteComment">
 											<a href="deletePlanComment.plan?comment_seq=${pc.comment_seq}&plan_seq=${pc.plan_seq}">
 												<span aria-hidden="true">&times;</span>
 											</a>
@@ -453,11 +449,6 @@
 	<div id="footer">
 		<%@include file="../footer1.jsp"%>
 	</div>
-	<c:choose>
-		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="../include/multiChat.jsp"%>
-		</c:when>
-	</c:choose>
 <script>
 	$(".schedule ul li:first").addClass('active');
 	$("div[id='Day1']").addClass('active');
@@ -676,5 +667,5 @@
 		<c:when test="${sessionScope.user.seq !=null}">
 			<%@include file="../include/multiChat.jsp"%>
 		</c:when>
-	</c:choose>	
+</c:choose>	
 </html>

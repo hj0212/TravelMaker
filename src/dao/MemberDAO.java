@@ -98,12 +98,13 @@ public class MemberDAO {
 	public MemberDTO addKakaoMember(MemberDTO dto) throws Exception {
 		if(!kakaocheck(dto.getKakao_id())) {
 			Connection con = DBConnection.getConnection();
-			String sql = "insert into users (seq, kakao_id, kakao_nickname, kakao_email, modify_date, create_date,part) VALUES (users_seq.nextval, ?, ?, ?, sysdate, sysdate, 'kakao')";
+			String sql = "insert into users (seq, kakao_id, kakao_nickname, kakao_email, modify_date, create_date,part,photo_system_file_name) VALUES (users_seq.nextval, ?, ?, ?, sysdate, sysdate, 'kakao',?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 
 			pstmt.setString(1, dto.getKakao_id());
 			pstmt.setString(2, dto.getKakao_nickname());
 			pstmt.setString(3, dto.getKakao_email());
+			pstmt.setString(4, dto.getPhoto_system_file_name());
 
 			int result = pstmt.executeUpdate();		
 			con.commit();

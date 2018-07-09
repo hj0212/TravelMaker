@@ -111,7 +111,7 @@
 	  $(".btn-login").click(function() {
 		  if($(".btn-login").text()=="Log in") {
 			  console.log("로그인");
-			  $("#userform").attr('action','../login.do').submit();
+			  $("#userform").attr('action','login.do').submit();
 		  } else if($(".btn-login").text()=="Sign up"){
 			  console.log("사인업");
 			  var id = $("#user_idcheck").val();
