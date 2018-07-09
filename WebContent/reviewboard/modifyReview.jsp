@@ -62,4 +62,9 @@ pageEncoding="UTF-8"%>
         </div>
     </body>
     <script src="./reviewboard/editor.js"></script>
+    <c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>	
     </html>

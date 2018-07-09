@@ -60,6 +60,10 @@
     .card a {
         text-decoration: none;
     }
+    
+.container h1, .container  h6 {
+	display: inline;
+}
 </style>
 </head>
 <body>
@@ -75,7 +79,7 @@
 
 
 	<div class="container">
-		<h1 class="divLine">Review</h1>
+		<h1 class="divLine">Review</h1><h6> : 여행 후기를 공유해요</h6>
 		<hr />
 
 		<div class="row" id="cardArea">
@@ -85,7 +89,7 @@
 						<div class="col-md-4">
 							<div class="card">
 							<a href="reviewArticle.bo?review_seq=${item.review_seq}">
-								<img class="card-img-top" src="${pageContext.request.contextPath}/files/${item.review_thumbnail}" alt="Card image cap">
+								<img class="card-img-top" src="/TravelMaker/files/${item.review_thumbnail}" alt="Card image cap">
 								<div class="card-body">
 									<h5 class="card-title">${item.review_title}</h5>
 									<p class="card-text">${item.review_writerN}</p>
@@ -125,11 +129,9 @@
 			</div>
 		</div>
 	</div>
-	<c:choose>
-		<c:when test="${sessionScope.user.seq !=null}">
-			<%@include file="../include/multiChat.jsp"%>
-		</c:when>
-	</c:choose>
+	
+	<%@include file="../footer1.jsp"%>
+	
 	<script>
 		$("#searchbtn").click(function() {
 			location.href = "reviewboard.bo?search=" + $("#search").val();
@@ -140,4 +142,9 @@
 		})
 	</script>
 </body>
+<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>
 </html>

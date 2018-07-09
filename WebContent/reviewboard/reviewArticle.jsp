@@ -71,7 +71,12 @@
 tr {
    border-bottom: 3px dotted #e9e9e9;
 }
-
+#commentList {
+	min-height:	150px;
+}
+#comment-table {
+	margin-bottom: 50px;
+}
 </style>
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -190,11 +195,12 @@ $(document).ready(function(){
                <div
                   style="width: 20%; float: left; height: 86px; margin-bottom: 30px;">
                   <button style="width: 100%; height: 86px;background-color: white" id="commentbnt"
-                     class="btn btn-default"><i class="fa fa-comments"></i>댓글 작성</button>
+                     ><i class="fa fa-comments"></i>댓글 작성</button>
                </div>
             </div>
          </form>
 
+		<div id="commentList">
          <table class="table" id="comment-table">
             <thead id="comment-thead">
                <tr>
@@ -233,9 +239,10 @@ $(document).ready(function(){
          
             </tbody>
          </table>
+         </div>
       </div>
    </div>
-  
+  <%@include file="../footer1.jsp"%>
  
    <script>
 /*       $("#comment-write-bnt").click(
@@ -267,7 +274,7 @@ $(document).ready(function(){
       });
       
       $('#commentbtn').click(function() {
-   	   var comment_text = $("#comment_text").val(); 
+   	   var comment_text = $("#comment_text").val().replace(/\s|　/gi, ''); 
    	   if(comment_text != null){
           $('#reveiwCommentForm').submit();
    	   }else{
@@ -306,4 +313,9 @@ $(document).ready(function(){
      </c:if>
    </script>
 </body>
+<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>	
 </html>

@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>로그인</title>
-<link rel="stylesheet" href="../source/lib/materialize/css/materialize.css">
+<link rel="stylesheet"
+	href="../source/lib/materialize/css/materialize.css">
 <script src="../source/lib/materialize/js/materialize.js"></script>
 
 <script type="text/javascript"
@@ -24,9 +25,9 @@
 }
 
 #loginbox {
-   width: 400px;
-   height: 560px;
-   margin: 20px auto;
+	width: 400px;
+	height: 560px;
+	margin: 20px auto;
 }
 
 #loginbtn {
@@ -81,6 +82,11 @@
 #kakao_btn_changed {
 	height: 49px;
 }
+
+#title img {
+	width: 400px;
+}
+
 </style>
 <script>
 	$(document).ready(() => {
@@ -88,9 +94,6 @@
 	  $(".signup-link").on("click", showSignup);
 	  $(".confirm-password-row").hide();
 	  $(".btn-login").text("Log in");
-	  
-	  
-	  
 	  
 	  $(document).keydown(function(key) {	
 		  if (key.keyCode == 13) {
@@ -104,8 +107,7 @@
 				  alert("Password를 입력해주세요")
 			  }
 		  }
-
-		  });
+	  });
 	  
 	  
 	  $(".btn-login").click(function() {
@@ -139,9 +141,7 @@
 				  alert("패스워드가 일치 하지않습니다");
 			  }else{
 				  $("#userform").attr('action','../join.do').submit();
-			  }		  
-			  
-			  
+			  }		  			  
 		  }
 	  });
 	  
@@ -172,22 +172,18 @@
 <script>
 $(document).ready(function(){	
 
-
-$("#user_idchek").keyup(function(){
-	
-	var userid = $("#user_idchek").val();
-
-	$.ajax({
-		url:"idcheck.Ajax",
-		type:"post",
-		data:{userid:userid},
-		success:function(data){		
- 				$("#label-text").html(data); 				   							 			
-		}
-	});
-});	
+$("#user_idcheck").keyup(function(){
+	var userid = $("#user_idcheck").val();
+		$.ajax({
+			url:"idcheck.Ajax",
+			type:"post",
+			data:{userid:userid},
+			success:function(data){		
+	 			$("#label-text").html(data); 				   							 			
+			}
+		});
+	});	
 });
-
 </script>
 
 
@@ -196,18 +192,19 @@ $("#user_idchek").keyup(function(){
 
 </head>
 <body>
+	
 
 	<div id="container">
 		<div class="row">
 			<h1 id="title" class="center col s12">
-				<a href="../main.jsp">TRAVEL MAKER</a>
+				<a href="../main.jsp"><img src="../source/img/travellogo2.png"></a>
 			</h1>
 		</div>
 		<div class="row">
 			<div id="loginarea">
 				<div class="card white hoverable" id="loginbox">
 					<div class="card-content black-text">
-						<div class="row card-title" id	="card-title">
+						<div class="row card-title" id="card-title">
 							<div class="col s6 left-align login-link active">
 								<span>Log in</span>
 							</div>
@@ -224,9 +221,9 @@ $("#user_idchek").keyup(function(){
 							</div>
 							<div class="row confirm-password-row" id="idcheck-div">
 								<div class="input-field col s12">
-									<input id="user_idchek" type="text" class="validate"
+									<input id="user_idcheck" type="text" class="validate"
 										name="idcheck" maxlength="45"> <label
-										for="user_idchek" id="label-text">id</label>
+										for="user_idcheck" id="label-text">id</label>
 								</div>
 							</div>
 
@@ -284,7 +281,8 @@ $("#user_idchek").keyup(function(){
 								    	            	data:{
 								    	            		id:res.id,
 								    	            		name:res.properties.nickname,
-								    	            		email:res.kaccount_email
+								    	            		email:res.kaccount_email,
+								    	            		img:res.properties.profile_image
 								    	             	},
 								    	            	success:function(data) {
 								    	            		location.href = "../main.jsp";
@@ -328,5 +326,6 @@ $("#user_idchek").keyup(function(){
 				</div>
 			</div>
 		</div>
+	</div>
 </body>
 </html>

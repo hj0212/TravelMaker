@@ -98,7 +98,7 @@ h5, .h5{
 			<%@include file="include/mainNavi.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	<div class="container">	
+	<div class="container" style="margin-top:-140px;">	
 		<div id="accordion" style="padding-top:50px; padding-bottom:70px;" >
 			<div class="card">
 				<div class="card-header">
@@ -144,7 +144,7 @@ h5, .h5{
 					<div class="card-body question">
 						<font class="fsize1">여행기란 TravelMaker의 핵심 기능으로써 사용자가 여행을 다니면서
 							자신의 여행 후기를 작성할 수 있도록 해주는 기능입니다. 물론 다녀오신 후에도 작성하실 수 있습니다. 사용자가 각
-							여행후기마다 자신의 느낌이나 사진을 저장하면 하나의 여행기가 완성됩니다. </font><br> 이미지 넣을것
+							여행후기마다 자신의 느낌이나 사진을 저장하면 하나의 여행기가 완성됩니다. </font><br>
 					</div>
 				</div>
 			</div>
@@ -158,7 +158,7 @@ h5, .h5{
 				</div>
 				<div id="collapse4" class="collapse" data-parent="#accordion">
 					<div class="card-body question">
-						<font class="fsize1">내가 작성한 여행기는[마이페이지]-[내 글 보기]에서 볼 수 있습니다. </font><br> 이미지 넣을것
+						<font class="fsize1">내가 작성한 여행기는[마이페이지]-[내 글 보기]에서 볼 수 있습니다. </font><br>
 					</div>
 				</div>
 			</div>
@@ -172,7 +172,8 @@ h5, .h5{
 				</div>
 				<div id="collapse5" class="collapse" data-parent="#accordion">
 					<div class="card-body question">
-						<font class="fsize1">화면 오른쪽 상단의 [로그아웃]을 선택하시면 로그아웃 하실 수 있습니다. </font><br> 이미지 넣을것
+						<font class="fsize1">화면 오른쪽 상단의 [로그아웃]을 선택하시면 로그아웃 하실 수 있습니다. </font><br>
+						<img src="source/img/logout.PNG">
 					</div>
 				</div>
 			</div>
@@ -187,7 +188,8 @@ h5, .h5{
 				<div id="collapse6" class="collapse" data-parent="#accordion">
 					<div class="card-body question">
 						<font class="fsize1">좋아요는 타인의 여행기를 보고나서 좋아요(하트)를 터치하면 자동으로 스크랩 하는 기능입니다.<br>
-						여행기를 보시고 좋아요를 많이 눌러주세요~  </font><br> 이미지 넣을것
+						여행기를 보시고 좋아요를 많이 눌러주세요~  </font><br> 
+						<img src="source/img/zoayo.PNG">
 					</div>
 				</div>
 			</div>
@@ -201,8 +203,7 @@ h5, .h5{
 				</div>
 				<div id="collapse7" class="collapse" data-parent="#accordion">
 					<div class="card-body question">
-						<font class="fsize1"> 내 여행기에서 수정하고 싶은 여행기를 클릭해보시면 수정버튼이 있습니다.<br>
-						이 버튼을 누르시면 여행기를 수정하실 수 있습니다. </font><br> 이미지 넣을것
+						<font class="fsize1"> 마이페이지에서 여행기를 선택하여 수정/삭제할 수 있습니다. </font><br>
 					</div>
 				</div>
 			</div>

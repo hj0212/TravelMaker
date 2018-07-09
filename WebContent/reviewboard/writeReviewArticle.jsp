@@ -9,12 +9,12 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.js""></script>
 <link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css"
 	rel="stylesheet">
 <script
-   src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script
@@ -60,7 +60,8 @@
 					</div>
 					<div class="form-group">
 						<textarea name="contents" class="form-control" id="editor"></textarea>
-						<input type="text" readonly style="display:none" id="imageList" name="imageList">
+						<input type="text" readonly style="display: none" id="imageList"
+							name="imageList">
 					</div>
 					<div class="text-right">
 						<input type="button" class="btn btn-primary" value="작성"
@@ -73,6 +74,11 @@
 				</form>
 			</div>
 </body>
+	<c:choose>
+		<c:when test="${sessionScope.user.seq !=null}">
+			<%@include file="../include/multiChat.jsp"%>
+		</c:when>
+	</c:choose>	
 <script src="./reviewboard/editor.js"></script>
 </c:otherwise>
 </c:choose>

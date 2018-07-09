@@ -12,12 +12,10 @@
 	white-space: nowrap;
 	overflow: hidden;
 }
-
 a {
 	color: #6d6d6d;
 	text-decoration: none;
 }
-
 .rslides {
 	position: relative;
 	list-style: none;
@@ -26,7 +24,6 @@ a {
 	padding: 0;
 	margin: 0;
 }
-
 .rslides li {
 	-webkit-backface-visibility: hidden;
 	position: absolute;
@@ -35,13 +32,11 @@ a {
 	left: 0;
 	top: 0;
 }
-
 .rslides li:first-child {
 	position: relative;
 	display: block;
 	float: left;
 }
-
 .rslides img {
 	display: block;
 	height: 550px;
@@ -49,12 +44,10 @@ a {
 	width: 100%;
 	border: 0;
 }
-
 .navbar-fixed-top.scrolled {
 	background-color: #fff !important;
 	transition: background-color 200ms linear;
 }
-
 .nav-link {
 	font-size: 15pt;
 	font-family: menufont;
@@ -71,8 +64,7 @@ a {
 		<li><img src="source/img/TRAVEL/travel16.png" alt=""></li>
 	</ul>
 
-	<nav
-		class="navbar fixed-top navbar-expand-lg navbar-fixed-top navbar-light"
+	<nav class="navbar fixed-top navbar-expand-lg navbar-fixed-top navbar-light"
 		style="height: 100px;" id="naviId">
 
 		<a class="navbar-brand" href="main.jsp" style="font-size: 30px">
@@ -85,11 +77,9 @@ a {
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav ml-auto ">
-				<li class="nav-item active"><a class="nav-link"
-					href="planboard.plan">Plans <span class="sr-only">(current)</span>
-				</a></li>
+				<li class="nav-item"><a class="nav-link" href="planboard.plan">Plan</a></li>
 				<li class="nav-item"><a class="nav-link" href="reviewboard.bo">Review</a></li>
-				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
+				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Free</a></li>
 				<li class="nav-item"><a class="nav-link" href="login/newlogin.jsp">Login</a></li>
 				<li class="nav-item"><a class="nav-link" href="login/newlogin.jsp">Join</a></li>
 
@@ -107,6 +97,9 @@ a {
 						$nav.toggleClass('scrolled', $(this).scrollTop() > $nav
 								.height());
 					});
+		});
+		$("#navbarNavDropdown>ul").on('click','li',function() {
+			$(this).addClass('active').siblings().removeClass('active');
 		});
 	</script>
 

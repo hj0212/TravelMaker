@@ -49,7 +49,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li class="dropdown-header">Pages</li>
 								<li><a href="admin_free.ad">FreeBoard</a></li>
-								<li><a href="admin_plan.ad">Share_Plan</a></li>
+								<li><a href="admin_review.ad">Share_Review</a></li>
 							</ul></li>
 						<li><a href="javascript:msg()">Contact</a></li>
 					</ul>
@@ -81,7 +81,7 @@
 							<table class="table col-md-12" id="members">
 								<thead>
 									<tr>
-										<th class="col-md-12 text-center" colspan=7>회원 관리</th>
+										<th class="col-md-12 text-center" style="font-size:20px;" colspan=7>회원 관리</th>
 									</tr>
 								</thead>
 								<tbody>
