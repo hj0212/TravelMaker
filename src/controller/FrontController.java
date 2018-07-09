@@ -119,7 +119,7 @@ public class FrontController extends HttpServlet {
 						
 						int result = fbdao.insertArticle(writer, title, contents);
 						
-						dst = "writeArticleProc.bo";
+						dst = "freeboard.bo";
 					}
 				}catch(NumberFormatException e) {
 					dst = "freeNumberError.bo";
@@ -438,7 +438,7 @@ public class FrontController extends HttpServlet {
 			  				
 			  				int result = rdao.insertReview(title, contents, user.getSeq(), imageList);
 			  				
-			  				dst = "reviewProc.bo";
+			  				dst = "reviewboard.bo";
 		        		  }
 		        	  }
 	        	  }catch(Exception e) {
