@@ -87,9 +87,9 @@ a {
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav ml-auto ">
 				<li class="nav-item"><a class="nav-link"
-					href="planboard.plan">Plans</a></li>
+					href="planboard.plan">Plan</a></li>
 				<li class="nav-item"><a class="nav-link" href="reviewboard.bo">Review</a></li>
-				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Board</a></li>
+				<li class="nav-item"><a class="nav-link" href="freeboard.bo">Free</a></li>
 				<li class="nav-item dropdown" style="min-width: 150px;"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"

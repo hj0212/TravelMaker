@@ -1,5 +1,9 @@
 package dto;
 
+/**
+ * @author Kwon
+ *
+ */
 public class PlanDTO {
 	private int plan_seq;
 	private int plan_writer;
@@ -13,6 +17,7 @@ public class PlanDTO {
 	private int plan_reportcount;
 	private String plan_check;
 	private String file_name;
+	private String part;
 
 	public PlanDTO() {	}
 	public PlanDTO(int plan_seq, int plan_writer, String plan_writerN, String plan_startdate, String plan_enddate,
@@ -33,6 +38,12 @@ public class PlanDTO {
 
 
 	
+	public String getPart() {
+		return part;
+	}
+	public void setPart(String part) {
+		this.part = part;
+	}
 	public String getFile_name() {
 		return file_name;
 	}

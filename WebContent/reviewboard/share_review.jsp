@@ -89,7 +89,7 @@
 						<div class="col-md-4">
 							<div class="card">
 							<a href="reviewArticle.bo?review_seq=${item.review_seq}">
-								<img class="card-img-top" src="${pageContext.request.contextPath}/files/${item.review_thumbnail}" alt="Card image cap">
+								<img class="card-img-top" src="/TravelMaker/files/${item.review_thumbnail}" alt="Card image cap">
 								<div class="card-body">
 									<h5 class="card-title">${item.review_title}</h5>
 									<p class="card-text">${item.review_writerN}</p>
