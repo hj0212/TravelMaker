@@ -149,7 +149,7 @@
 
 		</c:when>
 		<c:otherwise>
-			<script> location.href="../error.jsp"</script>
+			<script> location.href="adminlogin.ad";</script>
 		</c:otherwise>
 	</c:choose>
 

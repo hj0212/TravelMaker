@@ -19,6 +19,7 @@
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="source/css/admin.css">
+<script type="text/javascript"> function msg(){alert("준비 중입니다.");}</script>
 
 <style>
 </style>
@@ -35,9 +36,9 @@
 					<nav class="navbar navbar-inverse navbar-fixed-top"
 						id="sidebar-wrapper" role="navigation">
 					<ul class="nav sidebar-nav">
-						<li class="sidebar-brand"><a href="#"> TravelMaker </a></li>
+						<li class="sidebar-brand"><a href="main.jsp"> TravelMaker </a></li>
 						<li><a href="showMembers.ad">Members</a></li>
-						<li><a href="#">Log</a></li>
+						<li><a href="javascript:msg()">Log</a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">Pages<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
@@ -45,7 +46,7 @@
 								<li><a href="admin_free.ad">FreeBoard</a></li>
 								<li><a href="admin_review.ad">Share_Review</a></li>
 							</ul></li>
-						<li><a href="#">Contact</a></li>
+						<li><a href="javascript:msg()">Contact</a></li>
 					</ul>
 					</nav>
 
@@ -145,7 +146,7 @@
 
 		</c:when>
 		<c:otherwise>
-			<script> location.href="error.jsp"</script>
+			<script> location.href="adminlogin.ad"</script>
 		</c:otherwise>
 	</c:choose>
 

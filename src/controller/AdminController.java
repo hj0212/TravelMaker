@@ -97,10 +97,11 @@ public class AdminController extends HttpServlet {
 	
 				isForward = true;
 				dst = "admin/admin_reviewCount.jsp";
-				
 			}
-			
-			
+		//---------admin계정으로 로그인이 필요
+			else if(command.equals("/adminlogin.ad")) {
+				dst = "admin/needLogin.jsp";	
+			}
 			
 			
 			

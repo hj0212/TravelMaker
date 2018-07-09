@@ -71,7 +71,7 @@
 									<span class="input-group-btn">
 
 										<button class="btn btn-outline-secondary " type="button"
-											id="searchbtn" name="searchbtn">검색</button>
+											id="searchbtn" name="searchbtn" ><a href="javascript:msg()">검색</a></button>
 									</span>
 
 								</div>
@@ -139,6 +139,9 @@
 																name="TriSea2" checked></label>
 														</div>
 													</c:when>
+													<c:otherwise>
+													<script> location.href="adminlogin.ad";</script>
+													</c:otherwise>
 												</c:choose></td>
 										</tr>
 									</c:forEach>
@@ -215,16 +218,17 @@
 
 								})
 
-				$("#searchbtn").click(
+				/* $("#searchbtn").click(
 						function() {
 							location.href = "showMembers.ad?search="+ $("#search").val();
-						})
+						}) */
+				
 			</script>
 
 		</c:when>
 		<c:otherwise>
 			<script>
-				location.href = "../error.jsp"
+				location.href = "adminlogin.ad";
 			</script>
 		</c:otherwise>
 	</c:choose>

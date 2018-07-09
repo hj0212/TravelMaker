@@ -55,6 +55,8 @@
 							<span class="hamb-top"></span> <span class="hamb-middle"></span>
 							<span class="hamb-bottom"></span>
 						</button>
+						
+						
 						<div class="container">
 							<div class="row">
 								<div class="col-md-10 col-md-offset-2">
@@ -147,7 +149,7 @@
 
 		</c:when>
 		<c:otherwise>
-			<script> location.href="../error.jsp"</script>
+			<script> location.href="adminlogin.ad";</script>
 		</c:otherwise>
 	</c:choose>
 
