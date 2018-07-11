@@ -856,7 +856,7 @@ public class PlanDAO {
 
 	public List<LocationDTO> selectLocation(int plan_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "select * from location l, (select location_id from schedule where plan_seq = ? and location_id != -1) s where l.location_id = s.location_id";
+		String sql = "select * from location l, (select location_id, day_seq, schedule_starttime from schedule where plan_seq = ? and location_id != -1) s where l.location_id = s.location_id order by day_seq, schedule_starttime";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, plan_seq);
 		ResultSet rs = pstat.executeQuery();
@@ -877,7 +877,7 @@ public class PlanDAO {
 
 	public List<ScheduleDTO> selectTimeline(int plan_seq) throws Exception {
 		Connection con = DBConnection.getConnection();
-		String sql = "select s.day_seq, s.location_id, l.location_name from schedule s, location l where s.location_id = l.location_id and s.plan_seq = ? and s.location_id != -1 order by schedule_seq desc";
+		String sql = "select s.day_seq, s.location_id, l.location_name from schedule s, location l where s.location_id = l.location_id and s.plan_seq = ? and s.location_id != -1 order by day_seq, schedule_starttime";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, plan_seq);
 		ResultSet rs = pstat.executeQuery();

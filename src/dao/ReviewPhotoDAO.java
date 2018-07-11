@@ -34,7 +34,7 @@ public class ReviewPhotoDAO {
 		if(rs.next()) {
 			name = "/files/"+rs.getString(1);
 		}else {
-			name = "Charlie-Chaplin-PNG-Image-17681.png";
+			name = "/files/back1.png";
 		}
 		
 		rs.close();

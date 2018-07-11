@@ -79,7 +79,6 @@ public class PlanController extends HttpServlet {
 				List<BudgetDTO> list = new ArrayList<>();
 
 				if(!budgetplanstr.equals("")) {
-
 					for(int i = 0; i < budget_plan.length; i++) {
 						BudgetDTO btmp = new BudgetDTO();
 						btmp.setPlan_seq(plan);
@@ -233,34 +232,36 @@ public class PlanController extends HttpServlet {
 				isForward = false;
 				dst="selectSchedule.plan?plan="+plan+"&day="+day+"&create=f";
 			} else if(command.equals("/selectSchedule.plan")) {
-				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
+				try {
+					MemberDTO dto = (MemberDTO)request.getSession().getAttribute("user");
 
-				int plan = Integer.parseInt(request.getParameter("plan"));
-				int day = Integer.parseInt(request.getParameter("day"));
-				String create = request.getParameter("create");
-				int plan_period = pdao.getPlanperiod(plan);
-				boolean state = pdao.getPlanState(plan);
-				request.setAttribute("plan_period", plan_period);
-				if(create.equals("f")) {
-					List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
-					List<BudgetDTO> blist = pdao.selectBudget(plan, day);
-					int totalBudget = pdao.getTotalBudget(plan, day);
-					request.setAttribute("totalBudget", totalBudget);
-					request.setAttribute("create", create);
-					request.setAttribute("scheduleList", list);
-					request.setAttribute("budgetList", blist);
-					request.setAttribute("plan_state", state);
-				} else {
-					request.setAttribute("create", create);
-				}
-				String plan_title = pdao.getPlantitle(plan);
-				request.setAttribute("plan_title", plan_title);
-				if(dto == null) {
-					isForward=false;
-					dst="login.bo";
-				}else {					
+					int plan = Integer.parseInt(request.getParameter("plan"));
+					int day = Integer.parseInt(request.getParameter("day"));
+					String create = request.getParameter("create");
+					int plan_period = pdao.getPlanperiod(plan);
+					boolean state = pdao.getPlanState(plan);
+					request.setAttribute("plan_period", plan_period);
+					if(create.equals("f")) {
+						List<ScheduleDTO> list = pdao.selectSchedule(plan, day);
+						List<BudgetDTO> blist = pdao.selectBudget(plan, day);
+						int totalBudget = pdao.getTotalBudget(plan, day);
+						request.setAttribute("totalBudget", totalBudget);
+						request.setAttribute("create", create);
+						request.setAttribute("scheduleList", list);
+						request.setAttribute("budgetList", blist);
+						request.setAttribute("plan_state", state);
+					} else {
+						request.setAttribute("create", create);
+					}
+					String plan_title = pdao.getPlantitle(plan);
+					request.setAttribute("plan_title", plan_title);
+
 					isForward = true;
 					dst="planboard/plan_write.jsp?plan="+plan+"&day="+day+"&create="+create;
+
+				} catch (NullPointerException e) {
+					isForward=false;
+					dst="plan/needLogin.jsp";
 				}
 
 			} else if(command.equals("/deleteSchedule.plan")) {
@@ -325,6 +326,7 @@ public class PlanController extends HttpServlet {
 				isForward = true;
 				dst="planboard/share_plan.jsp";
 			}else if(command.equals("/planArticle.plan")) {
+				try {
 				int currentPage = 0;
 				String currentPageString = request.getParameter("currentPage");
 				MemberDTO dto = ((MemberDTO)request.getSession().getAttribute("user"));
@@ -373,6 +375,13 @@ public class PlanController extends HttpServlet {
 
 				isForward=true;
 				dst="planboard/planView.jsp?plan_seq="+plan_seq+"&currentPage="+currentPage;
+			} catch (NullPointerException e) {
+				isForward=false;
+				dst="plan/needLogin.jsp";
+			} catch (NumberFormatException e) {
+				isForward=false;
+				dst="plan/needLogin.jsp";
+			}
 
 			}else if(command.equals("/insertPlanComment.plan")) {
 				String comment_text = request.getParameter("comment_text");
@@ -420,13 +429,14 @@ public class PlanController extends HttpServlet {
 				dst = "planboard.plan";
 			}
 
-
 			if(isForward) {
 				RequestDispatcher rd = request.getRequestDispatcher(dst);
 				rd.forward(request, response);
 			} else {
 				response.sendRedirect(dst);
 			}
+		}catch(NumberFormatException e2) {
+			response.sendRedirect("login.do");
 		}catch(NullPointerException e1) {
 			response.sendRedirect("login.do");
 		}catch(Exception e) {e.printStackTrace();}

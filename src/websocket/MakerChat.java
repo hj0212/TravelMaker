@@ -31,7 +31,7 @@ public class MakerChat {
 
 
 	@OnMessage
-	public void handleMessage(String message)throws Exception{
+	synchronized public void handleMessage(Session session,String message)throws Exception{
 		System.out.println(message);
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(message);

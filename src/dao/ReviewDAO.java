@@ -144,7 +144,7 @@ public class ReviewDAO {
 		String sql;
 		PreparedStatement pstat = null;
 
-		if(searchTerm == null || searchTerm.equals("")) {
+		if(searchTerm == null || searchTerm.equals("") || searchTerm.equals("null")) {
 			sql = "select * from (select review_seq, review_title, review_contents, review_writer, to_char(review_writedate, 'YYYY/MM/DD') review_writedate, review_viewcount, row_number() over(order by review_seq desc) as num from reviewboard_c) where num between ? and ?";
 			pstat = con.prepareStatement(sql);
 			pstat.setInt(1, startNum);
@@ -212,7 +212,7 @@ public class ReviewDAO {
 		String sql;
 		PreparedStatement pstat;
 
-		if(searchTerm == null || searchTerm.equals("")) {
+		if(searchTerm == null || searchTerm.equals("") || searchTerm.equals("null")) {
 			sql = "select count(*) totalCount from reviewboard_c";
 			pstat = con.prepareStatement(sql);
 		} else {
